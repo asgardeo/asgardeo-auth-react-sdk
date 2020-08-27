@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "npm run build",
+        "build": "lerna run build --stream",
         "prebuild": "npm install && lerna bootstrap",
         "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
         "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
@@ -31,6 +31,7 @@
     },
     "homepage": "https://github.com/thivi/asgardio-js-oidc-sdk#readme",
     "devDependencies": {
-        "lerna": "^3.22.1"
+        "lerna": "^3.22.1",
+        "rimraf": "^3.0.0"
     }
 }

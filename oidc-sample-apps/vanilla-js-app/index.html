@@ -60,7 +60,22 @@
             }
         </style>
     </head>
-    <script src="main.js"></script>
+    <body>
+        <div class="wrapper">
+            <div class="menu">
+                <button onclick="signIn()">Sign In</button>
+                <button onclick="signOut()">Sign Out</button>
+                <button onclick="getUserProfile()">Get user info</button>
+            </div>
+            <div id="greeting"></div>
+            <div class="details">
+                <div id="email"></div>
+                <div id="lastName"></div>
+                <div id="roles"></div>
+            </div>
+        </div>
+    </body>
+    <script src="node_modules/@asgardio/authentication/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
         var clientHost = "http://localhost:5000";
@@ -72,7 +87,7 @@
 
         // Initialize the client
         auth.initialize({
-            baseUrls: [serverOrigin],
+            baseUrls: [ serverOrigin ],
             callbackURL: clientHost,
             clientHost: clientHost,
             clientID: "oNYe7ML9smdwuR5olarViTTL_iga",
@@ -108,11 +123,11 @@
                 }
             }).then((response) => {
                 document.getElementById("email").innerHTML =
-                    "<b>Email:</b> " + response.data.basic["http://wso2.org/claims/emailaddress"];
+                    "<b>Email:</b> " + response.data.basic[ "http://wso2.org/claims/emailaddress" ];
                 document.getElementById("lastName").innerHTML =
-                    "<b>Last name:</b> " + response.data.basic["http://wso2.org/claims/lastname"];
+                    "<b>Last name:</b> " + response.data.basic[ "http://wso2.org/claims/lastname" ];
                 document.getElementById("roles").innerHTML =
-                    "<b>Role:</b> " + response.data.basic["http://wso2.org/claims/role"];
+                    "<b>Role:</b> " + response.data.basic[ "http://wso2.org/claims/role" ];
             });
         }
 
@@ -126,19 +141,4 @@
             auth.signOut();
         }
     </script>
-    <body>
-        <div class="wrapper">
-            <div class="menu">
-                <button onclick="signIn()">Sign In</button>
-                <button onclick="signOut()">Sign Out</button>
-                <button onclick="getUserProfile()">Get user info</button>
-            </div>
-            <div id="greeting"></div>
-            <div class="details">
-                <div id="email"></div>
-                <div id="lastName"></div>
-                <div id="roles"></div>
-            </div>
-        </div>
-    </body>
 </html>
