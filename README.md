@@ -9,7 +9,7 @@
     - [Sign In](#sign-in)
     - [Sign Out](#sign-out)
     - [Use a Custom Grant](#use-a-custom-grant)
-    - [Callback Hooks](#custom-hooks)
+    - [Callback Hooks](#callback-hooks)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
     - [getInstance](#getinstance)
@@ -55,6 +55,7 @@ This client is a singleton and can be instantiated as follows.
 const auth = IdentityClient.getInstance();
 ```
 Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
+
 ```javascript
 auth.initialize({
         callbackURL: "http://localhost:9443/my-account/login",
@@ -139,7 +140,7 @@ npm run build
 ```
 
 ### Vanilla JavaScript Sample
-You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
+You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](oidc-sample-apps/vanilla-js-app). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
 
 ## APIs
 ### getInstance
