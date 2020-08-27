@@ -12,6 +12,19 @@
     - [Callback Hooks](#custom-hooks)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
+    - [getInstance](#getinstance)
+    - [initialize](#initialize)
+        - [Storage](#storage)
+        - [ServiceResourceTypes](#serviceresourcetypes)
+    - [getUserInfo](#getuserinfo)
+    - [signIn](#signin)
+    - [signOut](#signout)
+    - [httpRequest](#httpRequest)
+    - [httpRequestAll](#httpRequestAll)
+    - [customGrant](#customGrant)
+        - [The data Attribute](#the-data-attribute)
+    - [endUserSession](#endusersession)
+    - [getServiceEndpoints](#getserviceendpoints)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -102,6 +115,31 @@ Callback functions can be attached to authentication methods such as sign in and
 [Learn more](#on).
 
 ## Try Out the Sample Apps
+### Create a Service Provider
+Before trying out the sample apps, you need to a create a service provider in the Identity Server. So, navigate to `https://localhost:9443/carbon" and click on `Add` under `Service Providers` in the left-hand menu panel.
+
+Enter `Sample` as the name of the app and click on `Register`.
+
+Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
+
+Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
+
+Enter `http://localhost:3000` as the `Callback Url`.
+
+Check `Allow authentication without the client secret`.
+
+Click `Add` at the bottom.
+
+Copy the `OAuth Client Key`.
+
+### Running the sample apps
+Build the apps by running the following command at the root directory.
+```
+npm run build
+```
+
+### Vanilla JavaScript Sample
+You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
 
 ## APIs
 ### getInstance
@@ -126,11 +164,18 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`responseMode` (optional)|`string`|`query`| Specifies the response mode. The value can either be `query` or `form_post`|
 |`scope` (optional)|`string[]`|`[openid]`|Specifies the requested scopes|
 |`serverOrigin`|`string`||The origin of the Identity Provider. eg: `https://www.asgardio.io`|
-|`storage` (optional)| `sessionStorage`| `webWorker`|`localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
+|[`storage`](#storage) (optional)| `sessionStorage`| `webWorker`|`localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
 |`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`||The URLs of the API endpoints.|
-|`endpoints` (optional)|(`ServiceResourceTypes`)[#serviceresourcetypes]|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
+|`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
 
 The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
+### Storage
+Asgardio allows the session information including the access token to be stored in three different places, namely,
+1. Session storage
+2. Local storage
+3. Web worker
+
+Of the three methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and data there cannot be stolen through XSS attacks. However, when using a web worker to store the session information, the [`httpRequest`](#httprequest)
 
 #### ServiceResourceTypes
 |Attribute|Type|Default Value|Description|
@@ -275,8 +320,9 @@ The `on` method is used to hook callback functions to authentication methods. Th
 - `Node.js` (version 10 or above).
 - `npm` package manager.
 ### Installing Dependencies
+The repository is a mono repository. The SDK repository is found in the [oidc-js-sdk]() directory. You can install the dependencies by running the following command at the root.
 ```
-npm install
+npm run build
 ```
 
 ## Contribute
