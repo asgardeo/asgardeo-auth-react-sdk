@@ -1,7 +1,7 @@
 {
     "name": "@asgardio/oidc-js-sdk",
     "version": "1.0.375",
-    "description": "Asgardio Authnetication SDK and Sample Apps",
+    "description": "Asgardio Authentication SDK and Sample Apps",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
