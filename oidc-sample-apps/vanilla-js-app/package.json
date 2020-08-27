@@ -1,0 +1,11 @@
+{
+  "name": "@asgardio/oidc-sample-vanilla",
+  "version": "1.0.375",
+  "description": "A sample vanilla javascript app demonstrating OIDC authentication using Asgardio's SDK",
+  "main": "index.js",
+  "scripts": {
+    "start":"npx serve"
+  },
+  "author": "Asgardio",
+  "license": "Apache-2.0"
+}
