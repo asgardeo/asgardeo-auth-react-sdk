@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [Introduction](##introduction)
+- [Introduction](#introduction)
 - [Getting Started](##getting-started)
     - [Install](###install)
     - [Initialize](###initialize)
