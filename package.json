@@ -1,29 +1,36 @@
 {
-  "name": "@asgardio/oidc-js-sdk",
-  "version": "1.0.375",
-  "description": "Asgardio Authnetication SDK and Sample Apps",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thivi/asgardio-js-oidc-sdk.git"
-  },
-  "keywords": [
-    "Asgardio",
-    "OIDC",
-    "OAuth2",
-    "Authentication",
-    "Authorization"
-  ],
-  "author": "Asgardio",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/thivi/asgardio-js-oidc-sdk/issues"
-  },
-  "homepage": "https://github.com/thivi/asgardio-js-oidc-sdk#readme",
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  }
+    "name": "@asgardio/oidc-js-sdk",
+    "version": "1.0.375",
+    "description": "Asgardio Authnetication SDK and Sample Apps",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npm run build",
+        "prebuild": "npm install && lerna bootstrap",
+        "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
+        "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
+        "lint": "eslint --ext .js,.ts .",
+        "clean": "lerna run clean --stream",
+        "clean-all": "npm run remove-package-lock && npm run remove-maven-folders && npm run remove-node-modules"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thivi/asgardio-js-oidc-sdk.git"
+    },
+    "keywords": [
+        "Asgardio",
+        "OIDC",
+        "OAuth2",
+        "Authentication",
+        "Authorization"
+    ],
+    "author": "Asgardio",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/thivi/asgardio-js-oidc-sdk/issues"
+    },
+    "homepage": "https://github.com/thivi/asgardio-js-oidc-sdk#readme",
+    "devDependencies": {
+        "lerna": "^3.22.1"
+    }
 }
