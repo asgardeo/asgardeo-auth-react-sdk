@@ -3,20 +3,20 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Getting Started](##getting-started)
-    - [Install](###install)
-    - [Initialize](###initialize)
-    - [Sign In](###sign-in)
-    - [Sign Out](###sign-out)
-    - [Use a Custom Grant](###use-a-custom-grant)
-    - [Callback Hooks](###custom-hooks)
-- [Try Out the Sample Apps](##try-out-the-sample-apps)
-- [APIs](##apis)
-- [Develop](##develop)
-    - [Prerequisites](###prerequisites)
-    - [Installing Dependencies](###installing-dependencies)
-- [Contribute](##contribute)
-- [License](##license)
+- [Getting Started](#getting-started)
+    - [Install](#install)
+    - [Initialize](#initialize)
+    - [Sign In](#sign-in)
+    - [Sign Out](#sign-out)
+    - [Use a Custom Grant](#use-a-custom-grant)
+    - [Callback Hooks](#custom-hooks)
+- [Try Out the Sample Apps](#try-out-the-sample-apps)
+- [APIs](#apis)
+- [Develop](#develop)
+    - [Prerequisites](#prerequisites)
+    - [Installing Dependencies](#installing-dependencies)
+- [Contribute](#contribute)
+- [License](#license)
 
 ## Introduction
 Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the JavaScript OIDC SDK, developers will be able to add identity management to their Single Page Applications in a jiffy.
@@ -54,26 +54,26 @@ auth.initialize({
         storage: "sessionStorage"
     });
 ```
-[Learn more](###initialize).
+[Learn more](#initialize).
 
 ### Sign In
 To sign in, simple call the `signIn()` method.
 ```javascript
 auth.signIn();
 ```
-[Learn more](###signin).
+[Learn more](#signin).
 
 
 ### Sign Out
-The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](###on()) section for more information.
+The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on()) section for more information.
 ```javascript
 auth.signOut()
 ```
 
-[Learn more](###signout).
+[Learn more](#signout).
 
 ### Use a Custom Grant
-You can use custom grants with our SDK using the `customGrant()` method. The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](###on()) section for more information.
+You can use custom grants with our SDK using the `customGrant()` method. The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on()) section for more information.
 ```javascript
 oAuth.customGrant({
     attachToken: false,
@@ -90,7 +90,7 @@ oAuth.customGrant({
 })
 ```
 
-[Learn more](###customgrant).
+[Learn more](#customgrant).
 
 ### Callback Hooks
 Callback functions can be attached to authentication methods such as sign in and sign out using hooks. Hooks can be attached to the client using the `on()` method.
@@ -99,7 +99,7 @@ Callback functions can be attached to authentication methods such as sign in and
      alert("You have successfully signed in!");
  }
 ```
-[Learn more](###on).
+[Learn more](#on).
 
 ## Try Out the Sample Apps
 
@@ -130,7 +130,7 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`||The URLs of the API endpoints.|
 |`endpoints` (optional)|(`ServiceResourceTypes`)[#serviceresourcetypes]|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
 
-The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](###on) section for more information.
+The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
 
 #### ServiceResourceTypes
 |Attribute|Type|Default Value|Description|
@@ -166,7 +166,7 @@ auth.getUserInfo().then(response=>{
 
 This method initiates the authentication flow.
 
-The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](###on) section for more information.
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
 
 
 ```javascript
@@ -176,7 +176,7 @@ auth.signIn();
 ### signOut
 This method ends the user session at the Identity Server and logs the user out.
 
-The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](###on) section for more information.
+The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
 ### httpRequest
 This method  is used to send http requests to the Identity Server. The developer doesn't need to manually attach the access token since this method does it automatically.
@@ -217,7 +217,7 @@ This method allows developers to use custom grants provided by their Identity Se
 `returnsSession`| `boolean`|Specifies if the response to teh custom grant request would return session information. If set to yes, then the current session will be updated with the returned session.|
 `returnResponse`| `boolean`|Specifies if the response returned by the custom grant should be returned back. If the `returnsSession` attribute is set to `true` then only the user information is returned.|
 
-The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](###on) section for more information.
+The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
 
 #### The data attribute
 Often, you may have to send session information in the body of a custom grant request. Since when using a web worker to store the session information, you won't have access to the session information, Asgardio provides template tags to attach the necessary session information. When a template tag is used, the SDK automatically replaces the tag with the relevant session information before sending the request. For example, if the access token should be send in teh body of the request, you can use the `{{token}}` template tag. The SDK will replace this tag with the access token before dispatching the request.
@@ -250,7 +250,7 @@ return oAuth.customGrant({
 ### endUserSession
 This method revokes the access token and clears the session information from the storage.
 
-The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [on()](###on) section for more information.
+The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [on()](#on) section for more information.
 
 ### getServiceEndpoints
 This method returns an object containing the OIDC endpoints obtained from the `.well-known` endpoint.
