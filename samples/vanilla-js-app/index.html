@@ -79,15 +79,14 @@
     <script>
         var serverOrigin = "https://localhost:9443";
         var clientHost = "http://localhost:3000";
+        var isAuthenticated = false;
 
         // Instantiate the `IdentityClient` singleton
         var auth = AsgardioAuth.IdentityClient.getInstance();
 
-        var isAuthenticated = false;
-
         // Initialize the client
         auth.initialize({
-            baseUrls: [ serverOrigin ],
+            baseUrls: [serverOrigin],
             callbackURL: clientHost,
             clientHost: clientHost,
             clientID: "client-id",
@@ -95,6 +94,16 @@
             serverOrigin: serverOrigin,
             storage: "webWorker"
         });
+
+        //Sign in function
+        function signIn() {
+            auth.signIn();
+        }
+
+        //Sign out function
+        function signOut() {
+            auth.signOut();
+        }
 
         //Pass the callback function to be called after signing in using the `sign-in` hook
         auth.on("sign-in", function (response) {
@@ -123,22 +132,12 @@
                 }
             }).then((response) => {
                 document.getElementById("email").innerHTML =
-                    "<b>Email:</b> " + response.data.basic[ "http://wso2.org/claims/emailaddress" ];
+                    "<b>Email:</b> " + response.data.basic["http://wso2.org/claims/emailaddress"];
                 document.getElementById("lastName").innerHTML =
-                    "<b>Last name:</b> " + response.data.basic[ "http://wso2.org/claims/lastname" ];
+                    "<b>Last name:</b> " + response.data.basic["http://wso2.org/claims/lastname"];
                 document.getElementById("roles").innerHTML =
-                    "<b>Role:</b> " + response.data.basic[ "http://wso2.org/claims/role" ];
+                    "<b>Role:</b> " + response.data.basic["http://wso2.org/claims/role"];
             });
-        }
-
-        //Sign in function
-        function signIn() {
-            auth.signIn();
-        }
-
-        //Sign out function
-        function signOut() {
-            auth.signOut();
         }
     </script>
 </html>
