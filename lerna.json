@@ -1,4 +1,4 @@
 {
-    "packages": ["js-oidc-sdk", "oidc-sample-apps/*"],
+    "packages": ["oidc-js", "samples/*"],
     "version": "1.0.375"
 }
