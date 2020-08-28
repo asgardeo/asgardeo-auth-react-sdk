@@ -71,7 +71,7 @@ auth.initialize({
 [Learn more](#initialize).
 
 ### Sign In
-To sign in, simple call the `signIn()` method.
+To sign in, simply call the `signIn()` method.
 ```javascript
 auth.signIn();
 ```
