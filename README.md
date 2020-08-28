@@ -2,16 +2,16 @@
 
 ## Table of Contents
 
-- [1. Introduction](#introduction)
-- [2. Getting Started](#getting-started)
+- [1. Introduction](#1.-introduction)
+- [2. Getting Started](#2.-getting-started)
     - [Install](#install)
     - [Initialize](#initialize)
     - [Sign In](#sign-in)
     - [Sign Out](#sign-out)
     - [Use a Custom Grant](#use-a-custom-grant)
     - [Callback Hooks](#callback-hooks)
-- [3. Try Out the Sample Apps](#try-out-the-sample-apps)
-- [4. APIs](#apis)
+- [3. Try Out the Sample Apps](#3.-try-out-the-sample-apps)
+- [4. APIs](#4.-apis)
     - [getInstance](#getinstance)
     - [initialize](#initialize)
         - [Storage](#storage)
@@ -25,11 +25,11 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
-- [5. Develop](#develop)
+- [5. Develop](#5.-develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
-- [6. Contribute](#contribute)
-- [7. License](#license)
+- [6. Contribute](#6.-contribute)
+- [7. License](#7.-license)
 
 ## 1. Introduction
 Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the JavaScript OIDC SDK, developers will be able to add identity management to their Single Page Applications in a jiffy.
@@ -323,7 +323,7 @@ The `on` method is used to hook callback functions to authentication methods. Th
 |`"end-user-session"`| `endUserSession()`| A boolean value indicating if the process was successful or not
 |`"custom-grant"`| `customGrant()`|
 
-## 6. Develop
+## 5. Develop
 ### Prerequisites
 - `Node.js` (version 10 or above).
 - `npm` package manager.
@@ -333,7 +333,7 @@ The repository is a mono repository. The SDK repository is found in the [oidc-js
 npm run build
 ```
 
-## 7. Contribute
+## 6. Contribute
 
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
@@ -342,5 +342,5 @@ We encourage you to report issues, improvements, and feature requests creating [
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
-## License
+## 7. License
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
