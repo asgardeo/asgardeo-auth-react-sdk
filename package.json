@@ -1,5 +1,5 @@
 {
-    "name": "@asgardio/oidc-js-sdk",
+    "name": "@asgardio/js-oidc",
     "version": "1.0.375",
     "description": "Asgardio Authentication SDK and Sample Apps",
     "main": "index.js",
@@ -15,7 +15,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/thivi/asgardio-js-oidc-sdk.git"
+        "url": "git+https://github.com/asgardio/asgardio-js-oidc-sdk.git"
     },
     "keywords": [
         "Asgardio",
@@ -27,9 +27,9 @@
     "author": "Asgardio",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/thivi/asgardio-js-oidc-sdk/issues"
+        "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
     },
-    "homepage": "https://github.com/thivi/asgardio-js-oidc-sdk#readme",
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
     "devDependencies": {
         "lerna": "^3.22.1",
         "rimraf": "^3.0.0"

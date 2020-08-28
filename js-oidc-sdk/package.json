@@ -1,5 +1,5 @@
 {
-    "name": "@asgardio/authentication",
+    "name": "@asgardio/js-oidc-sdk",
     "version": "1.0.375",
     "description": "Authentication module for Asgardio SPA",
     "keywords": [
@@ -52,5 +52,13 @@
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.7",
         "worker-loader": "^2.0.0"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asgardio/asgardio-js-oidc-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
+    },
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme"
 }
