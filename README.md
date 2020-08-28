@@ -39,7 +39,7 @@ Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC o
 ### Install
 Install the JavaScript library from the npm directory.
 ```
-npm install --save @asgardio/js-oidc-sdk
+npm install --save @asgardio/oidc-js
 ```
 Or simply load the SDK by importing the script into the header of your HTML file.
 ```html
@@ -48,7 +48,7 @@ Or simply load the SDK by importing the script into the header of your HTML file
 ### Initialize
 The SDK provides a client that can be used to carry out the authentication.
 ```javascript
-import { IdentityClient } from "@asgardio/js-oidc-sdk"
+import { IdentityClient } from "@asgardio/oidc-js"
 ```
 This client is a singleton and can be instantiated as follows.
 ```javascript

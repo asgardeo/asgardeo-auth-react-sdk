@@ -7,7 +7,7 @@
         "start": "node server.js"
     },
     "dependencies": {
-        "@asgardio/js-oidc-sdk": "^1.0.375",
+        "@asgardio/oidc-js": "^1.0.375",
         "express": "^4.17.1"
     },
     "author": "Asgardio",
