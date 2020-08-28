@@ -2,16 +2,16 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Getting Started](#getting-started)
+- [1. Introduction](#introduction)
+- [2. Getting Started](#getting-started)
     - [Install](#install)
     - [Initialize](#initialize)
     - [Sign In](#sign-in)
     - [Sign Out](#sign-out)
     - [Use a Custom Grant](#use-a-custom-grant)
     - [Callback Hooks](#callback-hooks)
-- [Try Out the Sample Apps](#try-out-the-sample-apps)
-- [APIs](#apis)
+- [3. Try Out the Sample Apps](#try-out-the-sample-apps)
+- [4. APIs](#apis)
     - [getInstance](#getinstance)
     - [initialize](#initialize)
         - [Storage](#storage)
@@ -25,19 +25,19 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
-- [Develop](#develop)
+- [5. Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
-- [Contribute](#contribute)
-- [License](#license)
+- [6. Contribute](#contribute)
+- [7. License](#license)
 
-## Introduction
+## 1. Introduction
 Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the JavaScript OIDC SDK, developers will be able to add identity management to their Single Page Applications in a jiffy.
 
-## Getting Started
+## 2. Getting Started
 
 ### Install
-Install the JavaScript library from the npm directory.
+Install the JavaScript library from the npm registry.
 ```
 npm install --save @asgardio/oidc-js
 ```
@@ -75,11 +75,18 @@ To sign in, simply call the `signIn()` method.
 ```javascript
 auth.signIn();
 ```
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
+```javascript
+ auth.on("sign-in", (response) => {
+     alert("You have successfully signed in!");
+ }
+```
+
 [Learn more](#signin).
 
 
 ### Sign Out
-The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on()) section for more information.
+The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 ```javascript
 auth.signOut()
 ```
@@ -89,7 +96,7 @@ auth.signOut()
 ### Use a Custom Grant
 You can use custom grants with our SDK using the `customGrant()` method. The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on()) section for more information.
 ```javascript
-oAuth.customGrant({
+auth.customGrant({
     attachToken: false,
     data: {
         client_id: "{{clientId}}",
@@ -115,7 +122,7 @@ Callback functions can be attached to authentication methods such as sign in and
 ```
 [Learn more](#on).
 
-## Try Out the Sample Apps
+## 3. Try Out the Sample Apps
 ### Create a Service Provider
 Before trying out the sample apps, you need to a create a service provider in the Identity Server. So, navigate to `https://localhost:9443/carbon" and click on `Add` under `Service Providers` in the left-hand menu panel.
 
@@ -142,7 +149,7 @@ npm run build
 ### Vanilla JavaScript Sample
 You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](oidc-sample-apps/vanilla-js-app). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
 
-## APIs
+## 4. APIs
 ### getInstance
 This returns an instance of the `IdentityClient`. Since the `IdentityClient` is a singleton, this method returns the same instance no matter how many time sit is called.
 
@@ -316,7 +323,7 @@ The `on` method is used to hook callback functions to authentication methods. Th
 |`"end-user-session"`| `endUserSession()`| A boolean value indicating if the process was successful or not
 |`"custom-grant"`| `customGrant()`|
 
-## Develop
+## 6. Develop
 ### Prerequisites
 - `Node.js` (version 10 or above).
 - `npm` package manager.
@@ -326,7 +333,7 @@ The repository is a mono repository. The SDK repository is found in the [oidc-js
 npm run build
 ```
 
-## Contribute
+## 7. Contribute
 
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
