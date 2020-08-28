@@ -1,0 +1,37 @@
+{
+    "name": "asgardio-js-oidc-sdk",
+    "version": "0.1.0",
+    "description": "Asgardio Authentication SDK and Sample Apps",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "lerna run build --stream",
+        "prebuild": "npm install && lerna bootstrap",
+        "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
+        "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
+        "lint": "eslint --ext .js,.ts .",
+        "clean": "lerna run clean --stream",
+        "clean-all": "npm run remove-package-lock && npm run remove-node-modules"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asgardio/asgardio-js-oidc-sdk.git"
+    },
+    "keywords": [
+        "Asgardio",
+        "OIDC",
+        "OAuth2",
+        "Authentication",
+        "Authorization"
+    ],
+    "author": "Asgardio",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
+    },
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
+    "devDependencies": {
+        "lerna": "^3.22.1",
+        "rimraf": "^3.0.0"
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es6",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "jsx": "react",
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "noLib": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "baseUrl": "src",
+        "paths": {
+            "*": ["types/*"]
+        },
+        "outDir": "./dist"
+    },
+    "compileOnSave": false,
+    "exclude": ["node_modules", "test-configs", "src/**/tests/*", "**/*.test.ts"]
+}
