@@ -212,7 +212,7 @@ This method returns the information about the authenticated user as an object. T
 |`email`|`string`|The email address of the user|
 |`username`|`string`| The username of the user|
 |`displayName`| `string`| The display name of the user|
-`allowedScopes`|`string`| The scopes the user has authorized teh client to access|
+`allowedScopes`|`string`| The scopes the user has authorized the client to access|
 ```javascript
 auth.getUserInfo().then(response=>{
     console.log(response);
@@ -251,7 +251,7 @@ auth.httpRequest(config).then(response=>{
 ```
 
 ### httpRequestAll
-This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in teh order in which the configs were passed.
+This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
 ```javascript
 auth.httpRequestAll(configs).then(responses => {
@@ -268,16 +268,16 @@ This method allows developers to use custom grants provided by their Identity Se
 |Attribute|Type|Description|
 |:--|:--|:--|
 `id`| `string`|A unique id for the custom grant. This allows developers to use multiple custom grants.|
-`data`| `any`|The data to be attached to teh body of the request to the Identity Server|
+`data`| `any`|The data to be attached to the body of the request to the Identity Server|
 `signInRequired`| `boolean`|Specifies if the custom grant requires an active user session.|
-`attachToken`| `boolean`|Specifies if the access token should be attached to the header of teh request.|
-`returnsSession`| `boolean`|Specifies if the response to teh custom grant request would return session information. If set to yes, then the current session will be updated with the returned session.|
+`attachToken`| `boolean`|Specifies if the access token should be attached to the header of the request.|
+`returnsSession`| `boolean`|Specifies if the response to the custom grant request would return session information. If set to yes, then the current session will be updated with the returned session.|
 `returnResponse`| `boolean`|Specifies if the response returned by the custom grant should be returned back. If the `returnsSession` attribute is set to `true` then only the user information is returned.|
 
 The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
 
 #### The data attribute
-Often, you may have to send session information in the body of a custom grant request. Since when using a web worker to store the session information, you won't have access to the session information, Asgardio provides template tags to attach the necessary session information. When a template tag is used, the SDK automatically replaces the tag with the relevant session information before sending the request. For example, if the access token should be send in teh body of the request, you can use the `{{token}}` template tag. The SDK will replace this tag with the access token before dispatching the request.
+Often, you may have to send session information in the body of a custom grant request. Since when using a web worker to store the session information, you won't have access to the session information, Asgardio provides template tags to attach the necessary session information. When a template tag is used, the SDK automatically replaces the tag with the relevant session information before sending the request. For example, if the access token should be send in the body of the request, you can use the `{{token}}` template tag. The SDK will replace this tag with the access token before dispatching the request.
 
 The following template tags are at your disposal.
 |Template Tags| Session Information Attached|
