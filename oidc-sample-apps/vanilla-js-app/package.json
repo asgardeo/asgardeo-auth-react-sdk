@@ -4,15 +4,11 @@
     "description": "A sample vanilla javascript app demonstrating OIDC authentication using Asgardio's SDK",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --hot --open"
+        "start": "node server.js"
     },
     "dependencies": {
-        "@asgardio/js-oidc-sdk": "^1.0.375"
-    },
-    "devDependencies": {
-        "webpack": "^4.41.5",
-        "webpack-cli": "^3.3.7",
-        "webpack-dev-server": "^3.11.0"
+        "@asgardio/js-oidc-sdk": "^1.0.375",
+        "express": "^4.17.1"
     },
     "author": "Asgardio",
     "license": "Apache-2.0"
