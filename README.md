@@ -172,7 +172,7 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`responseMode` (optional)|`string`|`query`| Specifies the response mode. The value can either be `query` or `form_post`|
 |`scope` (optional)|`string[]`|`[openid]`|Specifies the requested scopes|
 |`serverOrigin`|`string`||The origin of the Identity Provider. eg: `https://www.asgardio.io`|
-|[`storage`](#storage) (optional)| `sessionStorage`| `webWorker`|`localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
+|[`storage`](#storage) (optional)| `sessionStorage` or `webWorker` or `localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
 |`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`||The URLs of the API endpoints.|
 |`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
 
