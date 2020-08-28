@@ -5,7 +5,7 @@
 - [1. Introduction](#1.-introduction)
 - [2. Getting Started](#2.-getting-started)
     - [Install](#install)
-    - [Initialize](#initialize)
+    - [Initialize](#initialize-the-sdk)
     - [Sign In](#sign-in)
     - [Sign Out](#sign-out)
     - [Use a Custom Grant](#use-a-custom-grant)
@@ -45,7 +45,7 @@ Or simply load the SDK by importing the script into the header of your HTML file
 ```html
 <script src=""></script>
 ``` -->
-### Initialize
+### Initialize the SDK
 The SDK provides a client that can be used to carry out the authentication.
 ```javascript
 import { IdentityClient } from "@asgardio/oidc-js"
