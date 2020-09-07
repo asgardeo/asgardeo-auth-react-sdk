@@ -50,7 +50,8 @@ import {
     UserInfo,
     WebWorkerClientInterface,
     WebWorkerConfigInterface,
-    WebWorkerSingletonClientInterface
+    WebWorkerSingletonClientInterface,
+    SignInResponseWorker
 } from "../models";
 import { getAuthorizationCode } from "../utils";
 
@@ -428,24 +429,16 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
         sessionStorage.removeItem(PKCE_CODE_VERIFIER);
         sessionStorage.removeItem(AUTHORIZATION_CODE);
 
-        return communicate<AuthCode, SignInResponse>(message)
+        return communicate<AuthCode, SignInResponseWorker>(message)
             .then((response) => {
                 if (response.type === SIGNED_IN) {
                     signedIn = true;
 
-                    const message: Message<null> = {
-                        type: LOGOUT
-                    };
+                    sessionStorage.setItem(LOGOUT_URL, response.data.logoutUrl);
 
-                    return communicate<null, string>(message)
-                        .then((logoutUrl) => {
-                            sessionStorage.setItem(LOGOUT_URL, logoutUrl);
-
-                            return Promise.resolve(response.data);
-                        })
-                        .catch((error) => {
-                            return Promise.reject(error);
-                        });
+                    const data = response.data;
+                    delete data.logoutUrl;
+                    return Promise.resolve(data);
                 }
 
                 return Promise.reject(
@@ -473,24 +466,16 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                     type: SIGN_IN
                 };
 
-                return communicate<null, SignInResponse>(message)
+                return communicate<null, SignInResponseWorker>(message)
                     .then((response) => {
                         if (response.type === SIGNED_IN) {
                             signedIn = true;
 
-                           const message: Message<null> = {
-                               type: LOGOUT
-                           };
+                           sessionStorage.setItem(LOGOUT_URL, response.data.logoutUrl);
 
-                           return communicate<null, string>(message)
-                               .then((logoutUrl) => {
-                                   sessionStorage.setItem(LOGOUT_URL, logoutUrl);
-
-                                   return Promise.resolve(response.data);
-                               })
-                               .catch((error) => {
-                                   return Promise.reject(error);
-                               });
+                           const data = response.data;
+                           delete data.logoutUrl;
+                           return Promise.resolve(data);
 
                         } else if (response.type === AUTH_REQUIRED && response.code) {
                             if (response.pkce) {

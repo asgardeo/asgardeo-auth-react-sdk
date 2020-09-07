@@ -28,7 +28,9 @@ import {
     SCOPE,
     SESSION_STATE,
     SIGNED_IN,
-    USERNAME
+    USERNAME,
+    ID_TOKEN,
+    CALLBACK_URL
 } from "../constants";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
 import {
@@ -40,7 +42,8 @@ import {
     WebWorkerClientConfigInterface,
     WebWorkerConfigInterface,
     WebWorkerInterface,
-    WebWorkerSingletonInterface
+    WebWorkerSingletonInterface,
+    SignInResponseWorker
 } from "../models";
 import {
     customGrant as customGrantUtil,
@@ -51,7 +54,9 @@ import {
     handleSignOut,
     resetOPConfiguration,
     sendRefreshTokenRequest as sendRefreshTokenRequestUtil,
-    sendRevokeTokenRequest as sendRevokeTokenRequestUtil
+    sendRevokeTokenRequest as sendRevokeTokenRequestUtil,
+    getEndSessionEndpoint,
+    getSessionParameter
 } from "../utils";
 
 export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSingletonInterface {
@@ -93,10 +98,33 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
      *
      * @returns {Promise<SignInResponse>} A promise that resolves with the Sign In response.
      */
-    const signIn = (): Promise<SignInResponse> => {
+    const signIn = (): Promise<SignInResponseWorker> => {
         return handleSignIn(authConfig)
             .then((response) => {
                 if (response.type === SIGNED_IN) {
+                    const logoutEndpoint = getEndSessionEndpoint(authConfig);
+
+                    if (!logoutEndpoint || logoutEndpoint.trim().length === 0) {
+                        return Promise.reject(new Error("No logout endpoint found in the session."));
+                    }
+
+                    const idToken = getSessionParameter(ID_TOKEN, authConfig);
+
+                    if (!idToken || idToken.trim().length === 0) {
+                        return Promise.reject(new Error("Invalid id_token found in the session."));
+                    }
+
+                    const callbackURL = getSessionParameter(CALLBACK_URL, authConfig);
+
+                    if (!callbackURL || callbackURL.trim().length === 0) {
+                        return Promise.reject(new Error("No callback URL found in the session."));
+                    }
+
+                    const logoutCallback =
+                        `${logoutEndpoint}?` +
+                        `id_token_hint=${idToken}` +
+                        `&post_logout_redirect_uri=${ callbackURL }`;
+
                     return Promise.resolve({
                         data: {
                             allowedScopes: session.get(SCOPE),
@@ -104,7 +132,8 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
                             displayName: session.get(DISPLAY_NAME),
                             email: session.get(EMAIL),
                             oidcSessionIframe: session.get(OIDC_SESSION_IFRAME_ENDPOINT),
-                            username: session.get(USERNAME)
+                            username: session.get(USERNAME),
+                            logoutUrl: logoutCallback
                         },
                         type: response.type
                     });

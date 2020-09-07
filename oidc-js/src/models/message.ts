@@ -35,6 +35,7 @@ import {
     SIGNED_IN,
     SIGN_IN
 } from "../constants";
+import { userInfo } from "os";
 
 export interface ResponseMessage<T> {
     success: boolean;
@@ -54,11 +55,19 @@ export interface SignInResponse {
     data?: UserInfo;
 }
 
+export interface SignInResponseWorker extends SignInResponse{
+    data: UserInfoWorker;
+}
+
 export interface UserInfo {
     email: string;
     username: string;
     displayName: string;
     allowedScopes: string;
+}
+
+export interface UserInfoWorker extends UserInfo {
+    logoutUrl: string;
 }
 
 export interface AuthCode {
