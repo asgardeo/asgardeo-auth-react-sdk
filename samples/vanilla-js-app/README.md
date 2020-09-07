@@ -3,7 +3,7 @@
 Before getting started with running this app, make sure you have followed the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section.
 
 
-Open the [index.html](index.html) file. Scroll down the `<script>` tag below the `body` where the app logic is written.
+Open the [index.html](index.html) file. Scroll down to the `<script>` tag below the `body` where the app logic is written.
 
 Paste the copied `OAuth Client Key` in front of the `clientID` attribute of `auth.initialize` method's argument object. You will be replacing a value called `client-id`.
 ```javascript
