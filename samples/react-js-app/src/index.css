@@ -1,0 +1,53 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #212121;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+}
+
+#greeting {
+    font-size: 2em;
+    margin: 1em;
+    text-align: center;
+}
+
+.details {
+    margin: 1em;
+}
+
+.details div {
+    margin-bottom: 1em;
+    font-size: 1em;
+    width: 100%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 320px;
+    width: 500px;
+    border-radius: 5px;
+    padding: 2em;
+    background-color: #1d1c21;
+}
+
+.menu button {
+    padding: 1em;
+    border: none;
+    color: white;
+    background-color: #3d4444;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
