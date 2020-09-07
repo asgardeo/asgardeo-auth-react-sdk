@@ -35,7 +35,6 @@ import {
     SIGNED_IN,
     SIGN_IN
 } from "../constants";
-import { userInfo } from "os";
 
 export interface ResponseMessage<T> {
     success: boolean;
