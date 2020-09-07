@@ -16,10 +16,22 @@
  * under the License.
  */
 
-import React, { ReactElement, FunctionComponent } from "react";
+import { ReactElement, FunctionComponent, useEffect } from "react";
+import { IdentityClient, Hooks } from "@asgardio/oidc-js";
+import { DASHBOARD } from "../constants";
+import { useHistory } from "react-router-dom";
 
 export const SignOut: FunctionComponent<null> = (): ReactElement => {
-    return <div>
 
-    </div>;
+    const history = useHistory();
+
+    useEffect(() => {
+        const auth = IdentityClient.getInstance();
+        auth.on(Hooks.SignOut, () => {
+            history.push(DASHBOARD);
+        });
+        auth.signOut();
+    }, [history]);
+
+    return null;
 };

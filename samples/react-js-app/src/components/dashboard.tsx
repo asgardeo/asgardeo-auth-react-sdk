@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, FunctionComponent, useState } from "react";
-import { SIGN_IN, SIGN_OUT } from "../constants";
+import { SIGN_OUT } from "../constants";
 import { useHistory } from "react-router-dom";
 import { IdentityClient } from '@asgardio/oidc-js';
 import { useRecoilState } from "recoil";
@@ -38,7 +38,6 @@ export const Dashboard: FunctionComponent<null> = (): ReactElement => {
 
     return <div className="wrapper">
         <div className="menu">
-            <button onClick={ () => { history.push(SIGN_IN); } }>Sign In</button>
             <button onClick={ () => { history.push(SIGN_OUT); } }>Sign Out</button>
             <button onClick={ () => {
                 auth.httpRequest({

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { ReactElement, FunctionComponent, useEffect } from "react";
+import { ReactElement, FunctionComponent, useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authState, displayName } from "../recoil";
 import { useHistory } from "react-router-dom";
@@ -42,7 +42,5 @@ export const SignIn: FunctionComponent<null> = (): ReactElement => {
         }
     }, [auth, history, setAuth, setDisplayName]);
 
-    return <div>
-
-    </div>;
+    return null;
 };

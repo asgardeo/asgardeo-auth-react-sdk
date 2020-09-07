@@ -34,6 +34,6 @@ export const routes: Route[] = [
     {
         path: DASHBOARD,
         component: Dashboard,
-        protected: false
+        protected: true
     }
 ];
