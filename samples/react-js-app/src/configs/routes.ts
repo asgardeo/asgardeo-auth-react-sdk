@@ -29,7 +29,7 @@ export const routes: Route[] = [
     {
         path: SIGN_OUT,
         component: SignOut,
-        protected: true
+        protected: false
     },
     {
         path: DASHBOARD,

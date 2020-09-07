@@ -36,7 +36,8 @@ import {
     REQUEST_SUCCESS,
     SESSION_STATE,
     SIGNED_IN,
-    SIGN_IN
+    SIGN_IN,
+    LOGOUT_URL
 } from "../constants";
 import {
     AuthCode,
@@ -431,7 +432,20 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
             .then((response) => {
                 if (response.type === SIGNED_IN) {
                     signedIn = true;
-                    return Promise.resolve(response.data);
+
+                    const message: Message<null> = {
+                        type: LOGOUT
+                    };
+
+                    return communicate<null, string>(message)
+                        .then((logoutUrl) => {
+                            sessionStorage.setItem(LOGOUT_URL, logoutUrl);
+
+                            return Promise.resolve(response.data);
+                        })
+                        .catch((error) => {
+                            return Promise.reject(error);
+                        });
                 }
 
                 return Promise.reject(
@@ -464,7 +478,20 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                         if (response.type === SIGNED_IN) {
                             signedIn = true;
 
-                            return Promise.resolve(response.data);
+                           const message: Message<null> = {
+                               type: LOGOUT
+                           };
+
+                           return communicate<null, string>(message)
+                               .then((logoutUrl) => {
+                                   sessionStorage.setItem(LOGOUT_URL, logoutUrl);
+
+                                   return Promise.resolve(response.data);
+                               })
+                               .catch((error) => {
+                                   return Promise.reject(error);
+                               });
+
                         } else if (response.type === AUTH_REQUIRED && response.code) {
                             if (response.pkce) {
                                 sessionStorage.setItem(PKCE_CODE_VERIFIER, response.pkce);
@@ -509,6 +536,14 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
      */
     const signOut = (): Promise<boolean> => {
         if (!signedIn) {
+            if (sessionStorage.getItem(LOGOUT_URL)) {
+                const logoutUrl = sessionStorage.getItem(LOGOUT_URL);
+                sessionStorage.removeItem(LOGOUT_URL);
+                window.location.href = logoutUrl;
+
+                return Promise.resolve(true);
+            }
+
             return Promise.reject("You have not signed in yet");
         }
 
