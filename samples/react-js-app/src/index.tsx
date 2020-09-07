@@ -29,20 +29,20 @@ const clientHost = "http://localhost:3000";
 
 // Initialize the client
 auth.initialize({
-  baseUrls: [ serverOrigin ],
-  callbackURL: clientHost+"/sign-in",
-  clientHost: clientHost,
-  clientID: "jFtMl5oU8byzUSK62gBNJFKf6PQa",
-  enablePKCE: true,
-  serverOrigin: serverOrigin,
-  storage: Storage.WebWorker
+    baseUrls: [ serverOrigin ],
+    callbackURL: clientHost + "/sign-in",
+    clientHost: clientHost,
+    clientID: "jFtMl5oU8byzUSK62gBNJFKf6PQa",
+    enablePKCE: true,
+    serverOrigin: serverOrigin,
+    storage: Storage.WebWorker
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
