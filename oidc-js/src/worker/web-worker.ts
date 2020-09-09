@@ -30,7 +30,8 @@ import {
     SIGNED_IN,
     USERNAME,
     ID_TOKEN,
-    CALLBACK_URL
+    SIGN_IN_REDIRECT_URL,
+    SIGN_OUT_REDIRECT_URL
 } from "../constants";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
 import {
@@ -114,16 +115,14 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
                         return Promise.reject(new Error("Invalid id_token found in the session."));
                     }
 
-                    const callbackURL = getSessionParameter(CALLBACK_URL, authConfig);
+                    const redirectURL = getSessionParameter(SIGN_OUT_REDIRECT_URL, authConfig);
 
-                    if (!callbackURL || callbackURL.trim().length === 0) {
+                    if (!redirectURL || redirectURL.trim().length === 0) {
                         return Promise.reject(new Error("No callback URL found in the session."));
                     }
 
                     const logoutCallback =
-                        `${logoutEndpoint}?` +
-                        `id_token_hint=${idToken}` +
-                        `&post_logout_redirect_uri=${ callbackURL }`;
+                        `${logoutEndpoint}?` + `id_token_hint=${idToken}` + `&post_logout_redirect_uri=${redirectURL}`;
 
                     return Promise.resolve({
                         data: {

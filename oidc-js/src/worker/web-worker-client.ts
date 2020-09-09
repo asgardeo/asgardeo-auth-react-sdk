@@ -314,8 +314,12 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
             return Promise.reject("Array elements of baseUrls must all be string values");
         }
 
-        if (typeof config.callbackURL !== "string") {
-            return Promise.reject("The callbackURL must be a string");
+        if (typeof config.signInRedirectURL !== "string") {
+            return Promise.reject("The sign-in redirect URL must be a string");
+        }
+
+        if (typeof config.signOutRedirectURL !== "string") {
+            return Promise.reject("The sign-out redirect URL must be a string");
         }
 
         if (typeof config.clientHost !== "string") {

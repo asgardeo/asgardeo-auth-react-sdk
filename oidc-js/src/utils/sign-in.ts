@@ -144,7 +144,7 @@ export function sendAuthorizationRequest(
     }
 
     authorizeRequest += "&scope=" + scope;
-    authorizeRequest += "&redirect_uri=" + requestParams.callbackURL;
+    authorizeRequest += "&redirect_uri=" + requestParams.signInRedirectURL;
 
     if (requestParams.responseMode) {
         authorizeRequest += "&response_mode=" + requestParams.responseMode;
@@ -260,7 +260,7 @@ export function sendTokenRequest(
     }
 
     body.push("grant_type=authorization_code");
-    body.push(`redirect_uri=${requestParams.callbackURL}`);
+    body.push(`redirect_uri=${requestParams.signInRedirectURL}`);
 
     if (requestParams.enablePKCE) {
         body.push(`code_verifier=${getSessionParameter(PKCE_CODE_VERIFIER, requestParams)}`);
