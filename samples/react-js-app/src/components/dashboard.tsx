@@ -17,7 +17,7 @@
  */
 
 import React, { ReactElement, FunctionComponent, useState } from "react";
-import { SIGN_OUT } from "../constants";
+import { SIGN_OUT, SIGN_IN } from "../constants";
 import { useHistory } from "react-router-dom";
 import { IdentityClient } from '@asgardio/oidc-js';
 import { useRecoilState } from "recoil";
@@ -38,20 +38,25 @@ export const Dashboard: FunctionComponent<null> = (): ReactElement => {
 
     return <div className="wrapper">
         <div className="menu">
+            <button onClick={ () => { history.push(SIGN_IN); } }>Sign In</button>
             <button onClick={ () => { history.push(SIGN_OUT); } }>Sign Out</button>
             <button onClick={ () => {
-                auth.httpRequest({
-                    url: serverOrigin + "/api/identity/user/v1.0/me",
-                    method: "GET",
-                    headers: {
-                        "Access-Control-Allow-Origin": clientHost,
-                        Accept: "application/json"
-                    }
-                }).then((response) => {
-                    setEmail(response.data.basic[ "http://wso2.org/claims/emailaddress" ]);
-                    setLastName(response.data.basic[ "http://wso2.org/claims/lastname" ]);
-                    setRoles(response.data.basic[ "http://wso2.org/claims/role" ]);
-                });
+                if (isAuth) {
+                    auth.httpRequest({
+                        url: serverOrigin + "/api/identity/user/v1.0/me",
+                        method: "GET",
+                        headers: {
+                            "Access-Control-Allow-Origin": clientHost,
+                            Accept: "application/json"
+                        }
+                    }).then((response) => {
+                        setEmail(response.data.basic[ "http://wso2.org/claims/emailaddress" ]);
+                        setLastName(response.data.basic[ "http://wso2.org/claims/lastname" ]);
+                        setRoles(response.data.basic[ "http://wso2.org/claims/role" ]);
+                    });
+                } else {
+                    alert("Please sign in first!");
+                }
             } }>Get user info</button>
         </div>
         <div id="greeting">
