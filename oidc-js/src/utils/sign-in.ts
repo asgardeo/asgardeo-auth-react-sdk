@@ -107,7 +107,7 @@ export function getAuthorizationCode(requestParams?: ConfigInterface | WebWorker
  * Get token request headers.
  *
  * @param {string} clientHost
- * @returns {{headers: {Accept: string; "Access-Control-Allow-Origin": string; "Content-Type": string}}}
+ * @returns {{Accept: string; "Access-Control-Allow-Origin": string; "Content-Type": string}}
  */
 export const getTokenRequestHeaders = (clientHost: string): TokenRequestHeader => {
     return {
