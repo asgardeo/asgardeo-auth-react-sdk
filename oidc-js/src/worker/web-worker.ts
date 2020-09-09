@@ -312,7 +312,14 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
     function Constructor(config: WebWorkerClientConfigInterface): WebWorkerInterface {
         authConfig = { ...config };
         authConfig.session = session;
-        setAuthCode(authConfig.authorizationCode, authConfig.sessionState, "");
+
+        if (authConfig.authorizationCode) {
+            session.set(AUTHORIZATION_CODE, authConfig.authorizationCode);
+        }
+
+        if (authConfig.sessionState) {
+            session.set(SESSION_STATE, authConfig.sessionState);
+        }
 
         httpClient = AxiosHttpClient.getInstance();
 
