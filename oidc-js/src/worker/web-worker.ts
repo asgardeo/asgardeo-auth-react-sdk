@@ -185,8 +185,8 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
      * @param {string} authCode The authorization code.
      */
     const setAuthCode = (authCode: string, sessionState: string, pkce: string): void => {
-        session.set(AUTHORIZATION_CODE, authCode);
-        session.set(SESSION_STATE, sessionState);
+        authCode && session.set(AUTHORIZATION_CODE, authCode);
+        sessionState && session.set(SESSION_STATE, sessionState);
         session.set(PKCE_CODE_VERIFIER, pkce);
     };
 

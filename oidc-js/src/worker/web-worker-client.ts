@@ -462,7 +462,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
      */
     const signIn = (): Promise<UserInfo> => {
         if (initialized) {
-            if (hasAuthorizationCode()) {
+            if (hasAuthorizationCode() || sessionStorage.getItem(PKCE_CODE_VERIFIER)) {
                 return sendAuthorizationCode();
             } else {
                 const message: Message<null> = {
@@ -475,12 +475,11 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                         if (response.type === SIGNED_IN) {
                             signedIn = true;
 
-                           sessionStorage.setItem(LOGOUT_URL, response.data.logoutUrl);
+                            sessionStorage.setItem(LOGOUT_URL, response.data.logoutUrl);
 
-                           const data = response.data;
-                           delete data.logoutUrl;
-                           return Promise.resolve(data);
-
+                            const data = response.data;
+                            delete data.logoutUrl;
+                            return Promise.resolve(data);
                         } else if (response.type === AUTH_REQUIRED && response.code) {
                             if (response.pkce) {
                                 sessionStorage.setItem(PKCE_CODE_VERIFIER, response.pkce);
@@ -504,7 +503,8 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                             } else {
                                 return Promise.reject(
                                     "Something went wrong during authentication." +
-                                        "Unknown response received. " + JSON.stringify(response)
+                                        "Unknown response received. " +
+                                        JSON.stringify(response)
                                 );
                             }
                         }

@@ -67,7 +67,7 @@ ctx.onmessage = ({ data, ports }) => {
             if (!webWorker) {
                 port.postMessage(generateFailureDTO("Worker has not been initiated."));
             } else {
-                if (data?.data?.code) {
+                if (data?.data?.code || data?.data?.pkce) {
                     webWorker.setAuthCode(data.data.code, data?.data?.sessionState, data?.data?.pkce);
                 }
                 webWorker
