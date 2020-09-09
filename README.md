@@ -62,7 +62,8 @@ Once instantiated, the  client can be initialized by passing the relevant parame
 
 ```javascript
 auth.initialize({
-        callbackURL: "http://localhost:9443/my-account/login",
+        signInRedirectURL: "http://localhost:9443/my-account/login",
+        signOutRedirectURL: "http://localhost:9443/my-account/login",
         clientHost: "http://localhost:9443/my-account/",
         clientID: "client ID",
         enablePKCE: true,
@@ -167,7 +168,8 @@ This method takes a `config` object as the only argument. The attributes of the 
 
 |Attribute| Type | Default Value| Description|
 |:-----|:----|:----|:----|
-|`callbackURL`|`string`||The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+|`signInRedirectURL`|`string`||The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+|`signOutRedirectURL`|`string`||The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
 |`clientHost`|`string`||The hostname of the client app.  eg: `https://contoso.com`|
 |`clientID`| `string` | |The client ID of the OIDC application hosted in the Asgardio.
 |`clientSecret` (optional)||`string`|The client secret of the OIDC application|
