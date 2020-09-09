@@ -83,7 +83,6 @@
 
         // Instantiate the `IdentityClient` singleton
         var auth = AsgardioAuth.IdentityClient.getInstance();
-
         // Initialize the client
         auth.initialize({
             baseUrls: [serverOrigin],
@@ -95,8 +94,8 @@
             serverOrigin: serverOrigin,
             storage: "webWorker",
             responseMode:"form_post",
-            authorizationCode: "<%=request.getParameter("code")%>",
-            sessionState: "<%=request.getParameter("session_state")%>"
+            authorizationCode: "<%=request.getParameter("code")%>" !== "null" ? "<%=request.getParameter("code")%>": "",
+            sessionState: "<%=request.getParameter("session_state")%>" !== "null" ? "<%=request.getParameter("session_state")%>": ""
         });
 
         //Sign in function
@@ -116,7 +115,7 @@
         });
 
         // call the signIn() method if the URL contains the authorization code.
-        if (new URL(window.location.href).searchParams.get("code")) {
+        if ("<%=request.getParameter("code")%>" !== "null") {
             auth.signIn();
         }
 
