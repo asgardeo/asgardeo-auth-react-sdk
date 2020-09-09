@@ -36,6 +36,8 @@ interface BaseConfigInterface {
     scope?: string[];
     serverOrigin: string;
     endpoints?: ServiceResourcesType;
+    authorizationCode?: string;
+    sessionState?: string;
 }
 /**
  * SDK Client config parameters.
