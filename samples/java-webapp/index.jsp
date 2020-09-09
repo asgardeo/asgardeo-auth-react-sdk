@@ -94,6 +94,7 @@
             enablePKCE: true,
             serverOrigin: serverOrigin,
             storage: "webWorker",
+            responseMode:"form_post",
             authorizationCode: "<%=request.getParameter("code")%>",
             sessionState: "<%=request.getParameter("session_state")%>"
         });
