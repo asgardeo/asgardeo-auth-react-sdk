@@ -75,7 +75,7 @@
             </div>
         </div>
     </body>
-    <script src="/node_modules/@asgardio/oidc-js/dist/main.js"></script>
+    <script src="node_modules/@asgardio/oidc-js/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
         var clientHost = "http://localhost:3000";
@@ -94,8 +94,8 @@
             enablePKCE: true,
             serverOrigin: serverOrigin,
             storage: "webWorker",
-            authorizationCode: "<%=request.getParameter(\"code\")%>",
-            sessionState: "<%=request.getParameter(\"session_state\")%>"
+            authorizationCode: "<%=request.getParameter("code")%>",
+            sessionState: "<%=request.getParameter("session_state")%>"
         });
 
         //Sign in function
