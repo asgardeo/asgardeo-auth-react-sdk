@@ -87,7 +87,8 @@
         // Initialize the client
         auth.initialize({
             baseUrls: [serverOrigin],
-            callbackURL: clientHost,
+            signInRedirectURL: clientHost,
+            signOutRedirectURL: clientHost,
             clientHost: clientHost,
             clientID: "client-id",
             enablePKCE: true,
