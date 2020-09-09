@@ -75,7 +75,7 @@
             </div>
         </div>
     </body>
-    <script src="/main.js"></script>
+    <script src="/node_modules/@asgardio/oidc-js/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
         var clientHost = "http://localhost:3000";
