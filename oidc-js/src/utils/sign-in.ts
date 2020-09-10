@@ -90,10 +90,6 @@ export function getAuthorizationCode(requestParams?: ConfigInterface | WebWorker
         if (new URL(window.location.href).searchParams.get(AUTHORIZATION_CODE)) {
             return new URL(window.location.href).searchParams.get(AUTHORIZATION_CODE);
         }
-
-        if (window.sessionStorage.getItem(AUTHORIZATION_CODE)) {
-            return window.sessionStorage.getItem(AUTHORIZATION_CODE);
-        }
     } else {
         if (requestParams.session.get(AUTHORIZATION_CODE)) {
             return requestParams.session.get(AUTHORIZATION_CODE);
