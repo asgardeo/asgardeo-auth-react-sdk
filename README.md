@@ -62,7 +62,8 @@ Once instantiated, the  client can be initialized by passing the relevant parame
 
 ```javascript
 auth.initialize({
-        callbackURL: "http://localhost:9443/my-account/login",
+        signInRedirectURL: "http://localhost:9443/my-account/login",
+        signOutRedirectURL: "http://localhost:9443/my-account/login",
         clientHost: "http://localhost:9443/my-account/",
         clientID: "client ID",
         enablePKCE: true,
@@ -167,7 +168,8 @@ This method takes a `config` object as the only argument. The attributes of the 
 
 |Attribute| Type | Default Value| Description|
 |:-----|:----|:----|:----|
-|`callbackURL`|`string`||The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+|`signInRedirectURL`|`string`||The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+|`signOutRedirectURL`|`string`||The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
 |`clientHost`|`string`||The hostname of the client app.  eg: `https://contoso.com`|
 |`clientID`| `string` | |The client ID of the OIDC application hosted in the Asgardio.
 |`clientSecret` (optional)||`string`|The client secret of the OIDC application|
@@ -179,6 +181,8 @@ This method takes a `config` object as the only argument. The attributes of the 
 |[`storage`](#storage) (optional)| `sessionStorage` or `webWorker` or `localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
 |`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`||The URLs of the API endpoints.|
 |`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
+|`authorizationCode` (optional)| `string`||When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
+| `sessionState` (optional) | `string`|| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
 
 The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
 ### Storage

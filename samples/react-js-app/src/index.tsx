@@ -30,9 +30,10 @@ const clientHost = "http://localhost:3000";
 // Initialize the client
 auth.initialize({
     baseUrls: [ serverOrigin ],
-    callbackURL: clientHost + "/sign-in",
+    signInRedirectURL: clientHost + "/sign-in",
+    signOutRedirectURL: clientHost + "/dashboard",
     clientHost: clientHost,
-    clientID: "jFtMl5oU8byzUSK62gBNJFKf6PQa",
+    clientID: "client-id",
     enablePKCE: true,
     serverOrigin: serverOrigin,
     storage: Storage.WebWorker

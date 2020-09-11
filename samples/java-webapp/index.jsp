@@ -75,7 +75,7 @@
             </div>
         </div>
     </body>
-    <script src="/main.js"></script>
+    <script src="node_modules/@asgardio/oidc-js/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
         var clientHost = "http://localhost:3000";
@@ -83,7 +83,6 @@
 
         // Instantiate the `IdentityClient` singleton
         var auth = AsgardioAuth.IdentityClient.getInstance();
-
         // Initialize the client
         auth.initialize({
             baseUrls: [serverOrigin],
@@ -93,7 +92,10 @@
             clientID: "client-id",
             enablePKCE: true,
             serverOrigin: serverOrigin,
-            storage: "webWorker"
+            storage: "webWorker",
+            responseMode:"form_post",
+            authorizationCode: "<%=request.getParameter("code")%>" !== "null" ? "<%=request.getParameter("code")%>": "",
+            sessionState: "<%=request.getParameter("session_state")%>" !== "null" ? "<%=request.getParameter("session_state")%>": ""
         });
 
         //Sign in function
@@ -113,7 +115,7 @@
         });
 
         // call the signIn() method if the URL contains the authorization code.
-        if (new URL(window.location.href).searchParams.get("code")) {
+        if ("<%=request.getParameter("code")%>" !== "null") {
             auth.signIn();
         }
 
