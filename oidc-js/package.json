@@ -9,8 +9,9 @@
         "oauth2"
     ],
     "main": "dist/main.js",
+    "types":"dist/src/index.d.ts",
     "scripts": {
-        "lint": "tslint -t stylish --project .",
+        "lint": "eslint .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch",

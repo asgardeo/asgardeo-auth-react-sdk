@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -14,17 +14,26 @@
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
- *
  */
 
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import { SignIn, SignOut, Dashboard } from "../components";
+import { Route } from "../models";
+import { SIGN_IN, SIGN_OUT, DASHBOARD } from "../constants";
 
-/**
- * Export Client SDK
- */
-export * from "./client";
-export * from "./models";
-export * from "./constants/endpoints";
-export * from "./constants/storage";
-export * from "./constants/hooks";
+export const routes: Route[] = [
+    {
+        path: SIGN_IN,
+        component: SignIn,
+        protected: false
+    },
+    {
+        path: SIGN_OUT,
+        component: SignOut,
+        protected: false
+    },
+    {
+        path: DASHBOARD,
+        component: Dashboard,
+        protected: true
+    }
+];

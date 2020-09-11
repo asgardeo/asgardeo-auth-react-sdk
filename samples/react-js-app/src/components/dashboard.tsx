@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import React, { ReactElement, FunctionComponent, useState } from "react";
+import { SIGN_OUT } from "../constants";
+import { useHistory } from "react-router-dom";
+import { IdentityClient } from '@asgardio/oidc-js';
+import { useRecoilState } from "recoil";
+import { authState, displayName } from "../recoil";
+
+export const Dashboard: FunctionComponent<null> = (): ReactElement => {
+    const history = useHistory();
+    const auth = IdentityClient.getInstance();
+    const serverOrigin = "https://localhost:9443";
+    const clientHost = "http://localhost:3000";
+
+    const [ email, setEmail ] = useState("");
+    const [ lastName, setLastName ] = useState("");
+    const [ roles, setRoles ] = useState("");
+
+    const [ isAuth ] = useRecoilState(authState);
+    const [ displayNameState ] = useRecoilState(displayName);
+
+    return <div className="wrapper">
+        <div className="menu">
+            <button onClick={ () => { history.push(SIGN_OUT); } }>Sign Out</button>
+            <button onClick={ () => {
+                auth.httpRequest({
+                    url: serverOrigin + "/api/identity/user/v1.0/me",
+                    method: "GET",
+                    headers: {
+                        "Access-Control-Allow-Origin": clientHost,
+                        Accept: "application/json"
+                    }
+                }).then((response) => {
+                    setEmail(response.data.basic[ "http://wso2.org/claims/emailaddress" ]);
+                    setLastName(response.data.basic[ "http://wso2.org/claims/lastname" ]);
+                    setRoles(response.data.basic[ "http://wso2.org/claims/role" ]);
+                });
+            } }>Get user info</button>
+        </div>
+        <div id="greeting">
+
+            { isAuth && "Hi, " + displayNameState + "!" }
+        </div>
+        <div className="details">
+            <div id="email">
+                {
+                    email && "Email: " + email
+                }
+            </div>
+            <div id="lastName">
+                {
+                    lastName && "Last Name: " + lastName
+                }
+            </div>
+            <div id="roles">
+                {
+                    roles && "Roles: " + roles
+                }
+            </div>
+        </div>
+    </div>;
+};
