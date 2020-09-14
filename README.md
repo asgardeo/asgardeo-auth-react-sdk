@@ -213,8 +213,8 @@ This method returns the information about the authenticated user as an object. T
 |`displayName`| `string`| The display name of the user|
 `allowedScopes`|`string`| The scopes the user has authorized the client to access|
 ```javascript
-auth.getUserInfo().then(response=>{
-    console.log(response);
+auth.getUserInfo().then((response) => {
+    // console.log(response);
 })
 ```
 
@@ -242,10 +242,10 @@ If the `storage` type is set to `sessionStorage` or `localStorage`, the develope
 This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
 
 ```javascript
-auth.httpRequest(config).then(response=>{
-    console.log(response);
-}).catch(error=>{
-    console.error(error);
+auth.httpRequest(config).then((response) => {
+    // console.log(response);
+}).catch((error) => {
+    // console.error(error);
 })
 ```
 
@@ -253,12 +253,12 @@ auth.httpRequest(config).then(response=>{
 This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
 ```javascript
-auth.httpRequestAll(configs).then(responses => {
-    response.forEach(response=>{
-        console.log(response);
-    })
-}).catch(error=>{
-    console.error(error);
+auth.httpRequestAll(configs).then((responses) => {
+    response.forEach((response) => {
+        // console.log(response);
+    });
+}).catch((error) => {
+    // console.error(error);
 });
 ```
 
