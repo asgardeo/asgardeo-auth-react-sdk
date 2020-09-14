@@ -52,7 +52,7 @@ Or simply load the SDK by importing the script into the header of your HTML file
 ### Initialize the SDK
 The SDK provides a client that can be used to carry out the authentication.
 ```javascript
-import { IdentityClient } from "@asgardio/oidc-js"
+import { IdentityClient } from "@asgardio/oidc-js";
 ```
 This client is a singleton and can be instantiated as follows.
 ```javascript
@@ -62,16 +62,11 @@ Once instantiated, the  client can be initialized by passing the relevant parame
 
 ```javascript
 auth.initialize({
-        signInRedirectURL: "http://localhost:9443/my-account/login",
-        signOutRedirectURL: "http://localhost:9443/my-account/login",
-        clientHost: "http://localhost:9443/my-account/",
-        clientID: "client ID",
-        enablePKCE: true,
-        responseMode: "query",
-        scope: [ "email" ],
-        serverOrigin: "http://localhost:9443/",
-        storage: "sessionStorage"
-    });
+     signInRedirectURL: "http://localhost:9443/my-account/login",
+     signOutRedirectURL: "http://localhost:9443/my-account/login",
+     clientHost: "http://localhost:9443/my-account/",
+     clientID: "client ID"
+});
 ```
 [Learn more](#initialize).
 
@@ -84,7 +79,7 @@ The `sign-in` hook is used to fire a callback function after signing in is succe
 ```javascript
  auth.on("sign-in", (response) => {
      alert("You have successfully signed in!");
- }
+ });
 ```
 
 [Learn more](#signin).
@@ -93,7 +88,7 @@ The `sign-in` hook is used to fire a callback function after signing in is succe
 ### Sign Out
 The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 ```javascript
-auth.signOut()
+auth.signOut();
 ```
 
 [Learn more](#signout).
@@ -113,7 +108,7 @@ auth.customGrant({
     returnResponse: true,
     returnsSession: true,
     signInRequired: true
-})
+});
 ```
 
 [Learn more](#customgrant).
@@ -123,7 +118,7 @@ Callback functions can be attached to authentication methods such as sign in and
 ```javascript
  auth.on("sign-in", (response) => {
      alert("You have successfully signed in!");
- }
+ });
 ```
 [Learn more](#on).
 
@@ -264,7 +259,7 @@ auth.httpRequestAll(configs).then(responses => {
     })
 }).catch(error=>{
     console.error(error);
-})
+});
 ```
 
 ### customGrant
@@ -305,7 +300,7 @@ return oAuth.customGrant({
     returnResponse: true,
     returnsSession: true,
     signInRequired: true
-})
+});
 ```
 
 ### endUserSession
@@ -346,7 +341,7 @@ npm run build
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ### Reporting issues
-We encourage you to report issues, improvements, and feature requests creating [git Issues](https://github.com/asgardio/asgardio-js-oidc-sdk/issues).
+We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardio/asgardio-js-oidc-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
