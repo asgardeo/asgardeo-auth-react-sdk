@@ -6,16 +6,10 @@
 ---
 ## Table of Contents
 
-- [1. Introduction](#1.-introduction)
-- [2. Getting Started](#2.-getting-started)
-    - [Install](#install)
-    - [Initialize](#initialize-the-sdk)
-    - [Sign In](#sign-in)
-    - [Sign Out](#sign-out)
-    - [Use a Custom Grant](#use-a-custom-grant)
-    - [Callback Hooks](#callback-hooks)
-- [3. Try Out the Sample Apps](#3.-try-out-the-sample-apps)
-- [4. APIs](#4.-apis)
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Try Out the Sample Apps](#try-out-the-sample-apps)
+- [APIs](#apis)
     - [getInstance](#getinstance)
     - [initialize](#initialize)
         - [Storage](#storage)
@@ -29,16 +23,16 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
-- [5. Develop](#5.-develop)
+- [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
-- [6. Contribute](#6.-contribute)
-- [7. License](#7.-license)
+- [Contribute](#contribute)
+- [License](#license)
 
-## 1. Introduction
+## Introduction
 Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the JavaScript OIDC SDK, developers will be able to add identity management to their Single Page Applications in a jiffy.
 
-## 2. Getting Started
+## Getting Started
 
 <!-- ### Install
 Install the JavaScript library from the npm registry.
@@ -49,107 +43,62 @@ Or simply load the SDK by importing the script into the header of your HTML file
 ```html
 <script src=""></script>
 ``` -->
-### Initialize the SDK
-The SDK provides a client that can be used to carry out the authentication.
 ```javascript
+// The SDK provides a client that can be used to carry out the authentication.
 import { IdentityClient } from "@asgardio/oidc-js";
-```
-This client is a singleton and can be instantiated as follows.
-```javascript
-const auth = IdentityClient.getInstance();
-```
-Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
 
-```javascript
+// This client is a singleton and can be instantiated as follows.
+const auth = IdentityClient.getInstance();
+
+// Once instantiated, the  client can be initialized by passing the relevant parameters such as the server origin, redirect URL, client ID, etc.
 auth.initialize({
-     signInRedirectURL: "http://localhost:9443/my-account/login",
-     signOutRedirectURL: "http://localhost:9443/my-account/login",
-     clientHost: "http://localhost:9443/my-account/",
+     signInRedirectURL: "http://localhost:9443/myaccount/login",
+     signOutRedirectURL: "http://localhost:9443/myaccount/login",
+     clientHost: "http://localhost:9443/myaccount/",
      clientID: "client ID"
 });
-```
-[Learn more](#initialize).
 
-### Sign In
-To sign in, simply call the `signIn()` method.
-```javascript
+// To sign in, simply call the `signIn()` method.
 auth.signIn();
-```
-The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
-```javascript
+
+// The `sign-in` hook is used to fire a callback function after signing in is successful.
  auth.on("sign-in", (response) => {
      alert("You have successfully signed in!");
  });
+
 ```
 
-[Learn more](#signin).
+[Learn more](#apis).
 
+## Try Out the Sample Apps
+### 1. Create a Service Provider
+Before trying out the sample apps, you need to a create a service provider in the Identity Server.
+1. So, navigate to `https://localhost:9443/carbon" and click on `Add` under `Service Providers` in the left-hand menu panel.
 
-### Sign Out
-The `signOut()` method can be used to sign a user out. The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
-```javascript
-auth.signOut();
-```
+2. Enter `Sample` as the name of the app and click on `Register`.
 
-[Learn more](#signout).
+3. Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
 
-### Use a Custom Grant
-You can use custom grants with our SDK using the `customGrant()` method. The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on()) section for more information.
-```javascript
-auth.customGrant({
-    attachToken: false,
-    data: {
-        client_id: "{{clientId}}",
-        grant_type: "account_switch",
-        scope: "{{scope}}",
-        token: "{{token}}",
-    },
-    id: "account-switch",
-    returnResponse: true,
-    returnsSession: true,
-    signInRequired: true
-});
-```
+4. Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
 
-[Learn more](#customgrant).
+5. Enter `http://localhost:3000` as the `Callback Url`.
 
-### Callback Hooks
-Callback functions can be attached to authentication methods such as sign in and sign out using hooks. Hooks can be attached to the client using the `on()` method.
-```javascript
- auth.on("sign-in", (response) => {
-     alert("You have successfully signed in!");
- });
-```
-[Learn more](#on).
+6. Check `Allow authentication without the client secret`.
 
-## 3. Try Out the Sample Apps
-### Create a Service Provider
-Before trying out the sample apps, you need to a create a service provider in the Identity Server. So, navigate to `https://localhost:9443/carbon" and click on `Add` under `Service Providers` in the left-hand menu panel.
+7. Click `Add` at the bottom.
 
-Enter `Sample` as the name of the app and click on `Register`.
+8. Copy the `OAuth Client Key`.
 
-Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
-
-Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
-
-Enter `http://localhost:3000` as the `Callback Url`.
-
-Check `Allow authentication without the client secret`.
-
-Click `Add` at the bottom.
-
-Copy the `OAuth Client Key`.
-
-### Running the sample apps
+### 2. Running the sample apps
 Build the apps by running the following command at the root directory.
 ```
 npm run build
 ```
 
-### Vanilla JavaScript Sample
+### 3. Vanilla JavaScript Sample
 You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](oidc-sample-apps/vanilla-js-app). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
 
-## 4. APIs
+## APIs
 ### getInstance
 This returns an instance of the `IdentityClient`. Since the `IdentityClient` is a singleton, this method returns the same instance no matter how many time sit is called.
 
@@ -166,18 +115,18 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`signInRedirectURL`|`string`||The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
 |`signOutRedirectURL`|`string`||The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
 |`clientHost`|`string`||The hostname of the client app.  eg: `https://contoso.com`|
-|`clientID`| `string` | |The client ID of the OIDC application hosted in the Asgardio.
-|`clientSecret` (optional)||`string`|The client secret of the OIDC application|
+|`clientID`| `string` ||The client ID of the OIDC application hosted in the Asgardio.
+|`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
 |`enablePKCE` (optional)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
-|`prompt` (optional)|`string`||Specifies the prompt type of an OIDC request|
-|`responseMode` (optional)|`string`|`query`| Specifies the response mode. The value can either be `query` or `form_post`|
-|`scope` (optional)|`string[]`|`[openid]`|Specifies the requested scopes|
-|`serverOrigin`|`string`||The origin of the Identity Provider. eg: `https://www.asgardio.io`|
-|[`storage`](#storage) (optional)| `sessionStorage` or `webWorker` or `localStorage`|`sessionStorage`| The storage medium where the session information such as the access token should be stored.|
-|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`||The URLs of the API endpoints.|
-|`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
-|`authorizationCode` (optional)| `string`||When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
-| `sessionState` (optional) | `string`|| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
+|`prompt` (optional)|`string`|""|Specifies the prompt type of an OIDC request|
+|`responseMode` (optional)|`string`|`"query"`| Specifies the response mode. The value can either be `query` or `form_post`|
+|`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
+|`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardio.io`|
+|[`storage`](#storage) (optional)| `"sessionStorage"`, `"webWorker"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored.|
+|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`|""|The URLs of the API endpoints.|
+|`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|[ServiceResource Default Values](#serviceresourcetypes)| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
+|`authorizationCode` (optional)| `string`|""|When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
+| `sessionState` (optional) | `string`|""| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
 
 The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
 ### Storage
@@ -191,13 +140,13 @@ Of the three methods, storing the session information in the **web worker** is t
 #### ServiceResourceTypes
 |Attribute|Type|Default Value|Description|
 |:--|:--|:--|:--|
-|`authorize`|`string`|`/oauth2/authorize`| The endpoint to send the authorization request to.|
-|`jwks`|`string`|`/oauth2/jwks`| The endpoint from which the JSON Web Keyset can be obtained`|
-|`logout`|`string`| `/oidc/logout`|The endpoint to send the logout request to.
-|`oidcSessionIFrame`|`string`| `/oidc/checksession`| The URL of the OIDC session iframe.
-|`revoke`|`string`| `/oauth2/revoke`| The endpoint to send the revoke-access-token request to.
-|`token`|`string`| `/oauth2/token`| The endpoint to send the token request to.|
-|`wellKnown`|`string`| `/oauth2/oidcdiscovery/.well-known/openid-configuration`| The endpoint to receive the OIDC endpoints from|
+|`authorize`|`string`|`"/oauth2/authorize"`| The endpoint to send the authorization request to.|
+|`jwks`|`string`|`"/oauth2/jwks"`| The endpoint from which the JSON Web Keyset can be obtained`|
+|`logout`|`string`| `"/oidc/logout"`|The endpoint to send the logout request to.
+|`oidcSessionIFrame`|`string`| `"/oidc/checksession"`| The URL of the OIDC session iframe.
+|`revoke`|`string`| `"/oauth2/revoke"`| The endpoint to send the revoke-access-token request to.
+|`token`|`string`| `"/oauth2/token"`| The endpoint to send the token request to.|
+|`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|
 
 ```javascript
 auth.initialize(config)
@@ -215,6 +164,8 @@ This method returns the information about the authenticated user as an object. T
 ```javascript
 auth.getUserInfo().then((response) => {
     // console.log(response);
+}).catch(error=>{
+    // console.error(error);
 })
 ```
 
@@ -241,12 +192,28 @@ If the `storage` type is set to `sessionStorage` or `localStorage`, the develope
 
 This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
 
+For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+
 ```javascript
-auth.httpRequest(config).then((response) => {
-    // console.log(response);
-}).catch((error) => {
-    // console.error(error);
-})
+const auth = IdentityClient.getInstance();
+
+const requestConfig = {
+    headers: {
+        "Accept": "application/json",
+        "Access-Control-Allow-Origin": "https://localhost:9443/myaccount,
+        "Content-Type": "application/scim+json"
+    },
+    method: "GET",
+    url: "https://localhost:9443/scim2/me
+};
+
+return auth.httpRequest(requestConfig)
+    .then((response) => {
+        // console.log(response);
+    })
+    .catch((error) => {
+        // console.error(error);
+    });
 ```
 
 ### httpRequestAll
@@ -288,7 +255,7 @@ The following template tags are at your disposal.
 `"{{clientSecret}}"`|The client secret|
 
 ```javascript
-return oAuth.customGrant({
+return auth.customGrant({
     attachToken: false,
     data: {
         client_id: "{{clientId}}",
@@ -326,7 +293,7 @@ The `on` method is used to hook callback functions to authentication methods. Th
 |`"end-user-session"`| `endUserSession()`| A boolean value indicating if the process was successful or not
 |`"custom-grant"`| `customGrant()`|
 
-## 5. Develop
+## Develop
 ### Prerequisites
 - `Node.js` (version 10 or above).
 - `npm` package manager.
@@ -336,7 +303,7 @@ The repository is a mono repository. The SDK repository is found in the [oidc-js
 npm run build
 ```
 
-## 6. Contribute
+## Contribute
 
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
@@ -345,5 +312,5 @@ We encourage you to report issues, improvements, and feature requests creating [
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
-## 7. License
+## License
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
