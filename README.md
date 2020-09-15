@@ -23,7 +23,7 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
-- [Using the `form_post` Response Mode](#using-the-form-post-response-mode)
+- [Using the `form_post` Response Mode](#using-the-`form_post`-response-mode)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
