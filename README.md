@@ -23,6 +23,7 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
+- [Using the `form_post` Response Mode](#using-the-form-post-response-mode)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -292,6 +293,17 @@ The `on` method is used to hook callback functions to authentication methods. Th
 |`"http-request-success"`| `httpRequest()` (Called when an http requests returns a response successfully)|
 |`"end-user-session"`| `endUserSession()`| A boolean value indicating if the process was successful or not
 |`"custom-grant"`| `customGrant()`|
+
+## Using the `form_post` response mode
+When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
+
+The backend can then inject the authorization code into a JavaSCript variable while rendering the webpage in the server side. But this results in the authorization code getting printed in the HTML of the page creating a **threat vector**.
+
+To address this issue, we recommend storing the authorization code in a server session variable and providing the Single Page Application a separate API endpoint to request the authorization code. The server, when the request is received, can then respond with the authorization code from the server session.
+
+![form_post auth code flow](img/auth_code.png)
+
+You can refer to a sample implementation using JSP [here](samples/java-webapp).
 
 ## Develop
 ### Prerequisites
