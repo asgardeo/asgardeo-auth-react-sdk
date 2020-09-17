@@ -25,8 +25,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Build
-      env:
-        NPM_TOKEN: ""
       run: |
         npm ci
         npm run build --if-present

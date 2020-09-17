@@ -22,6 +22,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
 
     - name: Build
       run: |
@@ -30,7 +31,7 @@ jobs:
 
     - name: Publish
       env:
-        NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       run: |
         cd oidc-js
         npm publish --access public
