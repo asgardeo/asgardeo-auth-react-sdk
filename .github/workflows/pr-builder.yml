@@ -30,12 +30,4 @@ jobs:
       run: |
         npm ci
         npm run build --if-present
-        npm test --if-present
 
-    - name: Bump version
-      run: |
-        git config --global user.email "version.bump@github.action.com"
-        git config --global user.name "GitHub Action Version Bumping"
-        npm version patch
-        git push
-      if: github.event_name=='push'
