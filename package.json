@@ -12,8 +12,8 @@
         "lint": "eslint --ext .js,.ts .",
         "clean": "lerna run clean --stream",
         "clean-all": "npm run remove-package-lock && npm run remove-node-modules",
-        "bump-patch-version": "lerna version patch",
-        "bump-minor-version": "lerna version minor"
+        "bump-patch-version": "lerna version patch --yes",
+        "bump-minor-version": "lerna version minor --yes"
     },
     "repository": {
         "type": "git",
