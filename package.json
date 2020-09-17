@@ -11,7 +11,9 @@
         "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
         "lint": "eslint --ext .js,.ts .",
         "clean": "lerna run clean --stream",
-        "clean-all": "npm run remove-package-lock && npm run remove-node-modules"
+        "clean-all": "npm run remove-package-lock && npm run remove-node-modules",
+        "bump-patch-version": "lerna version patch",
+        "bump-minor-version": "lerna version minor"
     },
     "repository": {
         "type": "git",
