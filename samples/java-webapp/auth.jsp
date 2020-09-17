@@ -10,7 +10,7 @@
         sessionState = "";
     }
 
-    out.print("{\"authCode\": \""+authCode+"\", \"sessionState\": \""+sessionState+"\"}");
+    out.print("{\"authCode\": \"" + authCode + "\", \"sessionState\": \"" + sessionState + "\"}");
 
     authCode = "";
     sessionState = "";
