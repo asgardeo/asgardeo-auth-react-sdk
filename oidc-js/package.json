@@ -15,7 +15,8 @@
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch",
-        "clean": "rimraf dist && rimraf node_modules"
+        "clean": "rimraf dist && rimraf node_modules",
+        "prepublish": "npm run build"
     },
     "author": "Asgardio",
     "license": "Apache-2.0",

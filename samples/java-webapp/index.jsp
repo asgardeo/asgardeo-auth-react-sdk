@@ -75,28 +75,40 @@
             </div>
         </div>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
     <script src="node_modules/@asgardio/oidc-js/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
-        var clientHost = "http://localhost:3000";
         var isAuthenticated = false;
+
+        <%
+            session.setAttribute("authCode",request.getParameter("code"));
+            session.setAttribute("sessionState", request.getParameter("session_state"));
+        %>
 
         // Instantiate the `IdentityClient` singleton
         var auth = AsgardioAuth.IdentityClient.getInstance();
-        // Initialize the client
-        auth.initialize({
-            baseUrls: [serverOrigin],
-            signInRedirectURL: clientHost,
-            signOutRedirectURL: clientHost,
-            clientHost: clientHost,
-            clientID: "client-id",
-            enablePKCE: true,
-            serverOrigin: serverOrigin,
-            storage: "webWorker",
-            responseMode:"form_post",
-            authorizationCode: "<%=request.getParameter("code")%>" !== "null" ? "<%=request.getParameter("code")%>": "",
-            sessionState: "<%=request.getParameter("session_state")%>" !== "null" ? "<%=request.getParameter("session_state")%>": ""
-        });
+
+        axios.get("/auth.jsp").then((response)=>{
+            // Initialize the client
+            auth.initialize({
+                baseUrls: [ serverOrigin ],
+                signInRedirectURL: clientHost,
+                signOutRedirectURL: clientHost,
+                clientHost: "client-host",
+                clientID: "client-id",
+                enablePKCE: true,
+                serverOrigin: serverOrigin,
+                storage: "webWorker",
+                responseMode: "form_post",
+                authorizationCode: response.data.authCode,
+                sessionState: response.data.sessionState
+            });
+
+            if(response.data.authCode){
+                auth.signIn();
+            }
+        })
 
         //Sign in function
         function signIn() {
@@ -113,11 +125,6 @@
             document.getElementById("greeting").innerHTML = "Hello, " + response.displayName + "!";
             isAuthenticated = true;
         });
-
-        // call the signIn() method if the URL contains the authorization code.
-        if ("<%=request.getParameter("code")%>" !== "null") {
-            auth.signIn();
-        }
 
         //Get user profile function
         function getUserProfile() {
