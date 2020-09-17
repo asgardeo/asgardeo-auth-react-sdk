@@ -11,7 +11,7 @@
     "main": "dist/main.js",
     "types":"dist/src/index.d.ts",
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint --ext .js,.ts .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch",

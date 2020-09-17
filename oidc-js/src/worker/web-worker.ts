@@ -23,15 +23,14 @@ import {
     AUTHORIZATION_ENDPOINT,
     DISPLAY_NAME,
     EMAIL,
+    ID_TOKEN,
     OIDC_SESSION_IFRAME_ENDPOINT,
     PKCE_CODE_VERIFIER,
     SCOPE,
     SESSION_STATE,
     SIGNED_IN,
-    USERNAME,
-    ID_TOKEN,
-    SIGN_IN_REDIRECT_URL,
-    SIGN_OUT_REDIRECT_URL
+    SIGN_OUT_REDIRECT_URL,
+    USERNAME
 } from "../constants";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
 import {
@@ -39,25 +38,25 @@ import {
     ServiceResourcesType,
     SessionData,
     SignInResponse,
+    SignInResponseWorker,
     UserInfo,
     WebWorkerClientConfigInterface,
     WebWorkerConfigInterface,
     WebWorkerInterface,
-    WebWorkerSingletonInterface,
-    SignInResponseWorker
+    WebWorkerSingletonInterface
 } from "../models";
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
+    getEndSessionEndpoint,
     getServiceEndpoints as getServiceEndpointsUtil,
+    getSessionParameter,
     getUserInfo as getUserInfoUtil,
     handleSignIn,
     handleSignOut,
     resetOPConfiguration,
     sendRefreshTokenRequest as sendRefreshTokenRequestUtil,
-    sendRevokeTokenRequest as sendRevokeTokenRequestUtil,
-    getEndSessionEndpoint,
-    getSessionParameter
+    sendRevokeTokenRequest as sendRevokeTokenRequestUtil
 } from "../utils";
 
 export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSingletonInterface {
@@ -130,9 +129,9 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
                             authorizationEndpoint: session.get(AUTHORIZATION_ENDPOINT),
                             displayName: session.get(DISPLAY_NAME),
                             email: session.get(EMAIL),
+                            logoutUrl: logoutCallback,
                             oidcSessionIframe: session.get(OIDC_SESSION_IFRAME_ENDPOINT),
-                            username: session.get(USERNAME),
-                            logoutUrl: logoutCallback
+                            username: session.get(USERNAME)
                         },
                         type: response.type
                     });

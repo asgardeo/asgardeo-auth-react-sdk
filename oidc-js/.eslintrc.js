@@ -1,7 +1,7 @@
 module.exports = {
     extends: [
         "eslint:recommended",
-        "plugin:import/typescript",
+        "plugin:import/typescript"
     ],
     parserOptions: {
         ecmaVersion: 9,
@@ -29,7 +29,7 @@ module.exports = {
             {
                 "groups": [ "builtin", "external", "index", "sibling", "parent", "internal" ],
                 "alphabetize": {
-                    order: 'asc',
+                    order: "asc",
                     caseInsensitive: true
                 }
             }
