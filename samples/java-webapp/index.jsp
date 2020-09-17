@@ -79,7 +79,6 @@
     <script src="node_modules/@asgardio/oidc-js/dist/main.js"></script>
     <script>
         var serverOrigin = "https://localhost:9443";
-        var clientHost = "https://localhost:9443/user-portal/";
         var isAuthenticated = false;
 
         <%
@@ -96,7 +95,7 @@
                 baseUrls: [ serverOrigin ],
                 signInRedirectURL: clientHost,
                 signOutRedirectURL: clientHost,
-                clientHost: clientHost,
+                clientHost: "client-host",
                 clientID: "client-id",
                 enablePKCE: true,
                 serverOrigin: serverOrigin,
