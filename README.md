@@ -101,7 +101,7 @@ You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/van
 
 ## APIs
 ### getInstance
-This returns an instance of the `IdentityClient`. Since the `IdentityClient` is a singleton, this method returns the same instance no matter how many time sit is called.
+This returns an instance of the `IdentityClient`. Since the `IdentityClient` is a singleton, this method returns the same instance no matter how many times it is called.
 
 This allows the developers the flexibility of using multiple files to implement the authentication logic. That is, you can have the sign in logic implemented on one page and the sign out logic on another.
 
