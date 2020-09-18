@@ -1,6 +1,5 @@
 {
     "packages": [
-        ".",
         "oidc-js",
         "samples/*"
     ],
