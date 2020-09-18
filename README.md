@@ -8,6 +8,7 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Install](#install)
 - [Getting Started](#getting-started)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
@@ -34,17 +35,21 @@
 ## Introduction
 Asgardio's OIDC SDK for JavaScript allows Single Page Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the JavaScript OIDC SDK, developers will be able to add identity management to their Single Page Applications in a jiffy.
 
-## Getting Started
-
-<!-- ### Install
+## Install
 Install the JavaScript library from the npm registry.
 ```
 npm install --save @asgardio/oidc-js
 ```
 Or simply load the SDK by importing the script into the header of your HTML file.
 ```html
-<script src=""></script>
-``` -->
+<script src="https://unpkg.com/@asgardio/oidc-js@0.1.0/dist/main.js"></script>
+
+<script>
+const auth = AsgardioAuth.IdentityClient.getInstance();
+</script>
+```
+
+## Getting Started
 ```javascript
 // The SDK provides a client that can be used to carry out the authentication.
 import { IdentityClient } from "@asgardio/oidc-js";
@@ -97,8 +102,14 @@ Build the apps by running the following command at the root directory.
 npm run build
 ```
 
-### 3. Vanilla JavaScript Sample
-You can try out the Vanilla JavaScript Sample App from the [oidc-sample-apps/vanilla-js-app](oidc-sample-apps/vanilla-js-app). The instructions to run the app can  be found [here](oidc-sample-apps/vanilla-js-app/README.md)
+#### 1. Vanilla JavaScript Sample
+You can try out the Vanilla JavaScript Sample App from the [samples/vanilla-js-app](samples/vanilla-js-app). The instructions to run the app can  be found [here](/samples/vanilla-js-app/README.md)
+
+#### 2. React Sample
+You can try out the React Sample App from the [samples/react-js-app](samples/react-js-app). The instructions to run the app can  be found [here](/samples/react-js-app/README.md)
+
+#### 2. Java Webapp Sample
+You can try out the Java Webapp Sample App from the [samples/java-webapp](samples/java-webapp). The instructions to run the app can  be found [here](/samples/java-webapp/README.md)
 
 ## APIs
 ### getInstance
@@ -302,9 +313,9 @@ The backend can then inject the authorization code into a JavaSCript variable wh
 
 To address this issue, we recommend storing the authorization code in a server session variable and providing the Single Page Application a separate API endpoint to request the authorization code. The server, when the request is received, can then respond with the authorization code from the server session.
 
-![form_post auth code flow](img/auth_code.png)
+![form_post auth code flow](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/img/auth_code.png)
 
-You can refer to a sample implementation using JSP [here](samples/java-webapp).
+You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 
 ## Develop
 ### Prerequisites
