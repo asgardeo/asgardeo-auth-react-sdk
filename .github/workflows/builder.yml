@@ -5,7 +5,11 @@ name: Builder
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    paths-ignore:
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   build:
