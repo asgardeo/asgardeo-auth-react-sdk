@@ -8,8 +8,9 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'package.json'
-      - 'package-lock.json'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - 'lerna.json'
 
 jobs:
   build:
@@ -24,6 +25,10 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+      if: github.repository == 'asgardio/asgardio-js-oidc-sdk'
+
+    - uses: actions/checkout@v2
+      if: github.repository != 'asgardio/asgardio-js-oidc-sdk'
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -41,3 +46,4 @@ jobs:
         git config --global user.name "GitHub Action Version Bumping"
         npm run bump-patch-version
         git push --follow-tags
+      if: github.repository == 'asgardio/asgardio-js-oidc-sdk'

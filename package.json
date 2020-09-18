@@ -1,6 +1,5 @@
 {
     "name": "asgardio-js-oidc-sdk",
-    "version": "0.1.0",
     "description": "Asgardio Authentication SDK and Sample Apps",
     "main": "index.js",
     "scripts": {
