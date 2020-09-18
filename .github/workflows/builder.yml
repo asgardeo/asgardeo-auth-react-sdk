@@ -8,8 +8,9 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'package.json'
-      - 'package-lock.json'
+      - '**/package.json'
+      - '**/package-lock.json'
+      - 'lerna.json'
 
 jobs:
   build:
