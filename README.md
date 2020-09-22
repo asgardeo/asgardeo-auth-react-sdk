@@ -70,9 +70,9 @@ auth.initialize({
 auth.signIn();
 
 // The `sign-in` hook is used to fire a callback function after signing in is successful.
- auth.on("sign-in", (response) => {
-     alert("You have successfully signed in!");
- });
+auth.on("sign-in", (response) => {
+    alert("You have successfully signed in!");
+});
 
 ```
 
