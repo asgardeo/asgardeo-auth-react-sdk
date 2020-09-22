@@ -62,16 +62,17 @@ auth.initialize({
      signInRedirectURL: "http://localhost:9443/myaccount/login",
      signOutRedirectURL: "http://localhost:9443/myaccount/login",
      clientHost: "http://localhost:9443/myaccount/",
-     clientID: "client ID"
+     clientID: "client ID",
+     serverOrigin: "http://localhost:9443"
 });
 
 // To sign in, simply call the `signIn()` method.
 auth.signIn();
 
 // The `sign-in` hook is used to fire a callback function after signing in is successful.
- auth.on("sign-in", (response) => {
-     alert("You have successfully signed in!");
- });
+auth.on("sign-in", (response) => {
+    alert("You have successfully signed in!");
+});
 
 ```
 
