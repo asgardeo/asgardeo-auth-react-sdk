@@ -20,6 +20,7 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { WebWorkerClientConfigInterface } from "./client";
 import { ServiceResourcesType } from "./endpoints";
 import { Message, SignInResponse, UserInfo } from "./message";
+import { DecodedIdTokenPayloadInterface } from "./token-response";
 import { CustomGrantRequestParams } from "./web-worker-client";
 
 export interface WebWorkerInterface {
@@ -35,6 +36,7 @@ export interface WebWorkerInterface {
     getUserInfo(): UserInfo;
     endUserSession(): Promise<boolean>;
     getServiceEndpoints(): Promise<ServiceResourcesType>;
+    getDecodedIDToken(): DecodedIdTokenPayloadInterface;
 }
 
 export interface WebWorkerSingletonInterface {
