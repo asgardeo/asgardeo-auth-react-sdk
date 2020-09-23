@@ -61,17 +61,16 @@ import { Storage } from "../constants/storage";
 import {
     ConfigInterface,
     CustomGrantRequestParams,
+    DecodedIdTokenPayloadInterface,
     SignInResponse,
+    TokenRequestHeader,
+    TokenResponseInterface,
     UserInfo,
     WebWorkerConfigInterface,
     isWebWorkerConfig
 } from "../models";
 import { AuthenticatedUserInterface } from "../models/authenticated-user";
-import {
-    DecodedIdTokenPayloadInterface,
-    TokenRequestHeader,
-    TokenResponseInterface
-} from "../models/token-response";
+
 
 /**
  * Checks whether authorization code is present.
@@ -369,7 +368,8 @@ export function sendRefreshTokenRequest(
                         return Promise.resolve(tokenResponse);
                     }
 
-                    return Promise.reject(new Error("Invalid id_token in the token response: " + response.data.id_token));
+                    return Promise.reject(
+                        new Error("Invalid id_token in the token response: " + response.data.id_token));
                 });
             } else {
                 const tokenResponse: TokenResponseInterface = {
