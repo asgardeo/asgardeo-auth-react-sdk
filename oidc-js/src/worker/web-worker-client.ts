@@ -443,6 +443,20 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                     const data = response.data;
                     delete data.logoutUrl;
                     return Promise.resolve(data);
+                } else if (response.type === AUTH_REQUIRED) {
+
+                    if (response.pkce) {
+                        sessionStorage.setItem(PKCE_CODE_VERIFIER, response.pkce);
+                    }
+
+                    location.href = response.code;
+
+                    return Promise.resolve({
+                        allowedScopes: "",
+                        displayName: "",
+                        email: "",
+                        username: ""
+                    });
                 }
 
                 return Promise.reject(
