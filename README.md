@@ -293,7 +293,7 @@ The `end-user-session` hook is used to fire a callback function after end user s
 This method returns an object containing the OIDC endpoints obtained from the `.well-known` endpoint.
 
 ### getDecodedIDToken
-This method returns teh decoded payload of the JWT ID token.
+This method returns the decoded payload of the JWT ID token.
 
 ### on
 The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
