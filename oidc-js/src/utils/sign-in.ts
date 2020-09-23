@@ -276,30 +276,45 @@ export function sendTokenRequest(
                     new Error("Invalid status code received in the token response: " + response.status)
                 );
             }
-            return validateIdToken(response.data.id_token, requestParams)
-                .then((valid) => {
-                    if (valid) {
-                        setSessionParameter(REQUEST_PARAMS, JSON.stringify(requestParams), requestParams);
 
-                        const tokenResponse: TokenResponseInterface = {
-                            accessToken: response.data.access_token,
-                            expiresIn: response.data.expires_in,
-                            idToken: response.data.id_token,
-                            refreshToken: response.data.refresh_token,
-                            scope: response.data.scope,
-                            tokenType: response.data.token_type
-                        };
+            if (requestParams.validateIDToken) {
+                return validateIdToken(response.data.id_token, requestParams)
+                    .then((valid) => {
+                        if (valid) {
+                            setSessionParameter(REQUEST_PARAMS, JSON.stringify(requestParams), requestParams);
 
-                        return Promise.resolve(tokenResponse);
-                    }
+                            const tokenResponse: TokenResponseInterface = {
+                                accessToken: response.data.access_token,
+                                expiresIn: response.data.expires_in,
+                                idToken: response.data.id_token,
+                                refreshToken: response.data.refresh_token,
+                                scope: response.data.scope,
+                                tokenType: response.data.token_type
+                            };
 
-                    return Promise.reject(
-                        new Error("Invalid id_token in the token response: " + response.data.id_token)
-                    );
-                })
-                .catch((error) => {
-                    return Promise.reject(error);
-                });
+                            return Promise.resolve(tokenResponse);
+                        }
+
+                        return Promise.reject(
+                            new Error("Invalid id_token in the token response: " + response.data.id_token)
+                        );
+                    })
+                    .catch((error) => {
+                        return Promise.reject(error);
+                    });
+            } else {
+                const tokenResponse: TokenResponseInterface = {
+                    accessToken: response.data.access_token,
+                    expiresIn: response.data.expires_in,
+                    idToken: response.data.id_token,
+                    refreshToken: response.data.refresh_token,
+                    scope: response.data.scope,
+                    tokenType: response.data.token_type
+                };
+                setSessionParameter(REQUEST_PARAMS, JSON.stringify(requestParams), requestParams);
+
+                return Promise.resolve(tokenResponse);
+            }
         })
         .catch((error) => {
             return Promise.reject(error);
@@ -336,24 +351,40 @@ export function sendRefreshTokenRequest(
                     new Error("Invalid status code received in the refresh token response: " + response.status)
                 );
             }
-            return validateIdToken(response.data.id_token, requestParams).then((valid) => {
-                if (valid) {
-                    const tokenResponse: TokenResponseInterface = {
-                        accessToken: response.data.access_token,
-                        expiresIn: response.data.expires_in,
-                        idToken: response.data.id_token,
-                        refreshToken: response.data.refresh_token,
-                        scope: response.data.scope,
-                        tokenType: response.data.token_type
-                    };
 
-                    initUserSession(response.data, getAuthenticatedUser(response.data.idToken), requestParams);
+            if (requestParams.validateIDToken) {
+                return validateIdToken(response.data.id_token, requestParams).then((valid) => {
+                    if (valid) {
+                        const tokenResponse: TokenResponseInterface = {
+                            accessToken: response.data.access_token,
+                            expiresIn: response.data.expires_in,
+                            idToken: response.data.id_token,
+                            refreshToken: response.data.refresh_token,
+                            scope: response.data.scope,
+                            tokenType: response.data.token_type
+                        };
 
-                    return Promise.resolve(tokenResponse);
-                }
+                        initUserSession(response.data, getAuthenticatedUser(response.data.idToken), requestParams);
 
-                return Promise.reject(new Error("Invalid id_token in the token response: " + response.data.id_token));
-            });
+                        return Promise.resolve(tokenResponse);
+                    }
+
+                    return Promise.reject(new Error("Invalid id_token in the token response: " + response.data.id_token));
+                });
+            } else {
+                const tokenResponse: TokenResponseInterface = {
+                    accessToken: response.data.access_token,
+                    expiresIn: response.data.expires_in,
+                    idToken: response.data.id_token,
+                    refreshToken: response.data.refresh_token,
+                    scope: response.data.scope,
+                    tokenType: response.data.token_type
+                };
+
+                initUserSession(response.data, getAuthenticatedUser(response.data.idToken), requestParams);
+
+                return Promise.resolve(tokenResponse);
+            }
         })
         .catch((error) => {
             return Promise.reject(error);
@@ -558,33 +589,56 @@ export const customGrant = (
                 }
 
                 if (requestParams.returnsSession) {
-                    return validateIdToken(response.data.id_token, authConfig).then((valid) => {
-                        if (valid) {
-                            const tokenResponse: TokenResponseInterface = {
-                                accessToken: response.data.access_token,
-                                expiresIn: response.data.expires_in,
-                                idToken: response.data.id_token,
-                                refreshToken: response.data.refresh_token,
-                                scope: response.data.scope,
-                                tokenType: response.data.token_type
-                            };
 
-                            initUserSession(tokenResponse, getAuthenticatedUser(tokenResponse.idToken), authConfig);
+                    if (authConfig.validateIDToken) {
+                        return validateIdToken(response.data.id_token, authConfig).then((valid) => {
+                            if (valid) {
+                                const tokenResponse: TokenResponseInterface = {
+                                    accessToken: response.data.access_token,
+                                    expiresIn: response.data.expires_in,
+                                    idToken: response.data.id_token,
+                                    refreshToken: response.data.refresh_token,
+                                    scope: response.data.scope,
+                                    tokenType: response.data.token_type
+                                };
 
-                            if (requestParams.returnResponse) {
-                                return Promise.resolve({
-                                    data: getUserInfo(authConfig),
-                                    type: SIGNED_IN
-                                } as SignInResponse);
-                            } else {
-                                return Promise.resolve(true);
+                                initUserSession(tokenResponse, getAuthenticatedUser(tokenResponse.idToken), authConfig);
+
+                                if (requestParams.returnResponse) {
+                                    return Promise.resolve({
+                                        data: getUserInfo(authConfig),
+                                        type: SIGNED_IN
+                                    } as SignInResponse);
+                                } else {
+                                    return Promise.resolve(true);
+                                }
                             }
-                        }
 
-                        return Promise.reject(
-                            new Error("Invalid id_token in the token response: " + response.data.id_token)
-                        );
-                    });
+                            return Promise.reject(
+                                new Error("Invalid id_token in the token response: " + response.data.id_token)
+                            );
+                        });
+                    } else {
+                        const tokenResponse: TokenResponseInterface = {
+                            accessToken: response.data.access_token,
+                            expiresIn: response.data.expires_in,
+                            idToken: response.data.id_token,
+                            refreshToken: response.data.refresh_token,
+                            scope: response.data.scope,
+                            tokenType: response.data.token_type
+                        };
+
+                        initUserSession(tokenResponse, getAuthenticatedUser(tokenResponse.idToken), authConfig);
+
+                        if (requestParams.returnResponse) {
+                            return Promise.resolve({
+                                data: getUserInfo(authConfig),
+                                type: SIGNED_IN
+                            } as SignInResponse);
+                        } else {
+                            return Promise.resolve(true);
+                        }
+                    }
                 } else {
                     return requestParams.returnResponse ? Promise.resolve(response) : Promise.resolve(true);
                 }
