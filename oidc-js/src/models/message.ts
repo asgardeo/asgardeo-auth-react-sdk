@@ -23,6 +23,7 @@ import {
     AUTH_REQUIRED,
     CUSTOM_GRANT,
     END_USER_SESSION,
+    GET_DECODED_ID_TOKEN,
     GET_SERVICE_ENDPOINTS,
     GET_USER_INFO,
     INIT,
@@ -90,4 +91,5 @@ export type MessageType =
     | typeof REQUEST_START
     | typeof REQUEST_SUCCESS
     | typeof GET_SERVICE_ENDPOINTS
-    | typeof GET_USER_INFO;
+    | typeof GET_USER_INFO
+    | typeof GET_DECODED_ID_TOKEN;

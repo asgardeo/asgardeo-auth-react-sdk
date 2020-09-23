@@ -25,6 +25,7 @@
         - [The data Attribute](#the-data-attribute)
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
+    - [getDecodedIDToken](#getdecodedidtoken)
 - [Using the `form_post` Response Mode](#using-the-form_post-response-mode)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
@@ -137,10 +138,11 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
 |`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardio.io`|
 |[`storage`](#storage) (optional)| `"sessionStorage"`, `"webWorker"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored.|
-|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`|""|The URLs of the API endpoints.|
+|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`|""|The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied.|
 |`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|[ServiceResource Default Values](#serviceresourcetypes)| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
 |`authorizationCode` (optional)| `string`|""|When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
 | `sessionState` (optional) | `string`|""| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
+|`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
 
 The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
 ### Storage
@@ -292,6 +294,9 @@ The `end-user-session` hook is used to fire a callback function after end user s
 ### getServiceEndpoints
 This method returns an object containing the OIDC endpoints obtained from the `.well-known` endpoint.
 
+### getDecodedIDToken
+This method returns the decoded payload of the JWT ID token.
+
 ### on
 The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
 
@@ -314,7 +319,7 @@ The backend can then inject the authorization code into a JavaSCript variable wh
 
 To address this issue, we recommend storing the authorization code in a server session variable and providing the Single Page Application a separate API endpoint to request the authorization code. The server, when the request is received, can then respond with the authorization code from the server session.
 
-![form_post auth code flow](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/img/auth_code.png)
+![form_post auth code flow](https://raw.githubusercontent.com/asgardio/asgardio-js-oidc-sdk/master/img/auth_code.png)
 
 You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 

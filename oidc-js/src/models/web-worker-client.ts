@@ -20,6 +20,7 @@ import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { WebWorkerConfigInterface } from ".";
 import { ServiceResourcesType } from "./endpoints";
 import { SignInResponse, UserInfo } from "./message";
+import { DecodedIdTokenPayloadInterface } from "./token-response";
 
 export interface WebWorkerClientInterface {
     httpRequest<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>>;
@@ -37,6 +38,7 @@ export interface WebWorkerClientInterface {
 
     onHttpRequestFinish(callback: () => void): void;
     getUserInfo(): Promise<UserInfo>;
+    getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface>;
 }
 
 export interface WebWorkerSingletonClientInterface {

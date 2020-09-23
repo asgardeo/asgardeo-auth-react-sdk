@@ -25,6 +25,7 @@ import {
     AUTH_REQUIRED,
     CUSTOM_GRANT,
     END_USER_SESSION,
+    GET_DECODED_ID_TOKEN,
     GET_SERVICE_ENDPOINTS,
     GET_USER_INFO,
     INIT,
@@ -51,7 +52,8 @@ import {
     UserInfo,
     WebWorkerClientInterface,
     WebWorkerConfigInterface,
-    WebWorkerSingletonClientInterface
+    WebWorkerSingletonClientInterface,
+    DecodedIdTokenPayloadInterface
 } from "../models";
 import { getAuthorizationCode } from "../utils";
 
@@ -443,6 +445,20 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                     const data = response.data;
                     delete data.logoutUrl;
                     return Promise.resolve(data);
+                } else if (response.type === AUTH_REQUIRED) {
+
+                    if (response.pkce) {
+                        sessionStorage.setItem(PKCE_CODE_VERIFIER, response.pkce);
+                    }
+
+                    location.href = response.code;
+
+                    return Promise.resolve({
+                        allowedScopes: "",
+                        displayName: "",
+                        email: "",
+                        username: ""
+                    });
                 }
 
                 return Promise.reject(
@@ -589,19 +605,33 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
             });
     };
 
-      const getUserInfo = (): Promise<UserInfo> => {
-          const message: Message<null> = {
-              type: GET_USER_INFO
-          };
+    const getUserInfo = (): Promise<UserInfo> => {
+        const message: Message<null> = {
+            type: GET_USER_INFO
+        };
 
-          return communicate<null, UserInfo>(message)
-              .then((response) => {
-                  return Promise.resolve(response);
-              })
-              .catch((error) => {
-                  return Promise.reject(error);
-              });
-      };
+        return communicate<null, UserInfo>(message)
+            .then((response) => {
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
+    };
+
+    const getDecodedIDToken = (): Promise<DecodedIdTokenPayloadInterface> => {
+        const message: Message<null> = {
+            type: GET_DECODED_ID_TOKEN
+        };
+
+        return communicate<null, DecodedIdTokenPayloadInterface>(message)
+            .then((response) => {
+                return Promise.resolve(response);
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+        })
+    }
 
     const onHttpRequestSuccess = (callback: (response: AxiosResponse) => void): void => {
         if (callback && typeof callback === "function") {
@@ -640,6 +670,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
         return {
             customGrant,
             endUserSession,
+            getDecodedIDToken,
             getServiceEndpoints,
             getUserInfo,
             httpRequest,

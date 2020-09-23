@@ -22,6 +22,7 @@ import { AxiosHttpClient, AxiosHttpClientInstance } from "./http-client";
 import {
     ConfigInterface,
     CustomGrantRequestParams,
+    DecodedIdTokenPayloadInterface,
     ServiceResourcesType,
     UserInfo,
     WebWorkerClientInterface,
@@ -31,6 +32,7 @@ import {
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
+    getDecodedIDToken,
     getServiceEndpoints,
     getSessionParameter,
     getUserInfo as getUserInfoUtil,
@@ -50,7 +52,8 @@ const DefaultConfig = {
     consentDenied: false,
     enablePKCE: true,
     responseMode: null,
-    scope: [OIDC_SCOPE]
+    scope: [ OIDC_SCOPE ],
+    validateIDToken: true
 };
 
 /**
@@ -126,7 +129,7 @@ export class IdentityClient {
             this._client = WebWorkerClient.getInstance();
 
             return this._client
-                .initialize(config)
+                .initialize({ ...DefaultConfig, ...config })
                 .then(() => {
                     if (this._onInitialize) {
                         this._onInitialize(true);
@@ -350,6 +353,14 @@ export class IdentityClient {
         }
 
         throw Error("Identity Client has not been initialized yet");
+    }
+
+    public getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface>{
+        if (this._storage === Storage.WebWorker) {
+            return this._client.getDecodedIDToken();
+        }
+
+        return Promise.resolve(getDecodedIDToken(this._authConfig));
     }
 
     public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
