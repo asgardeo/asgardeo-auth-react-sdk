@@ -35,6 +35,7 @@ import {
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
 import {
     CustomGrantRequestParams,
+    DecodedIdTokenPayloadInterface,
     ServiceResourcesType,
     SessionData,
     SignInResponse,
@@ -48,6 +49,7 @@ import {
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
+    getDecodedIDToken as getDecodedIDTokenUtil,
     getEndSessionEndpoint,
     getServiceEndpoints as getServiceEndpointsUtil,
     getSessionParameter,
@@ -299,6 +301,10 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
         return Promise.resolve(getServiceEndpointsUtil(authConfig));
     }
 
+    const getDecodedIDToken = (): DecodedIdTokenPayloadInterface => {
+        return getDecodedIDTokenUtil(authConfig);
+    }
+
     /**
      * @constructor
      *
@@ -344,6 +350,7 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
             customGrant,
             doesTokenExist,
             endUserSession,
+            getDecodedIDToken,
             getServiceEndpoints,
             getUserInfo,
             httpRequest,
