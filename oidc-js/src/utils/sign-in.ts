@@ -43,6 +43,7 @@ import {
     CLIENT_SECRET_TAG,
     DISPLAY_NAME,
     EMAIL,
+    ID_TOKEN,
     OIDC_SCOPE,
     PKCE_CODE_VERIFIER,
     REQUEST_PARAMS,
@@ -66,7 +67,11 @@ import {
     isWebWorkerConfig
 } from "../models";
 import { AuthenticatedUserInterface } from "../models/authenticated-user";
-import { TokenRequestHeader, TokenResponseInterface } from "../models/token-response";
+import {
+    DecodedIdTokenPayloadInterface,
+    TokenRequestHeader,
+    TokenResponseInterface
+} from "../models/token-response";
 
 /**
  * Checks whether authorization code is present.
@@ -602,4 +607,19 @@ export const getUserInfo = (config: ConfigInterface | WebWorkerConfigInterface):
         email: getSessionParameter(EMAIL, config),
         username: getSessionParameter(USERNAME, config)
     };
+};
+
+/**
+ *
+ * @param {ConfigInterface} config - The configuration parameters.
+ *
+ * @return {DecodedIdTokenPayloadInterface} The decoded ID Token payload.
+ */
+export const getDecodedIDToken = (
+    config: ConfigInterface | WebWorkerConfigInterface
+): DecodedIdTokenPayloadInterface => {
+    const idToken = getSessionParameter(ID_TOKEN, config);
+    const payload: DecodedIdTokenPayloadInterface = JSON.parse(atob(idToken.split(".")[1]));
+
+    return payload;
 };
