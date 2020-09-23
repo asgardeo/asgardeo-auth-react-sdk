@@ -24,6 +24,7 @@ import {
     AUTH_REQUIRED,
     CUSTOM_GRANT,
     END_USER_SESSION,
+    GET_DECODED_ID_TOKEN,
     GET_SERVICE_ENDPOINTS,
     GET_USER_INFO,
     INIT,
@@ -242,6 +243,26 @@ ctx.onmessage = ({ data, ports }) => {
 
             try {
                 port.postMessage(generateSuccessDTO(webWorker.getUserInfo()));
+            } catch (error) {
+                port.postMessage(generateFailureDTO(error));
+            }
+
+            break;
+        case GET_DECODED_ID_TOKEN:
+            if (!webWorker) {
+                port.postMessage(generateFailureDTO("Worker has not been initiated."));
+
+                break;
+            }
+
+            if (!webWorker.isSignedIn() && data.data.signInRequired) {
+                port.postMessage(generateFailureDTO("You have not signed in yet."));
+
+                break;
+            }
+
+            try {
+                port.postMessage(generateSuccessDTO(webWorker.getDecodedIDToken()));
             } catch (error) {
                 port.postMessage(generateFailureDTO(error));
             }
