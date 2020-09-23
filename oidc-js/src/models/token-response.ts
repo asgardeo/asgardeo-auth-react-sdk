@@ -59,10 +59,6 @@ export interface DecodedIdTokenPayloadInterface {
      */
     preferred_username?: string;
     /**
-     * The tenant domain of the user to whom the ID token belongs.
-     */
-    tenant_domain?: string;
-    /**
      * Other custom claims;
      */
     [ any: string ]: any;
