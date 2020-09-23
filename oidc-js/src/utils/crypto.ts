@@ -103,7 +103,6 @@ export const getJWKForTheIdToken = (jwtHeader: string, keys: JWKInterface[]): Er
  * @param {string} issuer id_token issuer.
  * @returns {any} whether the id_token is valid.
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const isValidIdToken = (
     idToken: string,
     jwk: string,
