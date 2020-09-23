@@ -23,11 +23,11 @@ import {
     ConfigInterface,
     CustomGrantRequestParams,
     DecodedIdTokenPayloadInterface,
-    isWebWorkerConfig,
     ServiceResourcesType,
     UserInfo,
     WebWorkerClientInterface,
-    WebWorkerConfigInterface
+    WebWorkerConfigInterface,
+    isWebWorkerConfig
 } from "./models";
 import {
     customGrant as customGrantUtil,
