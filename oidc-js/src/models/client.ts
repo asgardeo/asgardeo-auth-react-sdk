@@ -38,6 +38,7 @@ interface BaseConfigInterface {
     endpoints?: ServiceResourcesType;
     authorizationCode?: string;
     sessionState?: string;
+    validateIDToken?: boolean;
 }
 /**
  * SDK Client config parameters.

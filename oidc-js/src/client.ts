@@ -52,7 +52,8 @@ const DefaultConfig = {
     consentDenied: false,
     enablePKCE: true,
     responseMode: null,
-    scope: [OIDC_SCOPE]
+    scope: [ OIDC_SCOPE ],
+    validateIDToken: true
 };
 
 /**
@@ -128,7 +129,7 @@ export class IdentityClient {
             this._client = WebWorkerClient.getInstance();
 
             return this._client
-                .initialize(config)
+                .initialize({ ...DefaultConfig, ...config })
                 .then(() => {
                     if (this._onInitialize) {
                         this._onInitialize(true);
