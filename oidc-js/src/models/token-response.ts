@@ -37,7 +37,7 @@ export interface TokenRequestHeader {
 /**
  * Interface for the payload of a Decoded ID Token.
  */
-export interface DecodedIdTokenPayloadInterface {
+export interface StrictDecodedIdTokenPayloadInterface {
     /**
      * The audience for which this token is intended.
      */
@@ -58,6 +58,9 @@ export interface DecodedIdTokenPayloadInterface {
      * Name by which the user wishes to be referred to.
      */
     preferred_username?: string;
+}
+
+export interface DecodedIdTokenPayloadInterface extends StrictDecodedIdTokenPayloadInterface {
     /**
      * Other custom claims;
      */
