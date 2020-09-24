@@ -16,10 +16,10 @@
  * under the License.
  */
 
-import React, { ReactElement, FunctionComponent, useState } from "react";
+import React, { ReactElement, FunctionComponent, useState, useEffect } from "react";
 import { SIGN_OUT, SIGN_IN } from "../constants";
 import { useHistory } from "react-router-dom";
-import { IdentityClient } from '@asgardio/oidc-js';
+import { IdentityClient, Hooks } from '@asgardio/oidc-js';
 import { useRecoilState } from "recoil";
 import { authState, displayName } from "../recoil";
 
@@ -35,11 +35,38 @@ export const Dashboard: FunctionComponent<null> = (): ReactElement => {
 
     const [ isAuth ] = useRecoilState(authState);
     const [ displayNameState ] = useRecoilState(displayName);
+    const [ isLoggedOut, setIsLoggedOut ] = useState(false);
+
+    useEffect(() => {
+        auth.on(Hooks.SignOut, () => {
+            setIsLoggedOut(true);
+        });
+    }, [auth]);
 
     return <div className="wrapper">
         <div className="menu">
-            <button onClick={ () => { history.push(SIGN_IN); } }>Sign In</button>
-            <button onClick={ () => { history.push(SIGN_OUT); } }>Sign Out</button>
+            <button onClick={ () => {
+                if (isAuth) {
+                    alert("You have already signed in!");
+                } else {
+                    setIsLoggedOut(false);
+                    history.push(SIGN_IN);
+                }
+            } }>
+                Sign In
+            </button>
+
+            <button onClick={ () => {
+                if (isAuth) {
+                    history.push(SIGN_OUT);
+                } else {
+                    alert("You haven't signed in!");
+                }
+            }
+            }>
+                Sign Out
+            </button>
+
             <button onClick={ () => {
                 if (isAuth) {
                     auth.httpRequest({
@@ -60,8 +87,8 @@ export const Dashboard: FunctionComponent<null> = (): ReactElement => {
             } }>Get user info</button>
         </div>
         <div id="greeting">
-
             { isAuth && "Hi, " + displayNameState + "!" }
+            { isLoggedOut && "You have logged out!" }
         </div>
         <div className="details">
             <div id="email">
