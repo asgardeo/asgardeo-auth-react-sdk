@@ -18,7 +18,11 @@
 
 import { getEndSessionEndpoint, resetOPConfiguration } from "./op-config";
 import { endAuthenticatedSession, getSessionParameter } from "./session-storage";
-import { ID_TOKEN, SIGN_OUT_REDIRECT_URL } from "../constants";
+import {
+    ID_TOKEN,
+    LOGOUT_SUCCESS,
+    SIGN_OUT_REDIRECT_URL
+} from "../constants";
 import { Storage } from "../constants/storage";
 import { ConfigInterface, WebWorkerConfigInterface, isWebWorkerConfig } from "../models";
 
@@ -53,10 +57,13 @@ export function sendSignOutRequest(requestParams: ConfigInterface | WebWorkerCon
     resetOPConfiguration(requestParams);
 
     const logoutCallback =
-        `${logoutEndpoint}?` + `id_token_hint=${idToken}` + `&post_logout_redirect_uri=${callbackURL}`;
+        `${ logoutEndpoint }?` + `id_token_hint=${ idToken }` + `&post_logout_redirect_uri=${ callbackURL }&state=`
+        + LOGOUT_SUCCESS;
 
     if (requestParams.storage !== Storage.WebWorker) {
         window.location.href = logoutCallback;
+
+        return Promise.resolve(true);
     } else {
         return Promise.resolve(logoutCallback);
     }
@@ -81,4 +88,27 @@ export function handleSignOut(requestParams: ConfigInterface | WebWorkerConfigIn
     } else {
         return sendSignOutRequest(requestParams);
     }
+}
+
+/**
+ * Checks if the user has logged out and returns true if the logout is successful.
+ *
+ * @return {boolean} isLoggedOut - Specifies if a user has logged out or not.
+ */
+export const isLoggedOut = (): boolean => {
+    const param = new URL(window.location.href).searchParams.get("state");
+    const isLoggedOut = param && param === LOGOUT_SUCCESS;
+
+    if (isLoggedOut) {
+        const url = new URL(window.location.href);
+        const searchParams = new URLSearchParams(url.search.slice(1));
+
+        searchParams.delete("state");
+
+        const newUrl = window.location.href.split("?")[ 0 ] + "?" + searchParams.toString();
+
+        history.pushState({}, document.title, newUrl);
+    }
+
+    return isLoggedOut;
 }
