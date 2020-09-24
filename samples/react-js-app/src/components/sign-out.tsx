@@ -17,8 +17,7 @@
  */
 
 import { ReactElement, FunctionComponent, useEffect } from "react";
-import { IdentityClient, Hooks } from "@asgardio/oidc-js";
-import { DASHBOARD } from "../constants";
+import { IdentityClient } from "@asgardio/oidc-js";
 import { useHistory } from "react-router-dom";
 
 export const SignOut: FunctionComponent<null> = (): ReactElement => {
@@ -27,9 +26,7 @@ export const SignOut: FunctionComponent<null> = (): ReactElement => {
 
     useEffect(() => {
         const auth = IdentityClient.getInstance();
-        auth.on(Hooks.SignOut, () => {
-            history.push(DASHBOARD);
-        });
+
         auth.signOut();
     }, [history]);
 
