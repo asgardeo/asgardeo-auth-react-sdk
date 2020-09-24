@@ -303,14 +303,16 @@ The `on` method is used to hook callback functions to authentication methods. Th
 |Hook|Method to which the callback function is attached| Returned Response|
 |:--|:--|:--|
 |`"sign-in"`|`signIn()`| The user information|
-|`"sign-out"`|`signOut()`|
+|`"sign-out"`|`signOut()`||
 |`"initialize"`|`initialize()`|A boolean value indicating if the initialization was successful or not.|
 |`"http-request-start"`| `httpRequest()` (Called before an http request is sent)|
 |`"http-request-finish"`|`httpRequest()` (Called after an http request is sent and response is received.)|
 |`"http-request-error"`| `httpRequest()` (Called when an http request returns an error)|
 |`"http-request-success"`| `httpRequest()` (Called when an http requests returns a response successfully)|
 |`"end-user-session"`| `endUserSession()`| A boolean value indicating if the process was successful or not
-|`"custom-grant"`| `customGrant()`|
+|`"custom-grant"`| `customGrant()`|Returns the response from the custom grant request.
+
+**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 ## Using the `form_post` response mode
 When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
