@@ -34,3 +34,4 @@ export const REQUEST_FINISH = "request-finish";
 export const GET_SERVICE_ENDPOINTS = "get-service-endpoints";
 export const GET_USER_INFO = "get-user-info";
 export const GET_DECODED_ID_TOKEN = "get-decoded-id-token";
+export const LOGOUT_SUCCESS = "logout_success";
