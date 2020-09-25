@@ -38,6 +38,7 @@ import {
     getUserInfo as getUserInfoUtil,
     handleSignIn,
     handleSignOut,
+    isLoggedOut,
     resetOPConfiguration,
     sendRevokeTokenRequest
 } from "./utils";
@@ -229,9 +230,6 @@ export class IdentityClient {
             return this._client
                 .signOut()
                 .then((response) => {
-                    if (this._onSignOutCallback) {
-                        this._onSignOutCallback(response);
-                    }
 
                     return Promise.resolve(response);
                 })
@@ -242,9 +240,6 @@ export class IdentityClient {
 
         return handleSignOut(this._authConfig)
             .then((response) => {
-                if (this._onSignOutCallback) {
-                    this._onSignOutCallback(response);
-                }
 
                 return Promise.resolve(response);
             })
@@ -384,6 +379,9 @@ export class IdentityClient {
                     break;
                 case Hooks.SignOut:
                     this._onSignOutCallback = callback;
+                    if (isLoggedOut()) {
+                        callback();
+                    }
                     break;
                 case Hooks.EndUserSession:
                     this._onEndUserSession = callback;
