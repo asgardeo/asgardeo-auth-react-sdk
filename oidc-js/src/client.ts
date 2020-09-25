@@ -38,9 +38,9 @@ import {
     getUserInfo as getUserInfoUtil,
     handleSignIn,
     handleSignOut,
+    isLoggedOut,
     resetOPConfiguration,
-    sendRevokeTokenRequest,
-    isLoggedOut
+    sendRevokeTokenRequest
 } from "./utils";
 import { WebWorkerClient } from "./worker";
 

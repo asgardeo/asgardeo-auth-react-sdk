@@ -43,6 +43,7 @@ import {
 import {
     AuthCode,
     CustomGrantRequestParams,
+    DecodedIdTokenPayloadInterface,
     HttpClient,
     Message,
     ResponseMessage,
@@ -52,8 +53,7 @@ import {
     UserInfo,
     WebWorkerClientInterface,
     WebWorkerConfigInterface,
-    WebWorkerSingletonClientInterface,
-    DecodedIdTokenPayloadInterface
+    WebWorkerSingletonClientInterface
 } from "../models";
 import { getAuthorizationCode } from "../utils";
 
