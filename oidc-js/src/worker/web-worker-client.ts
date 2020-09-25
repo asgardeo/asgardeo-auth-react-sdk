@@ -457,6 +457,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                         allowedScopes: "",
                         displayName: "",
                         email: "",
+                        tenantDomain: "",
                         username: ""
                     });
                 }
