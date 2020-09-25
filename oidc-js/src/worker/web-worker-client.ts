@@ -30,6 +30,7 @@ import {
     GET_USER_INFO,
     INIT,
     LOGOUT,
+    LOGOUT_URL,
     PKCE_CODE_VERIFIER,
     REQUEST_ERROR,
     REQUEST_FINISH,
@@ -37,8 +38,7 @@ import {
     REQUEST_SUCCESS,
     SESSION_STATE,
     SIGNED_IN,
-    SIGN_IN,
-    LOGOUT_URL
+    SIGN_IN
 } from "../constants";
 import {
     AuthCode,
@@ -49,11 +49,11 @@ import {
     ResponseMessage,
     ServiceResourcesType,
     SignInResponse,
+    SignInResponseWorker,
     UserInfo,
     WebWorkerClientInterface,
     WebWorkerConfigInterface,
-    WebWorkerSingletonClientInterface,
-    SignInResponseWorker
+    WebWorkerSingletonClientInterface
 } from "../models";
 import { getAuthorizationCode } from "../utils";
 

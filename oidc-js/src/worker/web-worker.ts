@@ -23,15 +23,15 @@ import {
     AUTHORIZATION_ENDPOINT,
     DISPLAY_NAME,
     EMAIL,
+    ID_TOKEN,
     OIDC_SESSION_IFRAME_ENDPOINT,
     PKCE_CODE_VERIFIER,
     SCOPE,
     SESSION_STATE,
     SIGNED_IN,
+    SIGN_OUT_REDIRECT_URL,
     TENANT_DOMAIN,
-    USERNAME,
-    ID_TOKEN,
-    SIGN_OUT_REDIRECT_URL
+    USERNAME
 } from "../constants";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
 import {
@@ -40,12 +40,12 @@ import {
     ServiceResourcesType,
     SessionData,
     SignInResponse,
+    SignInResponseWorker,
     UserInfo,
     WebWorkerClientConfigInterface,
     WebWorkerConfigInterface,
     WebWorkerInterface,
-    WebWorkerSingletonInterface,
-    SignInResponseWorker
+    WebWorkerSingletonInterface
 } from "../models";
 import {
     customGrant as customGrantUtil,
