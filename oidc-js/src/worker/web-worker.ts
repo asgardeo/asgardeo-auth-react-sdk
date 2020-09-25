@@ -30,6 +30,7 @@ import {
     SESSION_STATE,
     SIGNED_IN,
     SIGN_OUT_REDIRECT_URL,
+    TENANT_DOMAIN,
     USERNAME
 } from "../constants";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "../http-client";
@@ -133,6 +134,7 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
                             email: session.get(EMAIL),
                             logoutUrl: logoutCallback,
                             oidcSessionIframe: session.get(OIDC_SESSION_IFRAME_ENDPOINT),
+                            tenantDomain: session.get(TENANT_DOMAIN),
                             username: session.get(USERNAME)
                         },
                         type: response.type
@@ -183,7 +185,9 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
     /**
      * Saves the passed authorization code on the session
      *
-     * @param {string} authCode The authorization code.
+     * @param {string} authCode - The authorization code.
+     * @param {string} sessionState - Session state.
+     * @param {string} pkce - PKCE code.
      */
     const setAuthCode = (authCode: string, sessionState: string, pkce: string): void => {
         authCode && session.set(AUTHORIZATION_CODE, authCode);
@@ -239,7 +243,7 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
     /**
      * Makes multiple api calls. Wraps `axios.spread`.
      *
-     * @param {AxiosRequestConfig[]} config API request data.
+     * @param {AxiosRequestConfig[]} configs - API request data.
      *
      * @returns {AxiosResponse[]} A promise that resolves with the response.
      */
@@ -299,11 +303,11 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
 
     const getServiceEndpoints = (): Promise<ServiceResourcesType> => {
         return Promise.resolve(getServiceEndpointsUtil(authConfig));
-    }
+    };
 
     const getDecodedIDToken = (): DecodedIdTokenPayloadInterface => {
         return getDecodedIDTokenUtil(authConfig);
-    }
+    };
 
     /**
      * @constructor
@@ -312,7 +316,7 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
      *
      * @param {ConfigInterface} config Configuration data.
      *
-     * @returns {OAuthWorkerInterface} Returns the object containing
+     * @returns {WebWorkerInterface} Returns the object containing
      */
     function Constructor(config: WebWorkerClientConfigInterface): WebWorkerInterface {
         authConfig = { ...config };

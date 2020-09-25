@@ -249,9 +249,9 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
      * Send multiple API requests to the web worker and returns the response.
      * Similar `axios.spread` in functionality.
      *
-     * @param {AxiosRequestConfig[]} config The Axios Request Config object
+     * @param {AxiosRequestConfig[]} configs - The Axios Request Config object
      *
-     * @returns {Promise<AxiosResponse>[]} A promise that resolves with the response data.
+     * @returns {Promise<AxiosResponse<T>[]>} A promise that resolves with the response data.
      */
     const httpRequestAll = <T = any>(configs: AxiosRequestConfig[]): Promise<AxiosResponse<T>[]> => {
         if (!initialized) {
@@ -457,6 +457,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                         allowedScopes: "",
                         displayName: "",
                         email: "",
+                        tenantDomain: "",
                         username: ""
                     });
                 }
@@ -507,6 +508,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                                 allowedScopes: "",
                                 displayName: "",
                                 email: "",
+                                tenantDomain: "",
                                 username: ""
                             });
                         } else {
@@ -662,7 +664,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
      *
      * This returns the object containing the public methods.
      *
-     * @returns {OAuthInterface} OAuthInterface object
+     * @returns {WebWorkerClientInterface} OAuthInterface object
      */
     function Constructor(): WebWorkerClientInterface {
         worker = new WorkerFile();

@@ -17,32 +17,12 @@
  */
 
 /**
- * Interface of the authenticated user.
+ * Entry point for all public APIs of this SDK.
  */
-export interface AuthenticatedUserInterface {
-    /**
-     * Authenticated user's display name.
-     */
-    displayName?: string;
-    /**
-     * Authenticated user's display name.
-     * @deprecated Use `displayName` instead.
-     */
-    display_name?: string;
-    /**
-     * User's email.
-     */
-    email?: string;
-    /**
-     * Available scopes. 
-     */
-    scope?: string;
-    /**
-     * Authenticated user's tenant domain.
-     */
-    tenantDomain?: string;
-    /**
-     * Authenticated user's username.
-     */
-    username: string;
-}
+export * from "./client";
+export * from "./models";
+
+// Constants
+export * from "./constants/endpoints";
+export * from "./constants/storage";
+export * from "./constants/hooks";

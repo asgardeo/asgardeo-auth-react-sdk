@@ -58,6 +58,10 @@ export interface StrictDecodedIdTokenPayloadInterface {
      * Name by which the user wishes to be referred to.
      */
     preferred_username?: string;
+    /**
+     * The tenant domain of the user to whom the ID token belongs.
+     */
+    tenant_domain?: string;
 }
 
 export interface DecodedIdTokenPayloadInterface extends StrictDecodedIdTokenPayloadInterface {
