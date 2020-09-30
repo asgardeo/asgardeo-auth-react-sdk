@@ -361,7 +361,7 @@ export class IdentityClient {
 
     public getAccessToken(): Promise<string> {
         if (this._storage === Storage.WebWorker) {
-            return Promise.resolve("");
+            return Promise.reject("The access token cannot be obtained when the storage type is set to webWorker.");
         } else {
             return getAccessTokenUtil(this._authConfig);
         }
