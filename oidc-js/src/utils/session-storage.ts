@@ -28,6 +28,7 @@ import {
     REFRESH_TOKEN,
     REQUEST_PARAMS,
     SCOPE,
+    SESSION_STATE,
     Storage,
     TENANT_DOMAIN,
     TOKEN_TYPE,
@@ -130,6 +131,8 @@ export function endAuthenticatedSession(requestParams: ConfigInterface | WebWork
     removeSessionParameter(TENANT_DOMAIN, requestParams);
     removeSessionParameter(TOKEN_TYPE, requestParams);
     removeSessionParameter(USERNAME, requestParams);
+    removeSessionParameter(REQUEST_PARAMS, requestParams);
+    removeSessionParameter(SESSION_STATE, requestParams);
 }
 
 /**
