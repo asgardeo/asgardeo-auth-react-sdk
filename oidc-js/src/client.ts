@@ -360,7 +360,7 @@ export class IdentityClient {
     }
 
     public getAccessToken(): Promise<string> {
-        if (this._storage !== Storage.WebWorker) {
+        if (this._storage === Storage.WebWorker) {
             return Promise.resolve("");
         } else {
             return getAccessTokenUtil(this._authConfig);
