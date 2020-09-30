@@ -32,7 +32,7 @@ import {
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
-    getAccessToken,
+    getAccessToken as getAccessTokenUtil,
     getDecodedIDToken,
     getServiceEndpoints,
     getSessionParameter,
@@ -359,11 +359,11 @@ export class IdentityClient {
         return Promise.resolve(getDecodedIDToken(this._authConfig));
     }
 
-    public getAccessToken(): string {
+    public getAccessToken(): Promise<string> {
         if (this._storage !== Storage.WebWorker) {
-            return "";
+            return Promise.resolve("");
         } else {
-            return getAccessToken(this._authConfig);
+            return getAccessTokenUtil(this._authConfig);
         }
     }
 
