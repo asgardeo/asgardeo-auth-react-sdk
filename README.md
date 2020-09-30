@@ -26,6 +26,8 @@
     - [endUserSession](#endusersession)
     - [getServiceEndpoints](#getserviceendpoints)
     - [getDecodedIDToken](#getdecodedidtoken)
+    - [getAccessToken](#getaccesstoken)
+    - [on](#on)
 - [Using the `form_post` Response Mode](#using-the-form_post-response-mode)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
@@ -320,6 +322,15 @@ This method returns an object containing the OIDC endpoints obtained from the `.
 
 This method returns the decoded payload of the JWT ID token.
 
+### getAccessToken
+This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise an error is thrown.
+```javascript
+auth.getAccessToken().then((token)=>{
+    // console.log(token);
+}).error((error)=>{
+    // console.error(error);
+});
+```
 ### on
 
 The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
