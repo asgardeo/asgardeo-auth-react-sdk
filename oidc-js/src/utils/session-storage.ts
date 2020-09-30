@@ -105,7 +105,7 @@ export function getSessionParameter(
 ): string | null {
     switch (requestParams.storage) {
         case Storage.WebWorker:
-            return requestParams.session.get(key);
+            return requestParams?.session?.get(key);
         case Storage.SessionStorage:
             return sessionStorage.getItem(key);
         case Storage.LocalStorage:

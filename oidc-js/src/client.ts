@@ -32,6 +32,7 @@ import {
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
+    getAccessToken,
     getDecodedIDToken,
     getServiceEndpoints,
     getSessionParameter,
@@ -40,7 +41,7 @@ import {
     handleSignOut,
     isLoggedOut,
     resetOPConfiguration,
-    sendRevokeTokenRequest
+    sendRevokeTokenRequest,
 } from "./utils";
 import { WebWorkerClient } from "./worker";
 
@@ -356,6 +357,14 @@ export class IdentityClient {
         }
 
         return Promise.resolve(getDecodedIDToken(this._authConfig));
+    }
+
+    public getAccessToken(): string {
+        if (this._storage !== Storage.WebWorker) {
+            return "";
+        } else {
+            return getAccessToken(this._authConfig);
+        }
     }
 
     public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;

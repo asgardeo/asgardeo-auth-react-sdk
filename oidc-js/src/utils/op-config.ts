@@ -36,6 +36,7 @@ import {
     USERNAME
 } from "../constants";
 import { ConfigInterface, ServiceResourcesType, WebWorkerConfigInterface } from "../models";
+import { ACCESS_TOKEN } from "../../dist/src/constants";
 
 /**
  * Checks whether openid configuration initiated.
@@ -361,6 +362,15 @@ export const getIssuer = (requestParams: ConfigInterface | WebWorkerConfigInterf
  */
 export const getClientID = (requestParams: ConfigInterface | WebWorkerConfigInterface): string => {
     return getSessionParameter(CLIENT_ID, requestParams);
+};
+
+/**
+ * Get access token.
+ *
+ * @return {string}
+ */
+export const getAccessToken = (requestParams: ConfigInterface | WebWorkerConfigInterface): string => {
+    return getSessionParameter(ACCESS_TOKEN, requestParams);
 };
 
 /**
