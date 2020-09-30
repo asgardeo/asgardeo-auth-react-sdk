@@ -41,7 +41,7 @@ import {
     handleSignOut,
     isLoggedOut,
     resetOPConfiguration,
-    sendRevokeTokenRequest,
+    sendRevokeTokenRequest
 } from "./utils";
 import { WebWorkerClient } from "./worker";
 
