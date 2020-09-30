@@ -36,7 +36,7 @@ import {
     USERNAME
 } from "../constants";
 import { ConfigInterface, ServiceResourcesType, WebWorkerConfigInterface } from "../models";
-import { ACCESS_TOKEN } from "../../dist/src/constants";
+import { ACCESS_TOKEN } from "../constants";
 
 /**
  * Checks whether openid configuration initiated.
