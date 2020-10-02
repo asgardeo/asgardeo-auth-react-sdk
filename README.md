@@ -80,7 +80,9 @@ auth.on("sign-in", (response) => {
 [Learn more](#apis).
 
 ## Try Out the Sample Apps
+
 ### 1. Create a Service Provider
+
 Before trying out the sample apps, you need to a create a service provider in the Identity Server.
 1. So, navigate to `https://localhost:9443/carbon" and click on `Add` under `Service Providers` in the left-hand menu panel.
 
@@ -99,22 +101,28 @@ Before trying out the sample apps, you need to a create a service provider in th
 8. Copy the `OAuth Client Key`.
 
 ### 2. Running the sample apps
+
 Build the apps by running the following command at the root directory.
 ```
 npm run build
 ```
 
 #### 1. Vanilla JavaScript Sample
+
 You can try out the Vanilla JavaScript Sample App from the [samples/vanilla-js-app](samples/vanilla-js-app). The instructions to run the app can  be found [here](/samples/vanilla-js-app/README.md)
 
 #### 2. React Sample
+
 You can try out the React Sample App from the [samples/react-js-app](samples/react-js-app). The instructions to run the app can  be found [here](/samples/react-js-app/README.md)
 
 #### 2. Java Webapp Sample
+
 You can try out the Java Webapp Sample App from the [samples/java-webapp](samples/java-webapp). The instructions to run the app can  be found [here](/samples/java-webapp/README.md)
 
 ## APIs
+
 ### getInstance
+
 This returns an instance of the `IdentityClient`. Since the `IdentityClient` is a singleton, this method returns the same instance no matter how many times it is called.
 
 This allows the developers the flexibility of using multiple files to implement the authentication logic. That is, you can have the sign in logic implemented on one page and the sign out logic on another.
@@ -145,8 +153,11 @@ This method takes a `config` object as the only argument. The attributes of the 
 |`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
 
 The `initialize` hook is used to fire a callback function after initializing is successful. Check the [on()](#on) section for more information.
+
 ### Storage
+
 Asgardio allows the session information including the access token to be stored in three different places, namely,
+
 1. Session storage
 2. Local storage
 3. Web worker
@@ -154,6 +165,7 @@ Asgardio allows the session information including the access token to be stored 
 Of the three methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and data there cannot be stolen through XSS attacks. However, when using a web worker to store the session information, the [`httpRequest`](#httprequest) method has to be used to send http requests. This method will route the request through the web worker and the web worker will attach the access token to the request before sending it to the server.
 
 #### ServiceResourceTypes
+
 |Attribute|Type|Default Value|Description|
 |:--|:--|:--|:--|
 |`authorize`|`string`|`"/oauth2/authorize"`| The endpoint to send the authorization request to.|
@@ -162,13 +174,14 @@ Of the three methods, storing the session information in the **web worker** is t
 |`oidcSessionIFrame`|`string`| `"/oidc/checksession"`| The URL of the OIDC session iframe.
 |`revoke`|`string`| `"/oauth2/revoke"`| The endpoint to send the revoke-access-token request to.
 |`token`|`string`| `"/oauth2/token"`| The endpoint to send the token request to.|
-|`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|
+|`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|   
 
 ```javascript
 auth.initialize(config);
 ```
 
 ### getUserInfo
+
 This method returns the information about the authenticated user as an object. The object has the following attributes.
 
 |Attribute| Type | Description|
@@ -176,7 +189,8 @@ This method returns the information about the authenticated user as an object. T
 |`email`|`string`|The email address of the user|
 |`username`|`string`| The username of the user|
 |`displayName`| `string`| The display name of the user|
-`allowedScopes`|`string`| The scopes the user has authorized the client to access|
+`allowedScopes`|`string`| The scopes the user has authorized the client to access|   
+
 ```javascript
 auth.getUserInfo().then((response) => {
     // console.log(response);
@@ -197,11 +211,13 @@ auth.signIn();
 ```
 
 ### signOut
+
 This method ends the user session at the Identity Server and logs the user out.
 
 The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
 ### httpRequest
+
 This method  is used to send http requests to the Identity Server. The developer doesn't need to manually attach the access token since this method does it automatically.
 
 If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the *ONLY* way http requests can be sent.
@@ -233,6 +249,7 @@ return auth.httpRequest(requestConfig)
 ```
 
 ### httpRequestAll
+
 This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
 ```javascript
@@ -246,6 +263,7 @@ auth.httpRequestAll(configs).then((responses) => {
 ```
 
 ### customGrant
+
 This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
 |Attribute|Type|Description|
 |:--|:--|:--|
@@ -259,9 +277,11 @@ This method allows developers to use custom grants provided by their Identity Se
 The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
 
 #### The data attribute
+
 Often, you may have to send session information in the body of a custom grant request. Since when using a web worker to store the session information, you won't have access to the session information, Asgardio provides template tags to attach the necessary session information. When a template tag is used, the SDK automatically replaces the tag with the relevant session information before sending the request. For example, if the access token should be send in the body of the request, you can use the `{{token}}` template tag. The SDK will replace this tag with the access token before dispatching the request.
 
 The following template tags are at your disposal.
+
 |Template Tags| Session Information Attached|
 |:--|:--|
 `"{{token}}"`|The access token|
@@ -287,17 +307,21 @@ return auth.customGrant({
 ```
 
 ### endUserSession
+
 This method revokes the access token and clears the session information from the storage.
 
 The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [on()](#on) section for more information.
 
 ### getServiceEndpoints
+
 This method returns an object containing the OIDC endpoints obtained from the `.well-known` endpoint.
 
 ### getDecodedIDToken
+
 This method returns the decoded payload of the JWT ID token.
 
 ### on
+
 The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
 
 |Hook|Method to which the callback function is attached| Returned Response|
@@ -315,6 +339,7 @@ The `on` method is used to hook callback functions to authentication methods. Th
 **When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 ## Using the `form_post` response mode
+
 When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
 
 The backend can then inject the authorization code into a JavaSCript variable while rendering the webpage in the server side. But this results in the authorization code getting printed in the HTML of the page creating a **threat vector**.
@@ -326,11 +351,16 @@ To address this issue, we recommend storing the authorization code in a server s
 You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 
 ## Develop
+
 ### Prerequisites
+
 - `Node.js` (version 10 or above).
 - `npm` package manager.
+
 ### Installing Dependencies
+
 The repository is a mono repository. The SDK repository is found in the [oidc-js-sdk]() directory. You can install the dependencies by running the following command at the root.
+
 ```
 npm run build
 ```
@@ -340,9 +370,11 @@ npm run build
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ### Reporting issues
+
 We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardio/asgardio-js-oidc-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
 ## License
+
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
