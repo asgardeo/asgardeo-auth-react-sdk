@@ -165,7 +165,7 @@ Of the three methods, storing the session information in the **web worker** is t
 |`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|
 
 ```javascript
-auth.initialize(config)
+auth.initialize(config);
 ```
 
 ### getUserInfo
@@ -216,11 +216,11 @@ const auth = IdentityClient.getInstance();
 const requestConfig = {
     headers: {
         "Accept": "application/json",
-        "Access-Control-Allow-Origin": "https://localhost:9443/myaccount,
+        "Access-Control-Allow-Origin": "https://localhost:9443/myaccount",
         "Content-Type": "application/scim+json"
     },
     method: "GET",
-    url: "https://localhost:9443/scim2/me
+    url: "https://localhost:9443/scim2/me"
 };
 
 return auth.httpRequest(requestConfig)
