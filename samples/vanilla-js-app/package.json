@@ -1,13 +1,13 @@
 {
     "name": "@asgardio/oidc-sample-vanilla",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "description": "A sample vanilla javascript app demonstrating OIDC authentication using Asgardio's SDK",
     "main": "index.js",
     "scripts": {
         "start": "node server.js"
     },
     "dependencies": {
-        "@asgardio/oidc-js": "^0.1.7",
+        "@asgardio/oidc-js": "^0.1.8",
         "express": "^4.17.1"
     },
     "author": "Asgardio",
