@@ -62,5 +62,8 @@
     "bugs": {
         "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
     },
-    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme"
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
+    "browserslist": [
+        "> 0.2%"
+    ]
 }
