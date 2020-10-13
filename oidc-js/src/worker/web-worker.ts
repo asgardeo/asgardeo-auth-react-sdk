@@ -370,7 +370,6 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
 
     return {
         getInstance: (config: WebWorkerClientConfigInterface): WebWorkerInterface => {
-            console.log("Web Worker get instance");
             if (instance) {
                 return instance;
             } else {
