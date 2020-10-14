@@ -261,6 +261,7 @@ export const resetOPConfiguration = (requestParams: ConfigInterface | WebWorkerC
         removeSessionParameter(TENANT, requestParams);
         removeSessionParameter(SIGN_IN_REDIRECT_URL, requestParams);
         removeSessionParameter(SIGN_OUT_REDIRECT_URL, requestParams);
+        removeSessionParameter(OIDC_SESSION_IFRAME_ENDPOINT, requestParams);
     } else {
         requestParams.session.clear();
     }

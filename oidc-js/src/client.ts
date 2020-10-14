@@ -32,6 +32,7 @@ import {
 import {
     customGrant as customGrantUtil,
     endAuthenticatedSession,
+    getAccessToken as getAccessTokenUtil,
     getDecodedIDToken,
     getServiceEndpoints,
     getSessionParameter,
@@ -356,6 +357,14 @@ export class IdentityClient {
         }
 
         return Promise.resolve(getDecodedIDToken(this._authConfig));
+    }
+
+    public getAccessToken(): Promise<string> {
+        if (this._storage === Storage.WebWorker) {
+            return Promise.reject("The access token cannot be obtained when the storage type is set to webWorker.");
+        }
+
+        return getAccessTokenUtil(this._authConfig);
     }
 
     public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
