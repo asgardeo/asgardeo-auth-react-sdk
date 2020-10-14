@@ -26,8 +26,7 @@ import {
     ServiceResourcesType,
     UserInfo,
     WebWorkerClientInterface,
-    WebWorkerConfigInterface,
-    isWebWorkerConfig
+    WebWorkerConfigInterface
 } from "./models";
 import {
     customGrant as customGrantUtil,
@@ -44,6 +43,7 @@ import {
     sendRevokeTokenRequest
 } from "./utils";
 import { WebWorkerClient } from "./worker";
+import { isWebWorkerConfig } from "./helpers";
 
 /**
  * Default configurations.

@@ -69,9 +69,9 @@ import {
     TokenRequestHeader,
     TokenResponseInterface,
     UserInfo,
-    WebWorkerConfigInterface,
-    isWebWorkerConfig
+    WebWorkerConfigInterface
 } from "../models";
+import { isWebWorkerConfig } from "../helpers";
 
 /**
  * Checks whether authorization code is present.
