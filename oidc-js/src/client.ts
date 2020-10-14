@@ -193,6 +193,8 @@ export class IdentityClient {
                     if (this._onSignInCallback) {
                         if (response.allowedScopes || response.displayName || response.email || response.username) {
                             this._onSignInCallback(response);
+                        } else {
+                            this._onSignInCallback(null);
                         }
                     }
 
@@ -351,7 +353,7 @@ export class IdentityClient {
         throw Error("Identity Client has not been initialized yet");
     }
 
-    public getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface>{
+    public getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface> {
         if (this._storage === Storage.WebWorker) {
             return this._client.getDecodedIDToken();
         }
