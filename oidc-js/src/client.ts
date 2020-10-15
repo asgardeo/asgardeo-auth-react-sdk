@@ -193,8 +193,6 @@ export class IdentityClient {
                     if (this._onSignInCallback) {
                         if (response.allowedScopes || response.displayName || response.email || response.username) {
                             this._onSignInCallback(response);
-                        } else {
-                            this._onSignInCallback(null);
                         }
                     }
 
