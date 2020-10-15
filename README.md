@@ -125,7 +125,7 @@ You can try out the React Sample App from the [samples/react-js-app](samples/rea
 
 #### 2. Java Webapp Sample
 
-The *Callback URL* of this app is `http://localhost:3000`.
+The *Callback URL* of this app is the URL of this app on the server. For instance, if your Tomcat server is running on `http://localhost:8080`, then the callback URL will be `http://localhost:8080/java-webapp`.
 
 You can try out the Java Webapp Sample App from the [samples/java-webapp](samples/java-webapp). The instructions to run the app can  be found [here](/samples/java-webapp/README.md)
 
