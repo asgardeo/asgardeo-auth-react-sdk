@@ -60,6 +60,7 @@ import {
     USERNAME,
     USERNAME_TAG
 } from "../constants";
+import { isWebWorkerConfig } from "../helpers";
 import {
     AuthenticatedUserInterface,
     ConfigInterface,
@@ -71,7 +72,6 @@ import {
     UserInfo,
     WebWorkerConfigInterface
 } from "../models";
-import { isWebWorkerConfig } from "../helpers";
 
 /**
  * Checks whether authorization code is present.

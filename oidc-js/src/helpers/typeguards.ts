@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import { ConfigInterface, WebWorkerConfigInterface } from "../models";
 import { Storage } from "../constants";
+import { ConfigInterface, WebWorkerConfigInterface } from "../models";
 
 export const isWebWorkerConfig = (
     config: ConfigInterface | WebWorkerConfigInterface

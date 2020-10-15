@@ -18,6 +18,7 @@
 
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ACCESS_TOKEN, AUTHORIZATION_CODE_TYPE, Hooks, OIDC_SCOPE, Storage } from "./constants";
+import { isWebWorkerConfig } from "./helpers";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "./http-client";
 import {
     ConfigInterface,
@@ -43,7 +44,6 @@ import {
     sendRevokeTokenRequest
 } from "./utils";
 import { WebWorkerClient } from "./worker";
-import { isWebWorkerConfig } from "./helpers";
 
 /**
  * Default configurations.

@@ -24,8 +24,8 @@ import {
     SIGN_OUT_REDIRECT_URL
 } from "../constants";
 import { Storage } from "../constants/storage";
-import { ConfigInterface, WebWorkerConfigInterface } from "../models";
 import { isWebWorkerConfig } from "../helpers";
+import { ConfigInterface, WebWorkerConfigInterface } from "../models";
 
 /**
  * Execute user sign out request
