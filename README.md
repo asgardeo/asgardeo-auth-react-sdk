@@ -94,13 +94,15 @@ Before trying out the sample apps, you need to a create a service provider in th
 
 4. Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
 
-5. Enter `http://localhost:3000` as the `Callback Url`.
+5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
 
 6. Check `Allow authentication without the client secret`.
 
 7. Click `Add` at the bottom.
 
 8. Copy the `OAuth Client Key`.
+
+9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
 
 ### 2. Running the sample apps
 
@@ -111,13 +113,19 @@ npm run build
 
 #### 1. Vanilla JavaScript Sample
 
+The *Callback URL* of this app is `http://localhost:3000`.
+
 You can try out the Vanilla JavaScript Sample App from the [samples/vanilla-js-app](samples/vanilla-js-app). The instructions to run the app can  be found [here](/samples/vanilla-js-app/README.md)
 
 #### 2. React Sample
 
+The *Callback URL* of this app is `regexp=(http://localhost:3000/sign-in|http://localhost:3000/dashboard)`.
+
 You can try out the React Sample App from the [samples/react-js-app](samples/react-js-app). The instructions to run the app can  be found [here](/samples/react-js-app/README.md)
 
 #### 2. Java Webapp Sample
+
+The *Callback URL* of this app is the URL of this app on the server. For instance, if your Tomcat server is running on `http://localhost:8080`, then the callback URL will be `http://localhost:8080/java-webapp`.
 
 You can try out the Java Webapp Sample App from the [samples/java-webapp](samples/java-webapp). The instructions to run the app can  be found [here](/samples/java-webapp/README.md)
 
@@ -176,7 +184,7 @@ Of the three methods, storing the session information in the **web worker** is t
 |`oidcSessionIFrame`|`string`| `"/oidc/checksession"`| The URL of the OIDC session iframe.
 |`revoke`|`string`| `"/oauth2/revoke"`| The endpoint to send the revoke-access-token request to.
 |`token`|`string`| `"/oauth2/token"`| The endpoint to send the token request to.|
-|`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|   
+|`wellKnown`|`string`| `"/oauth2/oidcdiscovery/.well-known/openid-configuration"`| The endpoint to receive the OIDC endpoints from|
 
 ```javascript
 auth.initialize(config);
@@ -191,7 +199,7 @@ This method returns the information about the authenticated user as an object. T
 |`email`|`string`|The email address of the user|
 |`username`|`string`| The username of the user|
 |`displayName`| `string`| The display name of the user|
-`allowedScopes`|`string`| The scopes the user has authorized the client to access|   
+`allowedScopes`|`string`| The scopes the user has authorized the client to access|
 
 ```javascript
 auth.getUserInfo().then((response) => {

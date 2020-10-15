@@ -64,9 +64,3 @@ export interface HttpClient {
 export interface WebWorkerClientConfigInterface extends WebWorkerConfigInterface {
     httpClient: HttpClient;
 }
-
-export const isWebWorkerConfig = (
-    config: ConfigInterface | WebWorkerConfigInterface
-): config is WebWorkerConfigInterface => {
-    return config.storage === Storage.WebWorker;
-};

@@ -320,6 +320,7 @@ export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSin
      */
     function Constructor(config: WebWorkerClientConfigInterface): WebWorkerInterface {
         authConfig = { ...config };
+        session.clear();
         authConfig.session = session;
 
         if (authConfig.authorizationCode) {

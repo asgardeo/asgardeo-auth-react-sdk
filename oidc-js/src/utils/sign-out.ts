@@ -24,7 +24,8 @@ import {
     SIGN_OUT_REDIRECT_URL
 } from "../constants";
 import { Storage } from "../constants/storage";
-import { ConfigInterface, WebWorkerConfigInterface, isWebWorkerConfig } from "../models";
+import { isWebWorkerConfig } from "../helpers";
+import { ConfigInterface, WebWorkerConfigInterface } from "../models";
 
 /**
  * Execute user sign out request
@@ -60,7 +61,7 @@ export function sendSignOutRequest(requestParams: ConfigInterface | WebWorkerCon
         `${ logoutEndpoint }?` + `id_token_hint=${ idToken }` + `&post_logout_redirect_uri=${ callbackURL }&state=`
         + LOGOUT_SUCCESS;
 
-    if (requestParams.storage !== Storage.WebWorker) {
+    if (!isWebWorkerConfig(requestParams)) {
         window.location.href = logoutCallback;
 
         return Promise.resolve(true);

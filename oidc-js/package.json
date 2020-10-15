@@ -12,6 +12,7 @@
     "types": "dist/src/index.d.ts",
     "scripts": {
         "lint": "eslint --ext .js,.ts .",
+        "fix-lint": "eslint --ext .js,.ts . --fix",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch",
@@ -62,5 +63,8 @@
     "bugs": {
         "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
     },
-    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme"
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
+    "browserslist": [
+        "> 0.2%"
+    ]
 }

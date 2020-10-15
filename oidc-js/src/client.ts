@@ -18,6 +18,7 @@
 
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { ACCESS_TOKEN, AUTHORIZATION_CODE_TYPE, Hooks, OIDC_SCOPE, Storage } from "./constants";
+import { isWebWorkerConfig } from "./helpers";
 import { AxiosHttpClient, AxiosHttpClientInstance } from "./http-client";
 import {
     ConfigInterface,
@@ -26,8 +27,7 @@ import {
     ServiceResourcesType,
     UserInfo,
     WebWorkerClientInterface,
-    WebWorkerConfigInterface,
-    isWebWorkerConfig
+    WebWorkerConfigInterface
 } from "./models";
 import {
     customGrant as customGrantUtil,
@@ -193,6 +193,8 @@ export class IdentityClient {
                     if (this._onSignInCallback) {
                         if (response.allowedScopes || response.displayName || response.email || response.username) {
                             this._onSignInCallback(response);
+                        } else {
+                            this._onSignInCallback(null);
                         }
                     }
 
@@ -351,7 +353,7 @@ export class IdentityClient {
         throw Error("Identity Client has not been initialized yet");
     }
 
-    public getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface>{
+    public getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface> {
         if (this._storage === Storage.WebWorker) {
             return this._client.getDecodedIDToken();
         }

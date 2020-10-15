@@ -60,6 +60,7 @@ import {
     USERNAME,
     USERNAME_TAG
 } from "../constants";
+import { isWebWorkerConfig } from "../helpers";
 import {
     AuthenticatedUserInterface,
     ConfigInterface,
@@ -69,8 +70,7 @@ import {
     TokenRequestHeader,
     TokenResponseInterface,
     UserInfo,
-    WebWorkerConfigInterface,
-    isWebWorkerConfig
+    WebWorkerConfigInterface
 } from "../models";
 
 /**
