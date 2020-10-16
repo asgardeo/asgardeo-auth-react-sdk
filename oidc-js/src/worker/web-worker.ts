@@ -62,7 +62,7 @@ import {
     sendRevokeTokenRequest as sendRevokeTokenRequestUtil
 } from "../utils";
 
-export const WebWorker: WebWorkerSingletonInterface = (function (): WebWorkerSingletonInterface {
+export const WebWorker: WebWorkerSingletonInterface = ((): WebWorkerSingletonInterface => {
     /**
      * Values to be set when initializing the library.
      */

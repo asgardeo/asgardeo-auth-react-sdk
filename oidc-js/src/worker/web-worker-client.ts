@@ -98,7 +98,7 @@ import { getAuthorizationCode } from "../utils";
  *
  * ```
  */
-export const WebWorkerClient: WebWorkerSingletonClientInterface = (function (): WebWorkerSingletonClientInterface {
+export const WebWorkerClient: WebWorkerSingletonClientInterface = ((): WebWorkerSingletonClientInterface => {
     /**
      * The private member variable that holds the reference to the web worker.
      */
