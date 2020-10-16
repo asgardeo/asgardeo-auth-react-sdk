@@ -98,7 +98,7 @@ import { getAuthorizationCode } from "../utils";
  *
  * ```
  */
-export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): WebWorkerSingletonClientInterface {
+export const WebWorkerClient: WebWorkerSingletonClientInterface = ((): WebWorkerSingletonClientInterface => {
     /**
      * The private member variable that holds the reference to the web worker.
      */
@@ -445,8 +445,7 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                     const data = response.data;
                     delete data.logoutUrl;
                     return Promise.resolve(data);
-                } else if (response.type === AUTH_REQUIRED) {
-
+                } else if (response.type === AUTH_REQUIRED && response.code) {
                     if (response.pkce) {
                         sessionStorage.setItem(PKCE_CODE_VERIFIER, response.pkce);
                     }
@@ -460,6 +459,12 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
                         tenantDomain: "",
                         username: ""
                     });
+                } else if (response.type === AUTH_REQUIRED && !response.code) {
+                    return Promise.reject(
+                        "Something went wrong during authentication after obtaining the authorization code." +
+                            " Re-authentication failed. No authorization url was received." +
+                            JSON.stringify(response)
+                    );
                 }
 
                 return Promise.reject(
@@ -632,8 +637,8 @@ export const WebWorkerClient: WebWorkerSingletonClientInterface = (function(): W
             })
             .catch((error) => {
                 return Promise.reject(error);
-        })
-    }
+            });
+    };
 
     const onHttpRequestSuccess = (callback: (response: AxiosResponse) => void): void => {
         if (callback && typeof callback === "function") {

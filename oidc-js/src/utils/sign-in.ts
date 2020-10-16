@@ -374,7 +374,8 @@ export function sendRefreshTokenRequest(
                     }
 
                     return Promise.reject(
-                        new Error("Invalid id_token in the token response: " + response.data.id_token));
+                        new Error("Invalid id_token in the token response: " + response.data.id_token)
+                    );
                 });
             } else {
                 const tokenResponse: TokenResponseInterface = {
@@ -504,7 +505,9 @@ export function handleSignIn(requestParams: ConfigInterface | WebWorkerConfigInt
                 });
         }
 
-        return Promise.resolve("Sign In successful!");
+        return Promise.resolve({
+            type: SIGNED_IN
+        } as SignInResponse);
     } else {
         return initOPConfiguration(requestParams, false)
             .then(() => {
@@ -596,7 +599,6 @@ export const customGrant = (
                 }
 
                 if (requestParams.returnsSession) {
-
                     if (authConfig.validateIDToken) {
                         return validateIdToken(response.data.id_token, authConfig).then((valid) => {
                             if (valid) {
