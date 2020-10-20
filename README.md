@@ -45,7 +45,7 @@ npm install --save @asgardio/oidc-js
 ```
 Or simply load the SDK by importing the script into the header of your HTML file.
 ```html
-<script src="https://unpkg.com/@asgardio/oidc-js@0.1.0/dist/main.js"></script>
+<script src="https://unpkg.com/@asgardio/oidc-js@0.1.12/dist/main.js"></script>
 
 <script>
 const auth = AsgardioAuth.IdentityClient.getInstance();
