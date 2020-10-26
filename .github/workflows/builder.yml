@@ -58,7 +58,7 @@ jobs:
     - name: Bump version
       run: |
         git config --global user.email "version.bump@github.action.com"
-        git config --global user.name "GitHub Action Version Bumping"
+        git config --global user.name "asgardio-github-bot"
         npm run bump-patch-version
         git push --follow-tags
       if: github.repository == 'asgardio/asgardio-js-oidc-sdk'
