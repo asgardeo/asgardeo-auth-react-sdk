@@ -1,0 +1,56 @@
+{
+    "name": "@asgardio/oidc-react",
+    "version": "0.1.0",
+    "description": "OIDC React Authentication SDK for Asgardio.",
+    "keywords": [
+        "WSO2",
+        "WSO2-IS",
+        "WSO2 Identity Server",
+        "WSO2 Identity Apps",
+        "authentication",
+        "OIDC",
+        "SDK",
+        "Javascript",
+        "Asgardio",
+        "React"
+    ],
+    "main": "dist/main.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "lint": "tslint -t stylish --project .",
+        "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
+        "type-check": "tsc --emitDeclarationOnly",
+        "type-check:watch": "npm run type-check -- --watch"
+    },
+    "author": "WSO2",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@asgardio/oidc-js": "^0.1.2",
+        "jsrsasign": "^10.0.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.10.5",
+        "@babel/core": "^7.11.4",
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
+        "@babel/plugin-proposal-decorators": "^7.10.5",
+        "@babel/plugin-transform-modules-commonjs": "^7.6.0",
+        "@babel/polyfill": "^7.0.0",
+        "@babel/preset-env": "^7.11.0",
+        "@babel/preset-react": "^7.6.3",
+        "@babel/preset-typescript": "^7.10.4",
+        "@babel/runtime-corejs3": "^7.11.2",
+        "@types/crypto-js": "^3.1.43",
+        "@types/node": "^13.9.2",
+        "@typescript-eslint/eslint-plugin": "^2.19.2",
+        "@typescript-eslint/parser": "^3.10.1",
+        "babel-loader": "^8.1.0",
+        "eslint": "^6.8.0",
+        "eslint-loader": "^3.0.3",
+        "eslint-plugin-import": "^2.20.2",
+        "typescript": "^3.9.7",
+        "rimraf": "^3.0.2",
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.7",
+        "worker-loader": "^2.0.0"
+    }
+}
