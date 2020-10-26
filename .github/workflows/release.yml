@@ -43,10 +43,9 @@ jobs:
         npm ci
         npm run build --if-present
 
-    - name: Publish
+    - name: Publish OIDC JS SDK
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       run: |
-        cp README.md oidc-js/README.md
-        cd oidc-js
+        cd packages/oidc-js
         npm publish --access public
