@@ -48,7 +48,7 @@ Or simply load the SDK by importing the script into the header of your HTML file
 <script src="https://unpkg.com/@asgardio/oidc-js@0.1.12/dist/main.js"></script>
 
 <script>
-const auth = AsgardioAuth.IdentityClient.getInstance();
+var auth = AsgardioAuth.IdentityClient.getInstance();
 </script>
 ```
 
@@ -204,9 +204,9 @@ This method returns the information about the authenticated user as an object. T
 ```javascript
 auth.getUserInfo().then((response) => {
     // console.log(response);
-}).catch(error=>{
+}).catch((error) => {
     // console.error(error);
-})
+});
 ```
 
 ### signIn
@@ -333,9 +333,9 @@ This method returns the decoded payload of the JWT ID token.
 ### getAccessToken
 This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise an error is thrown.
 ```javascript
-auth.getAccessToken().then((token)=>{
+auth.getAccessToken().then((token) => {
     // console.log(token);
-}).error((error)=>{
+}).error((error) => {
     // console.error(error);
 });
 ```
