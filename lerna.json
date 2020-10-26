@@ -1,6 +1,6 @@
 {
     "packages": [
-        "oidc-js",
+        "packages/*",
         "samples/*"
     ],
     "version": "0.1.14"
