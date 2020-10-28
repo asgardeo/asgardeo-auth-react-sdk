@@ -52,6 +52,7 @@
         "eslint-plugin-import": "^2.20.2",
         "jsrsasign": "^8.0.12",
         "rimraf": "^3.0.2",
+        "ts-loader": "^8.0.4",
         "typescript": "^3.9.7",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.7",

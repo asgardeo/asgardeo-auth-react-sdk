@@ -52,7 +52,10 @@ module.exports = [{
         ]
     },
     output: {
-        filename: "main.js",
+        filename: "[name].js",
+        globalObject: "this",
+        library: "AsgardioAuth",
+        libraryTarget: "umd",
         path: path.resolve(__dirname, "dist")
     },
     resolve: {

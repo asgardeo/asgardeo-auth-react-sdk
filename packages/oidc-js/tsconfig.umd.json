@@ -13,7 +13,7 @@
         "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "outDir": "./dist",
+        "outDir": "./umd",
         "paths": {
             "*": ["types/*"]
         }
