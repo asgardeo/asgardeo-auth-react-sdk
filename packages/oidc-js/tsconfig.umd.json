@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "baseUrl": "/",
+        "esModuleInterop": true,
+        "target": "es5",
+        "module": "commonjs",
+        "lib": [ "webworker", "es2015", "dom" ],
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "noLib": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "outDir": "./dist",
+        "paths": {
+            "*": ["types/*"]
+        }
+    },
+    "compileOnSave": false,
+    "exclude": [
+        "node_modules",
+        "dist", 
+        "test-configs",
+        "src/**/tests/*",
+        "**/*.test.ts"
+    ]
+}

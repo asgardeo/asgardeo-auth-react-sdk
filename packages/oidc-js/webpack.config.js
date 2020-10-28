@@ -63,6 +63,15 @@ module.exports = [{
     module: {
         rules: [
             {
+                test: /\.worker\.ts$/,
+                use: {
+                    loader: "worker-loader",
+                    options: {
+                        inline: true
+                    }
+                }
+            },
+            {
                 test: /\.tsx?$/,
                 use: [{
                     loader: "awesome-typescript-loader?tsconfig=tsconfig.umd.json"
@@ -81,5 +90,5 @@ module.exports = [{
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
-    }
+    } 
 }];
