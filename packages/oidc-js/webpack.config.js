@@ -65,10 +65,7 @@ module.exports = [{
             {
                 test: /\.tsx?$/,
                 use: [{
-                    loader: "awesome-typescript-loader?tsconfig=tsconfig.umd.json",
-                    query: {
-                        declaration: true
-                    }
+                    loader: "awesome-typescript-loader?tsconfig=tsconfig.umd.json"
                 }],  
                 exclude: /node_modules/
             }
@@ -84,5 +81,5 @@ module.exports = [{
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
-    } 
+    }
 }];
