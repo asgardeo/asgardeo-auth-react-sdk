@@ -18,7 +18,7 @@
 
 const path = require("path");
 
-module.exports = {
+module.exports = [{
     entry: "./src/index.ts",
     module: {
         rules: [
@@ -52,7 +52,7 @@ module.exports = {
         ]
     },
     output: {
-        filename: "main.js",
+        filename: "[name].js",
         globalObject: "this",
         library: "AsgardioAuth",
         libraryTarget: "umd",
@@ -61,4 +61,37 @@ module.exports = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
     }
-};
+}, {
+    entry: "./src/index.ts",
+    module: {
+        rules: [
+            {
+                test: /\.worker\.ts$/,
+                use: {
+                    loader: "worker-loader",
+                    options: {
+                        inline: true
+                    }
+                }
+            },
+            {
+                test: /\.tsx?$/,
+                use: [{
+                    loader: "awesome-typescript-loader?tsconfig=tsconfig.umd.json"
+                }],  
+                exclude: /node_modules/
+            }
+        ]
+    },
+    output: {
+        filename: "asgardio-oidc.production.min.js",
+        globalObject: "this",
+        library: "AsgardioAuth",
+        libraryTarget: "umd",
+        path: path.resolve(__dirname, "umd"),
+        umdNamedDefine: true
+    },
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"]
+    } 
+}];

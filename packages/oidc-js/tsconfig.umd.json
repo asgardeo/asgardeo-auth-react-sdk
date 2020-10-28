@@ -1,25 +1,29 @@
 {
     "compilerOptions": {
+        "baseUrl": "/",
         "esModuleInterop": true,
-        "target": "es6",
-        "module": "esnext",
+        "target": "es5",
+        "module": "commonjs",
+        "lib": [ "webworker", "es2015", "dom" ],
         "moduleResolution": "node",
         "noImplicitAny": false,
-        "jsx": "react",
         "resolveJsonModule": true,
         "sourceMap": true,
         "noLib": false,
         "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true,
         "declaration": true,
-        "composite": true,
-        "declarationMap": true,
-        "baseUrl": "/",
+        "outDir": "./umd",
         "paths": {
             "*": ["types/*"]
-        },
-        "outDir": "./dist"
+        }
     },
     "compileOnSave": false,
-    "exclude": ["node_modules", "test-configs", "src/**/tests/*", "**/*.test.ts", "dist/**/*"]
+    "exclude": [
+        "node_modules",
+        "dist", 
+        "test-configs",
+        "src/**/tests/*",
+        "**/*.test.ts"
+    ]
 }
