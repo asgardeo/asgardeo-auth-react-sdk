@@ -52,11 +52,11 @@ module.exports = {
         ]
     },
     output: {
-        filename: "main.js",
+        filename: "asgardio-oidc.production.min.js",
         globalObject: "this",
         library: "AsgardioAuth",
         libraryTarget: "umd",
-        path: path.resolve(__dirname, "dist")
+        path: path.resolve(__dirname, "umd")
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
