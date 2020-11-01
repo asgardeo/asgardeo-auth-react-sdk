@@ -1,14 +1,21 @@
-# Asgardio Javascript SDKs
+# Asgardio Javascript SDKs and Samples
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org)
 
-Monorepo containing the source of Asgardio Javascript SDKs & Samples.
+This is a monorepo contain the sources of Asgardio Javascript SDKs & Samples.
 
 ### Packages
 
 | Package | Version |
 |--------|-------|
 | [`@asgardio/oidc-js`](/packages/oidc-js) | [![npm](https://img.shields.io/npm/v/@asgardio/oidc-js.svg?maxAge=3600)](https://www.npmjs.com/package/@asgardio/oidc-js) |
+| [`@asgardio/oidc-react`](/packages/oidc-react) | [![npm](https://img.shields.io/npm/v/@asgardio/oidc-react.svg?maxAge=3600)](https://www.npmjs.com/package/@asgardio/oidc-react) |
+
+### Samples
+
+| SDK | Sample |
+|--------|-------|
+| oidc-js | [`vanilla-js-app`](/samples/using-oidc-js-sdk/vanilla-js-app) <br> [`react-js-app`](/samples/using-oidc-js-sdk/react-js-app) <br> [`java-webapp`](/samples/using-oidc-js-sdk/java-webapp) | 
 
 ## Contribute
 
