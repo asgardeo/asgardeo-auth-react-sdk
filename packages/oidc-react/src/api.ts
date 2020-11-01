@@ -82,7 +82,7 @@ class AuthAPI {
 
             this.updateState(stateToUpdate);
 
-            dispatch({...state, ...stateToUpdate});
+            dispatch({ ...state, ...stateToUpdate });
 
             if (callback) {
                 callback();
@@ -105,7 +105,7 @@ class AuthAPI {
 
             this.updateState(stateToUpdate);
 
-            dispatch({...state, ...stateToUpdate});
+            dispatch({ ...state, ...stateToUpdate });
 
             if (callback) {
                 callback();
@@ -121,7 +121,7 @@ class AuthAPI {
      * @param {AuthStateInterface} state - State values to update in authentication state.
      */
     updateState(state: AuthStateInterface) {
-        this._authState = {...this._authState, ...state};
+        this._authState = { ...this._authState, ...state };
     }
 }
 

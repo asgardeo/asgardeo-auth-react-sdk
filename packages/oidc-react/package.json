@@ -48,6 +48,7 @@
         "eslint-loader": "^3.0.3",
         "eslint-plugin-import": "^2.20.2",
         "typescript": "^3.9.7",
+        "react": "^16.13.1",
         "rimraf": "^3.0.2",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.7",

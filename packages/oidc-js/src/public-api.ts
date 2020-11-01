@@ -16,10 +16,7 @@
  * under the License.
  */
 
-/**
- * Entry point for all public APIs of this SDK.
- */
-export * from "./client";
+// Models
 export * from "./models";
 
 // Constants

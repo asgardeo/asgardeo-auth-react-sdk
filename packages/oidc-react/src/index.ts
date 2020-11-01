@@ -16,7 +16,7 @@
  * under the License.
  */
 
-export * as utils from "@asgardio/oidc-js";
+export * from "@asgardio/oidc-js/src/public-api";
 
 export * from "./authenticate";
 export * as MODELS from "./models";
