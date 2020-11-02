@@ -1,6 +1,6 @@
 {
     "name": "@asgardio/oidc-react",
-    "version": "0.1.0",
+    "version": "0.1.18",
     "description": "OIDC React Authentication SDK for Asgardio.",
     "keywords": [
         "WSO2",
@@ -15,13 +15,21 @@
         "React"
     ],
     "main": "dist/main.js",
-    "types": "dist/index.d.ts",
+    "types": "dist/src/index.d.ts",
     "scripts": {
         "lint": "tslint -t stylish --project .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asgardio/asgardio-js-oidc-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
+    },
+    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
@@ -47,11 +55,16 @@
         "eslint": "^6.8.0",
         "eslint-loader": "^3.0.3",
         "eslint-plugin-import": "^2.20.2",
+        "eslint-plugin-react": "^7.19.0",
+        "eslint-plugin-react-hooks": "^4.0.0",
         "typescript": "^3.9.7",
-        "react": "^16.13.1",
         "rimraf": "^3.0.2",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.7",
         "worker-loader": "^2.0.0"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-dom": "*"
     }
 }

@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { FunctionComponent, createContext, useContext, useEffect, useState } from "react";
 import AuthAPI from "./api";
 import { AuthContextInterface } from "./models";
 
@@ -31,7 +31,7 @@ const AuthContext = createContext<AuthContextInterface>({
     state: AuthClient.getState()
 });
 
-const AuthProvider = ({ children, config }) => {
+const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ children, config }) => {
 
     const [ state, dispatch ] = useState(AuthClient.getState());
     const [ configState, setConfigState ] = useState(null);

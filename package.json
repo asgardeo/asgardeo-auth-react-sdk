@@ -34,6 +34,9 @@
     "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
     "devDependencies": {
         "lerna": "^3.22.1",
+        "react": "^16.14.0",
+        "react-dom": "16.14.0",
+        "react-router-dom": "^5.2.0",
         "rimraf": "^3.0.0"
     }
 }

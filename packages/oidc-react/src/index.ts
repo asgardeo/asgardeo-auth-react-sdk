@@ -19,4 +19,5 @@
 export * from "@asgardio/oidc-js/src/public-api";
 
 export * from "./authenticate";
-export * as MODELS from "./models";
+export * from "./models";
+export * from "./secure-route";

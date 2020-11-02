@@ -29,3 +29,8 @@ export interface AuthContextInterface {
     signOut: () => void;
     state: AuthStateInterface;
 }
+
+export interface SecureRouteInterface {
+    callback: () => {};
+    component: any;
+}
