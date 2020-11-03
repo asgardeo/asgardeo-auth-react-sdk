@@ -1,4 +1,4 @@
-/**
+<!--
  * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
@@ -14,30 +14,21 @@
  * KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations
  * under the License.
- */
+ -->
 
-const express = require("express");
-const path = require("path");
-const RateLimit = require("express-rate-limit");
-
-// Set up rate limiter: maximum of five requests per minute
-const limiter = new RateLimit({
-    windowMs: 1*60*1000, // 1 minute
-    max: 5
-});
-
-const app = express();
-
-// Apply rate limiter to all requests
-app.use(limiter);
-
-// Set app listening port
-app.listen(3000, () => {
-    console.log("Server listening on 3000");
-});
-
-app.use(express.static(path.resolve(__dirname, "node_modules/@asgardio/oidc-js/umd")));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "index.html"));
-});
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="referrer" content="no-referrer" />
+        
+        <title>Sample react based SPA with Asgardio OIDC React SDK</title>
+    </head>
+    <body>
+        <noscript>
+            You need to enable JavaScript to run this app.
+        </noscript>
+        <div id="root"></div>
+    </body>
+</html>

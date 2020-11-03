@@ -20,5 +20,8 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-// Export the public API.
+/**
+ * Entry point for all public APIs of this SDK.
+ */
+export * from "./client";
 export * from "./public-api";

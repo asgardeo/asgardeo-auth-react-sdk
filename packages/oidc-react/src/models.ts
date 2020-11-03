@@ -16,28 +16,21 @@
  * under the License.
  */
 
-const express = require("express");
-const path = require("path");
-const RateLimit = require("express-rate-limit");
+export interface AuthStateInterface {
+    allowedScopes: string;
+    displayName: string;
+    email: string;
+    isAuthenticated: boolean;
+    username: string;
+}
 
-// Set up rate limiter: maximum of five requests per minute
-const limiter = new RateLimit({
-    windowMs: 1*60*1000, // 1 minute
-    max: 5
-});
+export interface AuthContextInterface {
+    signIn: (callback?) => void;
+    signOut: () => void;
+    state: AuthStateInterface;
+}
 
-const app = express();
-
-// Apply rate limiter to all requests
-app.use(limiter);
-
-// Set app listening port
-app.listen(3000, () => {
-    console.log("Server listening on 3000");
-});
-
-app.use(express.static(path.resolve(__dirname, "node_modules/@asgardio/oidc-js/umd")));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "index.html"));
-});
+export interface SecureRouteInterface {
+    callback: () => {};
+    component: any;
+}

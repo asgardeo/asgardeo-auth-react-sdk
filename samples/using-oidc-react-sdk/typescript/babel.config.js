@@ -16,28 +16,25 @@
  * under the License.
  */
 
-const express = require("express");
-const path = require("path");
-const RateLimit = require("express-rate-limit");
-
-// Set up rate limiter: maximum of five requests per minute
-const limiter = new RateLimit({
-    windowMs: 1*60*1000, // 1 minute
-    max: 5
-});
-
-const app = express();
-
-// Apply rate limiter to all requests
-app.use(limiter);
-
-// Set app listening port
-app.listen(3000, () => {
-    console.log("Server listening on 3000");
-});
-
-app.use(express.static(path.resolve(__dirname, "node_modules/@asgardio/oidc-js/umd")));
-
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "index.html"));
-});
+module.exports = {
+    env: {
+        test: {
+            plugins: [ "@babel/plugin-transform-modules-commonjs" ]
+        }
+    },
+    plugins: [ ["@babel/plugin-proposal-decorators", { "legacy": true }], "@babel/plugin-proposal-class-properties" ],
+    presets: [
+        [
+            "@babel/preset-env",
+            {
+                corejs: {
+                    proposals: true,
+                    version: "3.6"
+                },
+                useBuiltIns: "entry"
+            }
+        ],
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+    ]
+};

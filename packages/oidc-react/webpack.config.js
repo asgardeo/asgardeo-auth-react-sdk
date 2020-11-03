@@ -18,8 +18,30 @@
 
 const path = require("path");
 
-module.exports = [{
+module.exports = {
     entry: "./src/index.ts",
+    externals: [
+        {
+            "react": {
+                root: "React",
+                commonjs2: "react",
+                commonjs: "react",
+                umd: "react"
+            },
+            "react-dom": {
+                root: "ReactDOM",
+                commonjs2: "react-dom",
+                commonjs: "react-dom",
+                umd: "react-dom"
+            },
+            "react-router-dom": {
+                root: "ReactRouter",
+                commonjs2: "react-router-dom",
+                commonjs: "react-router-dom",
+                umd: "react-router-dom"
+            }
+        }
+    ],
     module: {
         rules: [
             {
@@ -33,12 +55,12 @@ module.exports = [{
             },
             {
                 exclude: /(node_modules|dist)/,
-                test: /\.(ts|js)?$/,
+                test: /\.(tsx|jsx|ts|js)?$/,
                 use: "babel-loader"
             },
             {
                 exclude: /(node_modules|dist)/,
-                test: /\.(ts?|js)$/,
+                test: /\.(tsx|jsx|ts?|js)$/,
                 use: [
                     {
                         loader: "eslint-loader",
@@ -52,7 +74,7 @@ module.exports = [{
         ]
     },
     output: {
-        filename: "[name].js",
+        filename: "main.js",
         globalObject: "this",
         library: "AsgardioAuth",
         libraryTarget: "umd",
@@ -61,37 +83,4 @@ module.exports = [{
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
     }
-}, {
-    entry: "./src/index.ts",
-    module: {
-        rules: [
-            {
-                test: /\.worker\.ts$/,
-                use: {
-                    loader: "worker-loader",
-                    options: {
-                        inline: true
-                    }
-                }
-            },
-            {
-                test: /\.tsx?$/,
-                use: [{
-                    loader: "awesome-typescript-loader?tsconfig=tsconfig.umd.json"
-                }],  
-                exclude: /node_modules/
-            }
-        ]
-    },
-    output: {
-        filename: "asgardio-oidc.production.min.js",
-        globalObject: "this",
-        library: "AsgardioAuth",
-        libraryTarget: "umd",
-        path: path.resolve(__dirname, "umd"),
-        umdNamedDefine: true
-    },
-    resolve: {
-        extensions: [".tsx", ".ts", ".js"]
-    } 
-}];
+};
