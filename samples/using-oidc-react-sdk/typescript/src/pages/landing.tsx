@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { useAuthContext } from "@asgardio/oidc-react/src/index";
+import { useAuthContext } from "@asgardio/oidc-react";
 import React, { FunctionComponent } from "react";
 import { DefaultLayout } from "../layouts/default";
 

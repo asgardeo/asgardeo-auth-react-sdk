@@ -20,6 +20,28 @@ const path = require("path");
 
 module.exports = {
     entry: "./src/index.ts",
+    externals: [
+        {
+            "react": {
+                root: "React",
+                commonjs2: "react",
+                commonjs: "react",
+                umd: "react"
+            },
+            "react-dom": {
+                root: "ReactDOM",
+                commonjs2: "react-dom",
+                commonjs: "react-dom",
+                umd: "react-dom"
+            },
+            "react-router-dom": {
+                root: "ReactRouter",
+                commonjs2: "react-router-dom",
+                commonjs: "react-router-dom",
+                umd: "react-router-dom"
+            }
+        }
+    ],
     module: {
         rules: [
             {

@@ -5,6 +5,7 @@
       "module": "ESNext",
       "sourceMap": true,
       "noImplicitAny": true,
+      "moduleResolution": "node",
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "typeRoots" : [ "./typings" ]

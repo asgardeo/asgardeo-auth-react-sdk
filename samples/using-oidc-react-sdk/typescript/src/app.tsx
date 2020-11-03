@@ -16,10 +16,10 @@
  * under the License.
  */
 
-import { AuthProvider, SecureRoute } from "@asgardio/oidc-react/src/index";
+import { AuthProvider, SecureRoute } from "@asgardio/oidc-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
-import { BrowserRouter, Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import "./app.css";
 import * as authConfig from "./config.json";
 import LandingPage from "./pages/landing";
@@ -29,29 +29,28 @@ import NotFoundPage from "./pages/404";
 const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string}> = (props): ReactElement => {
     const { component, path } = props;
 
-    const secureRouteErrorFallback = () => {
+    const callback = (() => {
         let location = useLocation();
         let history = useHistory();
     
         if (location.pathname == "/404" || location.pathname == "/") {
             history.push("/home");
         }
-    };
+    })();
 
-    return (<SecureRoute path={ path } component={ component } callback={ secureRouteErrorFallback() } />);
+    return (<SecureRoute path={ path } component={ component } callback={ callback } />);
 };
 
-render(
-    (
-        <AuthProvider config={ authConfig.default }>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={ LandingPage } />
-                    <SecureRouteWithRedirect path="/home" component={ HomePage } />
-                    <Route component={ NotFoundPage } />
-                </Switch>
-            </BrowserRouter>
-        </AuthProvider>
-    ),
-    document.getElementById("root")
+const App = () => (
+    <AuthProvider config={ authConfig.default }>
+        <Router>
+            <Switch>
+                <Route exact path="/" component={ LandingPage } />
+                <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
+                <Route component={ NotFoundPage } />
+            </Switch>
+        </Router>
+    </AuthProvider>
 );
+
+render((<App />), document.getElementById("root"));
