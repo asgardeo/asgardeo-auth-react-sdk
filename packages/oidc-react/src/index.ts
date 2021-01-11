@@ -16,7 +16,7 @@
  * under the License.
  */
 
-export * from "@asgardio/oidc-js/src/public-api";
+export * from "@asgardeo/auth-spa";
 
 export * from "./authenticate";
 export * from "./models";
