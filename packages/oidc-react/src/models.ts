@@ -16,6 +16,19 @@
  * under the License.
  */
 
+import {
+    AuthClientConfig,
+    BasicUserInfo,
+    Config,
+    CustomGrantConfig,
+    DecodedIDTokenPayload,
+    Hooks,
+    HttpClientInstance,
+    HttpRequestConfig,
+    HttpResponse,
+    OIDCEndpoints
+} from "@asgardeo/auth-spa";
+
 export interface AuthStateInterface {
     allowedScopes: string;
     displayName: string;
@@ -27,10 +40,41 @@ export interface AuthStateInterface {
 export interface AuthContextInterface {
     signIn: (callback?) => void;
     signOut: () => void;
+    getBasicUserInfo(): Promise<BasicUserInfo>;
+    httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>>;
+    httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
+    requestCustomGrant(
+        config: CustomGrantConfig,
+        callback: (response: BasicUserInfo | HttpResponse<any>) => void,
+    ): void;
+    revokeAccessToken(): Promise<boolean>;
+    getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
+    getHttpClient(): Promise<HttpClientInstance>;
+    getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
+    getAccessToken(): Promise<string>;
+    refreshAccessToken(): Promise<BasicUserInfo>;
+    isAuthenticated(): Promise<boolean>;
+    enableHttpHandler(): Promise<boolean>;
+    disableHttpHandler(): Promise<boolean>;
+    updateConfig(config: Partial<AuthClientConfig<Config>>): Promise<void>;
+    on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
+    on(
+        hook:
+            | Hooks.EndUserSession
+            | Hooks.HttpRequestError
+            | Hooks.HttpRequestFinish
+            | Hooks.HttpRequestStart
+            | Hooks.HttpRequestSuccess
+            | Hooks.Initialize
+            | Hooks.SignIn
+            | Hooks.SignOut,
+        callback: (response?: any) => void
+    ): void;
+    on(hook: Hooks, callback: (response?: any) => void, id?: string): void;
     state: AuthStateInterface;
 }
 
 export interface SecureRouteInterface {
-    callback: () => {};
+    callback: () => void;
     component: any;
 }
