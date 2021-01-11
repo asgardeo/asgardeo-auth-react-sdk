@@ -114,7 +114,7 @@ const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ child
     );
 };
 
-const useAuthContext = (): (() => void) => {
+const useAuthContext = (): AuthContextInterface => {
     return useContext(AuthContext);
 };
 
