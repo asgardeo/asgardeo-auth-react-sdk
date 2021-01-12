@@ -27,7 +27,8 @@ import {
     HttpClientInstance,
     HttpRequestConfig,
     HttpResponse,
-    OIDCEndpoints
+    OIDCEndpoints,
+    SignInConfig
 } from "@asgardeo/auth-spa";
 import { AuthStateInterface } from "./models";
 
@@ -75,7 +76,10 @@ class AuthAPI {
     public signIn(
         dispatch: (state: AuthStateInterface) => void,
         state: AuthStateInterface,
-        callback?: () => void
+        config: SignInConfig,
+        authorizationCode: string,
+        sessionState: string,
+        callback?: (response: BasicUserInfo) => void
     ): void {
         this._client.on(Hooks.SignIn, (response) => {
             const stateToUpdate = {
@@ -91,11 +95,11 @@ class AuthAPI {
             dispatch({ ...state, ...stateToUpdate });
 
             if (callback) {
-                callback();
+                callback(response);
             }
         });
 
-        this._client.signIn();
+        this._client.signIn(config, authorizationCode, sessionState);
     }
 
     /**
@@ -191,7 +195,7 @@ class AuthAPI {
                     dispatch({ ...(response as BasicUserInfo), isAuthenticated: true });
                 }
 
-                callback(response);
+                callback && callback(response);
             },
             config.id
         );
