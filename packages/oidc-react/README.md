@@ -16,6 +16,9 @@
 -   [Try Out the Sample Apps](#try-out-the-sample-apps)
 -   [Browser Compatibility](#browser-compatibility)
 -   [APIs](#apis)
+    -   [AuthProvider](#AuthProvider)
+    -   [SecureRoute](#SecureRoute)
+    -   [useAuthContext](#useAuthContext)
     -   [getBasicUserInfo](#getBasicUserInfo)
     -   [signIn](#signIn)
     -   [signOut](#signOut)
@@ -36,6 +39,7 @@
 -   [Using the `form_post` Response Mode](#using-the-form_post-response-mode)
 -   [Storage](#storage)
 -   [Models](#Models)
+    -   [AuthStateInterface](#AuthStateInterface)
     -   [AuthClientConfig\<Config>](#AuthClientConfig<Config>)
     -   [BasicUserInfo](#BasicUserInfo)
     -   [SignInConfig](#SignInConfig)
@@ -203,6 +207,15 @@ export const MyApp = (): ReactElement => {
     )
 }
 ```
+---
+### SecureRoute
+The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router`dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
+
+This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access teh route. Developers can use this callback function to either to redirect the user to the login page of the app to call the [`signIn`](#signIn) method.
+#### Example
+```TypeScript
+<SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
+```
 
 ### useAuthContext
 
@@ -217,6 +230,7 @@ const { signIn } = useAuthContext();
 The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#AuthStateInterface). You can refer the link to know more about what data is contained by the `state` object.
 
 In addition to the `state` object, the hook also returns the following methods.
+
 
 ### getBasicUserInfo
 
