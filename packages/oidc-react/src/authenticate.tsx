@@ -23,11 +23,12 @@ import {
     CustomGrantConfig,
     Hooks,
     HttpRequestConfig,
-    HttpResponse
+    HttpResponse,
+    SignInConfig
 } from "@asgardeo/auth-spa";
 import React, { FunctionComponent, createContext, useContext, useEffect, useState } from "react";
 import AuthAPI from "./api";
-import { AuthContextInterface } from "./models";
+import { AuthContextInterface, AuthStateInterface } from "./models";
 
 const AuthClient = new AuthAPI();
 
@@ -39,12 +40,17 @@ const AuthContext = createContext<AuthContextInterface>({
     state: AuthClient.getState()
 });
 
-const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ children, config }) => {
-    const [state, dispatch] = useState(AuthClient.getState());
-    const [configState, setConfigState] = useState(null);
+const AuthProvider: FunctionComponent<{ children: any; config: any; }> = ({ children, config }) => {
+    const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
+    const [ configState, setConfigState ] = useState(null);
 
-    const signIn = (callback?) => {
-        AuthClient.signIn(dispatch, state, callback);
+    const signIn = (
+        config?: SignInConfig,
+        authorizationCode?: string,
+        sessionState?: string,
+        callback?: (response: BasicUserInfo) => void
+    ) => {
+        AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
     const signOut = (callback?) => {
         AuthClient.signOut(dispatch, state, callback);
@@ -54,7 +60,7 @@ const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ child
     const httpRequestAll = (configs: HttpRequestConfig[]) => AuthClient.httpRequestAll(configs);
     const requestCustomGrant = (
         config: CustomGrantConfig,
-        callback: (response: BasicUserInfo | HttpResponse<any>) => void
+        callback?: (response: BasicUserInfo | HttpResponse<any>) => void
     ) => AuthClient.requestCustomGrant(config, callback, dispatch);
     const revokeAccessToken = () => AuthClient.revokeAccessToken(dispatch);
     const getOIDCServiceEndpoints = () => AuthClient.getOIDCServiceEndpoints();
@@ -81,14 +87,14 @@ const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ child
 
         AuthClient.init(config);
         setConfigState(config);
-    }, [config]);
+    }, [ config ]);
 
     /**
      * Render state and special case actions
      */
     return (
         <AuthContext.Provider
-            value={{
+            value={ {
                 disableHttpHandler,
                 enableHttpHandler,
                 getAccessToken,
@@ -107,9 +113,9 @@ const AuthProvider: FunctionComponent<{ children: any; config: any }> = ({ child
                 signOut,
                 state,
                 updateConfig
-            }}
+            } }
         >
-            {configState && children}
+            { configState && children }
         </AuthContext.Provider>
     );
 };
