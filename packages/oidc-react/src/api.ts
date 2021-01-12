@@ -16,20 +16,31 @@
  * under the License.
  */
 
-import { ConfigInterface, Hooks, IdentityClient } from "@asgardio/oidc-js";
+import {
+    AsgardeoSPAClient,
+    AuthClientConfig,
+    BasicUserInfo,
+    Config,
+    CustomGrantConfig,
+    DecodedIDTokenPayload,
+    Hooks,
+    HttpClientInstance,
+    HttpRequestConfig,
+    HttpResponse,
+    OIDCEndpoints
+} from "@asgardeo/auth-spa";
 import { AuthStateInterface } from "./models";
 
 class AuthAPI {
     static DEFAULT_STATE: AuthStateInterface;
 
     private _authState = AuthAPI.DEFAULT_STATE;
-    private _client;
+    private _client: AsgardeoSPAClient;
 
     constructor() {
-        this._client = IdentityClient.getInstance();
+        this._client = AsgardeoSPAClient.getInstance();
 
         this.getState = this.getState.bind(this);
-        this.httpClient = this.httpClient.bind(this);
         this.init = this.init.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
@@ -41,26 +52,17 @@ class AuthAPI {
      *
      * @return {AuthStateInterface} Authentication State.
      */
-    getState() {
+    public getState(): AuthStateInterface {
         return this._authState;
-    }
-
-    /**
-     * Method will return the http client instance bound to this Auth Client instance.
-     *
-     * @return HttpClient.
-     */
-    httpClient() {
-        return this._client.httpRequest.bind(this._client).bind(this._client);
     }
 
     /**
      * Method to initialize the AuthClient instance.
      *
-     * @param {ConfigInterface} config - `dispatch` function from React Auth Context.
+     * @param {Config} config - `dispatch` function from React Auth Context.
      */
-    init(config: ConfigInterface) {
-        this._client.initialize(config);
+    public init(config: AuthClientConfig<Config>): Promise<boolean> {
+        return this._client.initialize(config);
     }
 
     /**
@@ -70,7 +72,11 @@ class AuthAPI {
      * @param {AuthStateInterface} state - Current authentication state in React Auth Context.
      * @param {any} callback - Action to trigger on successful sign in.
      */
-    signIn(dispatch, state: AuthStateInterface, callback?) {
+    public signIn(
+        dispatch: (state: AuthStateInterface) => void,
+        state: AuthStateInterface,
+        callback?: () => void
+    ): void {
         this._client.on(Hooks.SignIn, (response) => {
             const stateToUpdate = {
                 allowedScopes: response.allowedScopes,
@@ -99,7 +105,11 @@ class AuthAPI {
      * @param {AuthStateInterface} state - Current authentication state in React Auth Context.
      * @param {any} callback - Action to trigger on successful sign out.
      */
-    signOut(dispatch, state: AuthStateInterface, callback?) {
+    public signOut(
+        dispatch: (state: AuthStateInterface) => void,
+        state: AuthStateInterface,
+        callback?: () => void
+    ): void {
         this._client.on(Hooks.SignOut, () => {
             const stateToUpdate = AuthAPI.DEFAULT_STATE;
 
@@ -120,12 +130,203 @@ class AuthAPI {
      *
      * @param {AuthStateInterface} state - State values to update in authentication state.
      */
-    updateState(state: AuthStateInterface) {
+    public updateState(state: AuthStateInterface): void {
         this._authState = { ...this._authState, ...state };
+    }
+
+    /**
+     * This method returns a Promise that resolves with the basic user information obtained from the ID token.
+     *
+     * @return {Promise<BasicUserInfo>} - A promise that resolves with the user information.
+     */
+    public async getBasicUserInfo(): Promise<BasicUserInfo> {
+        return this._client.getBasicUserInfo();
+    }
+
+    /**
+     * This method sends an API request to a protected endpoint.
+     * The access token is automatically attached to the header of the request.
+     * This is the only way by which protected endpoints can be accessed
+     * when the web worker is used to store session information.
+     *
+     * @param {HttpRequestConfig} config -  The config object containing attributes necessary to send a request.
+     *
+     * @return {Promise<HttpResponse>} - Returns a Promise that resolves with the response to the request.
+     */
+    public async httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>> {
+        return this._client.httpRequest(config);
+    }
+
+    /**
+     * This method sends multiple API requests to a protected endpoint.
+     * The access token is automatically attached to the header of the request.
+     * This is the only way by which multiple requests can be sent to protected endpoints
+     * when the web worker is used to store session information.
+     *
+     * @param {HttpRequestConfig[]} config -  The config object containing attributes necessary to send a request.
+     *
+     * @return {Promise<HttpResponse[]>} - Returns a Promise that resolves with the responses to the requests.
+     */
+    public async httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
+        return this._client.httpRequestAll(configs);
+    }
+
+    /**
+     * This method allows you to send a request with a custom grant.
+     *
+     * @param {CustomGrantRequestParams} config - The request parameters.
+     *
+     * @return {Promise<HttpResponse<any> | SignInResponse>} - A Promise that resolves with
+     * the value returned by the custom grant request.
+     */
+    public requestCustomGrant(
+        config: CustomGrantConfig,
+        callback: (response: BasicUserInfo | HttpResponse<any>) => void,
+        dispatch: (state: AuthStateInterface) => void
+    ): void {
+        this._client.on(
+            Hooks.CustomGrant,
+            (response: BasicUserInfo | HttpResponse<any>) => {
+                if (config.returnsSession) {
+                    dispatch({ ...(response as BasicUserInfo), isAuthenticated: true });
+                }
+
+                callback(response);
+            },
+            config.id
+        );
+        this._client.requestCustomGrant(config);
+    }
+
+    /**
+     * This method ends a user session. The access token is revoked and the session information is destroyed.
+     *
+     * @return {Promise<boolean>} - A promise that resolves with `true` if the process is successful.
+     */
+    public async revokeAccessToken(dispatch: (state: AuthStateInterface) => void): Promise<boolean> {
+        return this._client.revokeAccessToken().then(() => {
+            dispatch(AuthAPI.DEFAULT_STATE);
+            return true;
+        });
+    }
+
+    /**
+     * This method returns a Promise that resolves with an object containing the service endpoints.
+     *
+     * @return {Promise<ServiceResourcesType} - A Promise that resolves with an object containing the service endpoints.
+     */
+    public async getOIDCServiceEndpoints(): Promise<OIDCEndpoints> {
+        return this._client.getOIDCServiceEndpoints();
+    }
+
+    /**
+     * This methods returns the Axios http client.
+     *
+     * @return {HttpClientInstance} - The Axios HTTP client.
+     */
+    public async getHttpClient(): Promise<HttpClientInstance> {
+        return this._client.getHttpClient();
+    }
+
+    /**
+     * This method decodes the payload of the id token and returns it.
+     *
+     * @return {Promise<DecodedIDTokenPayloadInterface>} - A Promise that resolves with
+     * the decoded payload of the id token.
+     */
+    public async getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
+        return this._client.getDecodedIDToken();
+    }
+
+    /**
+     * This method return a Promise that resolves with the access token.
+     *
+     * **This method will not return the access token if the storage type is set to `webWorker`.**
+     *
+     * @return {Promise<string>} - A Promise that resolves with the access token.
+     */
+    public async getAccessToken(): Promise<string> {
+        return this._client.getAccessToken();
+    }
+
+    /**
+     * This method refreshes the access token.
+     *
+     * @return {TokenResponseInterface} - A Promise that resolves with an object containing
+     * information about the refreshed access token.
+     */
+    public async refreshAccessToken(): Promise<BasicUserInfo> {
+        return this._client.refreshAccessToken();
+    }
+
+    /**
+     * This method specifies if the user is authenticated or not.
+     *
+     * @return {Promise<boolean>} - A Promise that resolves with `true` if teh user is authenticated.
+     */
+    public async isAuthenticated(): Promise<boolean> {
+        return this._client.isAuthenticated();
+    }
+
+    /**
+     * This method enables callback functions attached to the http client.
+     *
+     * @return {Promise<boolean>} - A promise that resolves with True.
+     *
+     */
+    public async enableHttpHandler(): Promise<boolean> {
+        return this._client.enableHttpHandler();
+    }
+
+    /**
+     * This method disables callback functions attached to the http client.
+     *
+     * @return {Promise<boolean>} - A promise that resolves with True.
+     */
+    public async disableHttpHandler(): Promise<boolean> {
+        return this._client.disableHttpHandler();
+    }
+
+    /**
+     * This method updates the configuration that was passed into the constructor when instantiating this class.
+     *
+     * @param {Partial<AuthClientConfig<T>>} config - A config object to update the SDK configurations with.
+     */
+    public async updateConfig(config: Partial<AuthClientConfig<Config>>): Promise<void> {
+        return this._client.updateConfig(config);
+    }
+
+    /**
+     * This method attaches a callback function to an event hook that fires the callback when the event happens.
+     *
+     * @param {Hooks.CustomGrant} hook - The name of the hook.
+     * @param {(response?: any) => void} callback - The callback function.
+     * @param {string} id (optional) - The id of the hook. This is used when multiple custom grants are used.
+     *
+     */
+    public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
+    public on(
+        hook:
+            | Hooks.EndUserSession
+            | Hooks.HttpRequestError
+            | Hooks.HttpRequestFinish
+            | Hooks.HttpRequestStart
+            | Hooks.HttpRequestSuccess
+            | Hooks.Initialize
+            | Hooks.SignIn
+            | Hooks.SignOut,
+        callback: (response?: any) => void
+    ): void;
+    public on(hook: Hooks, callback: (response?: any) => void, id?: string): void {
+        if (hook === Hooks.CustomGrant) {
+            return this._client.on(hook, callback, id);
+        }
+
+        return this._client.on(hook, callback);
     }
 }
 
-AuthAPI.DEFAULT_STATE = { 
+AuthAPI.DEFAULT_STATE = {
     allowedScopes: "",
     displayName: "",
     email: "",

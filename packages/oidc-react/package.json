@@ -1,5 +1,5 @@
 {
-    "name": "@asgardio/oidc-react",
+    "name": "@asgardeo/oidc-react",
     "version": "0.1.18",
     "description": "OIDC React Authentication SDK for Asgardio.",
     "keywords": [
@@ -33,7 +33,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardio/oidc-js": "^0.1.2",
+        "@asgardeo/auth-spa": "^0.1.31",
         "jsrsasign": "^10.0.1"
     },
     "devDependencies": {
