@@ -30,7 +30,7 @@ import { SecureRouteInterface } from "./models";
  */
 const SecureRoute: FunctionComponent<SecureRouteInterface> = ( props: SecureRouteInterface
 ): ReactElement => {
-    const { state, signIn } = useAuthContext();
+    const { state } = useAuthContext();
 
     const { component: Component } = props;
     let { callback } = props;
@@ -42,7 +42,7 @@ const SecureRoute: FunctionComponent<SecureRouteInterface> = ( props: SecureRout
         }
 
         if(!state.isAuthenticated) {
-            signIn(callback);
+            callback();
         }
 
     }, [state.isAuthenticated]);
