@@ -19,7 +19,7 @@
 import React, { ReactElement, FunctionComponent, useState, useEffect } from "react";
 import { SIGN_OUT, SIGN_IN } from "../constants";
 import { useHistory } from "react-router-dom";
-import { IdentityClient, Hooks } from '@asgardeo/oidc-js';
+import { IdentityClient, Hooks } from '@asgardio/oidc-js';
 import { useRecoilState } from "recoil";
 import { authState, displayName } from "../recoil";
 

@@ -1,13 +1,13 @@
 {
-    "name": "@asgardeo/oidc-sample-java",
+    "name": "@asgardio/oidc-sample-java",
     "version": "0.1.18",
-    "description": "A sample java web app demonstrating OIDC authentication using asgardeo's SDK",
+    "description": "A sample java web app demonstrating OIDC authentication using Asgardio's SDK",
     "main": "index.js",
     "scripts": {},
     "dependencies": {
-        "@asgardeo/oidc-js": "^0.1.18",
+        "@asgardio/oidc-js": "^0.1.18",
         "express": "^4.17.1"
     },
-    "author": "asgardeo",
+    "author": "Asgardio",
     "license": "Apache-2.0"
 }

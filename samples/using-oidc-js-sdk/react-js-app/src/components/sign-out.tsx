@@ -17,7 +17,7 @@
  */
 
 import { ReactElement, FunctionComponent, useEffect } from "react";
-import { IdentityClient } from "@asgardeo/oidc-js";
+import { IdentityClient } from "@asgardio/oidc-js";
 import { useHistory } from "react-router-dom";
 
 export const SignOut: FunctionComponent<null> = (): ReactElement => {

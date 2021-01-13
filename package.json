@@ -1,5 +1,5 @@
 {
-    "name": "asgardeo-auth-react-sdk",
+    "name": "asgardio-auth-react-sdk",
     "description": "Asgardeo Auth React SDK and Sample Apps",
     "main": "index.js",
     "scripts": {
@@ -17,21 +17,21 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/asgardeo/asgardeo-auth-react-sdk.git"
+        "url": "git+https://github.com/asgardio/asgardio-auth-react-sdk.git"
     },
     "keywords": [
-        "asgardeo",
+        "Asgardio",
         "OIDC",
         "OAuth2",
         "Authentication",
         "Authorization"
     ],
-    "author": "asgardeo",
+    "author": "Asgardio",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/asgardeo/asgardeo-auth-react-sdk/issues"
+        "url": "https://github.com/asgardio/asgardio-auth-react-sdk/issues"
     },
-    "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
+    "homepage": "https://github.com/asgardio/asgardio-auth-react-sdk#readme",
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^4.8.1",
         "@typescript-eslint/parser": "^3.10.1",

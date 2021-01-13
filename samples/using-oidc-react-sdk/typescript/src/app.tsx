@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { AuthProvider, SecureRoute } from "@asgardeo/oidc-react";
+import { AuthProvider, SecureRoute } from "@asgardio/oidc-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
@@ -32,7 +32,7 @@ const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string}>
     const callback = (() => {
         let location = useLocation();
         let history = useHistory();
-
+    
         if (location.pathname == "/404" || location.pathname == "/") {
             history.push("/home");
         }

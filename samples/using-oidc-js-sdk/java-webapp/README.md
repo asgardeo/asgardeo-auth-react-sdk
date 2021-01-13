@@ -1,4 +1,4 @@
-# asgardeo Java Sample Web App
+# Asgardio Java Sample Web App
 ## Getting Started
 Before getting started with running this app, make sure you have followed the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section.
 
