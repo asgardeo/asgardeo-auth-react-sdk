@@ -20,13 +20,13 @@
         "url": "git+https://github.com/asgardeo/asgardeo-auth-react-sdk.git"
     },
     "keywords": [
-        "Asgardio",
+        "Asgardeo",
         "OIDC",
         "OAuth2",
         "Authentication",
         "Authorization"
     ],
-    "author": "Asgardio",
+    "author": "Asgardeo",
     "license": "Apache-2.0",
     "bugs": {
         "url": "https://github.com/asgardeo/asgardeo-auth-react-sdk/issues"

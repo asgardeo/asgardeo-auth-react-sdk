@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Asgardio OIDC SDK - Sample</title>
+        <title>Asgardeo OIDC SDK - Sample</title>
         <style>
             body {
                 min-height: 100vh;
@@ -87,7 +87,7 @@
         %>
 
         // Instantiate the `IdentityClient` singleton
-        var auth = AsgardioAuth.IdentityClient.getInstance();
+        var auth = AsgardeoAuth.IdentityClient.getInstance();
 
         axios.get("/auth.jsp").then((response)=>{
             // Initialize the client

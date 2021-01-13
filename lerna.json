@@ -1,7 +1,7 @@
 {
     "command": {
         "version": {
-            "message": "[Asgardio Release] [GitHub Actions] [Release %s] Bump version"
+            "message": "[Asgardeo Release] [GitHub Actions] [Release %s] Bump version"
         }
     },
     "packages": [
