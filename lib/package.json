@@ -1,7 +1,7 @@
 {
-    "name": "@asgardeo/oidc-react",
+    "name": "@asgardeo/auth-react",
     "version": "0.1.18",
-    "description": "OIDC React Authentication SDK for Asgardio.",
+    "description": "Asgardeo Auth React SDK for Asgardeo.",
     "keywords": [
         "WSO2",
         "WSO2-IS",
@@ -11,7 +11,7 @@
         "OIDC",
         "SDK",
         "Javascript",
-        "Asgardio",
+        "asgardeo",
         "React"
     ],
     "main": "dist/main.js",
@@ -24,12 +24,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/asgardio/asgardio-auth-react-sdk.git"
+        "url": "git+https://github.com/asgardeo/asgardeo-auth-react-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/asgardio/asgardio-auth-react-sdk/issues"
+        "url": "https://github.com/asgardeo/asgardeo-auth-react-sdk/issues"
     },
-    "homepage": "https://github.com/asgardio/asgardio-auth-react-sdk#readme",
+    "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {

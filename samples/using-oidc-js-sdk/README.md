@@ -1,6 +1,6 @@
 # OIDC JS SDK Usage samples
 
-These are some examples how to use the OIDC JS SDK to integrate with Asgardio / WSO2 Identity Server.
+These are some examples how to use the OIDC JS SDK to integrate with asgardeo / WSO2 Identity Server.
 
 1. [`vanilla-js-app`](/using-oidc-js-sdk/vanilla-js-app)
 2. [`react-js-app`](/using-oidc-js-sdk/react-js-app)

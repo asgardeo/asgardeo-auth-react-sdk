@@ -1,9 +1,9 @@
 {
-    "name": "@asgardio/using-oidc-react-sdk-typescript",
+    "name": "@asgardeo/using-oidc-react-sdk-typescript",
     "version": "0.1.18",
-    "description": "React based sample SPA to demonstrate Asgardio / WSO2 Identity Server OIDC React SDK usage",
+    "description": "React based sample SPA to demonstrate asgardeo / WSO2 Identity Server OIDC React SDK usage",
     "keywords": [
-        "Asgardio",
+        "asgardeo",
         "WSO2",
         "WSO2 IS",
         "WSO2 Identity Server",
@@ -19,12 +19,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/asgardio/asgardio-auth-react-sdk.git"
+        "url": "git+https://github.com/asgardeo/asgardeo-auth-react-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/asgardio/asgardio-auth-react-sdk/issues"
+        "url": "https://github.com/asgardeo/asgardeo-auth-react-sdk/issues"
     },
-    "homepage": "https://github.com/asgardio/asgardio-auth-react-sdk#readme",
+    "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
     "private": false,
@@ -32,7 +32,7 @@
         "start": "webpack-dev-server --mode development --inline --hot --open"
     },
     "dependencies": {
-        "@asgardio/oidc-react": "file:../../../packages/oidc-react"
+        "@asgardeo/oidc-react": "file:../../../packages/oidc-react"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
