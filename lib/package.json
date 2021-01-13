@@ -1,7 +1,7 @@
 {
     "name": "@asgardeo/oidc-react",
     "version": "0.1.18",
-    "description": "OIDC React Authentication SDK for Asgardeo.",
+    "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [
         "WSO2",
         "WSO2-IS",
