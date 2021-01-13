@@ -40,10 +40,10 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
-      if: github.repository == 'asgardio/asgardio-js-oidc-sdk'
+      if: github.repository == 'asgardio/asgardio-auth-react-sdk'
 
     - uses: actions/checkout@v2
-      if: github.repository != 'asgardio/asgardio-js-oidc-sdk'
+      if: github.repository != 'asgardio/asgardio-auth-react-sdk'
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -61,4 +61,4 @@ jobs:
         git config --global user.name "asgardio-github-bot"
         npm run bump-patch-version
         git push --follow-tags
-      if: github.repository == 'asgardio/asgardio-js-oidc-sdk'
+      if: github.repository == 'asgardio/asgardio-auth-react-sdk'

@@ -24,12 +24,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/asgardio/asgardio-js-oidc-sdk.git"
+        "url": "git+https://github.com/asgardio/asgardio-auth-react-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/asgardio/asgardio-js-oidc-sdk/issues"
+        "url": "https://github.com/asgardio/asgardio-auth-react-sdk/issues"
     },
-    "homepage": "https://github.com/asgardio/asgardio-js-oidc-sdk#readme",
+    "homepage": "https://github.com/asgardio/asgardio-auth-react-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {

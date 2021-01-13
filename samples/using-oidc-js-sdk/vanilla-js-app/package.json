@@ -16,7 +16,7 @@
         "Javascript",
         "Authenticate"
     ],
-    "repository": "https://github.com/asgardio/asgardio-js-oidc-sdk.git",
+    "repository": "https://github.com/asgardio/asgardio-auth-react-sdk.git",
     "author": "WSO2",
     "license": "Apache-2.0",
     "private": false,
