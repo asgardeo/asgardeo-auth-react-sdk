@@ -1,5 +1,5 @@
 {
-    "name": "@asgardio/oidc-sample-vanilla",
+    "name": "@asgardeo/oidc-sample-vanilla",
     "version": "0.1.18",
     "description": "A sample vanilla javascript app demonstrating authentication using Asgardio OIDC JS SDK",
     "keywords": [
@@ -16,7 +16,7 @@
         "Javascript",
         "Authenticate"
     ],
-    "repository": "https://github.com/asgardio/asgardio-auth-react-sdk.git",
+    "repository": "https://github.com/asgardeo/asgardeo-auth-react-sdk.git",
     "author": "WSO2",
     "license": "Apache-2.0",
     "private": false,
@@ -25,7 +25,7 @@
         "start": "node server.js"
     },
     "dependencies": {
-        "@asgardio/oidc-js": "^0.1.18",
+        "@asgardeo/oidc-js": "^0.1.18",
         "express": "^4.17.1",
         "express-rate-limit": "^5.1.3"
     }

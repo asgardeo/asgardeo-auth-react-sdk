@@ -21,7 +21,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { authState, displayName } from "../recoil";
 import { useHistory } from "react-router-dom";
 import { DASHBOARD } from "../constants";
-import { IdentityClient, Hooks } from "@asgardio/oidc-js";
+import { IdentityClient, Hooks } from "@asgardeo/oidc-js";
 export const SignIn: FunctionComponent<null> = (): ReactElement => {
 
     const [ auth, setAuth ] = useRecoilState(authState);

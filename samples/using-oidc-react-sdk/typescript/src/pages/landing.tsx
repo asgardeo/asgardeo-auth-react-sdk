@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { useAuthContext } from "@asgardio/oidc-react";
+import { useAuthContext } from "@asgardeo/oidc-react";
 import React, { FunctionComponent } from "react";
 import { DefaultLayout } from "../layouts/default";
 
@@ -28,7 +28,7 @@ const LandingPage: FunctionComponent<{}> = () => {
             <h3>
                 Sample demo to showcase how to authenticate a simple client side application using&nbsp;
                 <b>Asgardio / WSO2 Identity Server</b> with the&nbsp;
-                <a href="https://github.com/wso2-extensions/identity-sdks-js/tree/master/identity-oidc-js" 
+                <a href="https://github.com/wso2-extensions/identity-sdks-js/tree/master/identity-oidc-js"
                     target="_blank">OIDC React SDK</a>
             </h3>
             <button className="btn primary" onClick={() => { signIn() }}>Login</button>

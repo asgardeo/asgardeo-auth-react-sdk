@@ -5,7 +5,7 @@ This sample uses Typescript.
 
 ## Getting started
 
-Navigate to https://console.portals.asgardio.io and login (Register if you don't have an account). Or if you are using the on premise version (WSO2 Identity Server) follow below 1-3 steps.
+Navigate to https://console.portals.asgardeo.io and login (Register if you don't have an account). Or if you are using the on premise version (WSO2 Identity Server) follow below 1-3 steps.
 
 1. Download [WSO2 Identity Server 5.11.0](https://github.com/wso2/product-is/releases) or above.
 2. Navigate and execute `bin/wso2server.sh` (For unix environment) or `bin/wso2server.bat` (For windows environment) to run the WSO2 Identity Server.
@@ -36,7 +36,7 @@ And you are ready! OIDC details can be found under **"Access -> OIDC"**
         // ClientID generated for the application. E.g. "uxRd9AqFa3Blp1ASvKYaUizU7pca"
         "clientID": "",
 
-        // Server Origin URL with your tenant details. E.g. https://localhost:9443 (WSO2 Identity Server) or https://asgardio.io/t/demo (Asgardio)
+        // Server Origin URL with your tenant details. E.g. https://localhost:9443 (WSO2 Identity Server) or https://asgardeo.io/t/demo (Asgardio)
         "serverOrigin": "",
         ...
     };
