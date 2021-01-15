@@ -1,5 +1,5 @@
 {
-    "name": "@asgardeo/oidc-react",
+    "name": "@asgardeo/auth-react",
     "version": "0.1.0",
     "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [

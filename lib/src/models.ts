@@ -60,7 +60,7 @@ export interface AuthContextInterface {
     on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
     on(
         hook:
-            | Hooks.EndUserSession
+            | Hooks.RevokeAccessToken
             | Hooks.HttpRequestError
             | Hooks.HttpRequestFinish
             | Hooks.HttpRequestStart

@@ -32,7 +32,7 @@
         "start": "webpack-dev-server --mode development --inline --hot --open"
     },
     "dependencies": {
-        "@asgardeo/oidc-react": "file:../../../packages/oidc-react"
+        "@asgardeo/auth-react": "file:../../../packages/oidc-react"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
