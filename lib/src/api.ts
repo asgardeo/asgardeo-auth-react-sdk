@@ -311,7 +311,7 @@ class AuthAPI {
     public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
     public on(
         hook:
-            | Hooks.EndUserSession
+            | Hooks.RevokeAccessToken
             | Hooks.HttpRequestError
             | Hooks.HttpRequestFinish
             | Hooks.HttpRequestStart

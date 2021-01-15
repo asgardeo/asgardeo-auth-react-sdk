@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/using-oidc-react-sdk-typescript",
-    "version": "0.1.18",
+    "version": "0.1.0",
     "description": "React based sample SPA to demonstrate Asgardeo / WSO2 Identity Server OIDC React SDK usage",
     "keywords": [
         "Asgardeo",
@@ -32,7 +32,7 @@
         "start": "webpack-dev-server --mode development --inline --hot --open"
     },
     "dependencies": {
-        "@asgardeo/oidc-react": "file:../../../packages/oidc-react"
+        "@asgardeo/auth-react": "file:../../../packages/oidc-react"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",

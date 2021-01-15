@@ -26,7 +26,14 @@ import {
     HttpResponse,
     SignInConfig
 } from "@asgardeo/auth-spa";
-import React, { FunctionComponent, createContext, useContext, useEffect, useState } from "react";
+import React, {
+    FunctionComponent,
+    ReactPropsWithChildren,
+    createContext,
+    useContext,
+    useEffect,
+    useState
+} from "react";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthStateInterface } from "./models";
 
@@ -40,9 +47,17 @@ const AuthContext = createContext<AuthContextInterface>({
     state: AuthClient.getState()
 });
 
-const AuthProvider: FunctionComponent<{ children: any; config: any; }> = ({ children, config }) => {
-    const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
-    const [ configState, setConfigState ] = useState(null);
+interface AuthProviderPropsInterface {
+    config: AuthClientConfig<Config>;
+}
+
+const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsInterface>> = (
+    props: ReactPropsWithChildren<AuthProviderPropsInterface>
+) => {
+    const [state, dispatch] = useState<AuthStateInterface>(AuthClient.getState());
+    const [configState, setConfigState] = useState(null);
+
+    const { children, config } = props;
 
     const signIn = (
         config?: SignInConfig,
@@ -87,14 +102,14 @@ const AuthProvider: FunctionComponent<{ children: any; config: any; }> = ({ chil
 
         AuthClient.init(config);
         setConfigState(config);
-    }, [ config ]);
+    }, [config]);
 
     /**
      * Render state and special case actions
      */
     return (
         <AuthContext.Provider
-            value={ {
+            value={{
                 disableHttpHandler,
                 enableHttpHandler,
                 getAccessToken,
@@ -113,9 +128,9 @@ const AuthProvider: FunctionComponent<{ children: any; config: any; }> = ({ chil
                 signOut,
                 state,
                 updateConfig
-            } }
+            }}
         >
-            { configState && children }
+            {configState && children}
         </AuthContext.Provider>
     );
 };

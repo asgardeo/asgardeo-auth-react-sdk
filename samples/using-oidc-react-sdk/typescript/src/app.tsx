@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { AuthProvider, SecureRoute } from "@asgardeo/oidc-react";
+import { AuthProvider, SecureRoute } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, useHistory, useLocation } from "react-router-dom";
