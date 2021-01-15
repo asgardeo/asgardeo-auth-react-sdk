@@ -54,8 +54,8 @@ interface AuthProviderPropsInterface {
 const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsInterface>> = (
     props: ReactPropsWithChildren<AuthProviderPropsInterface>
 ) => {
-    const [state, dispatch] = useState<AuthStateInterface>(AuthClient.getState());
-    const [configState, setConfigState] = useState(null);
+    const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
+    const [ configState, setConfigState ] = useState(null);
 
     const { children, config } = props;
 
@@ -102,14 +102,14 @@ const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsIn
 
         AuthClient.init(config);
         setConfigState(config);
-    }, [config]);
+    }, [ config ]);
 
     /**
      * Render state and special case actions
      */
     return (
         <AuthContext.Provider
-            value={{
+            value={ {
                 disableHttpHandler,
                 enableHttpHandler,
                 getAccessToken,
@@ -128,9 +128,9 @@ const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsIn
                 signOut,
                 state,
                 updateConfig
-            }}
+            } }
         >
-            {configState && children}
+            { configState && children }
         </AuthContext.Provider>
     );
 };
