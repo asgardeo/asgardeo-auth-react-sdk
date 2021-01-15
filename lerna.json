@@ -1,11 +1,11 @@
 {
     "command": {
         "version": {
-            "message": "[Asgardio Release] [GitHub Actions] [Release %s] Bump version"
+            "message": "[Asgardeo Release] [GitHub Actions] [Release %s] Bump version"
         }
     },
     "packages": [
-        "packages/*",
+        "lib",
         "samples/using-oidc-react-sdk",
         "sample/using-oidc-js-sdk"
     ],

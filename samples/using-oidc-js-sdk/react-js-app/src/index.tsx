@@ -20,7 +20,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { IdentityClient, Storage } from "@asgardio/oidc-js";
+import { IdentityClient, Storage } from "@asgardeo/oidc-js";
 import "./index.css";
 
 const auth = IdentityClient.getInstance();
