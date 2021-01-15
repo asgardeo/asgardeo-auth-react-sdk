@@ -45,7 +45,7 @@ export interface AuthContextInterface {
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
     requestCustomGrant(
         config: CustomGrantConfig,
-        callback: (response: BasicUserInfo | HttpResponse<any>) => void,
+        callback?: (response: BasicUserInfo | HttpResponse<any>) => void,
     ): void;
     revokeAccessToken(): Promise<boolean>;
     getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;

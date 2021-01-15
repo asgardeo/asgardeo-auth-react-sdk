@@ -28,21 +28,21 @@ import { SecureRouteInterface } from "./models";
  *
  * @return {React.ReactElement}
  */
-const SecureRoute: FunctionComponent<{}> = ( props: SecureRouteInterface
+const SecureRoute: FunctionComponent<SecureRouteInterface> = ( props: SecureRouteInterface
 ): ReactElement => {
-    const { state, signIn } = useAuthContext();
+    const { state } = useAuthContext();
 
     const { component: Component } = props;
     let { callback } = props;
 
     useEffect(() => {
 
-        if(!callback) { 
+        if(!callback) {
             callback = null;
         }
 
-        if(!state.isAuthenticated) { 
-            signIn(callback);
+        if(!state.isAuthenticated) {
+            callback();
         }
 
     }, [state.isAuthenticated]);
