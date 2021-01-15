@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/oidc-sample-vanilla",
-    "version": "0.1.18",
+    "version": "0.1.0",
     "description": "A sample vanilla javascript app demonstrating authentication using Asgardeo OIDC JS SDK",
     "keywords": [
         "Asgardeo",
@@ -25,7 +25,7 @@
         "start": "node server.js"
     },
     "dependencies": {
-        "@asgardeo/oidc-js": "^0.1.18",
+        "@asgardeo/oidc-js": "^0.1.0",
         "express": "^4.17.1",
         "express-rate-limit": "^5.1.3"
     }
