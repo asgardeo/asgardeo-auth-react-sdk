@@ -87,7 +87,6 @@ import { AuthProvider, useAuthContext } from "@asgardeo/auth-react";
 const config = {
      signInRedirectURL: "http://localhost:3000/sign-in",
      signOutRedirectURL: "http://localhost:3000/dashboard",
-     clientHost: "http://localhost:3000",
      clientID: "client ID",
      serverOrigin: "https://localhost:9443"
 };
