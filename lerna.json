@@ -6,8 +6,7 @@
     },
     "packages": [
         "lib",
-        "samples/using-oidc-react-sdk",
-        "sample/using-oidc-js-sdk"
+        "samples/*"
     ],
     "version": "0.1.0"
 }
