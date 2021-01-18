@@ -16,8 +16,7 @@
  * under the License.
  */
 
-export * from "@asgardeo/auth-spa";
+process.env.polyfilled = "false";
 
-export * from "./authenticate";
-export * from "./models";
-export * from "./secure-route";
+export * from "@asgardeo/auth-spa";
+export * from "./public-api";
