@@ -27,9 +27,9 @@ const LandingPage: FunctionComponent<{}> = () => {
         <DefaultLayout>
             <h3>
                 Sample demo to showcase how to authenticate a simple client side application using&nbsp;
-                <b>Asgardeo / WSO2 Identity Server</b> with the&nbsp;
+                <b>Asgardeo</b> with the&nbsp;
                 <a href="https://github.com/wso2-extensions/identity-sdks-js/tree/master/identity-oidc-js"
-                    target="_blank">OIDC React SDK</a>
+                    target="_blank">Asgardeo Auth React SDK</a>
             </h3>
             <button className="btn primary" onClick={() => { signIn() }}>Login</button>
         </DefaultLayout>
