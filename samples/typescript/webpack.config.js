@@ -23,11 +23,12 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         historyApiFallback: true,
+        https: true,
         host: "localhost",
         inline: true,
         port: 5000
-    },   
-    devtool: "source-map", 
+    },
+    devtool: "source-map",
     entry: ["./src/app.tsx"],
     module: {
         rules: [
