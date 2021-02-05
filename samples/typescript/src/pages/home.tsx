@@ -25,7 +25,7 @@ const HomePage: FunctionComponent<{}> = () => {
 
     return (
         <DefaultLayout>
-            <h3>Below are the basic details retrieves from the server on a successful login.</h3>
+            <h3>Below are the basic details retrieved from the server on a successful login.</h3>
             <div>
                 <ul className="details">
                     <li><b>Name:</b> { state.displayName }</li>
