@@ -16,7 +16,8 @@
  * under the License.
  */
 
-process.env.polyfilled = "false";
+import "core-js";
+import "regenerator-runtime/runtime";
 
 export * from "@asgardeo/auth-spa";
 export * from "./public-api";
