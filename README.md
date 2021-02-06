@@ -28,6 +28,7 @@
     -   [revokeAccessToken](#revokeAccessToken)
     -   [getOIDCServiceEndpoints](#getOIDCServiceEndpoints)
     -   [getDecodedIDToken](#getdecodedidtoken)
+    -   [getIDToken](#getIDToken)
     -   [getAccessToken](#getaccesstoken)
     -   [refreshAccessToken](#refreshAccessToken)
     -   [on](#on)
@@ -517,7 +518,27 @@ auth.getDecodedIDToken().then((idToken) => {
     // console.error(error);
 });
 ```
+---
+### getIDToken
 
+```TypeScript
+getIDToken(): Promise<string>
+```
+
+#### Returns
+
+idToken: `Promise<string>`
+The id token.
+
+#### Description
+
+This method returns the id token.
+
+#### Example
+
+```TypeScript
+const idToken = await auth.getIDToken();
+```
 ---
 
 ### getAccessToken
@@ -783,6 +804,26 @@ This table shows the extended attributes provided by the `Config` interface.
 | [`storage`](#storage) | Optional | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"` | The storage medium where the session information such as the access token should be stored.| |
 | `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. | |
 |`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out. |
+
+#### The AuthClientConfig Interface
+
+| Attribute                    | Required/Optional | Type            | Default Value                                                           | Description                                                                                          |
+| ---------------------------- | ----------------- | --------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:3000/sign-in` |
+| `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `http://localhost:3000/dashboard`                                                                                                            |
+| `clientHost`                 | Optional          | `string`        | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:3000`                                         |
+| `clientID`                   | Required          | `string`        | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                        |
+| `clientSecret`               | Optional          | `string`        | ""                                                                      | The client secret of the OIDC application                                                            |
+| `enablePKCE`                 | Optional          | `boolean`       | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                      |
+| `prompt`                     | Optional          | `string`        | ""                                                                      | Specifies the prompt type of an OIDC request                                                         |
+| `responseMode`               | Optional          | `ResponseMode`  | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                          |
+| `scope`                      | Optional          | `string[]`      | `["openid"]`                                                            | Specifies the requested scopes.                                                                      |
+| `serverOrigin`               | Required          | `string`        | ""                                                                      | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                   |
+| `endpoints`                  | Optional          | `OIDCEndpoints` | [OIDC Endpoints Default Values](#oidc-endpoints)                        | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                 | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
+| `overrideWellEndpointConfig` | Optional          | `boolean`       | `false`                                                                 | If this option is set to `true`, then the `endpoints` object will override endpoints obtained        | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
+| `wellKnownEndpoint`          | Optional          | `string`        | `"/oauth2/token/.well-known/openid-configuration"`                      | The URL of the `.well-known` endpoint.                                                               |
+| `validateIDToken`            | Optional          | `boolean`       | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                   |
+| `clockTolerance`             | Optional          | `number`        | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                     |
 
 ### BasicUserInfo
 
