@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -21,8 +21,8 @@ body {
     padding: 0;
     text-align: center;
     color: #2A2A2A;
-    background-color: #EFEFEF;
-    font-family: BlinkMacSystemFont, Segoe WPC,Segoe UI, HelveticaNeue-Light, Ubuntu,Droid Sans,sans-serif, 'Helvetica Neue', Arial,Helvetica,sans-serif;
+    background-color: #fff;
+    font-family: BlinkMacSystemFont, Segoe WPC,Segoe UI, HelveticaNeue-Light, Ubuntu,Droid Sans, sans-serif, 'Helvetica Neue', Arial, Helvetica,sans-serif;
 }
 
 h1, h2, h3, h4, h5 {
@@ -38,11 +38,19 @@ b {
 }
 
 a {
-    color: #00d8ff;
+    color: #f47421;
 }
 
 a:hover {
     text-decoration: none;;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mt-4 {
+    margin-top: 40px !important;
 }
 
 .home-image {
@@ -63,36 +71,91 @@ a:hover {
 }
 
 img.footer-image {
-    width: 150px;
-    margin-top: 30px;
+    width: 50px;
+    margin: 30px auto;
     opacity: .8;
 }
 
+img.logo-image {
+    width: 200px;
+    margin-top: 100px;
+}
+
 code {
-    background: #eee;
+    background: #272822;
     padding: 4px;
     font-size: 90%;
-    color: #008aa2;
+    color: #fd971f;
+}
+
+.code {
+    background: #272822;
+    display: block;
+    word-break: break-all;
+    padding: 20px;
+    text-align: left;
+}
+
+.code .id-token-0 {
+    color: #cc6633;
+}
+
+.code .id-token-1 {
+    color: #f9f8f5;
+}
+
+.code .id-token-2 {
+    color: #fd971f;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    text-align: left;
+}
+
+.row > .column {
+    flex: 40%;
+    margin-right: 15px;
+}
+
+.row > .column:last-child {
+    flex: 60%;
+    margin-right: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+        margin-right: 0;
+    }
 }
 
 .container {
     background: #fff;
-    width: 789px;
+    border: 1px solid #e2e2e2;
+    width: 980px;
     margin: 0 auto;
     margin-top: 50px;
-    border-radius: 3px;
+    border-radius: 10px;
 }
 
-.details {
+.json {
     text-align: left;
-    display: inline-block;
-    margin-left: -30px;
+    display: block;
+    overflow: auto;
+    word-break: break-all;
+}
+
+.json .pretty-json-container.object-container {
+    padding: 20px;
 }
 
 .header-title {
-    background-color: #282c34;
+    background-color: #f47421;
     color: #ffffff;
     padding: 20px;
+    border-radius: 10px 10px 0 0;
 }
 
 .content {
