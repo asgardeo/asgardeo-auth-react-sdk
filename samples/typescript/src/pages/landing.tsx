@@ -17,21 +17,45 @@
  */
 
 import { useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
+import REACT_LOGO from "../images/react-logo.png";
+import JS_LOGO from "../images/js-logo.png";
 
 const LandingPage: FunctionComponent<{}> = () => {
-    const { signIn } = useAuthContext();
+    const { signIn, state } = useAuthContext();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (state?.isAuthenticated) {
+            history.push("/home");
+        }
+    }, [ state.isAuthenticated, history ]);
 
     return (
         <DefaultLayout>
+            <div className="home-image">
+                <img src={ JS_LOGO } className="js-logo-image logo" />
+                <span className="logo-plus">+</span>
+                <img src={ REACT_LOGO } className="react-logo-image logo" />
+            </div>
             <h3>
-                Sample demo to showcase how to authenticate a simple client side application using&nbsp;
-                <b>Asgardeo</b> with the&nbsp;
-                <a href="https://github.com/wso2-extensions/identity-sdks-js/tree/master/identity-oidc-js"
-                    target="_blank">Asgardeo Auth React SDK</a>
+                Sample demo to showcase how to authenticate a simple client side application using
+                <br />
+                <b>Asgardeo</b> with the{ " " }
+                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
+                    Asgardeo Auth React SDK
+                </a>
             </h3>
-            <button className="btn primary" onClick={() => { signIn() }}>Login</button>
+            <button
+                className="btn primary"
+                onClick={ () => {
+                    signIn();
+                } }
+            >
+                Login
+            </button>
         </DefaultLayout>
     );
 };
