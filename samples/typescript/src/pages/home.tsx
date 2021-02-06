@@ -17,23 +17,112 @@
  */
 
 import { useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { DefaultLayout } from "../layouts/default";
+import ReactJson from "react-json-view";
 
 const HomePage: FunctionComponent<{}> = () => {
-    const { state, signOut } = useAuthContext();
+    const { state, signOut, getBasicUserInfo, getIDToken, getDecodedIDToken } = useAuthContext();
+    const [ authenticateState, setAuthenticateState ] = useState(null);
+
+    useEffect(() => {
+        if (state?.isAuthenticated) {
+            const getData = async () => {
+                const basicUserInfo = await getBasicUserInfo();
+                const idToken = await getIDToken();
+                const decodedIDToken = await getDecodedIDToken();
+
+                const authState = {
+                    authenticateResponse: basicUserInfo,
+                    idToken: idToken.split("."),
+                    decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[ 0 ])),
+                    decodedIDTokenPayload: decodedIDToken
+                };
+
+                setAuthenticateState(authState);
+            };
+
+            getData();
+        }
+    }, [ state.isAuthenticated ]);
 
     return (
         <DefaultLayout>
-            <h3>Below are the basic details retrieved from the server on a successful login.</h3>
-            <div>
-                <ul className="details">
-                    <li><b>Name:</b> { state.displayName }</li>
-                    <li><b>Username:</b> { state.username }</li>
-                    <li><b>Email:</b> { state.email }</li>
-                </ul>
-            </div>
-            <button className="btn primary" onClick={() => { signOut() }}>Logout</button>
+            { state.isAuthenticated && (
+                <>
+                    <h2>Authentication response</h2>
+                    <div className="json">
+                        <ReactJson
+                            src={ authenticateState?.authenticateResponse }
+                            name={ null }
+                            enableClipboard={ false }
+                            displayObjectSize={ false }
+                            displayDataTypes={ false }
+                            iconStyle="square"
+                            theme="monokai"
+                        />
+                    </div>
+
+                    <h2 className="mb-0 mt-4">ID token</h2>
+
+                    <div className="row">
+                        { authenticateState?.idToken && (
+                            <div className="column">
+                                <h5>
+                                    <b>Encoded</b>
+                                </h5>
+                                <div className="code">
+                                    <code>
+                                        <span className="id-token-0">{ authenticateState?.idToken[ 0 ] }</span>.
+                                        <span className="id-token-1">{ authenticateState?.idToken[ 1 ] }</span>.
+                                        <span className="id-token-2">{ authenticateState?.idToken[ 2 ] }</span>
+                                    </code>
+                                </div>
+                            </div>
+                        ) }
+                        <div className="column">
+                            <div className="json">
+                                <h5>
+                                    <b>Decoded:</b> Header
+                                </h5>
+                                <ReactJson
+                                    src={ authenticateState?.decodedIdTokenHeader }
+                                    name={ null }
+                                    enableClipboard={ false }
+                                    displayObjectSize={ false }
+                                    displayDataTypes={ false }
+                                    iconStyle="square"
+                                    theme="monokai"
+                                />
+                            </div>
+
+                            <div className="json">
+                                <h5>
+                                    <b>Decoded:</b> Payload
+                                </h5>
+                                <ReactJson
+                                    src={ authenticateState?.decodedIDTokenPayload }
+                                    name={ null }
+                                    enableClipboard={ false }
+                                    displayObjectSize={ false }
+                                    displayDataTypes={ false }
+                                    iconStyle="square"
+                                    theme="monokai"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        className="btn primary mt-4"
+                        onClick={ () => {
+                            signOut();
+                        } }
+                    >
+                        Logout
+                    </button>
+                </>
+            ) }
         </DefaultLayout>
     );
 };
