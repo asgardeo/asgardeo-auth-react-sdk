@@ -29,7 +29,7 @@ import {
     HttpResponse,
     OIDCEndpoints,
     SignInConfig
-} from "./auth-spa";
+} from "@asgardeo/auth-spa";
 import { AuthStateInterface } from "./models";
 
 class AuthAPI {

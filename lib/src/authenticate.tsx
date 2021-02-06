@@ -25,7 +25,7 @@ import {
     HttpRequestConfig,
     HttpResponse,
     SignInConfig
-} from "./auth-spa";
+} from "@asgardeo/auth-spa";
 import React, {
     FunctionComponent,
     ReactPropsWithChildren,
