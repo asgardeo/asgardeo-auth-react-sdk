@@ -17,7 +17,7 @@
  */
 
 import React, { FunctionComponent } from "react";
-import REACT_LOGO from "../images/react-logo.png";
+import PRODUCT_LOGOS from "../images/asgardeo-logo.png";
 import FOOTER_LOGOS from "../images/footer.png";
 
 export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
@@ -26,6 +26,7 @@ export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
 
     return (
         <>
+            <img src={ PRODUCT_LOGOS } className="logo-image" />
             <div className="container">
                 <div className="header-title">
                     <h1>
@@ -36,7 +37,6 @@ export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
                     { children }
                 </div>
             </div>
-
             <img src={ FOOTER_LOGOS } className="footer-image" />
         </>
     );
