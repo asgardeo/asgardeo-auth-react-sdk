@@ -45,7 +45,6 @@
         "@babel/preset-env": "^7.11.0",
         "@babel/preset-react": "^7.6.3",
         "@babel/preset-typescript": "^7.10.4",
-        "@babel/runtime-corejs3": "^7.11.2",
         "@types/node": "^13.9.2",
         "@typescript-eslint/eslint-plugin": "^2.19.2",
         "@typescript-eslint/parser": "^3.10.1",
@@ -68,6 +67,7 @@
     "peerDependencies": {
         "react": "^16.14.0",
         "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "@babel/runtime-corejs3": "^7.11.2"
     }
 }
