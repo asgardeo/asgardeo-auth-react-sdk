@@ -29,7 +29,7 @@ export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
             <div className="container">
                 <div className="header-title">
                     <h1>
-                        Javascript-based React SPA Authentication Sample <br /> (OIDC - Authorization Code Grant)
+                        React SPA Authentication Sample <br /> (OIDC - Authorization Code Grant)
                     </h1>
                 </div>
                 <div className="content">
