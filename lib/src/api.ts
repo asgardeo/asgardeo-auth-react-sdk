@@ -243,6 +243,15 @@ class AuthAPI {
     }
 
     /**
+     * This method returns the ID token.
+     *
+     * @return {Promise<string>} - A Promise that resolves with the id token.
+     */
+    public async getIDToken(): Promise<string> {
+        return this._client.getIDToken();
+    }
+
+    /**
      * This method return a Promise that resolves with the access token.
      *
      * **This method will not return the access token if the storage type is set to `webWorker`.**
@@ -308,7 +317,7 @@ class AuthAPI {
      * @param {string} id (optional) - The id of the hook. This is used when multiple custom grants are used.
      *
      */
-    public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
+    public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): Promise<void>;
     public on(
         hook:
             | Hooks.RevokeAccessToken
@@ -320,8 +329,8 @@ class AuthAPI {
             | Hooks.SignIn
             | Hooks.SignOut,
         callback: (response?: any) => void
-    ): void;
-    public on(hook: Hooks, callback: (response?: any) => void, id?: string): void {
+    ): Promise<void>;
+    public on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
         if (hook === Hooks.CustomGrant) {
             return this._client.on(hook, callback, id);
         }

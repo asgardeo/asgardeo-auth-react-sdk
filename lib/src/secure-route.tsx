@@ -17,7 +17,7 @@
  */
 
 import React, { FunctionComponent, ReactElement, useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 import { useAuthContext } from "./authenticate";
 import { SecureRouteInterface } from "./models";
 
@@ -28,24 +28,18 @@ import { SecureRouteInterface } from "./models";
  *
  * @return {React.ReactElement}
  */
-const SecureRoute: FunctionComponent<SecureRouteInterface> = ( props: SecureRouteInterface
+const SecureRoute: FunctionComponent<SecureRouteInterface & RouteProps> = (props: SecureRouteInterface & RouteProps
 ): ReactElement => {
     const { state } = useAuthContext();
 
-    const { component: Component } = props;
-    let { callback } = props;
+    const { component: Component, callback, ...rest } = props;
 
     useEffect(() => {
-
-        if(!callback) {
-            callback = null;
+        if (!state.isAuthenticated) {
+            callback && callback();
         }
 
-        if(!state.isAuthenticated) {
-            callback();
-        }
-
-    }, [state.isAuthenticated]);
+    }, [ state.isAuthenticated ]);
 
     if (!state.isAuthenticated) {
         return null;
@@ -53,6 +47,7 @@ const SecureRoute: FunctionComponent<SecureRouteInterface> = ( props: SecureRout
 
     return (
         <Route
+            { ...rest }
             render={ (props) =>
                 <Component { ...props } />
             }

@@ -1,7 +1,0 @@
-{
-    "clientHost": "http://localhost:5000",
-    "clientID": "ptnJ7Zag21IRF3lY9hfUMiU4xosa",
-    "signInRedirectURL": "http://localhost:5000/home",
-    "signOutRedirectURL": "http://localhost:5000",
-    "serverOrigin": "https://localhost:9443"
-}

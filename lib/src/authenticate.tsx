@@ -54,8 +54,8 @@ interface AuthProviderPropsInterface {
 const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsInterface>> = (
     props: ReactPropsWithChildren<AuthProviderPropsInterface>
 ) => {
-    const [state, dispatch] = useState<AuthStateInterface>(AuthClient.getState());
-    const [configState, setConfigState] = useState(null);
+    const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
+    const [ configState, setConfigState ] = useState(null);
 
     const { children, config } = props;
 
@@ -86,8 +86,9 @@ const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsIn
     const isAuthenticated = () => AuthClient.isAuthenticated();
     const enableHttpHandler = () => AuthClient.enableHttpHandler();
     const disableHttpHandler = () => AuthClient.disableHttpHandler();
+    const getIDToken = () => AuthClient.getIDToken();
     const updateConfig = (config: Partial<AuthClientConfig<Config>>) => AuthClient.updateConfig(config);
-    const on = (hook: Hooks, callback: (response?: any) => void, id?: string) => {
+    const on = (hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> => {
         if (hook === Hooks.CustomGrant) {
             return AuthClient.on(hook, callback, id);
         }
@@ -102,20 +103,21 @@ const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsIn
 
         AuthClient.init(config);
         setConfigState(config);
-    }, [config]);
+    }, [ config ]);
 
     /**
      * Render state and special case actions
      */
     return (
         <AuthContext.Provider
-            value={{
+            value={ {
                 disableHttpHandler,
                 enableHttpHandler,
                 getAccessToken,
                 getBasicUserInfo,
                 getDecodedIDToken,
                 getHttpClient,
+                getIDToken,
                 getOIDCServiceEndpoints,
                 httpRequest,
                 httpRequestAll,
@@ -128,9 +130,9 @@ const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsIn
                 signOut,
                 state,
                 updateConfig
-            }}
+            } }
         >
-            {configState && children}
+            { configState && children }
         </AuthContext.Provider>
     );
 };

@@ -31,8 +31,8 @@ import {
 
 export interface AuthStateInterface {
     allowedScopes: string;
-    displayName: string;
-    email: string;
+    displayName?: string;
+    email?: string;
     isAuthenticated: boolean;
     username: string;
 }
