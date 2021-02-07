@@ -34,11 +34,7 @@
     },
     "dependencies": {
         "@asgardeo/auth-react": "0.1.0",
-        "@babel/runtime-corejs3": "^7.11.2",
-        "react-json-view": "^1.21.1",
-        "react": "^16.14.0",
-        "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0"
+        "react-json-view": "^1.21.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -65,5 +61,10 @@
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-dom": "*",
+        "react-router-dom": "*"
     }
 }
