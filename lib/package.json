@@ -16,7 +16,7 @@
     ],
     "main": "dist/main.js",
     "types": "dist/src/index.d.ts",
-    "module": "src/index.ts",
+    "module": "dist/main.js",
     "scripts": {
         "lint": "tslint -t stylish --project .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
