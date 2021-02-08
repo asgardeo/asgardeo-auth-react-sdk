@@ -21,7 +21,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 import REACT_LOGO from "../images/react-logo.png";
-import JS_LOGO from "../images/js-logo.png";
+import * as authConfig from "./config.json";
 
 const LandingPage: FunctionComponent<{}> = () => {
     const { signIn, state } = useAuthContext();
@@ -35,25 +35,35 @@ const LandingPage: FunctionComponent<{}> = () => {
 
     return (
         <DefaultLayout>
-            <div className="home-image">
-                <img src={ REACT_LOGO } className="react-logo-image logo" />
-            </div>
-            <h3>
-                Sample demo to showcase how to authenticate a simple client side application using
+            { authConfig.default.clientID === "" ?
+                <div className="content">
+                    <h2>You need to update the Client ID to proceed.</h2>
+                    <p>Please open "src/config.json" file using an editor, and update the <code>clientID</code> value with the registered application's client ID.</p>
+                    <p>Visit repo <a href="https://github.com/asgardeo/asgardeo-auth-spa-sdk/tree/master/samples/react-js-app">README</a> for more details.</p>
+                </div>
+                :
+                <>
+                    <div className="home-image">
+                        <img src={ REACT_LOGO } className="react-logo-image logo" />
+                    </div>
+                    <h3>
+                        Sample demo to showcase how to authenticate a simple client side application using
                 <br />
-                <b>Asgardeo</b> with the{ " " }
-                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
-                    Asgardeo Auth React SDK
+                        <b>Asgardeo</b> with the{ " " }
+                        <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
+                            Asgardeo Auth React SDK
                 </a>
-            </h3>
-            <button
-                className="btn primary"
-                onClick={ () => {
-                    signIn();
-                } }
-            >
-                Login
+                    </h3>
+                    <button
+                        className="btn primary"
+                        onClick={ () => {
+                            signIn();
+                        } }
+                    >
+                        Login
             </button>
+                </>
+            }
         </DefaultLayout>
     );
 };
