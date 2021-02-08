@@ -36,8 +36,6 @@ const LandingPage: FunctionComponent<{}> = () => {
     return (
         <DefaultLayout>
             <div className="home-image">
-                <img src={ JS_LOGO } className="js-logo-image logo" />
-                <span className="logo-plus">+</span>
                 <img src={ REACT_LOGO } className="react-logo-image logo" />
             </div>
             <h3>

@@ -2,6 +2,7 @@
     "name": "asgardeo-auth-react-sdk",
     "description": "Asgardeo Auth React SDK and Sample Apps",
     "main": "index.js",
+    "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "lerna run build --stream",
@@ -39,10 +40,8 @@
         "eslint-loader": "^3.0.3",
         "eslint-plugin-import": "^2.22.1",
         "lerna": "^3.22.1",
-        "react": "^16.14.0",
-        "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0",
         "rimraf": "^3.0.0",
         "typescript": "~4.0.5"
-    }
+    },
+    "workspaces": ["lib", "samples/*"]
 }
