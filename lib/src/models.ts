@@ -51,6 +51,7 @@ export interface AuthContextInterface {
     getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
     getHttpClient(): Promise<HttpClientInstance>;
     getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
+    getIDToken(): Promise<string>;
     getAccessToken(): Promise<string>;
     refreshAccessToken(): Promise<BasicUserInfo>;
     isAuthenticated(): Promise<boolean>;
