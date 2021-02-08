@@ -28,7 +28,7 @@ import {
 } from "@asgardeo/auth-spa";
 import React, {
     FunctionComponent,
-    ReactPropsWithChildren,
+    PropsWithChildren,
     createContext,
     useContext,
     useEffect,
@@ -42,17 +42,14 @@ const AuthClient = new AuthAPI();
 /**
  * Authentication Context to hold global states in react components.
  */
-const AuthContext = createContext<AuthContextInterface>({
-    ...AuthClient,
-    state: AuthClient.getState()
-});
+const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
     config: AuthClientConfig<Config>;
 }
 
-const AuthProvider: FunctionComponent<ReactPropsWithChildren<AuthProviderPropsInterface>> = (
-    props: ReactPropsWithChildren<AuthProviderPropsInterface>
+const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
+    props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ configState, setConfigState ] = useState(null);

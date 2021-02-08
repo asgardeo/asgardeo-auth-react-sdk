@@ -48,8 +48,7 @@ jobs:
 
       - name: Build
         run: |
-          npm ci
-          npm run bootstrap
+          yarn build
 
       - name: Bump Version
         run: |

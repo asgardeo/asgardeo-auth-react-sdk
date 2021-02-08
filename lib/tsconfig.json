@@ -18,8 +18,9 @@
         "paths": {
             "*": ["types/*"]
         },
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "skipLibCheck": true
     },
     "compileOnSave": false,
-    "exclude": ["node_modules", "test-configs", "src/**/tests/*", "**/*.test.ts"]
+    "exclude": ["node_modules", "test-configs", "src/**/tests/*", "**/*.test.ts", "**/node_modules"]
 }
