@@ -43,5 +43,8 @@
         "rimraf": "^3.0.0",
         "typescript": "~4.0.5"
     },
-    "workspaces": ["lib", "samples/*"]
+    "workspaces": [
+        "lib",
+        "samples/*"
+    ]
 }

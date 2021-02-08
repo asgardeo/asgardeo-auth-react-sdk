@@ -1,5 +1,5 @@
 {
-    "name": "@asgardeo/using-oidc-react-sdk-typescript",
+    "name": "@asgardeo/react-typescript-app-sample",
     "version": "0.1.0",
     "description": "React based sample SPA to demonstrate Asgardeo / WSO2 Identity Server OIDC React SDK usage",
     "keywords": [
@@ -38,7 +38,7 @@
         "react": "^16.14.0",
         "react-dom": "16.14.0",
         "react-router-dom": "^5.2.0",
-        "@babel/runtime-corejs3": "^7.12.13"
+        "@babel/runtime-corejs3": "^7.11.2"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
@@ -64,10 +64,5 @@
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.12",
         "webpack-dev-server": "^3.11.0"
-    },
-    "peerDependencies": {
-        "react": "*",
-        "react-dom": "*",
-        "react-router-dom": "*"
     }
 }
