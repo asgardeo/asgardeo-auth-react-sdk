@@ -16,6 +16,9 @@
  * under the License.
  */
 
+import "core-js";
+import "regenerator-runtime/runtime";
+
 import { AuthProvider, SecureRoute, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
@@ -25,8 +28,6 @@ import * as authConfig from "./config.json";
 import LandingPage from "./pages/landing";
 import HomePage from "./pages/home";
 import NotFoundPage from "./pages/404";
-import "core-js";
-import "regenerator-runtime/runtime";
 
 const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, exact: boolean}> = (props): ReactElement => {
     const { component, path } = props;
