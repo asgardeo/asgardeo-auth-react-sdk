@@ -39,7 +39,7 @@ const LandingPage: FunctionComponent<{}> = () => {
                 <div className="content">
                     <h2>You need to update the Client ID to proceed.</h2>
                     <p>Please open "src/config.json" file using an editor, and update the <code>clientID</code> value with the registered application's client ID.</p>
-                    <p>Visit repo <a href="https://github.com/asgardeo/asgardeo-auth-spa-sdk/tree/master/samples/react-js-app">README</a> for more details.</p>
+                    <p>Visit repo <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-ts-app">README</a> for more details.</p>
                 </div>
                 :
                 <>
