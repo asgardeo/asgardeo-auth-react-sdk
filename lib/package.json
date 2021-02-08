@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-react",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [
         "WSO2",
@@ -45,6 +45,7 @@
         "@babel/preset-env": "^7.11.0",
         "@babel/preset-react": "^7.6.3",
         "@babel/preset-typescript": "^7.10.4",
+        "@babel/runtime-corejs3": "^7.11.2",
         "@types/node": "^13.9.2",
         "@typescript-eslint/eslint-plugin": "^2.19.2",
         "@typescript-eslint/parser": "^3.10.1",
@@ -55,20 +56,19 @@
         "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-react": "^7.19.0",
         "eslint-plugin-react-hooks": "^4.0.0",
+        "react": "^16.14.0",
+        "react-dom": "16.14.0",
+        "react-router-dom": "^5.2.0",
         "rimraf": "^3.0.2",
         "typescript": "^3.9.7",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.7",
-        "worker-loader": "^2.0.0",
-        "react": "^16.14.0",
-        "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0",
-        "@babel/runtime-corejs3": "^7.11.2"
+        "worker-loader": "^2.0.0"
     },
     "peerDependencies": {
+        "@babel/runtime-corejs3": "^7.11.2",
         "react": "^16.14.0",
         "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0",
-        "@babel/runtime-corejs3": "^7.11.2"
+        "react-router-dom": "^5.2.0"
     }
 }
