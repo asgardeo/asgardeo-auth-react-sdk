@@ -21,7 +21,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 import REACT_LOGO from "../images/react-logo.png";
-import * as authConfig from "./config.json";
+import * as authConfig from "../config.json";
 
 const LandingPage: FunctionComponent<{}> = () => {
     const { signIn, state } = useAuthContext();
