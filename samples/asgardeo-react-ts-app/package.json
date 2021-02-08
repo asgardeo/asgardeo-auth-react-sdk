@@ -1,5 +1,5 @@
 {
-    "name": "@asgardeo/react-typescript-app-sample",
+    "name": "@asgardeo/react-ts-app",
     "version": "0.1.1",
     "description": "React based sample SPA to demonstrate Asgardeo / WSO2 Identity Server OIDC React SDK usage",
     "keywords": [
