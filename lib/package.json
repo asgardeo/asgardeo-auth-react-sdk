@@ -62,7 +62,8 @@
         "worker-loader": "^2.0.0",
         "react": "^16.14.0",
         "react-dom": "16.14.0",
-        "react-router-dom": "^5.2.0"
+        "react-router-dom": "^5.2.0",
+        "@babel/runtime-corejs3": "^7.11.2"
     },
     "peerDependencies": {
         "react": "^16.14.0",
