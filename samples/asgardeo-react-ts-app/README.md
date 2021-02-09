@@ -1,6 +1,6 @@
 # OIDC REACT SDK Usage Example (Single Page Application)
 
-Asgardeo / WSO2 Identity Server integration example using the OIDC REACT SDK.
+Asgardeo / WSO2 Identity Server integration example using the Asgardeo Auth React SDK.
 This sample uses Typescript.
 
 ## Getting started
@@ -43,7 +43,7 @@ And you are ready! OIDC details can be found under **"Access -> OIDC"**
 
 2. If this is the first time, run `npm install` to install dependencies.
 3. You are all set. Run `npm start`.
-4. Navigate to `http://localhost:5000` from the browser.
+4. Navigate to `https://localhost:5000` from the browser.
 
 ## License
 
