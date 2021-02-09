@@ -23,7 +23,7 @@ import ReactJson from "react-json-view";
 
 const HomePage: FunctionComponent<{}> = () => {
     const { state, signOut, getBasicUserInfo, getIDToken, getDecodedIDToken } = useAuthContext();
-    const [ authenticateState, setAuthenticateState ] = useState(null);
+    const [authenticateState, setAuthenticateState] = useState(null);
 
     useEffect(() => {
         if (state?.isAuthenticated) {
@@ -35,7 +35,7 @@ const HomePage: FunctionComponent<{}> = () => {
                 const authState = {
                     authenticateResponse: basicUserInfo,
                     idToken: idToken.split("."),
-                    decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[ 0 ])),
+                    decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[0])),
                     decodedIDTokenPayload: decodedIDToken
                 };
 
@@ -44,20 +44,20 @@ const HomePage: FunctionComponent<{}> = () => {
 
             getData();
         }
-    }, [ state.isAuthenticated ]);
+    }, [state.isAuthenticated]);
 
     return (
         <DefaultLayout>
-            { state.isAuthenticated && (
+            {state.isAuthenticated && (
                 <>
                     <h2>Authentication response</h2>
                     <div className="json">
                         <ReactJson
-                            src={ authenticateState?.authenticateResponse }
-                            name={ null }
-                            enableClipboard={ false }
-                            displayObjectSize={ false }
-                            displayDataTypes={ false }
+                            src={authenticateState?.authenticateResponse}
+                            name={null}
+                            enableClipboard={false}
+                            displayObjectSize={false}
+                            displayDataTypes={false}
                             iconStyle="square"
                             theme="monokai"
                         />
@@ -66,31 +66,31 @@ const HomePage: FunctionComponent<{}> = () => {
                     <h2 className="mb-0 mt-4">ID token</h2>
 
                     <div className="row">
-                        { authenticateState?.idToken && (
+                        {authenticateState?.idToken && (
                             <div className="column">
                                 <h5>
                                     <b>Encoded</b>
                                 </h5>
                                 <div className="code">
                                     <code>
-                                        <span className="id-token-0">{ authenticateState?.idToken[ 0 ] }</span>.
-                                        <span className="id-token-1">{ authenticateState?.idToken[ 1 ] }</span>.
-                                        <span className="id-token-2">{ authenticateState?.idToken[ 2 ] }</span>
+                                        <span className="id-token-0">{authenticateState?.idToken[0]}</span>.
+                                        <span className="id-token-1">{authenticateState?.idToken[1]}</span>.
+                                        <span className="id-token-2">{authenticateState?.idToken[2]}</span>
                                     </code>
                                 </div>
                             </div>
-                        ) }
+                        )}
                         <div className="column">
                             <div className="json">
                                 <h5>
                                     <b>Decoded:</b> Header
                                 </h5>
                                 <ReactJson
-                                    src={ authenticateState?.decodedIdTokenHeader }
-                                    name={ null }
-                                    enableClipboard={ false }
-                                    displayObjectSize={ false }
-                                    displayDataTypes={ false }
+                                    src={authenticateState?.decodedIdTokenHeader}
+                                    name={null}
+                                    enableClipboard={false}
+                                    displayObjectSize={false}
+                                    displayDataTypes={false}
                                     iconStyle="square"
                                     theme="monokai"
                                 />
@@ -101,28 +101,53 @@ const HomePage: FunctionComponent<{}> = () => {
                                     <b>Decoded:</b> Payload
                                 </h5>
                                 <ReactJson
-                                    src={ authenticateState?.decodedIDTokenPayload }
-                                    name={ null }
-                                    enableClipboard={ false }
-                                    displayObjectSize={ false }
-                                    displayDataTypes={ false }
+                                    src={authenticateState?.decodedIDTokenPayload}
+                                    name={null}
+                                    enableClipboard={false}
+                                    displayObjectSize={false}
+                                    displayDataTypes={false}
                                     iconStyle="square"
                                     theme="monokai"
                                 />
+                            </div>
+                            <div className="json">
+                                <h5>
+                                    <b>Signature:</b>
+                                </h5>
+                                <div className="code">
+                                    <code>
+                                        HMACSHA256(
+                                        <br />
+                                        &nbsp;&nbsp;
+                                        <span className="id-token-0">
+                                            base64UrlEncode(
+                                            <span className="id-token-1">header</span>)
+                                        </span>{" "}
+                                        + "." + <br />
+                                        &nbsp;&nbsp;
+                                        <span className="id-token-0">
+                                            base64UrlEncode(
+                                            <span className="id-token-1">payload</span>)
+                                        </span>
+                                        ,&nbsp;
+                                        <span className="id-token-1">your-256-bit-secret</span> <br />
+                                        );
+                                    </code>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <button
                         className="btn primary mt-4"
-                        onClick={ () => {
+                        onClick={() => {
                             signOut();
-                        } }
+                        }}
                     >
                         Logout
                     </button>
                 </>
-            ) }
+            )}
         </DefaultLayout>
     );
 };
