@@ -61,7 +61,7 @@ const LandingPage: FunctionComponent<{}> = () => {
                         } }
                     >
                         Login
-            </button>
+                    </button>
                 </>
             }
         </DefaultLayout>
