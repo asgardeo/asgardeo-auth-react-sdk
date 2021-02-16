@@ -67,6 +67,37 @@ export const HomePage: FunctionComponent<{}> = () => {
                 const idToken = await getIDToken();
                 const decodedIDToken = await getDecodedIDToken();
 
+                const username = basicUserInfo?.username?.split("/");
+
+                if (username.length >= 2) {
+                    username.shift();
+                    decodedIDToken.username = username.join("/");
+                }
+
+
+                const sub = decodedIDToken?.sub?.split("/");
+
+                if (sub.length >= 2) {
+                    sub.shift();
+                    decodedIDToken.sub = sub.join("/");
+                }
+
+                const groups: string[] = [];
+                decodedIDToken?.groups.forEach((group: string) => {
+                    const groupArrays = group.split("/");
+
+                    if (groupArrays.length >= 2) {
+                        groupArrays.shift();
+                        groups.push(groupArrays.join("/"));
+                    } else {
+                        groups.push(group);
+                    }
+                });
+
+                if (decodedIDToken?.groups) {
+                    decodedIDToken.groups = groups;
+                }
+
                 const authState = {
                     authenticateResponse: basicUserInfo,
                     idToken: idToken.split("."),
