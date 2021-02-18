@@ -90,7 +90,7 @@ export const HomePage: FunctionComponent<{}> = () => {
 
                 <div className="header-title">
                     <h1>
-                        React SPA Authentication Sample <br /> (OIDC - Authorization Code Grant)
+                        React SPA Authentication Sample
                         </h1>
                 </div>
             }
@@ -158,7 +158,7 @@ export const HomePage: FunctionComponent<{}> = () => {
                             </div>
                             <div className="json">
                                 <h5>
-                                    <b>Signature:</b>
+                                    Signature
                                 </h5>
                                 <div className="code">
                                     <code>
@@ -206,10 +206,11 @@ export const HomePage: FunctionComponent<{}> = () => {
                                     <img src={REACT_LOGO} className="react-logo-image logo" />
                                 </div>
                                 <h3>
-                                    Sample demo to showcase how to authenticate a simple client side application using <br />
-                                    <b>Asgardeo</b> with the{" "}
+                                    Sample demo to showcase authentication for a Single Page Application <br />
+                                    via the OpenID Connect Authorization Code flow, <br />
+                                    which is integrated using the { " " }
                                     <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
-                                        Asgardeo Auth React SDK </a>
+                                        Asgardeo Auth React SDK</a>.
                                 </h3>
                                 <button
                                     className="btn primary"
