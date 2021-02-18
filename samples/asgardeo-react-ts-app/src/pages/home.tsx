@@ -112,7 +112,7 @@ const HomePage: FunctionComponent<{}> = () => {
                             </div>
                             <div className="json">
                                 <h5>
-                                    <b>Signature:</b>
+                                    Signature
                                 </h5>
                                 <div className="code">
                                     <code>

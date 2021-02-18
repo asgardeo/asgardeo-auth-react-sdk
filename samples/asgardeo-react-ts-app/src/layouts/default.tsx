@@ -17,7 +17,6 @@
  */
 
 import React, { FunctionComponent } from "react";
-import PRODUCT_LOGOS from "../images/asgardeo-logo.png";
 import FOOTER_LOGOS from "../images/footer.png";
 
 export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
@@ -26,11 +25,10 @@ export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
 
     return (
         <>
-            <img src={ PRODUCT_LOGOS } className="logo-image" />
             <div className="container">
                 <div className="header-title">
                     <h1>
-                        React SPA Authentication Sample <br /> (OIDC - Authorization Code Grant)
+                        React SPA Authentication Sample
                     </h1>
                 </div>
                 <div className="content">
