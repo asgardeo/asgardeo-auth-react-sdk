@@ -1,8 +1,6 @@
-# Asgardeo Auth React SDK Usage Example (Single Page Application) with SecureRoute
+# Asgardeo Auth React SDK Usage Example (Single Page Application)
 
-This sample is developed to demonstrate the basic usage of the Asgardeo Auth React SDK with typescript. 
-
-This app utilizes the [SecureRoute](../../README.md#secureroute) component provided by the SDK.
+This sample is developed to demonstrate the basic usage of the Asgardeo Auth React SDK.
 
 ## Getting Started
 
@@ -10,11 +8,11 @@ This app utilizes the [SecureRoute](../../README.md#secureroute) component provi
 
 Follow the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section to register an application.
 
-Make sure to add `https://localhost:5000` and `https://localhost:5000/home` as Redirect URLs. Add `https://localhost:5000` under allowed origins. 
+Make sure to add `https://localhost:5000` as a Redirect URL and also add it under allowed origins. 
 
 ### Download the Sample
 
-Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-react-sdk/releases/latest/download/asgardeo-react-ts-app.zip) and extract the zip file.
+Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-react-sdk/releases/latest/download/asgardeo-react-app.zip) and extract the zip file.
 
 ### Configure the Sample
 
@@ -28,7 +26,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 {
     "clientID": "<ADD_CLIENT_ID_HERE>",
     "serverOrigin": "https://localhost:9443",
-    "signInRedirectURL": "https://localhost:5000/home",
+    "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000"
 }
 ```

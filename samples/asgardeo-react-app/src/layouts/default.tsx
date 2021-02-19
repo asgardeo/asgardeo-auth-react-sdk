@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -26,16 +26,9 @@ export const DefaultLayout: FunctionComponent<{ children: any }> = (props) => {
     return (
         <>
             <div className="container">
-                <div className="header-title">
-                    <h1>
-                        React SPA Authentication Sample
-                    </h1>
-                </div>
-                <div className="content">
-                    { children }
-                </div>
+                {children}
             </div>
-            <img src={ FOOTER_LOGOS } className="footer-image" />
+            <img src={FOOTER_LOGOS} className="footer-image" />
         </>
     );
 };
