@@ -79,7 +79,7 @@ export const HomePage: FunctionComponent<{}> = () => {
                 }
 
                 const groups: string[] = [];
-                decodedIDToken?.groups.forEach((group: string) => {
+                decodedIDToken?.groups?.forEach((group: string) => {
                     const groupArrays = group.split("/");
 
                     if (groupArrays.length >= 2) {
