@@ -50,7 +50,7 @@ const HomePage: FunctionComponent<{}> = () => {
         <DefaultLayout>
             {state.isAuthenticated && (
                 <>
-                    <h2>Authentication response</h2>
+                    <h2>Authentication response derived by the Asgardeo Auth React SDK</h2>
                     <div className="json">
                         <ReactJson
                             src={authenticateState?.authenticateResponse}
