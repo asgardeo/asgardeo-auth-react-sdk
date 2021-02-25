@@ -86,8 +86,8 @@ import { AuthProvider, useAuthContext } from "@asgardeo/auth-react";
 
 // The config data.
 const config = {
-     signInRedirectURL: "http://localhost:3000/sign-in",
-     signOutRedirectURL: "http://localhost:3000/dashboard",
+     signInRedirectURL: "https://localhost:5000/sign-in",
+     signOutRedirectURL: "https://localhost:5000/dashboard",
      clientID: "client ID",
      serverOrigin: "https://localhost:9443"
 };
@@ -729,7 +729,7 @@ This method can be used to update the configurations passed into the constructor
 
 ```TypeScript
 auth.updateConfig({
-    signOutRedirectURL: "http://localhost:3000/sign-out"
+    signOutRedirectURL: "https://localhost:5000/sign-out"
 });
 ```
 
@@ -809,9 +809,9 @@ This table shows the extended attributes provided by the `Config` interface.
 
 | Attribute                    | Required/Optional | Type            | Default Value                                                           | Description                                                                                          |
 | ---------------------------- | ----------------- | --------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:3000/sign-in` |
-| `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `http://localhost:3000/dashboard`                                                                                                            |
-| `clientHost`                 | Optional          | `string`        | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:3000`                                         |
+| `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in` |
+| `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `https://localhost:5000/dashboard`                                                                                                            |
+| `clientHost`                 | Optional          | `string`        | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:5000`                                         |
 | `clientID`                   | Required          | `string`        | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                        |
 | `clientSecret`               | Optional          | `string`        | ""                                                                      | The client secret of the OIDC application                                                            |
 | `enablePKCE`                 | Optional          | `boolean`       | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                      |
