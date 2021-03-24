@@ -94,7 +94,16 @@ export const HomePage: FunctionComponent<{}> = () => {
                         </h1>
                         </div>
                         <div className="content">
-                            <h2>Authentication response derived by the Asgardeo Auth React SDK</h2>
+                            <h2>Authentication Response</h2>
+                            <h4 className="sub-title">
+                                Derived by the&nbsp;
+                                <code className="inline-code-block">
+                                    <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
+                                       target="_blank">
+                                        @asgardeo/auth-react
+                                    </a>
+                                </code>&nbsp;SDK
+                            </h4>
                             <div className="json">
                                 <ReactJson
                                     src={authenticateState?.authenticateResponse}
