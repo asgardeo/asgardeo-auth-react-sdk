@@ -162,6 +162,10 @@ code {
     padding: 50px;
 }
 
+.content .spa-app-description {
+    line-height: 1.7;
+}
+
 .btn.primary,
 .btn.primary:active,
 .btn.primary:focus {

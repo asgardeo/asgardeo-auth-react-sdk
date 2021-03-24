@@ -200,13 +200,14 @@ export const HomePage: FunctionComponent<{}> = () => {
                                 <div className="home-image">
                                     <img src={REACT_LOGO} className="react-logo-image logo" />
                                 </div>
-                                <h3>
-                                    Sample demo to showcase authentication for a Single Page Application <br />
-                                    via the OpenID Connect Authorization Code flow, <br />
-                                    which is integrated using the {" "}
+                                <h4 className={ "spa-app-description" }>
+                                    Sample demo to showcase authentication for a Single Page Application
+                                    via the OpenID Connect Authorization Code flow,
+                                    which is integrated using the&nbsp;
                                     <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
-                                        Asgardeo Auth React SDK</a>.
-                                </h3>
+                                        Asgardeo Auth React SDK
+                                    </a>.
+                                </h4>
                                 <button
                                     className="btn primary"
                                     onClick={() => {
