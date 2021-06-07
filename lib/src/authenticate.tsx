@@ -62,7 +62,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         sessionState?: string,
         callback?: (response: BasicUserInfo) => void
     ) => {
-            await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
+        await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
     const signOut = (callback?) => {
         AuthClient.signOut(dispatch, state, callback);

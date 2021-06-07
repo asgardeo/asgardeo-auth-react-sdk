@@ -199,9 +199,9 @@ export const HomePage: FunctionComponent<{}> = () => {
                                     React SPA Authentication Sample
                                 </h1>
                             </div>
-                            {authenticationError ? <div className="content">An error occured while authenticating ...</div>
-                            :
-                            <div className="content">Loading ...</div>
+                            {authenticationError 
+                                ? <div className="content">An error occured while authenticating ...</div>
+                                : <div className="content">Loading ...</div>
                             }
                         </>
                         :
