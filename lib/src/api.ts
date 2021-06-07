@@ -98,11 +98,7 @@ class AuthAPI {
                 callback(response);
             }
         });
-        try {
-            await this._client.signIn(config, authorizationCode, sessionState);
-        } catch(error) {
-            throw error;
-        }
+        await this._client.signIn(config, authorizationCode, sessionState);
     }
 
     /**
