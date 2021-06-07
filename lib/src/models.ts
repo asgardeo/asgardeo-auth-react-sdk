@@ -38,7 +38,7 @@ export interface AuthStateInterface {
 }
 
 export interface AuthContextInterface {
-    signIn: (callback?) => void;
+    signIn: (callback?) => Promise<void>;
     signOut: () => void;
     getBasicUserInfo(): Promise<BasicUserInfo>;
     httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>>;

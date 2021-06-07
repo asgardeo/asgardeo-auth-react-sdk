@@ -56,13 +56,13 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
     const { children, config } = props;
 
-    const signIn = (
+    const signIn = async(
         config?: SignInConfig,
         authorizationCode?: string,
         sessionState?: string,
         callback?: (response: BasicUserInfo) => void
     ) => {
-        AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
+            await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
     const signOut = (callback?) => {
         AuthClient.signOut(dispatch, state, callback);
