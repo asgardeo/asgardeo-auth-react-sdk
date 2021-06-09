@@ -73,14 +73,14 @@ class AuthAPI {
      * @param {AuthStateInterface} state - Current authentication state in React Auth Context.
      * @param {any} callback - Action to trigger on successful sign in.
      */
-    public signIn(
+    public async signIn(
         dispatch: (state: AuthStateInterface) => void,
         state: AuthStateInterface,
         config: SignInConfig,
         authorizationCode: string,
         sessionState: string,
         callback?: (response: BasicUserInfo) => void
-    ): void {
+    ): Promise<void> {
         this._client.on(Hooks.SignIn, (response) => {
             const stateToUpdate = {
                 allowedScopes: response.allowedScopes,
@@ -98,8 +98,7 @@ class AuthAPI {
                 callback(response);
             }
         });
-
-        this._client.signIn(config, authorizationCode, sessionState);
+        await this._client.signIn(config, authorizationCode, sessionState);
     }
 
     /**
