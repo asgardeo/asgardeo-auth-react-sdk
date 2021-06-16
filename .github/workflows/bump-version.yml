@@ -16,7 +16,7 @@
 
 # This is a basic workflow to help you get started with Actions
 
-name: Bump Version
+name: Release
 
 # Controls when the action will run.
 on:
@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       Type:
-        description: 'Choose which version to bump'
+        description: 'Choose which version to bump before release'
         required: true
         default: 'patch'
 
@@ -54,5 +54,17 @@ jobs:
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          npm run bump-${{ github.event.inputs.Type }}-version
+          lerna version ${{ github.event.inputs.Type }} --yes
           git push --follow-tags
+
+      - name: Release Asgardeo Auth React SDK
+        run: |
+          gh auth login --with-token < ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+          gh release create --title v
+      - name: Publish Asgardeo Auth React SDK
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          cp README.md lib
+          cd lib
+          npm publish --access public
