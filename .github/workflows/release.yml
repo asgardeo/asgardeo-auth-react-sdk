@@ -58,13 +58,11 @@ jobs:
           git push --follow-tags
 
       - name: Pack Release Artifacts
-        working-directory: samples
         run: |
-          mkdir -p assets/new-release
+          mkdir assets/new-release
+          cd samples
           for dir in */ ; do
-              cd ..
-              zip -r "assets/new-release/${dir%/}.zip" $dir
-              cd samples
+              zip -r "../assets/new-release/${dir%/}.zip" $dir
           done
 
       - name: Release Asgardeo Auth React SDK
