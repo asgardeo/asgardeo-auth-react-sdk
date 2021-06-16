@@ -67,12 +67,10 @@ jobs:
           done
 
       - name: Release Asgardeo Auth React SDK
-        env:
-          GITHUB_TOKEN: ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
         run: |
           version=`npm info @asgardeo/auth-react version`
-          gh auth login
-          gh release create "v"+$version "artifacts/*"
+          gh auth login --with-token ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+          gh release create v$version "artifacts/*"
 
       - name: Publish Asgardeo Auth React SDK
         env:
