@@ -49,6 +49,7 @@ jobs:
       - name: Build
         run: |
           yarn build
+          npm run remove-node-modules
 
       - name: Bump Version
         run: |
@@ -69,7 +70,7 @@ jobs:
         run: |
           version=`npm info @asgardeo/auth-react version`
           gh auth login --with-token < ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
-          gh release create "v"+$version "assets/new-release/*"
+          gh release create "v"+$version "artifacts/*"
 
       - name: Publish Asgardeo Auth React SDK
         env:
