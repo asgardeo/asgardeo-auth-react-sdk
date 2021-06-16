@@ -71,8 +71,9 @@ export const HomePage: FunctionComponent<{}> = () => {
 
                 if (username.length >= 2) {
                     username.shift();
-                    basicUserInfo.username = username.join("/");
+                    decodedIDToken.username = username.join("/");
                 }
+
 
                 const sub = decodedIDToken?.sub?.split("/");
 
