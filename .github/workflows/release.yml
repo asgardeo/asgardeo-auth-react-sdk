@@ -59,10 +59,10 @@ jobs:
 
       - name: Pack Release Artifacts
         run: |
-          mkdir assets/new-release
+          mkdir artifacts
           cd samples
           for dir in */ ; do
-              zip -r "../assets/new-release/${dir%/}.zip" $dir
+              zip -r "../artifacts/${dir%/}.zip" $dir
           done
 
       - name: Release Asgardeo Auth React SDK
