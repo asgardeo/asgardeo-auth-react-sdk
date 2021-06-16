@@ -14,38 +14,67 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-#This workflow builds the repo and then publishes the SDK to the NPM registry following a release.
+# This is a basic workflow to help you get started with Actions
+
 name: Release
 
+# Controls when the action will run.
 on:
-  release:
-    types: [released]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      Type:
+        description: 'Choose which version to bump before release'
+        required: true
+        default: 'patch'
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
-
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-        registry-url: https://registry.npmjs.org/
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          token: ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+        if: github.repository == 'asgardeo/asgardeo-auth-react-sdk'
 
-    - name: Build
-      run: |
-        yarn build
+      - uses: actions/checkout@v2
+        if: github.repository != 'asgardeo/asgardeo-auth-react-sdk'
 
-    - name: Publish Asgardeo Auth SPA SDK
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      run: |
-        cp README.md lib
-        cd lib
-        npm publish --access public
+      - name: Build
+        run: |
+          yarn build
+
+      - name: Bump Version
+        run: |
+          git config --global user.email "version.bump@github.action.com"
+          git config --global user.name "asgardeo-github-bot"
+          lerna version ${{ github.event.inputs.Type }} --yes
+          git push --follow-tags
+
+      - name: Pack Release Artifacts
+        working-directory: samples
+        run: |
+          mkdir ../assets/new-release
+          for dir in */ ; do
+              zip -r "../assets/new-release/${dir%/}.zip" $dir
+          done
+
+      - name: Release Asgardeo Auth React SDK
+        run: |
+          version=`npm info @asgardeo/auth-react version`
+          gh auth login --with-token < ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+          gh release create "v"+$version "assets/new-release/*"
+
+      - name: Publish Asgardeo Auth React SDK
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          cp README.md lib
+          cd lib
+          npm publish --access public
