@@ -60,7 +60,8 @@ jobs:
       - name: Pack Release Artifacts
         working-directory: samples
         run: |
-          mkdir ../assets/new-release
+          pwd
+          mkdir -p assets/new-release
           for dir in */ ; do
               zip -r "../assets/new-release/${dir%/}.zip" $dir
           done
