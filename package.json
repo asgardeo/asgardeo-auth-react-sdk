@@ -12,9 +12,7 @@
         "lint": "lerna run lint",
         "fix-lint": "lerna run fix-lint",
         "clean": "lerna run clean --stream",
-        "clean-all": "npm run remove-package-lock && npm run remove-node-modules",
-        "bump-patch-version": "lerna version patch --yes",
-        "bump-minor-version": "lerna version minor --yes"
+        "clean-all": "npm run remove-package-lock && npm run remove-node-modules"
     },
     "repository": {
         "type": "git",
