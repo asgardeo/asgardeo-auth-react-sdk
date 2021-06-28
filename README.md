@@ -131,7 +131,7 @@ const Dashboard = (): ReactElement => {
 
 Before trying out the sample apps, you need to a create a service provider in the Identity Server.
 
-1. So, navigate to `https://localhost:9443/carbon" and click on `Add`under`Service Providers` in the left-hand menu panel.
+1. So, navigate to `https://localhost:9443/carbon` and click on `Add` under `Service Providers` in the left-hand menu panel.
 
 2. Enter `Sample` as the name of the app and click on `Register`.
 
