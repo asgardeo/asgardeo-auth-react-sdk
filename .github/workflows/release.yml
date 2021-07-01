@@ -49,28 +49,36 @@ jobs:
       - name: Build
         run: |
           yarn build
-          npm run remove-node-modules
 
       - name: Bump Version
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          lerna version ${{ github.event.inputs.Type }} --yes
+          npm run bump-${{ github.event.inputs.Type }}-version
           git push --follow-tags
 
       - name: Pack Release Artifacts
         run: |
           mkdir artifacts
-          cd samples
-          for dir in */ ; do
-              zip -r "../artifacts/${dir%/}.zip" $dir
-          done
+          if test -d samples
+          then
+            cd samples
+            rm -rf **/node_modules/
+            for dir in */ ; do
+                zip -r "../artifacts/${dir%/}.zip" $dir
+            done
+          fi
 
       - name: Release Asgardeo Auth React SDK
         run: |
-          version=`npm info @asgardeo/auth-react version`
+          version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
-          gh release create v$version artifacts/*
+          if test -d samples
+          then
+            gh release create $version artifacts/*
+          else
+            gh release create $version
+          fi
 
       - name: Publish Asgardeo Auth React SDK
         env:
