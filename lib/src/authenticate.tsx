@@ -92,6 +92,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
         return AuthClient.on(hook, callback);
     };
+    const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -126,6 +127,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 signIn,
                 signOut,
                 state,
+                trySignInSilently,
                 updateConfig
             } }
         >
