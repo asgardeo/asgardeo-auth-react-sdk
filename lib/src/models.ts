@@ -45,7 +45,7 @@ export interface AuthContextInterface {
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
     requestCustomGrant(
         config: CustomGrantConfig,
-        callback?: (response: BasicUserInfo | HttpResponse<any>) => void,
+        callback?: (response: BasicUserInfo | HttpResponse<any>) => void
     ): void;
     revokeAccessToken(): Promise<boolean>;
     getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
@@ -58,6 +58,7 @@ export interface AuthContextInterface {
     enableHttpHandler(): Promise<boolean>;
     disableHttpHandler(): Promise<boolean>;
     updateConfig(config: Partial<AuthClientConfig<Config>>): Promise<void>;
+    trySignInSilently: () => Promise<boolean | BasicUserInfo>;
     on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
     on(
         hook:
