@@ -336,6 +336,45 @@ class AuthAPI {
 
         return this._client.on(hook, callback);
     }
+
+    /**
+     * This method allows you to sign in silently.
+     * First, this method sends a prompt none request to see if there is an active user session in the identity server.
+     * If there is one, then it requests the access token and stores it. Else, it returns false.
+     *
+     * @return {Promise<BasicUserInfo | boolean>} - A Promise that resolves with the user information after signing in
+     * or with `false` if the user is not signed in.
+     *
+     * @example
+     *```
+     * client.trySignInSilently()
+     *```
+     */
+    public async trySignInSilently(
+        state: AuthStateInterface,
+        dispatch: (state: AuthStateInterface) => void
+    ): Promise<BasicUserInfo | boolean | undefined> {
+        return this._client.trySignInSilently().then((response: BasicUserInfo | boolean) => {
+            if (response) {
+                const basicUserInfo = response as BasicUserInfo;
+                const stateToUpdate = {
+                    allowedScopes: basicUserInfo.allowedScopes,
+                    displayName: basicUserInfo.displayName,
+                    email: basicUserInfo.email,
+                    isAuthenticated: true,
+                    username: basicUserInfo.username
+                };
+
+                this.updateState(stateToUpdate);
+
+                dispatch({ ...state, ...stateToUpdate });
+
+                return response;
+            }
+
+            return false;
+        });
+    }
 }
 
 AuthAPI.DEFAULT_STATE = {
