@@ -2,22 +2,22 @@
 # yarn lockfile v1
 
 
-"@asgardeo/auth-js@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-0.2.8.tgz#f3d891ccee516e929e9bf1c77546fc21bd70ffcb"
-  integrity sha512-0HRFUhBK0NEsquoVDsDV0DPPHEhJGdP8zxPtv9W0NvPUJMR7TfyZn8euqp+mYdeMRtEdh56qaneh0we73vn2uw==
+"@asgardeo/auth-js@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-0.2.9.tgz#4e7bd53c1035fa8029f4ce5fc21f8b0050189822"
+  integrity sha512-xGwUflJWZRuS+wQZn5/lysLGBmm9KeLF94sKbvSQsz2NIvDEQFnOKe39GSUW665d2BewQFURUcsvSxLZvmIaKQ==
   dependencies:
     base64url "^3.0.1"
     fast-sha256 "^1.3.0"
     jose "^3.1.2"
     randombytes "^2.1.0"
 
-"@asgardeo/auth-spa@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.1.8.tgz#99836c9cca8f86f5ae518bbccdcea64c01bf2176"
-  integrity sha512-oxZIXQGFyEOC7z8X+Sajfwmc1O0TRe8PwKecqJ1WgWI+w7N5q3Dnx//If6oOeBpoWbOboQUWE8+9xlROWEAjWA==
+"@asgardeo/auth-spa@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.1.10.tgz#29c2017c8416a0860d5012ef1a533b042f468a2b"
+  integrity sha512-EFM4ohrTxuD3HrQG3ipV0F4vqIkYmfL2i2HM6nYW9vc4KXZ94MAFebPR1Q9Zpvt2Z2tomfN9ZgU4yeugaskZ7Q==
   dependencies:
-    "@asgardeo/auth-js" "^0.2.8"
+    "@asgardeo/auth-js" "^0.2.9"
     "@babel/runtime-corejs3" "^7.11.2"
     await-semaphore "^0.1.3"
     axios "^0.21.0"
