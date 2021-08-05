@@ -21,6 +21,7 @@
     -   [useAuthContext](#useAuthContext)
     -   [getBasicUserInfo](#getBasicUserInfo)
     -   [signIn](#signIn)
+    -   [trySignInSilently](#trySignInSilently)
     -   [signOut](#signOut)
     -   [httpRequest](#httpRequest)
     -   [httpRequestAll](#httpRequestAll)
@@ -48,6 +49,7 @@
     -   [CustomGrantConfig](#CustomGrantConfig)
     -   [Custom Grant Template Tags](#Custom-Grant-Template-Tags)
     -   [DecodedIDTokenPayload](#DecodedIDTokenPayload)
+    -   [HttpRequestConfig](#HttpRequestConfig)
 -   [Develop](#develop)
     -   [Prerequisites](#prerequisites)
     -   [Installing Dependencies](#installing-dependencies)
@@ -64,16 +66,6 @@ Install the library from the npm registry.
 
 ```
 npm install --save @asgardeo/auth-react
-```
-
-Or simply load the SDK by importing the script into the header of your HTML file.
-
-```html
-<script src="https://unpkg.com/@asgardeo/auth-react@0.1.26/dist/asgardeo-react.production.min.js.js"></script>
-
-<script>
-    var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
-</script>
 ```
 
 ## Getting Started
@@ -286,6 +278,40 @@ The `sign-in` hook is used to fire a callback function after signing in is succe
 
 ```TypeScript
 auth.signIn();
+```
+---
+### trySignInSilently
+
+```typescript
+trySignInSilently();
+```
+
+#### Description
+
+This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
+This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
+
+This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+
+To dispatch a token request, the `[signIn()](#signIn)` or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+
+This returns a promise that resolves with a `[BasicUserInfo](#BasicUserInfo)` object following a successful sign in. If the user is not signed into the identity server, then the promise resolves with the boolean value of `false`.
+
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
+
+> :warning: ***Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.***
+
+#### Example
+
+```typescript
+auth.trySignInSilently().then((response)=>{
+    if(response) {
+        // The user is signed in.
+        // handle basic user info
+    }
+
+    // The user is not signed in.
+});
 ```
 
 ---
@@ -807,7 +833,7 @@ This table shows the extended attributes provided by the `Config` interface.
 
 #### The AuthClientConfig Interface
 
-| Attribute | Required/Optional | Type | Default Value | Description | 
+| Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
 | `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in` |
 | `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
@@ -893,6 +919,12 @@ Session information can be attached to the body of a custom-grant request using 
 | email              | `string`               | The email address.                             |
 | preferred_username | `string`               | The preferred username.                        |
 | tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
+
+### HTTPRequestConfig
+This extends the `AxiosRequestConfig` by providing an additional attribute that is used to specify if the access token should be attached to the request or not.
+|Attribute | Type | Description|
+|--|--|--|
+|attachToken| `boolean`| Specifies if the access token should be attached to the header of the request.|
 
 ## Develop
 
