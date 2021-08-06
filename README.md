@@ -21,6 +21,7 @@
     -   [useAuthContext](#useAuthContext)
     -   [getBasicUserInfo](#getBasicUserInfo)
     -   [signIn](#signIn)
+    -   [trySignInSilently](#trySignInSilently)
     -   [signOut](#signOut)
     -   [httpRequest](#httpRequest)
     -   [httpRequestAll](#httpRequestAll)
@@ -48,6 +49,7 @@
     -   [CustomGrantConfig](#CustomGrantConfig)
     -   [Custom Grant Template Tags](#Custom-Grant-Template-Tags)
     -   [DecodedIDTokenPayload](#DecodedIDTokenPayload)
+    -   [HttpRequestConfig](#HttpRequestConfig)
 -   [Develop](#develop)
     -   [Prerequisites](#prerequisites)
     -   [Installing Dependencies](#installing-dependencies)
@@ -64,16 +66,6 @@ Install the library from the npm registry.
 
 ```
 npm install --save @asgardeo/auth-react
-```
-
-Or simply load the SDK by importing the script into the header of your HTML file.
-
-```html
-<script src="https://unpkg.com/@asgardeo/auth-react@0.1.26/dist/asgardeo-react.production.min.js.js"></script>
-
-<script>
-    var auth = AsgardeoAuth.AsgardeoSPAClient.getInstance();
-</script>
 ```
 
 ## Getting Started
@@ -249,7 +241,7 @@ This method returns a promise that resolves with the information about the authe
 #### Example
 
 ```TypeScript
-auth.getBasicUserInfo().then((response) => {
+getBasicUserInfo().then((response) => {
     // console.log(response);
 }).catch((error) => {
     // console.error(error);
@@ -285,7 +277,41 @@ The `sign-in` hook is used to fire a callback function after signing in is succe
 #### Example
 
 ```TypeScript
-auth.signIn();
+signIn();
+```
+---
+### trySignInSilently
+
+```typescript
+trySignInSilently();
+```
+
+#### Description
+
+This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
+This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
+
+This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+
+To dispatch a token request, the `[signIn()](#signIn)` or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+
+This returns a promise that resolves with a `[BasicUserInfo](#BasicUserInfo)` object following a successful sign in. If the user is not signed into the identity server, then the promise resolves with the boolean value of `false`.
+
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
+
+> :warning: ***Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.***
+
+#### Example
+
+```typescript
+trySignInSilently().then((response)=>{
+    if(response) {
+        // The user is signed in.
+        // handle basic user info
+    }
+
+    // The user is not signed in.
+});
 ```
 
 ---
@@ -305,7 +331,7 @@ The `sign-out` hook is used to fire a callback function after signing out is suc
 #### Example
 
 ```TypeScript
-auth.signOut();
+signOut();
 ```
 
 ---
@@ -349,7 +375,7 @@ const requestConfig = {
     url: "https://localhost:9443/scim2/me"
 };
 
-return auth.httpRequest(requestConfig)
+return httpRequest(requestConfig)
     .then((response) => {
         // console.log(response);
     })
@@ -382,7 +408,7 @@ This method is used to send multiple http requests at the same time. This works 
 #### Example
 
 ```TypeScript
-auth.httpRequestAll(configs).then((responses) => {
+httpRequestAll(configs).then((responses) => {
     response.forEach((response) => {
         // console.log(response);
     });
@@ -431,7 +457,7 @@ The `custom-grant` hook is used to fire a callback function after a custom grant
       signInRequired: true
     }
 
-    auth.requestCustomGrant(config).then((response)=>{
+    requestCustomGrant(config).then((response)=>{
         console.log(response);
     }).catch((error)=>{
         console.error(error);
@@ -455,7 +481,7 @@ The `end-user-session` hook is used to fire a callback function after end user s
 #### Example
 
 ```TypeScript
-auth.revokeAccessToken();
+revokeAccessToken();
 ```
 
 ---
@@ -486,7 +512,7 @@ This method returns a promise that resolves with an object containing the OIDC e
 #### Example
 
 ```TypeScript
-auth.getOIDCServiceEndpoints().then((endpoints) => {
+getOIDCServiceEndpoints().then((endpoints) => {
     // console.log(endpoints);
 }).error((error) => {
     // console.error(error);
@@ -512,7 +538,7 @@ This method returns a promise that resolves with the decoded payload of the JWT 
 #### Example
 
 ```TypeScript
-auth.getDecodedIDToken().then((idToken) => {
+getDecodedIDToken().then((idToken) => {
     // console.log(idToken);
 }).error((error) => {
     // console.error(error);
@@ -537,7 +563,7 @@ This method returns the id token.
 #### Example
 
 ```TypeScript
-const idToken = await auth.getIDToken();
+const idToken = await getIDToken();
 ```
 ---
 
@@ -558,7 +584,7 @@ This returns a promise that resolves with the access token. The promise resolves
 #### Example
 
 ```TypeScript
-auth.getAccessToken().then((token) => {
+getAccessToken().then((token) => {
     // console.log(token);
 }).error((error) => {
     // console.error(error);
@@ -592,7 +618,7 @@ This method also returns a Promise that resolves with an object containing the a
 #### Example
 
 ```TypeScript
-auth.refreshToken().then((response)=>{
+refreshToken().then((response)=>{
       // console.log(response);
  }).catch((error)=>{
       // console.error(error);
@@ -637,7 +663,7 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 #### Example
 
 ```TypeScript
-auth.on("sign-in", () => {
+on("sign-in", () => {
     //called after signing in.
 });
 ```
@@ -662,7 +688,7 @@ This method returns a boolean value indicating if the user is authenticated or n
 #### Example
 
 ```TypeScript
-const isAuth = auth.isAuthenticated();
+const isAuth = isAuthenticated();
 ```
 
 ---
@@ -684,7 +710,7 @@ This enables the callback functions attached to the http client. The callback fu
 #### Example
 
 ```TypeScript
-auth.enableHttpHandler();
+enableHttpHandler();
 ```
 
 ---
@@ -706,7 +732,7 @@ This disables the callback functions attached to the http client.
 #### Example
 
 ```TypeScript
-auth.disableHttpHandler();
+disableHttpHandler();
 ```
 
 ### updateConfig
@@ -728,7 +754,7 @@ This method can be used to update the configurations passed into the constructor
 #### Example
 
 ```TypeScript
-auth.updateConfig({
+updateConfig({
     signOutRedirectURL: "https://localhost:5000/sign-out"
 });
 ```
@@ -738,7 +764,7 @@ auth.updateConfig({
 ### getHttpClient
 
 ```TypeScript
-auth.getHttpClient(): `HttpClientInstance`
+getHttpClient(): `HttpClientInstance`
 ```
 
 #### Returns
@@ -752,7 +778,7 @@ This method returns the `HttpClientInstance`. This is the client that is used to
 #### Example
 
 ```TypeScript
-const httpClient = auth.getHttpClient();
+const httpClient = getHttpClient();
 ```
 
 ## Using the `form_post` response mode
@@ -779,7 +805,7 @@ Asgardeo allows the session information including the access token to be stored 
 Of the four methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and data there cannot be stolen through XSS attacks. However, when using a web worker to store the session information, the [`httpRequest`](#httprequest) method has to be used to send http requests. This method will route the request through the web worker and the web worker will attach the access token to the request before sending it to the server.
 
 ```TypeScript
-auth.initialize(config);
+initialize(config);
 ```
 
 ## Models
@@ -807,7 +833,7 @@ This table shows the extended attributes provided by the `Config` interface.
 
 #### The AuthClientConfig Interface
 
-| Attribute | Required/Optional | Type | Default Value | Description | 
+| Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
 | `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in` |
 | `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
@@ -893,6 +919,12 @@ Session information can be attached to the body of a custom-grant request using 
 | email              | `string`               | The email address.                             |
 | preferred_username | `string`               | The preferred username.                        |
 | tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
+
+### HTTPRequestConfig
+This extends the `AxiosRequestConfig` by providing an additional attribute that is used to specify if the access token should be attached to the request or not.
+|Attribute | Type | Description|
+|--|--|--|
+|attachToken| `boolean`| Specifies if the access token should be attached to the header of the request.|
 
 ## Develop
 
