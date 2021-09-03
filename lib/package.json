@@ -20,6 +20,7 @@
     "scripts": {
         "lint": "tslint -t stylish --project .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
+        "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=developement",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
