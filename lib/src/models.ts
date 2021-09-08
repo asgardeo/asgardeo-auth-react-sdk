@@ -44,6 +44,10 @@ export interface AuthStateInterface {
     displayName?: string;
     email?: string;
     isAuthenticated: boolean;
+    /**
+     * Are the Auth requests loading.
+     */
+    isLoading: boolean;
     username: string;
 }
 
