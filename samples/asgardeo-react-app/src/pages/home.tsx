@@ -17,223 +17,132 @@
  */
 
 import { useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent, useEffect, useState } from "react";
-import ReactJson from "react-json-view";
+import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
+import { AuthenticationResponse } from "../components";
 
-export const HomePage: FunctionComponent<{}> = () => {
+/**
+ * Decoded ID Token Response component Prop types interface.
+ */
+type HomePagePropsInterface = {};
 
-    const { state, signIn, signOut, getBasicUserInfo, getIDToken, getDecodedIDToken } = useAuthContext();
-    const [authenticateState, setAuthenticateState] = useState(null);
-    const [authenticationError, setAuthenticationError] = useState <boolean>(false);
+/**
+ * Home page for the Sample.
+ *
+ * @param {HomePagePropsInterface} props - Props injected to the component.
+ *
+ * @return {React.ReactElement}
+ */
+export const HomePage: FunctionComponent<HomePagePropsInterface> = (
+    props: HomePagePropsInterface
+): ReactElement => {
+
+    const {
+        state,
+        signIn,
+        signOut,
+        getBasicUserInfo,
+        getIDToken,
+        getDecodedIDToken
+    } = useAuthContext();
+
+    const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<any>(null);
+    const [ hasAuthenticationErrors, setHasAuthenticationErrors ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (getIsInitLogin()) {
-                signIn().catch((error: any) => {
-                    setAuthenticationError(true);
-                });
-        }
-    }, []);
 
-    const getIsInitLogin = () => {
-        if (sessionStorage.getItem("isInitLogin") === "true") {
-            return true;
+        if (!state?.isAuthenticated) {
+            return;
         }
-        else {
-            return false;
-        }
-    };
 
-    const setIsInitLogin = (value: string) => {
-        sessionStorage.setItem("isInitLogin", value)
-    };
+        (async (): Promise<void> => {
+            const basicUserInfo = await getBasicUserInfo();
+            const idToken = await getIDToken();
+            const decodedIDToken = await getDecodedIDToken();
+
+            const derivedState = {
+                authenticateResponse: basicUserInfo,
+                idToken: idToken.split("."),
+                decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[0])),
+                decodedIDTokenPayload: decodedIDToken
+            };
+
+            setDerivedAuthenticationState(derivedState);
+        })();
+    }, [ state.isAuthenticated ]);
 
     const handleLogin = () => {
-        setIsInitLogin("true");
-        signIn();
-    }
+        signIn()
+            .catch(() => setHasAuthenticationErrors(true));
+    };
 
     const handleLogout = () => {
         signOut();
-        setIsInitLogin("false");
+    };
+
+    // If `clientID` is not defined in `config.json`, show a UI warning. 
+    if (!authConfig?.clientID) {
+
+        return (
+            <div className="content">
+                <h2>You need to update the Client ID to proceed.</h2>
+                <p>Please open "src/config.json" file using an editor, and update
+                    the <code>clientID</code> value with the registered application's client ID.</p>
+                <p>Visit repo <a
+                    href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">README</a> for
+                    more details.</p>
+            </div>
+        );
     }
 
-    useEffect(() => {
-        if (state?.isAuthenticated) {
-            const getData = async () => {
-                const basicUserInfo = await getBasicUserInfo();
-                const idToken = await getIDToken();
-                const decodedIDToken = await getDecodedIDToken();
-
-                const authState = {
-                    authenticateResponse: basicUserInfo,
-                    idToken: idToken.split("."),
-                    decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[0])),
-                    decodedIDTokenPayload: decodedIDToken
-                };
-
-                setAuthenticateState(authState);
-            };
-            getData();
-        }
-    }, [state.isAuthenticated]);
-
     return (
-        <DefaultLayout>
-            { authConfig.clientID === "" ?
-                <div className="content">
-                    <h2>You need to update the Client ID to proceed.</h2>
-                    <p>Please open "src/config.json" file using an editor, and update the <code>clientID</code> value with the registered application's client ID.</p>
-                    <p>Visit repo <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">README</a> for more details.</p>
-                </div>
-                :
-                (state.isAuthenticated) ?
-                    <>
-                        <div className="header-title">
-                            <h1>
-                                React SPA Authentication Sample
-                        </h1>
-                        </div>
+        <DefaultLayout
+            isLoading={ state.isLoading }
+            hasErrors={ hasAuthenticationErrors }
+        >
+            {
+                state.isAuthenticated
+                    ? (
                         <div className="content">
-                            <h2>Authentication Response</h2>
-                            <h4 className="sub-title">
-                                Derived by the&nbsp;
-                                <code className="inline-code-block">
-                                    <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
-                                       target="_blank">
-                                        @asgardeo/auth-react
-                                    </a>
-                                </code>&nbsp;SDK
-                            </h4>
-                            <div className="json">
-                                <ReactJson
-                                    src={authenticateState?.authenticateResponse}
-                                    name={null}
-                                    enableClipboard={false}
-                                    displayObjectSize={false}
-                                    displayDataTypes={false}
-                                    iconStyle="square"
-                                    theme="monokai"
-                                />
-                            </div>
-                            <h2 className="mb-0 mt-4">ID token</h2>
-                            <div className="row">
-                                {authenticateState?.idToken && (
-                                    <div className="column">
-                                        <h5>
-                                            <b>Encoded</b>
-                                        </h5>
-                                        <div className="code">
-                                            <code>
-                                                <span className="id-token-0">{authenticateState?.idToken[0]}</span>.
-                                        <span className="id-token-1">{authenticateState?.idToken[1]}</span>.
-                                        <span className="id-token-2">{authenticateState?.idToken[2]}</span>
-                                            </code>
-                                        </div>
-                                    </div>
-                                )}
-                                <div className="column">
-                                    <div className="json">
-                                        <h5>
-                                            <b>Decoded:</b> Header
-                                        </h5>
-                                        <ReactJson
-                                            src={authenticateState?.decodedIdTokenHeader}
-                                            name={null}
-                                            enableClipboard={false}
-                                            displayObjectSize={false}
-                                            displayDataTypes={false}
-                                            iconStyle="square"
-                                            theme="monokai"
-                                        />
-                                    </div>
-
-                                    <div className="json">
-                                        <h5>
-                                            <b>Decoded:</b> Payload
-                                        </h5>
-                                        <ReactJson
-                                            src={authenticateState?.decodedIDTokenPayload}
-                                            name={null}
-                                            enableClipboard={false}
-                                            displayObjectSize={false}
-                                            displayDataTypes={false}
-                                            iconStyle="square"
-                                            theme="monokai"
-                                        />
-                                    </div>
-                                    <div className="json">
-                                        <h5>Signature</h5>
-                                        <div className="code">
-                                            <code>
-                                                HMACSHA256(
-                                            <br />
-                                            &nbsp;&nbsp;<span className="id-token-0">base64UrlEncode(
-                                                <span className="id-token-1">header</span>)</span> + "." + <br />
-                                            &nbsp;&nbsp;<span className="id-token-0">base64UrlEncode(
-                                                <span className="id-token-1">payload</span>)</span>,&nbsp;
-                                            <span className="id-token-1">your-256-bit-secret</span> <br />
-                                            );
-                                            </code>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <AuthenticationResponse
+                                derivedResponse={ derivedAuthenticationState }
+                            />
                             <button
                                 className="btn primary mt-4"
-                                onClick={() => {
+                                onClick={ () => {
                                     handleLogout();
-                                }}
+                                } }
                             >
                                 Logout
                             </button>
                         </div>
-                    </>
-                    :
-                    (getIsInitLogin()) ?
-                        <>
-                            <div className="header-title">
-                                <h1>
-                                    React SPA Authentication Sample
-                                </h1>
+                    )
+                    : (
+                        <div className="content">
+                            <div className="home-image">
+                                <img src={ REACT_LOGO } className="react-logo-image logo"/>
                             </div>
-                            {authenticationError 
-                                ? <div className="content">An error occured while authenticating ...</div>
-                                : <div className="content">Loading ...</div>
-                            }
-                        </>
-                        :
-                        <>
-                            <div className="header-title">
-                                <h1>
-                                    React SPA Authentication Sample
-                                </h1>
-                            </div>
-                            <div className="content">
-                                <div className="home-image">
-                                    <img src={REACT_LOGO} className="react-logo-image logo" />
-                                </div>
-                                <h4 className={ "spa-app-description" }>
-                                    Sample demo to showcase authentication for a Single Page Application
-                                    via the OpenID Connect Authorization Code flow,
-                                    which is integrated using the&nbsp;
-                                    <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
-                                        Asgardeo Auth React SDK
-                                    </a>.
-                                </h4>
-                                <button
-                                    className="btn primary"
-                                    onClick={() => {
-                                        handleLogin();
-                                    }}
-                                >
-                                    Login
-                                </button>
-                            </div>
-                        </>
+                            <h4 className={ "spa-app-description" }>
+                                Sample demo to showcase authentication for a Single Page Application
+                                via the OpenID Connect Authorization Code flow,
+                                which is integrated using the&nbsp;
+                                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
+                                    Asgardeo Auth React SDK
+                                </a>.
+                            </h4>
+                            <button
+                                className="btn primary"
+                                onClick={ () => {
+                                    handleLogin();
+                                } }
+                            >
+                                Login
+                            </button>
+                        </div>
+                    )
             }
-        </DefaultLayout >
+        </DefaultLayout>
     );
 };

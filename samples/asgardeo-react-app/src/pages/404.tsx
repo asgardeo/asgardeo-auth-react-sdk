@@ -16,11 +16,23 @@
  * under the License.
  */
 
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 
-export const NotFoundPage: FunctionComponent<{}> = () => {
+/**
+ * Decoded ID Token Response component Prop types interface.
+ */
+type NotFoundPagePropsInterface = {};
+
+/**
+ * Page to display for 404.
+ *
+ * @param {NotFoundPagePropsInterface} props - Props injected to the component.
+ *
+ * @return {React.ReactElement}
+ */
+export const NotFoundPage: FunctionComponent<NotFoundPagePropsInterface> = (): ReactElement => {
 
     const history = useHistory();
 
