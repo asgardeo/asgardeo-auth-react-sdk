@@ -26,8 +26,18 @@ import {
     HttpClientInstance,
     HttpRequestConfig,
     HttpResponse,
-    OIDCEndpoints
+    OIDCEndpoints,
+    SPAConfig
 } from "@asgardeo/auth-spa";
+
+export interface AuthReactConfig extends SPAConfig {
+    /**
+     * The SDK's `AuthProvider` by default is listening to the URL changes to see
+     * if `code` & `session_state` search params are available so that it could perform
+     * token exchange. This option could be used to override that behaviour.
+     */
+    skipRedirectCallback?: boolean;
+}
 
 export interface AuthStateInterface {
     allowedScopes: string;
