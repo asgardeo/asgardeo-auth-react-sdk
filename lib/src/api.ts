@@ -94,8 +94,9 @@ class AuthAPI {
                         displayName: response.displayName,
                         email: response.email,
                         isAuthenticated: true,
+                        username: response.username,
                         isLoading: false,
-                        username: response.username
+                        isSigningOut: false
                     };
 
                     this.updateState(stateToUpdate);
@@ -392,7 +393,8 @@ class AuthAPI {
                             email: basicUserInfo.email,
                             isAuthenticated: true,
                             isLoading: false,
-                            username: basicUserInfo.username
+                            username: basicUserInfo.username,
+                            isSigningOut: false
                         };
 
                         this.updateState(stateToUpdate);
