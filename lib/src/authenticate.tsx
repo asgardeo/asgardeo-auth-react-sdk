@@ -106,8 +106,6 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
     }, [ config ]);
 
-    useEffect(() => { console.log(isAuthenticated); }, []);
-
     /**
      * Try signing in when the component is mounted.
      */
