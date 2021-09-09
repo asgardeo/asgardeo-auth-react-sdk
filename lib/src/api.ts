@@ -125,7 +125,7 @@ class AuthAPI {
     public signOut(
         dispatch: (state: AuthStateInterface) => void,
         state: AuthStateInterface,
-        callback?: () => void
+        callback?: (response?: boolean) => void
     ): Promise<boolean> {
         return this._client
             .signOut()
@@ -137,7 +137,7 @@ class AuthAPI {
                 dispatch({ ...state, ...stateToUpdate, isSigningOut: true });
 
                 if (callback) {
-                    callback();
+                    callback(response);
                 }
 
                 return response;
