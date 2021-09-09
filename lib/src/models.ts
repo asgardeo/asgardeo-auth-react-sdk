@@ -27,7 +27,7 @@ import {
     HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
-    SPAConfig
+    SignInConfig
 } from "@asgardeo/auth-spa";
 
 export interface AuthReactConfig extends SPAConfig {
@@ -49,11 +49,17 @@ export interface AuthStateInterface {
      */
     isLoading: boolean;
     username: string;
+    isSigningOut?: boolean;
 }
 
 export interface AuthContextInterface {
-    signIn: (callback?) => Promise<void>;
-    signOut: () => void;
+    signIn: (
+        config?: SignInConfig,
+        authorizationCode?: string,
+        sessionState?: string,
+        callback?: (response: BasicUserInfo) => void
+    ) => Promise<BasicUserInfo>;
+    signOut: () => Promise<boolean>;
     getBasicUserInfo(): Promise<BasicUserInfo>;
     httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>>;
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
