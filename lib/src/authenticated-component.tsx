@@ -23,8 +23,8 @@ import { useAuthContext } from "./authenticate";
  * Prop types of the Authenticated component.
  */
 interface AuthenticatedComponentPropsInterface {
-    placeholder: ReactNode;
-    signingOutPlaceholder?: ReactNode;
+    fallback: ReactNode;
+    signingOutFallback?: ReactNode;
 }
 
 /**
@@ -37,8 +37,8 @@ export const AuthenticatedComponent: FunctionComponent<PropsWithChildren<Authent
     props: PropsWithChildren<AuthenticatedComponentPropsInterface>
 ) => {
 
-    const { placeholder, children, signingOutPlaceholder } = props;
+    const { fallback, children, signingOutFallback } = props;
     const { state: { isAuthenticated, isSigningOut } } = useAuthContext();
 
-    return <> { isAuthenticated ? children : isSigningOut ? signingOutPlaceholder ?? null :placeholder } </>;
+    return <> { isAuthenticated ? children : isSigningOut ? signingOutFallback ?? null : fallback ?? null } </>;
 };
