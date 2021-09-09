@@ -232,12 +232,15 @@ class AuthAPI {
      * @return {Promise<boolean>} - A promise that resolves with `true` if the process is successful.
      */
     public async revokeAccessToken(dispatch: (state: AuthStateInterface) => void): Promise<boolean> {
-        return this._client.revokeAccessToken().then(() => {
-            dispatch(AuthAPI.DEFAULT_STATE);
-            return true;
-        }).catch((error) => {
-            return Promise.reject(error);
-        });
+        return this._client
+            .revokeAccessToken()
+            .then(() => {
+                dispatch(AuthAPI.DEFAULT_STATE);
+                return true;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     /**
@@ -384,28 +387,28 @@ class AuthAPI {
         return this._client
             .trySignInSilently()
             .then(async (response: BasicUserInfo | boolean) => {
-                if (await this._client.isAuthenticated()) {
-                    if (response) {
-                        const basicUserInfo = response as BasicUserInfo;
-                        const stateToUpdate = {
-                            allowedScopes: basicUserInfo.allowedScopes,
-                            displayName: basicUserInfo.displayName,
-                            email: basicUserInfo.email,
-                            isAuthenticated: true,
-                            isLoading: false,
-                            username: basicUserInfo.username,
-                            isSigningOut: false
-                        };
-
-                        this.updateState(stateToUpdate);
-
-                        dispatch({ ...state, ...stateToUpdate });
-
-                        return response;
-                    }
+                if (!response) {
+                    return false;
                 }
 
-                return false;
+                if (await this._client.isAuthenticated()) {
+                    const basicUserInfo = response as BasicUserInfo;
+                    const stateToUpdate = {
+                        allowedScopes: basicUserInfo.allowedScopes,
+                        displayName: basicUserInfo.displayName,
+                        email: basicUserInfo.email,
+                        isAuthenticated: true,
+                        isLoading: false,
+                        username: basicUserInfo.username,
+                        isSigningOut: false
+                    };
+
+                    this.updateState(stateToUpdate);
+
+                    dispatch({ ...state, ...stateToUpdate });
+                }
+
+                return response;
             })
             .catch((error) => {
                 return Promise.reject(error);
