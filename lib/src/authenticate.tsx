@@ -52,7 +52,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
-    const [ configState, setConfigState ] = useState(null);
+    const [ initialized, setInitialized ] = useState(false);
 
     const { children, config } = props;
 
@@ -61,11 +61,11 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         authorizationCode?: string,
         sessionState?: string,
         callback?: (response: BasicUserInfo) => void
-    ) => {
-        await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
+    ): Promise<BasicUserInfo> => {
+        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
-    const signOut = (callback?) => {
-        AuthClient.signOut(dispatch, state, callback);
+    const signOut = (callback?): Promise<boolean> => {
+        return AuthClient.signOut(dispatch, state, callback);
     };
     const getBasicUserInfo = () => AuthClient.getBasicUserInfo();
     const httpRequest = (config: HttpRequestConfig) => AuthClient.httpRequest(config);
@@ -98,10 +98,13 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         if (state.isAuthenticated) {
             return;
         }
+        (async () => {
+            setInitialized(await AuthClient.init(config));
+        })();
 
-        AuthClient.init(config);
-        setConfigState(config);
     }, [ config ]);
+
+    useEffect(() => { console.log(isAuthenticated); }, []);
 
     /**
      * Try signing in when the component is mounted.
@@ -168,7 +171,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 updateConfig
             } }
         >
-            { configState && children }
+            { initialized && children }
         </AuthContext.Provider>
     );
 };
