@@ -59,7 +59,7 @@ export interface AuthContextInterface {
         sessionState?: string,
         callback?: (response: BasicUserInfo) => void
     ) => Promise<BasicUserInfo>;
-    signOut: () => Promise<boolean>;
+    signOut: (callback?: (response: boolean) => void) => Promise<boolean>;
     getBasicUserInfo(): Promise<BasicUserInfo>;
     httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>>;
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;

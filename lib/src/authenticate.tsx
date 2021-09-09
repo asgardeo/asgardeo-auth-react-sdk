@@ -66,7 +66,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     ): Promise<BasicUserInfo> => {
         return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
-    const signOut = (callback?): Promise<boolean> => {
+    const signOut = (callback?: (response: boolean) => void): Promise<boolean> => {
         return AuthClient.signOut(dispatch, state, callback);
     };
     const getBasicUserInfo = () => AuthClient.getBasicUserInfo();
