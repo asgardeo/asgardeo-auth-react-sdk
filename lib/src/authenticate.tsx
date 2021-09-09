@@ -104,7 +104,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     }, [ config ]);
 
     /**
-     * Subscribe to the URL search param changes and try signing in whenever required.
+     * Try signing in when the component is mounted.
      */
     useEffect(() => {
 
@@ -138,7 +138,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                 });
         }
-    }, [ SPAUtils.hasAuthSearchParamsInURL() ]);
+    }, []);
 
     /**
      * Render state and special case actions
