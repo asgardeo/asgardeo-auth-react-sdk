@@ -32,7 +32,8 @@ import React, {
     createContext,
     useContext,
     useEffect,
-    useState
+    useState,
+    ReactNode
 } from "react";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
@@ -46,6 +47,7 @@ const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
     config: AuthClientConfig<AuthReactConfig>;
+    fallback?: ReactNode;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
@@ -54,7 +56,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
 
-    const { children, config } = props;
+    const { children, config, fallback } = props;
 
     const signIn = async(
         config?: SignInConfig,
@@ -171,7 +173,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 updateConfig
             } }
         >
-            { initialized && children }
+            { initialized ? children : fallback ?? null }
         </AuthContext.Provider>
     );
 };
