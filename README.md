@@ -188,12 +188,14 @@ Like every other provider, the `AuthProvider` also encapsulates the components t
 
 The provider takes a prop called `config` that accepts a config object of type [`AuthClientConfig<Config>`](#AuthClientConfig<Config>). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthClientConfig<Config>`](#AuthClientConfig<Config>) section.
 
+In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
+
 #### Example
 
 ```TypeScript
 export const MyApp = (): ReactElement => {
     return (
-        <AuthProvider config={ config }>
+        <AuthProvider config={ config } fallback={ <div>Initializing...</div> }>
             <Dashboard />
         </AuthProvider>
     )
@@ -209,6 +211,15 @@ This component takes three props. The `path` and `component` props just relay th
 <SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
 ```
 
+### AuthenticatedComponent
+
+This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop. Besides, the component also takes a prop called `signingOutFallback` that is shown while the user is signing out.
+#### Example
+```TypeScript
+<AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } signingOutFallback={ <div>Signing out...</div> }>
+    <SecureComponent />
+</AuthenticatedComponent>
+```
 ### useAuthContext
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
