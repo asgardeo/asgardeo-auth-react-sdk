@@ -27,6 +27,7 @@ const authenticateInitialState: AuthStateInterface = {
     displayName: "",
     email: "",
     isAuthenticated: false,
+    isLoading: true,
     username: ""
 };
 
@@ -46,12 +47,14 @@ const authenticateReducer = (state, action) => {
                 displayName: action.payload.displayName,
                 email: action.payload.email,
                 isAuthenticated: true,
+                isLoading: false,
                 username: action.payload.username
             };
         case AuthContextReducerActionTypes.SET_SIGN_OUT:
             return {
                 ...state,
-                authenticateInitialState
+                authenticateInitialState,
+                isLoading: false
             };
         case AuthContextReducerActionTypes.SET_PROFILE_INFO:
             return state

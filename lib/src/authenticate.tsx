@@ -19,12 +19,12 @@
 import {
     AuthClientConfig,
     BasicUserInfo,
-    Config,
     CustomGrantConfig,
     Hooks,
     HttpRequestConfig,
     HttpResponse,
-    SignInConfig
+    SignInConfig,
+    SPAUtils
 } from "@asgardeo/auth-spa";
 import React, {
     FunctionComponent,
@@ -35,7 +35,7 @@ import React, {
     useState
 } from "react";
 import AuthAPI from "./api";
-import { AuthContextInterface, AuthStateInterface } from "./models";
+import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
 
 const AuthClient = new AuthAPI();
 
@@ -45,7 +45,7 @@ const AuthClient = new AuthAPI();
 const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
-    config: AuthClientConfig<Config>;
+    config: AuthClientConfig<AuthReactConfig>;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
@@ -84,7 +84,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const enableHttpHandler = () => AuthClient.enableHttpHandler();
     const disableHttpHandler = () => AuthClient.disableHttpHandler();
     const getIDToken = () => AuthClient.getIDToken();
-    const updateConfig = (config: Partial<AuthClientConfig<Config>>) => AuthClient.updateConfig(config);
+    const updateConfig = (config: Partial<AuthClientConfig<AuthReactConfig>>) => AuthClient.updateConfig(config);
     const on = (hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> => {
         if (hook === Hooks.CustomGrant) {
             return AuthClient.on(hook, callback, id);
@@ -102,6 +102,43 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         AuthClient.init(config);
         setConfigState(config);
     }, [ config ]);
+
+    /**
+     * Try signing in when the component is mounted.
+     */
+    useEffect(() => {
+
+        // User is already authenticated. Skip...
+        if (state.isAuthenticated) {
+            return;
+        }
+
+        // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
+        // If so, initiate the sign in. If not, try to login silently.
+        if (!config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
+            signIn({ callOnlyOnRedirect: true })
+                .then(() => {
+                    // TODO: Add logs when a logger is available.
+                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                })
+                .catch(() => {
+                    // TODO: Add logs when a logger is available.
+                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                })
+        } else {
+            // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
+            // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
+            trySignInSilently()
+                .then((_: BasicUserInfo | boolean) => {
+                    // TODO: Add logs when a logger is available.
+                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                })
+                .catch(() => {
+                    // TODO: Add logs when a logger is available.
+                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                });
+        }
+    }, []);
 
     /**
      * Render state and special case actions

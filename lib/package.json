@@ -20,6 +20,7 @@
     "scripts": {
         "lint": "tslint -t stylish --project .",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
+        "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=developement",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
@@ -34,7 +35,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardeo/auth-spa": "^0.2.0"
+        "@asgardeo/auth-spa": "^0.2.2"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",

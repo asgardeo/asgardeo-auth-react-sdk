@@ -87,6 +87,7 @@ class AuthAPI {
                 displayName: response.displayName,
                 email: response.email,
                 isAuthenticated: true,
+                isLoading: false,
                 username: response.username
             };
 
@@ -191,7 +192,7 @@ class AuthAPI {
             Hooks.CustomGrant,
             (response: BasicUserInfo | HttpResponse<any>) => {
                 if (config.returnsSession) {
-                    dispatch({ ...(response as BasicUserInfo), isAuthenticated: true });
+                    dispatch({ ...(response as BasicUserInfo), isAuthenticated: true, isLoading: false });
                 }
 
                 callback && callback(response);
@@ -362,6 +363,7 @@ class AuthAPI {
                     displayName: basicUserInfo.displayName,
                     email: basicUserInfo.email,
                     isAuthenticated: true,
+                    isLoading: false,
                     username: basicUserInfo.username
                 };
 
@@ -371,6 +373,9 @@ class AuthAPI {
 
                 return response;
             }
+
+            this.updateState({ ...state, isLoading: false });
+            dispatch({ ...state, isLoading: false });
 
             return false;
         });
@@ -382,6 +387,7 @@ AuthAPI.DEFAULT_STATE = {
     displayName: "",
     email: "",
     isAuthenticated: false,
+    isLoading: true,
     username: ""
 };
 
