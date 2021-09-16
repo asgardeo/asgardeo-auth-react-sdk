@@ -130,12 +130,6 @@ class AuthAPI {
         return this._client
             .signOut()
             .then((response) => {
-                const stateToUpdate = AuthAPI.DEFAULT_STATE;
-
-                this.updateState(stateToUpdate);
-
-                dispatch({ ...state, ...stateToUpdate, isSigningOut: true });
-
                 if (callback) {
                     callback(response);
                 }
@@ -214,6 +208,13 @@ class AuthAPI {
                 }
 
                 if (config.returnsSession) {
+                    this.updateState(
+                        {
+                            ...this.getState(),
+                            ...(response as BasicUserInfo), isAuthenticated: true, isLoading: false
+                        }
+                    );
+
                     dispatch({ ...(response as BasicUserInfo), isAuthenticated: true, isLoading: false });
                 }
 
@@ -235,6 +236,7 @@ class AuthAPI {
         return this._client
             .revokeAccessToken()
             .then(() => {
+                this.updateState(AuthAPI.DEFAULT_STATE);
                 dispatch(AuthAPI.DEFAULT_STATE);
                 return true;
             })
@@ -388,6 +390,9 @@ class AuthAPI {
             .trySignInSilently()
             .then(async (response: BasicUserInfo | boolean) => {
                 if (!response) {
+                    this.updateState({ ...this.getState(), isLoading: false });
+                    dispatch({ ...state, isLoading: false });
+
                     return false;
                 }
 
@@ -422,8 +427,7 @@ AuthAPI.DEFAULT_STATE = {
     email: "",
     isAuthenticated: false,
     isLoading: true,
-    username: "",
-    isSigningOut: false
+    username: ""
 };
 
 export default AuthAPI;
