@@ -24,7 +24,6 @@ import { useAuthContext } from "./authenticate";
  */
 interface AuthenticatedComponentPropsInterface {
     fallback: ReactNode;
-    signingOutFallback?: ReactNode;
 }
 
 /**
@@ -37,8 +36,8 @@ export const AuthenticatedComponent: FunctionComponent<PropsWithChildren<Authent
     props: PropsWithChildren<AuthenticatedComponentPropsInterface>
 ) => {
 
-    const { fallback, children, signingOutFallback } = props;
-    const { state: { isAuthenticated, isSigningOut } } = useAuthContext();
+    const { fallback, children } = props;
+    const { state: { isAuthenticated } } = useAuthContext();
 
-    return <> { isAuthenticated ? children : isSigningOut ? signingOutFallback ?? null : fallback ?? null } </>;
+    return <> { isAuthenticated ? children : fallback ?? null } </>;
 };
