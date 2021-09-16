@@ -116,22 +116,28 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             return;
         }
 
-        // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
-        // If so, initiate the sign in. If not, try to login silently.
-        if (!config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
-            signIn({ callOnlyOnRedirect: true })
-                .then(() => {
-                    // TODO: Add logs when a logger is available.
-                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                })
-                .catch(() => {
-                    // TODO: Add logs when a logger is available.
-                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                })
-        } else {
+        (async () => {
+            // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
+            // If so, initiate the sign in.
+            if (!config.skipRedirectCallback) {
+                await signIn({ callOnlyOnRedirect: true })
+                    .then(() => {
+                        // TODO: Add logs when a logger is available.
+                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    })
+                    .catch(() => {
+                        // TODO: Add logs when a logger is available.
+                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    });
+            }
+
+            if (AuthClient.getState().isAuthenticated) {
+                return;
+            }
+
             // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
             // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
-            trySignInSilently()
+            await trySignInSilently()
                 .then((_: BasicUserInfo | boolean) => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
@@ -140,7 +146,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                 });
-        }
+        })();
+
     }, []);
 
     /**
