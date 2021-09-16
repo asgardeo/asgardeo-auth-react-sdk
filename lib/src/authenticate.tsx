@@ -125,9 +125,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                         // TODO: Add logs when a logger is available.
                         // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                     })
-                    .catch(() => {
+                    .catch((error) => {
                         // TODO: Add logs when a logger is available.
                         // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                        throw error;
                     });
             }
 
@@ -142,9 +143,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                 })
-                .catch(() => {
+                .catch((error) => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    throw error;
                 });
         })();
 
