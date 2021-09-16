@@ -219,13 +219,12 @@ This is a component that can be used to secure a React app. This component wraps
 if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically
 initiates the sign-in flow.
 
-The component takes three props, namely `fallback`, `signInRedirectPath`, and `overrideSignIn`. The `fallback` prop
-is used to render a fallback component during sign in. The `signInRedirectPath` prop is used to specify a path that the
-user will be redirected to after signing in. The `overrideSignIn` prop is used to specify a function that will be called to initiate the sign-in flow. By default, the `signIn` method is used to initiate the sign-in flow.
+The component takes three props, namely `fallback`, `onSignIn`, and `overrideSignIn`. The `fallback` prop
+is used to render a fallback component during sign in. The `onSignIn` prop is used to pass a callback function that will be called after signing in. The `overrideSignIn` prop is used to specify a function that will be called to initiate the sign-in flow. By default, the `signIn` method is used to initiate the sign-in flow.
 
 #### Example
 ```TypeScript
-<SecureApp fallback={ <Loader /> } signInRedirectPath="/home" >
+<SecureApp fallback={ <Loader /> } onSignIn{ ()=> { history.push("/home") } } >
     <App />
 </SecureApp>
 ```

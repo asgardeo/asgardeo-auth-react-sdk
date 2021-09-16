@@ -16,9 +16,7 @@
  * under the License.
  */
 
-import React, { Suspense } from "react";
-import { FunctionComponent, PropsWithChildren, ReactElement, useEffect } from "react";
-import { useHistory } from "react-router";
+import React, { Suspense, FunctionComponent, PropsWithChildren, ReactElement, useEffect } from "react";
 import { useAuthContext } from "./authenticate";
 import { AuthenticatedComponent } from "./authenticated-component";
 
@@ -32,9 +30,9 @@ interface SecureAppPropsInterface {
      */
     fallback?: React.ReactNode;
     /**
-     * The path to which the app should redirect to after a successful login.
+     * The callback function to be fired after a successful login.
      */
-    signInRedirectPath?: string;
+    onSignIn?: () => void;
     /**
      * The sign in method to be called. By default `SecureApp` uses the default `signIn` method.
      * If you want to use a custom sign in method, you can pass it here. For example, if you use the `form_post`
@@ -56,11 +54,9 @@ interface SecureAppPropsInterface {
 export const SecureApp: FunctionComponent<PropsWithChildren<SecureAppPropsInterface>> = (
     props: PropsWithChildren<SecureAppPropsInterface>): ReactElement => {
 
-    const { children, fallback, signInRedirectPath, overrideSignIn } = props;
+    const { children, fallback, onSignIn, overrideSignIn } = props;
 
     const { state: { isAuthenticated, isLoading }, signIn } = useAuthContext();
-
-    const history = useHistory();
 
     useEffect(() => {
         if (!isAuthenticated && !isLoading) {
@@ -73,9 +69,9 @@ export const SecureApp: FunctionComponent<PropsWithChildren<SecureAppPropsInterf
             })();
         }
 
-        isAuthenticated && signInRedirectPath && history?.push(signInRedirectPath);
+        isAuthenticated && onSignIn && typeof onSignIn === "function" && onSignIn();
 
-    }, [ isAuthenticated, isLoading, history ]);
+    }, [ isAuthenticated, isLoading ]);
 
     return (
         <AuthenticatedComponent fallback={ fallback }>
