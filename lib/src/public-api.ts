@@ -19,3 +19,5 @@
 export * from "./authenticate";
 export * from "./models";
 export * from "./secure-route";
+export * from "./authenticated-component";
+export * from "./secure-app";

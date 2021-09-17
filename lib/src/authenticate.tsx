@@ -32,7 +32,8 @@ import React, {
     createContext,
     useContext,
     useEffect,
-    useState
+    useState,
+    ReactNode
 } from "react";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
@@ -46,26 +47,27 @@ const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
     config: AuthClientConfig<AuthReactConfig>;
+    fallback?: ReactNode;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
     props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
-    const [ configState, setConfigState ] = useState(null);
+    const [ initialized, setInitialized ] = useState(false);
 
-    const { children, config } = props;
+    const { children, config, fallback } = props;
 
     const signIn = async(
         config?: SignInConfig,
         authorizationCode?: string,
         sessionState?: string,
         callback?: (response: BasicUserInfo) => void
-    ) => {
-        await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
+    ): Promise<BasicUserInfo> => {
+        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
     };
-    const signOut = (callback?) => {
-        AuthClient.signOut(dispatch, state, callback);
+    const signOut = (callback?: (response: boolean) => void): Promise<boolean> => {
+        return AuthClient.signOut(dispatch, state, callback);
     };
     const getBasicUserInfo = () => AuthClient.getBasicUserInfo();
     const httpRequest = (config: HttpRequestConfig) => AuthClient.httpRequest(config);
@@ -98,9 +100,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         if (state.isAuthenticated) {
             return;
         }
+        (async () => {
+            setInitialized(await AuthClient.init(config));
+        })();
 
-        AuthClient.init(config);
-        setConfigState(config);
     }, [ config ]);
 
     /**
@@ -113,31 +116,40 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             return;
         }
 
-        // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
-        // If so, initiate the sign in. If not, try to login silently.
-        if (!config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
-            signIn({ callOnlyOnRedirect: true })
-                .then(() => {
-                    // TODO: Add logs when a logger is available.
-                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                })
-                .catch(() => {
-                    // TODO: Add logs when a logger is available.
-                    // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                })
-        } else {
+        (async () => {
+            // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
+            // If so, initiate the sign in.
+            if (!config.skipRedirectCallback) {
+                await signIn({ callOnlyOnRedirect: true })
+                    .then(() => {
+                        // TODO: Add logs when a logger is available.
+                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    })
+                    .catch((error) => {
+                        // TODO: Add logs when a logger is available.
+                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                        throw error;
+                    });
+            }
+
+            if (AuthClient.getState().isAuthenticated) {
+                return;
+            }
+
             // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
             // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
-            trySignInSilently()
+            await trySignInSilently()
                 .then((_: BasicUserInfo | boolean) => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                 })
-                .catch(() => {
+                .catch((error) => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    throw error;
                 });
-        }
+        })();
+
     }, []);
 
     /**
@@ -168,7 +180,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 updateConfig
             } }
         >
-            { configState && children }
+            { initialized ? children : fallback ?? null }
         </AuthContext.Provider>
     );
 };

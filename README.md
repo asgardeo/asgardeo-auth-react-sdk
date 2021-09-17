@@ -16,40 +16,41 @@
 -   [Try Out the Sample Apps](#try-out-the-sample-apps)
 -   [Browser Compatibility](#browser-compatibility)
 -   [APIs](#apis)
-    -   [AuthProvider](#AuthProvider)
-    -   [SecureRoute](#SecureRoute)
-    -   [useAuthContext](#useAuthContext)
-    -   [getBasicUserInfo](#getBasicUserInfo)
-    -   [signIn](#signIn)
-    -   [trySignInSilently](#trySignInSilently)
-    -   [signOut](#signOut)
-    -   [httpRequest](#httpRequest)
-    -   [httpRequestAll](#httpRequestAll)
-    -   [requestCustomGrant](#requestCustomGrant)
-    -   [revokeAccessToken](#revokeAccessToken)
-    -   [getOIDCServiceEndpoints](#getOIDCServiceEndpoints)
+    -   [AuthProvider](#authprovider)
+    -   [SecureRoute](#secureroute)
+    -   [SecureApp](#secureapp)
+    -   [useAuthContext](#useauthcontext)
+    -   [getBasicUserInfo](#getbasicuserinfo)
+    -   [signIn](#signin)
+    -   [trySignInSilently](#trysigninsilently)
+    -   [signOut](#signout)
+    -   [httpRequest](#httprequest)
+    -   [httpRequestAll](#httprequestall)
+    -   [requestCustomGrant](#requestcustomgrant)
+    -   [revokeAccessToken](#revokeaccesstoken)
+    -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
     -   [getDecodedIDToken](#getdecodedidtoken)
-    -   [getIDToken](#getIDToken)
+    -   [getIDToken](#getidtoken)
     -   [getAccessToken](#getaccesstoken)
-    -   [refreshAccessToken](#refreshAccessToken)
+    -   [refreshAccessToken](#refreshaccesstoken)
     -   [on](#on)
-    -   [isAuthenticated](#isAuthenticated)
-    -   [enableHttpHandler](#enableHttpHandler)
-    -   [disableHttpHandler](#disableHttpHandler)
-    -   [updateConfig](#updateConfig)
-    -   [getHttpClient](#getHttpClient)
+    -   [isAuthenticated](#isauthenticated)
+    -   [enableHttpHandler](#enablehttphandler)
+    -   [disableHttpHandler](#disablehttphandler)
+    -   [updateConfig](#updateconfig)
+    -   [getHttpClient](#gethttpclient)
 -   [Using the `form_post` Response Mode](#using-the-form_post-response-mode)
 -   [Storage](#storage)
--   [Models](#Models)
-    -   [AuthStateInterface](#AuthStateInterface)
-    -   [AuthClientConfig\<Config>](#AuthClientConfig<Config>)
-    -   [BasicUserInfo](#BasicUserInfo)
-    -   [SignInConfig](#SignInConfig)
-    -   [OIDCEndpoints](#OIDCEndpoints)
-    -   [CustomGrantConfig](#CustomGrantConfig)
-    -   [Custom Grant Template Tags](#Custom-Grant-Template-Tags)
-    -   [DecodedIDTokenPayload](#DecodedIDTokenPayload)
-    -   [HttpRequestConfig](#HttpRequestConfig)
+-   [Models](#models)
+    -   [AuthStateInterface](#authstateinterface)
+    -   [AuthClientConfig\<Config>](#authclientconfigconfig)
+    -   [BasicUserInfo](#basicuserinfo)
+    -   [SignInConfig](#signinconfig)
+    -   [OIDCEndpoints](#oidcendpoints)
+    -   [CustomGrantConfig](#customgrantconfig)
+    -   [Custom Grant Template Tags](#custom-grant-template-tags)
+    -   [DecodedIDTokenPayload](#decodedidtokenpayload)
+    -   [HttpRequestConfig](#Httprequestconfig)
 -   [Develop](#develop)
     -   [Prerequisites](#prerequisites)
     -   [Installing Dependencies](#installing-dependencies)
@@ -188,12 +189,14 @@ Like every other provider, the `AuthProvider` also encapsulates the components t
 
 The provider takes a prop called `config` that accepts a config object of type [`AuthClientConfig<Config>`](#AuthClientConfig<Config>). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthClientConfig<Config>`](#AuthClientConfig<Config>) section.
 
+In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
+
 #### Example
 
 ```TypeScript
 export const MyApp = (): ReactElement => {
     return (
-        <AuthProvider config={ config }>
+        <AuthProvider config={ config } fallback={ <div>Initializing...</div> }>
             <Dashboard />
         </AuthProvider>
     )
@@ -209,6 +212,32 @@ This component takes three props. The `path` and `component` props just relay th
 <SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
 ```
 
+---
+
+### SecureApp
+This is a component that can be used to secure a React app. This component wraps a React component and renders it only
+if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically
+initiates the sign-in flow.
+
+The component takes three props, namely `fallback`, `onSignIn`, and `overrideSignIn`. The `fallback` prop
+is used to render a fallback component during sign in. The `onSignIn` prop is used to pass a callback function that will be called after signing in. The `overrideSignIn` prop is used to specify a function that will be called to initiate the sign-in flow. By default, the `signIn` method is used to initiate the sign-in flow.
+
+#### Example
+```TypeScript
+<SecureApp fallback={ <Loader /> } onSignIn{ ()=> { history.push("/home") } } >
+    <App />
+</SecureApp>
+```
+---
+### AuthenticatedComponent
+
+This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop. Besides, the component also takes a prop called `signingOutFallback` that is shown while the user is signing out.
+#### Example
+```TypeScript
+<AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } signingOutFallback={ <div>Signing out...</div> }>
+    <SecureComponent />
+</AuthenticatedComponent>
+```
 ### useAuthContext
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.

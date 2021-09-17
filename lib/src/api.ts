@@ -80,26 +80,39 @@ class AuthAPI {
         authorizationCode: string,
         sessionState: string,
         callback?: (response: BasicUserInfo) => void
-    ): Promise<void> {
-        this._client.on(Hooks.SignIn, (response) => {
-            const stateToUpdate = {
-                allowedScopes: response.allowedScopes,
-                displayName: response.displayName,
-                email: response.email,
-                isAuthenticated: true,
-                isLoading: false,
-                username: response.username
-            };
+    ): Promise<BasicUserInfo> {
+        return this._client
+            .signIn(config, authorizationCode, sessionState)
+            .then(async (response: BasicUserInfo) => {
+                if (!response) {
+                    return;
+                }
 
-            this.updateState(stateToUpdate);
+                if (await this._client.isAuthenticated()) {
+                    const stateToUpdate = {
+                        allowedScopes: response.allowedScopes,
+                        displayName: response.displayName,
+                        email: response.email,
+                        isAuthenticated: true,
+                        username: response.username,
+                        isLoading: false,
+                        isSigningOut: false
+                    };
 
-            dispatch({ ...state, ...stateToUpdate });
+                    this.updateState(stateToUpdate);
 
-            if (callback) {
-                callback(response);
-            }
-        });
-        await this._client.signIn(config, authorizationCode, sessionState);
+                    dispatch({ ...state, ...stateToUpdate });
+
+                    if (callback) {
+                        callback(response);
+                    }
+                }
+
+                return response;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     /**
@@ -112,21 +125,20 @@ class AuthAPI {
     public signOut(
         dispatch: (state: AuthStateInterface) => void,
         state: AuthStateInterface,
-        callback?: () => void
-    ): void {
-        this._client.on(Hooks.SignOut, () => {
-            const stateToUpdate = AuthAPI.DEFAULT_STATE;
+        callback?: (response?: boolean) => void
+    ): Promise<boolean> {
+        return this._client
+            .signOut()
+            .then((response) => {
+                if (callback) {
+                    callback(response);
+                }
 
-            this.updateState(stateToUpdate);
-
-            dispatch({ ...state, ...stateToUpdate });
-
-            if (callback) {
-                callback();
-            }
-        });
-
-        this._client.signOut();
+                return response;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     /**
@@ -187,19 +199,32 @@ class AuthAPI {
         config: CustomGrantConfig,
         callback: (response: BasicUserInfo | HttpResponse<any>) => void,
         dispatch: (state: AuthStateInterface) => void
-    ): void {
-        this._client.on(
-            Hooks.CustomGrant,
-            (response: BasicUserInfo | HttpResponse<any>) => {
+    ): Promise<BasicUserInfo | HttpResponse<any>> {
+        return this._client
+            .requestCustomGrant(config)
+            .then((response: BasicUserInfo | HttpResponse<any>) => {
+                if (!response) {
+                    return;
+                }
+
                 if (config.returnsSession) {
+                    this.updateState(
+                        {
+                            ...this.getState(),
+                            ...(response as BasicUserInfo), isAuthenticated: true, isLoading: false
+                        }
+                    );
+
                     dispatch({ ...(response as BasicUserInfo), isAuthenticated: true, isLoading: false });
                 }
 
                 callback && callback(response);
-            },
-            config.id
-        );
-        this._client.requestCustomGrant(config);
+
+                return response;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     /**
@@ -208,10 +233,16 @@ class AuthAPI {
      * @return {Promise<boolean>} - A promise that resolves with `true` if the process is successful.
      */
     public async revokeAccessToken(dispatch: (state: AuthStateInterface) => void): Promise<boolean> {
-        return this._client.revokeAccessToken().then(() => {
-            dispatch(AuthAPI.DEFAULT_STATE);
-            return true;
-        });
+        return this._client
+            .revokeAccessToken()
+            .then(() => {
+                this.updateState(AuthAPI.DEFAULT_STATE);
+                dispatch(AuthAPI.DEFAULT_STATE);
+                return true;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     /**
@@ -355,30 +386,38 @@ class AuthAPI {
         state: AuthStateInterface,
         dispatch: (state: AuthStateInterface) => void
     ): Promise<BasicUserInfo | boolean | undefined> {
-        return this._client.trySignInSilently().then((response: BasicUserInfo | boolean) => {
-            if (response) {
-                const basicUserInfo = response as BasicUserInfo;
-                const stateToUpdate = {
-                    allowedScopes: basicUserInfo.allowedScopes,
-                    displayName: basicUserInfo.displayName,
-                    email: basicUserInfo.email,
-                    isAuthenticated: true,
-                    isLoading: false,
-                    username: basicUserInfo.username
-                };
+        return this._client
+            .trySignInSilently()
+            .then(async (response: BasicUserInfo | boolean) => {
+                if (!response) {
+                    this.updateState({ ...this.getState(), isLoading: false });
+                    dispatch({ ...state, isLoading: false });
 
-                this.updateState(stateToUpdate);
+                    return false;
+                }
 
-                dispatch({ ...state, ...stateToUpdate });
+                if (await this._client.isAuthenticated()) {
+                    const basicUserInfo = response as BasicUserInfo;
+                    const stateToUpdate = {
+                        allowedScopes: basicUserInfo.allowedScopes,
+                        displayName: basicUserInfo.displayName,
+                        email: basicUserInfo.email,
+                        isAuthenticated: true,
+                        isLoading: false,
+                        username: basicUserInfo.username,
+                        isSigningOut: false
+                    };
+
+                    this.updateState(stateToUpdate);
+
+                    dispatch({ ...state, ...stateToUpdate });
+                }
 
                 return response;
-            }
-
-            this.updateState({ ...state, isLoading: false });
-            dispatch({ ...state, isLoading: false });
-
-            return false;
-        });
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 }
 
