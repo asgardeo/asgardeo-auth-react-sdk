@@ -35,6 +35,7 @@ import React, {
     useState,
     ReactNode
 } from "react";
+import { AuthParams } from ".";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
 
@@ -48,6 +49,7 @@ const AuthContext = createContext<AuthContextInterface>(null);
 interface AuthProviderPropsInterface {
     config: AuthClientConfig<AuthReactConfig>;
     fallback?: ReactNode;
+    getAuthParams?: () => Promise<AuthParams>;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
@@ -56,7 +58,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
 
-    const { children, config, fallback } = props;
+    const { children, config, fallback, getAuthParams } = props;
 
     const signIn = async(
         config?: SignInConfig,
@@ -120,7 +122,12 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
             // If so, initiate the sign in.
             if (!config.skipRedirectCallback) {
-                await signIn({ callOnlyOnRedirect: true })
+                let authParams: AuthParams = null;
+                if (getAuthParams && typeof getAuthParams === "function") {
+                    authParams = await getAuthParams();
+                }
+
+                await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
                     .then(() => {
                         // TODO: Add logs when a logger is available.
                         // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
