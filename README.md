@@ -881,6 +881,7 @@ This table shows the extended attributes provided by the `Config` interface.
 | `validateIDToken`            | Optional          | `boolean`       | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                   |
 | `clockTolerance`             | Optional          | `number`        | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                     |
 | `skipRedirectCallback`       | Optional          | `boolean`        | `false`                                                                    | Stop listening to Auth param changes i.e `code` & `session_state` to trigger auto login.        |
+|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management |
 
 ### BasicUserInfo
 
