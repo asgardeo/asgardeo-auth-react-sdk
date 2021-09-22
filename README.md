@@ -191,6 +191,10 @@ The provider takes a prop called `config` that accepts a config object of type [
 
 In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
 
+The `AuthProvider` also automatically requests for the access token should the URL contain the `code` query parameter.
+
+If the response mode is set to `form_post`, then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
+
 #### Example
 
 ```TypeScript
