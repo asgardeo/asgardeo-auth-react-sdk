@@ -100,3 +100,11 @@ export interface SecureRouteInterface {
     callback: () => void;
     component: any;
 }
+
+/**
+ * The model of the object returned by the `getAuthParams` prop method of the `AuthProvider`.
+ */
+export interface AuthParams {
+    authorizationCode?: string;
+    sessionState?: string;
+}
