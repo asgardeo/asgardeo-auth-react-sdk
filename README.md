@@ -43,7 +43,7 @@
 -   [Storage](#storage)
 -   [Models](#models)
     -   [AuthStateInterface](#authstateinterface)
-    -   [AuthClientConfig\<Config>](#authclientconfigconfig)
+    -   [AuthReactConfig>](#authreactconfig)
     -   [BasicUserInfo](#basicuserinfo)
     -   [SignInConfig](#signinconfig)
     -   [OIDCEndpoints](#oidcendpoints)
@@ -854,18 +854,7 @@ initialize(config);
 | `isLoading`       | `boolean` | Specifies if the authentication requests are loading. |
 | `username`        | `string`  | The username of the user.                            |
 
-### AuthClientConfig\<Config>
-
-The `AuthClientConfig<Config>` interface extends the `AuthClientConfig<T>` interface provided by the `Asgardeo JavaScript Auth SDK` with the `Config` interface. This table lists the attributes that the `AuthClientConfig<T>` interface takes.
-
-This table shows the extended attributes provided by the `Config` interface.
-| Attribute | Required/Optional | Type | Default Value | Description |
-|:----|:----|:----|:----|:----|
-| [`storage`](#storage) | Optional | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"` | The storage medium where the session information such as the access token should be stored.| |
-| `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. | |
-|`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out. |
-
-#### The AuthClientConfig Interface
+### AuthReactConfig
 
 | Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
@@ -885,6 +874,10 @@ This table shows the extended attributes provided by the `Config` interface.
 | `validateIDToken`            | Optional          | `boolean`       | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                   |
 | `clockTolerance`             | Optional          | `number`        | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                     |
 | `skipRedirectCallback`       | Optional          | `boolean`        | `false`                                                                    | Stop listening to Auth param changes i.e `code` & `session_state` to trigger auto login.        |
+| [`storage`](#storage) | Optional | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"` | The storage medium where the session information such as the access token should be stored.| |
+| `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. | |
+|`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out. |
+| `disableTrySignInSilently` | Optional | `boolean` | `false` | Specifies if the SDK should try to sign in silently on mount.|
 |`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management |
 
 ### BasicUserInfo
@@ -904,6 +897,7 @@ This table shows the extended attributes provided by the `Config` interface.
 | ------------- | ----------------- | --------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `fidp`        | Optional          | `string`              | ""            | The `fidp` parameter that can be used to redirect a user directly to an IdP's sign-in page.                                                                            |
 | `forceInit`   | Optional          | `boolean`             | `false`       | Forces obtaining the OIDC endpoints from the `.well-known` endpoint. A request to this endpoint is not sent if a request has already been sent. This forces a request. |
+| `callOnlyOnRedirect` | Optional | `boolean` | `false` | Specifies if the SDK should only call the `signIn` method when the user is redirected back to the client app. |
 | key: `string` | Optional          | `string` \| `boolean` | ""            | Any key-value pair to be appended as path parameters to the authorization URL.                                                                                         |
 
 ### OIDCEndpoints

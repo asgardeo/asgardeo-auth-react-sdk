@@ -32,12 +32,20 @@ import React, {
     createContext,
     useContext,
     useEffect,
+    useMemo,
     useState,
     ReactNode
 } from "react";
 import { AuthParams } from ".";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
+
+/**
+ * Default `AuthClientConfig<AuthReactConfig>` config.
+ */
+const defaultConfig: Partial<AuthClientConfig<AuthReactConfig>> = {
+    disableTrySignInSilently: false
+};
 
 const AuthClient = new AuthAPI();
 
@@ -47,9 +55,10 @@ const AuthClient = new AuthAPI();
 const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
-    config: AuthClientConfig<AuthReactConfig>;
+    config: AuthReactConfig;
     fallback?: ReactNode;
     getAuthParams?: () => Promise<AuthParams>;
+    onSignOut?: () => void;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
@@ -58,7 +67,11 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
 
-    const { children, config, fallback, getAuthParams } = props;
+    const { children, config: passedConfig, fallback, getAuthParams, onSignOut } = props;
+
+    const config = useMemo(
+        (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
+    );
 
     const signIn = async(
         config?: SignInConfig,
@@ -112,13 +125,21 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Try signing in when the component is mounted.
      */
     useEffect(() => {
-
-        // User is already authenticated. Skip...
-        if (state.isAuthenticated) {
-            return;
-        }
-
         (async () => {
+            let isSignedOut: boolean = false;
+            await on(Hooks.SignOut, () => {
+                isSignedOut = true;
+
+                if (onSignOut) {
+                    onSignOut();
+                }
+            });
+
+            // User is already authenticated. Skip...
+            if (state.isAuthenticated) {
+                return;
+            }
+
             // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
             // If so, initiate the sign in.
             if (!config.skipRedirectCallback) {
@@ -127,19 +148,27 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     authParams = await getAuthParams();
                 }
 
-                await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
-                    .then(() => {
-                        // TODO: Add logs when a logger is available.
-                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                    })
-                    .catch((error) => {
-                        // TODO: Add logs when a logger is available.
-                        // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                        throw error;
-                    });
+                if (SPAUtils.hasAuthSearchParamsInURL() || authParams?.authorizationCode) {
+                    await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
+                        .then(() => {
+                            // TODO: Add logs when a logger is available.
+                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                        })
+                        .catch((error) => {
+                            // TODO: Add logs when a logger is available.
+                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                            throw error;
+                        });
+                }
             }
 
             if (AuthClient.getState().isAuthenticated) {
+                return;
+            }
+
+            if (config.disableTrySignInSilently || isSignedOut) {
+                dispatch({ ...state, isLoading: false });
+
                 return;
             }
 
@@ -157,7 +186,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 });
         })();
 
-    }, []);
+    }, [ config ]);
 
     /**
      * Render state and special case actions
