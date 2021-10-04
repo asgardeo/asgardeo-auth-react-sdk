@@ -38,6 +38,11 @@ export interface AuthReactConfig extends SPAConfig {
      * token exchange. This option could be used to override that behaviour.
      */
     skipRedirectCallback?: boolean;
+    /**
+     * The `AuthProvider`, by default, looks for an active session in the server and updates the session information
+     * with the latest session information from the server. This option could be used to disable that behaviour.
+     */
+    enableTrySignInSilently?: boolean;
 }
 
 export interface AuthStateInterface {
