@@ -12,10 +12,10 @@
     jose "^3.1.2"
     randombytes "^2.1.0"
 
-"@asgardeo/auth-spa@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.2.5.tgz#15c95f6232bac267638058572aff512b467726b3"
-  integrity sha512-EvFpQiLN2k45gxKUVpj3mKK6LMeECJqgjFWPy666qjPyDnzR92JBt0oKdMpHoJjG6aN0JnWL2Ou8glJVIZ2+Tw==
+"@asgardeo/auth-spa@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.2.7.tgz#d9a2f8fceea4d9e84a76874d6ca38f7f68deae7f"
+  integrity sha512-DZfrnu+14PlKpHSR8FI3ZN4N1z6Wd/6SOloGnN9O0burEMlnrXIvdbnPzHP/3ZN8dILl6TKRJe6U+4DMJeJ+iQ==
   dependencies:
     "@asgardeo/auth-js" "^0.2.14"
     "@babel/runtime-corejs3" "^7.11.2"
