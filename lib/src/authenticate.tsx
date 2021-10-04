@@ -44,7 +44,7 @@ import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./mod
  * Default `AuthClientConfig<AuthReactConfig>` config.
  */
 const defaultConfig: Partial<AuthClientConfig<AuthReactConfig>> = {
-    enableTrySignInSilently: true
+    disableTrySignInSilently: false
 };
 
 const AuthClient = new AuthAPI();
@@ -55,7 +55,7 @@ const AuthClient = new AuthAPI();
 const AuthContext = createContext<AuthContextInterface>(null);
 
 interface AuthProviderPropsInterface {
-    config: AuthClientConfig<AuthReactConfig>;
+    config: AuthReactConfig;
     fallback?: ReactNode;
     getAuthParams?: () => Promise<AuthParams>;
     onSignOut?: () => void;
@@ -70,7 +70,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const { children, config: passedConfig, fallback, getAuthParams, onSignOut } = props;
 
     const config = useMemo(
-        (): AuthClientConfig<AuthReactConfig> => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
+        (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
     );
 
     const signIn = async(
@@ -166,7 +166,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 return;
             }
 
-            if (!config.enableTrySignInSilently || isSignedOut) {
+            if (config.disableTrySignInSilently || isSignedOut) {
                 dispatch({ ...state, isLoading: false });
 
                 return;

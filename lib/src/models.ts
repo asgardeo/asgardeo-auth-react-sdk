@@ -31,7 +31,7 @@ import {
     SPAConfig
 } from "@asgardeo/auth-spa";
 
-export interface AuthReactConfig extends SPAConfig {
+export interface ReactConfig extends SPAConfig {
     /**
      * The SDK's `AuthProvider` by default is listening to the URL changes to see
      * if `code` & `session_state` search params are available so that it could perform
@@ -42,9 +42,10 @@ export interface AuthReactConfig extends SPAConfig {
      * The `AuthProvider`, by default, looks for an active session in the server and updates the session information
      * with the latest session information from the server. This option could be used to disable that behaviour.
      */
-    enableTrySignInSilently?: boolean;
+    disableTrySignInSilently?: boolean;
 }
 
+export type AuthReactConfig = AuthClientConfig<ReactConfig>;
 export interface AuthStateInterface {
     allowedScopes: string;
     displayName?: string;
