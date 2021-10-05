@@ -148,7 +148,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     authParams = await getAuthParams();
                 }
 
-                if (SPAUtils.hasAuthSearchParamsInURL() || authParams?.authorizationCode) {
+                if (SPAUtils.hasAuthSearchParamsInURL()
+                    || authParams?.authorizationCode
+                    || new URL(location.href).searchParams.get("error") )
+                {
                     await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
                         .then(() => {
                             // TODO: Add logs when a logger is available.
