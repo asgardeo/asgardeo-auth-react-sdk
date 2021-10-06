@@ -36,14 +36,14 @@ import React, {
     useState,
     ReactNode
 } from "react";
-import { AuthParams } from ".";
+import { AuthParams, ReactConfig } from ".";
 import AuthAPI from "./api";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
 
 /**
- * Default `AuthClientConfig<AuthReactConfig>` config.
+ * Default `AuthReactConfig` config.
  */
-const defaultConfig: Partial<AuthClientConfig<AuthReactConfig>> = {
+const defaultConfig: Partial<ReactConfig> = {
     disableTrySignInSilently: false
 };
 
