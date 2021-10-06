@@ -18,6 +18,7 @@
 
 import {
     AuthClientConfig,
+    AuthSPAClientConfig,
     BasicUserInfo,
     Config,
     CustomGrantConfig,
@@ -27,11 +28,10 @@ import {
     HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
-    SignInConfig,
-    SPAConfig
+    SignInConfig
 } from "@asgardeo/auth-spa";
 
-export interface ReactConfig extends SPAConfig {
+export interface ReactConfig {
     /**
      * The SDK's `AuthProvider` by default is listening to the URL changes to see
      * if `code` & `session_state` search params are available so that it could perform
@@ -45,7 +45,8 @@ export interface ReactConfig extends SPAConfig {
     disableTrySignInSilently?: boolean;
 }
 
-export type AuthReactConfig = AuthClientConfig<ReactConfig>;
+export type AuthReactConfig = AuthSPAClientConfig & ReactConfig;
+
 export interface AuthStateInterface {
     allowedScopes: string;
     displayName?: string;
