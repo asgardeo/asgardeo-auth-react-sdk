@@ -236,7 +236,7 @@ class AuthAPI {
         return this._client
             .revokeAccessToken()
             .then(() => {
-                this.updateState(AuthAPI.DEFAULT_STATE);
+                this.updateState({ ...AuthAPI.DEFAULT_STATE, isLoading: false });
                 dispatch(AuthAPI.DEFAULT_STATE);
                 return true;
             })
