@@ -57,7 +57,7 @@ const authenticateReducer = (state, action) => {
                 isLoading: false
             };
         case AuthContextReducerActionTypes.SET_PROFILE_INFO:
-            return state
+            return state;
         default:
             return state;
     }

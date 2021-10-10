@@ -18,9 +18,10 @@
     "types": "dist/src/index.d.ts",
     "module": "dist/main.js",
     "scripts": {
-        "lint": "tslint -t stylish --project .",
+        "lint": "eslint --ext .js,.ts .",
+        "fix-lint": "eslint --ext .js,.ts . --fix",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
-        "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=developement",
+        "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=development",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
@@ -35,7 +36,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardeo/auth-spa": "^0.2.10"
+        "@asgardeo/auth-spa": "^0.2.11"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",
@@ -52,10 +53,9 @@
         "@typescript-eslint/parser": "^3.10.1",
         "babel-loader": "^8.1.0",
         "core-js": "^3.8.3",
-        "eslint": "^6.8.0",
-        "eslint-loader": "^3.0.3",
+        "eslint": "^7.20.0",
         "eslint-plugin-import": "^2.20.2",
-        "eslint-plugin-react": "^7.19.0",
+        "eslint-plugin-react": "^7.18.3",
         "eslint-plugin-react-hooks": "^4.0.0",
         "react": "^16.14.0",
         "react-dom": "16.14.0",
