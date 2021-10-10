@@ -64,6 +64,7 @@ jobs:
           then
             cd samples
             rm -rf **/node_modules/
+            rm -rf /samples/**/dist/
             for dir in */ ; do
                 zip -r "../artifacts/${dir%/}.zip" $dir
             done
