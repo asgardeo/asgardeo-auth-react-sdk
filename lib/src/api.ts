@@ -89,14 +89,14 @@ class AuthAPI {
                 }
 
                 if (await this._client.isAuthenticated()) {
-                    const stateToUpdate = {
+                    const stateToUpdate ={
                         allowedScopes: response.allowedScopes,
                         displayName: response.displayName,
                         email: response.email,
                         isAuthenticated: true,
-                        username: response.username,
                         isLoading: false,
-                        isSigningOut: false
+                        isSigningOut: false,
+                        username: response.username
                     };
 
                     this.updateState(stateToUpdate);
