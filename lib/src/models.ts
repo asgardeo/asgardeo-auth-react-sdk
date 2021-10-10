@@ -56,7 +56,7 @@ export interface AuthStateInterface {
      * Are the Auth requests loading.
      */
     isLoading: boolean;
-    username: string;
+    username?: string;
 }
 
 export interface AuthContextInterface {
