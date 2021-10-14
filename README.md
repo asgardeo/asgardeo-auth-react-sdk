@@ -61,7 +61,65 @@
 
 Asgardeo Auth React SDK for JavaScript allows React applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the Asgardeo Auth React SDK, developers will be able to add identity management to their React applications fast and secure.
 
-## Install
+## Try Out the Sample Apps
+
+### 1. Create an Application in Asgardeo
+
+Before trying out the sample apps, you need to create an application in **Asgardeo**.
+
+1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
+   
+2. Click on **New Application** and then **Single Page Application**.
+   
+3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+   
+4. Click on Register. You will be navigated to management page of the **sample** application.
+   
+5. Add `https://localhost:5000` (or whichever the URL your app is hosted) to **Allowed Origins** under **Access** tab and check **Public client** option.
+   
+6. Click on **Update** at the bottom.
+   
+7. Copy the configuration from the Asgardeo React Quickstart guide to your React application as shown in the above code snippet. 
+
+### 2. Running the sample apps
+
+1. Download the sample from the given link in the Asgardeo Console.
+
+2. Update configuration file `src/config.json` with your registered app details.
+
+**Note:** You will only have to paste in the `clientID`(**OAuth Client Key**) generated for the application you registered.
+
+Read more about the SDK configurations [here](#configuration) .
+
+```json
+{
+    "clientID": "",
+    "serverOrigin": "https://api.asgardeo.io",
+    "signInRedirectURL": "https://localhost:5000",
+    "signOutRedirectURL": "https://localhost:5000"
+}
+```
+
+3. Build and deploy the apps by running the following command at the root directory.
+
+```bash
+npm install && npm start
+```
+
+4. Navigate to [`https://localhost:5000`](https://localhost:5000) (or whichever the URL you have hosted the sample app).
+
+#### Basic React Sample
+
+- Download the Sample: [samples/asgardeo-react-app](https://github.com/asgardeo/asgardeo-auth-react-sdk/releases/latest/download/asgardeo-react-app.zip)
+
+- Find More Info: [README](/samples/asgardeo-react-app/README.md)
+
+- **Redirect URL(s):**
+  - `https://localhost:5000`
+
+## Getting Started
+
+### 1. Installing the Package
 
 Install the library from the npm registry.
 
@@ -69,7 +127,7 @@ Install the library from the npm registry.
 npm install --save @asgardeo/auth-react
 ```
 
-## Getting Started
+### 2. Import `AuthProvider`, `useAuthContext` and Provide Configuration Parameters
 
 ```TypeScript
 // The SDK provides a provider that can be used to carry out the authentication.
@@ -82,7 +140,7 @@ const config = {
      signInRedirectURL: "https://localhost:5000/sign-in",
      signOutRedirectURL: "https://localhost:5000/dashboard",
      clientID: "client ID",
-     serverOrigin: "https://localhost:9443"
+     serverOrigin: "https://api.asgardeo.io"
 };
 
 // Encapsulate your components with the `AuthProvider`.
@@ -117,38 +175,6 @@ const Dashboard = (): ReactElement => {
 ```
 
 [Learn more](#apis).
-
-## Try Out the Sample Apps
-
-### 1. Create a Service Provider
-
-Before trying out the sample apps, you need to a create a service provider in the Identity Server.
-
-1. So, navigate to `https://localhost:9443/carbon` and click on `Add` under `Service Providers` in the left-hand menu panel.
-
-2. Enter `Sample` as the name of the app and click on `Register`.
-
-3. Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
-
-4. Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
-
-5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
-
-6. Check `Allow authentication without the client secret`.
-
-7. Click `Add` at the bottom.
-
-8. Copy the `OAuth Client Key`.
-
-9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
-
-### 2. Running the sample apps
-
-Build the apps by running the following command at the root directory.
-
-```
-npm run build
-```
 
 <!-- ## Browser Compatibility
 
@@ -328,7 +354,7 @@ This uses an iFrame to check if there is an active user session in the identity 
 
 To dispatch a token request, the `[signIn()](#signIn)` or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
 
-This returns a promise that resolves with a `[BasicUserInfo](#BasicUserInfo)` object following a successful sign in. If the user is not signed into the identity server, then the promise resolves with the boolean value of `false`.
+This returns a promise that resolves with a `[BasicUserInfo](#BasicUserInfo)` object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
 
 The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
 
@@ -357,7 +383,7 @@ signOut();
 
 #### Description
 
-This method ends the user session at the Identity Server and logs the user out.
+This method ends the user session at the identity server and logs the user out.
 
 The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
@@ -391,7 +417,7 @@ A Promise that resolves with the response.
 
 #### Description
 
-This method is used to send http requests to the Identity Server. The developer doesn't need to manually attach the access token since this method does it automatically.
+This method is used to send http requests to the identity server. The developer doesn't need to manually attach the access token since this method does it automatically.
 
 If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
 
@@ -410,7 +436,7 @@ const requestConfig = {
         "Content-Type": "application/scim+json"
     },
     method: "GET",
-    url: "https://localhost:9443/scim2/me"
+    url: "https://api.asgardeo.io/scim2/me"
 };
 
 return httpRequest(requestConfig)
@@ -476,7 +502,7 @@ A Promise that resolves either with the response or the [`BasicUserInfo`](#Basic
 
 #### Description
 
-This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
+This method allows developers to use custom grants provided by their Identity Providers. This method accepts an object that has the following attributes as the argument.
 
 The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
 
@@ -696,7 +722,7 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 | `"end-user-session"`     | `endUserSession()`                                                               | A boolean value indicating if the process was successful or not                         |
 | `"custom-grant"`         | `customGrant()`                                                                  | Returns the response from the custom grant request.                                     |
 
-**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
+**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful logout. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 #### Example
 
