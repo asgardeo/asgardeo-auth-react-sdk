@@ -61,8 +61,6 @@
 
 Asgardeo Auth React SDK for JavaScript allows React applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the Asgardeo Auth React SDK, developers will be able to add identity management to their React applications fast and secure.
 
-## Install
-
 ## Try Out the Sample Apps
 
 ### 1. Create an Application in Asgardeo
