@@ -350,7 +350,7 @@ trySignInSilently();
 This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
 This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
 
-This uses an iFrame to check if there is an active user session in the Asgardeo by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
 
 To dispatch a token request, the `[signIn()](#signIn)` or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
 
