@@ -383,7 +383,7 @@ signOut();
 
 #### Description
 
-This method ends the user session at the Asgardeo and logs the user out.
+This method ends the user session at the identity server and logs the user out.
 
 The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
@@ -412,7 +412,7 @@ A Promise that resolves with the response.
 
 #### Description
 
-This method is used to send http requests to the Asgardeo. The developer doesn't need to manually attach the access token since this method does it automatically.
+This method is used to send http requests to the identity server. The developer doesn't need to manually attach the access token since this method does it automatically.
 
 If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
 
@@ -717,7 +717,7 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 | `"end-user-session"`     | `endUserSession()`                                                               | A boolean value indicating if the process was successful or not                         |
 | `"custom-grant"`         | `customGrant()`                                                                  | Returns the response from the custom grant request.                                     |
 
-**When the user signs out, the user is taken to the Asgardeo's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
+**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful logout. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 #### Example
 
