@@ -383,7 +383,7 @@ signOut();
 
 #### Description
 
-This method ends the user session at the Asgardeo and logs the user out.
+This method ends the user session at the identity server and logs the user out.
 
 The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
