@@ -47,15 +47,38 @@ export interface ReactConfig {
 
 export type AuthReactConfig = AuthSPAClientConfig & ReactConfig;
 
+/**
+ * Interface for the Authenticated state of the user which is exposed
+ * via `state` object from `useAuthContext` hook.
+ */
 export interface AuthStateInterface {
+    /**
+     * The scopes that are allowed for the user.
+     */
     allowedScopes: string;
+    /**
+     * The display name of the user.
+     */
     displayName?: string;
+    /**
+     * The email address of the user.
+     */
     email?: string;
+    /**
+     * Specifies if the user is authenticated or not.
+     */
     isAuthenticated: boolean;
     /**
      * Are the Auth requests loading.
      */
     isLoading: boolean;
+    /**
+     * The uid corresponding to the user who the ID token belonged to.
+     */
+    sub?: string;
+    /**
+     * The username of the user.
+     */
     username?: string;
 }
 

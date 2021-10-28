@@ -96,6 +96,7 @@ class AuthAPI {
                         isAuthenticated: true,
                         isLoading: false,
                         isSigningOut: false,
+                        sub: response.sub,
                         username: response.username
                     };
 
@@ -405,7 +406,8 @@ class AuthAPI {
                         isAuthenticated: true,
                         isLoading: false,
                         username: basicUserInfo.username,
-                        isSigningOut: false
+                        isSigningOut: false,
+                        sub: basicUserInfo.sub
                     };
 
                     this.updateState(stateToUpdate);
@@ -427,7 +429,8 @@ AuthAPI.DEFAULT_STATE = {
     email: "",
     isAuthenticated: false,
     isLoading: true,
-    username: ""
+    username: "",
+    sub: ""
 };
 
 export default AuthAPI;
