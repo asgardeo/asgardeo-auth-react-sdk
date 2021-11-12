@@ -878,14 +878,15 @@ initialize(config);
 
 ### AuthStateInterface
 
-| Attribute         | Type      | Description                                          |
-| :---------------- | :-------- | :--------------------------------------------------- |
-| `allowedScopes`   | `string`  | The scopes that are allowed for the user.            |
-| `displayName`     | `string`  | The display name of the user.                        |
-| `email`           | `string`  | The email address of the user.                       |
-| `isAuthenticated` | `boolean` | Specifies if the user is authenticated or not.        |
-| `isLoading`       | `boolean` | Specifies if the authentication requests are loading. |
-| `username`        | `string`  | The username of the user.                            |
+| Attribute         | Type      | Description                                                               |
+| :---------------- | :-------- | :------------------------------------------------------------------------ |
+| `allowedScopes`   | `string`  | The scopes that are allowed for the user.                                 |
+| `displayName`     | `string`  | The display name of the user.                                             |
+| `email`           | `string`  | The email address of the user.                                            |
+| `isAuthenticated` | `boolean` | Specifies if the user is authenticated or not.                             |
+| `isLoading`       | `boolean` | Specifies if the authentication requests are loading.                      |
+| `username`        | `string`  | The username of the user.                                                 |
+| `sub`             | `string`  | The `uid` corresponding to the user to whom the ID token belongs to.      |
 
 ### AuthReactConfig
 
