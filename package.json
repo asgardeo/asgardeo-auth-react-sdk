@@ -3,9 +3,6 @@
     "description": "Asgardeo Auth React SDK and Sample Apps",
     "main": "index.js",
     "private": true,
-    "engines": {
-        "node": "^16"
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "lerna run build --stream",
