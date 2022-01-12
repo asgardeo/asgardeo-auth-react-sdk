@@ -19,22 +19,22 @@
 import {
     AuthClientConfig,
     BasicUserInfo,
-    CustomGrantConfig,
     Hooks,
     HttpRequestConfig,
     HttpResponse,
-    SignInConfig,
-    SPAUtils
+    SPAUtils,
+    SignInConfig
 } from "@asgardeo/auth-spa";
+import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import React, {
     FunctionComponent,
     PropsWithChildren,
+    ReactNode,
     createContext,
     useContext,
     useEffect,
     useMemo,
-    useState,
-    ReactNode
+    useState
 } from "react";
 import { AuthParams, ReactConfig } from ".";
 import AuthAPI from "./api";
@@ -88,7 +88,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const httpRequest = (config: HttpRequestConfig) => AuthClient.httpRequest(config);
     const httpRequestAll = (configs: HttpRequestConfig[]) => AuthClient.httpRequestAll(configs);
     const requestCustomGrant = (
-        config: CustomGrantConfig,
+        config: SPACustomGrantConfig,
         callback?: (response: BasicUserInfo | HttpResponse<any>) => void
     ) => AuthClient.requestCustomGrant(config, callback, dispatch);
     const revokeAccessToken = () => AuthClient.revokeAccessToken(dispatch);
@@ -178,7 +178,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
             // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
             await trySignInSilently()
-                .then((_: BasicUserInfo | boolean) => {
+                .then(() => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                 })
