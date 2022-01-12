@@ -21,7 +21,6 @@ import {
     AuthClientConfig,
     BasicUserInfo,
     Config,
-    CustomGrantConfig,
     DecodedIDTokenPayload,
     Hooks,
     HttpClientInstance,
@@ -30,6 +29,7 @@ import {
     OIDCEndpoints,
     SignInConfig
 } from "@asgardeo/auth-spa";
+import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import { AuthStateInterface } from "./models";
 
 class AuthAPI {
@@ -197,7 +197,7 @@ class AuthAPI {
      * the value returned by the custom grant request.
      */
     public requestCustomGrant(
-        config: CustomGrantConfig,
+        config: SPACustomGrantConfig,
         callback: (response: BasicUserInfo | HttpResponse<any>) => void,
         dispatch: (state: AuthStateInterface) => void
     ): Promise<BasicUserInfo | HttpResponse<any>> {
@@ -405,9 +405,9 @@ class AuthAPI {
                         email: basicUserInfo.email,
                         isAuthenticated: true,
                         isLoading: false,
-                        username: basicUserInfo.username,
                         isSigningOut: false,
-                        sub: basicUserInfo.sub
+                        sub: basicUserInfo.sub,
+                        username: basicUserInfo.username
                     };
 
                     this.updateState(stateToUpdate);
@@ -429,8 +429,8 @@ AuthAPI.DEFAULT_STATE = {
     email: "",
     isAuthenticated: false,
     isLoading: true,
-    username: "",
-    sub: ""
+    sub: "",
+    username: ""
 };
 
 export default AuthAPI;
