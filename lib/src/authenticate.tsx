@@ -148,9 +148,12 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     authParams = await getAuthParams();
                 }
 
-                if (SPAUtils.hasAuthSearchParamsInURL()
+                const url = new URL(location.href);
+
+                if ((SPAUtils.hasAuthSearchParamsInURL()
+                    && new URL(url.origin + url.pathname).toString() === new URL(config?.signInRedirectURL).toString())
                     || authParams?.authorizationCode
-                    || new URL(location.href).searchParams.get("error") )
+                    || url.searchParams.get("error") )
                 {
                     await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
                         .then(() => {
