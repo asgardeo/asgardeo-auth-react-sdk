@@ -20,7 +20,7 @@ jobs:
                   {
                       "header": {
                           "title": "ISSUE: ${{ github.event.issue.title }}",
-                          "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo SPA SDK",
+                          "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo React SDK Repo",
                           "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
                           "imageStyle": "IMAGE"
                       },
@@ -59,7 +59,7 @@ jobs:
                     {
                         "header": {
                             "title": "PR: ${{ github.event.pull_request.title }}",
-                            "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo SPA SDK",
+                            "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo React SDK Repo",
                             "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
                             "imageStyle": "IMAGE"
                         },
