@@ -44,7 +44,7 @@ import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./mod
  * Default `AuthReactConfig` config.
  */
 const defaultConfig: Partial<ReactConfig> = {
-    disableTrySignInSilently: false
+    disableTrySignInSilently: true
 };
 
 const AuthClient = new AuthAPI();
