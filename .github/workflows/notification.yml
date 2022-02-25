@@ -1,0 +1,89 @@
+name: Send Notification
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification on issue creation
+        if: ${{github.event.issue}}
+        run: |
+          curl --location --request POST '${{secrets.WEBHOOK_CHAT}}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "cards": [
+                  {
+                      "header": {
+                          "title": "ISSUE: ${{ github.event.issue.title }}",
+                          "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo SPA SDK",
+                          "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
+                          "imageStyle": "IMAGE"
+                      },
+                      "sections": {
+                          "widgets": [
+                              {
+                                  "buttons": [
+                                      {
+                                          "textButton": {
+                                              "text": "Open Issue",
+                                              "onClick": {
+                                                  "openLink": {
+                                                      "url": "${{ github.event.issue.html_url }}"
+                                                  }
+                                              }
+                                          }
+                                      }
+                                  ],
+                                  "textParagraph": {
+                                      "text": "${{ github.event.issue.body }}"
+                                  }
+                              }
+                          ]
+                      }
+                  }
+              ]
+          }'
+
+      - name: Send notification on pull request creation
+        if: ${{github.event.pull_request}}
+        run: |
+            curl --location --request POST '${{secrets.WEBHOOK_CHAT}}' \
+            --header 'Content-Type: application/json' \
+            --data-raw '{
+                "cards": [
+                    {
+                        "header": {
+                            "title": "PR: ${{ github.event.pull_request.title }}",
+                            "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo SPA SDK",
+                            "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
+                            "imageStyle": "IMAGE"
+                        },
+                        "sections": {
+                            "widgets": [
+                                {
+                                    "buttons": [
+                                        {
+                                            "textButton": {
+                                                "text": "Open PR",
+                                                "onClick": {
+                                                    "openLink": {
+                                                        "url": "${{ github.event.pull_request.html_url }}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "textParagraph": {
+                                        "text": "${{ github.event.pull_request.body }}"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }'
