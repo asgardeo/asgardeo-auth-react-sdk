@@ -911,7 +911,7 @@ initialize(config);
 | [`storage`](#storage) | Optional | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"` | The storage medium where the session information such as the access token should be stored.| |
 | `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. | |
 |`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out. |
-| `disableTrySignInSilently` | Optional | `boolean` | `false` | Specifies if the SDK should try to sign in silently on mount.|
+| `disableTrySignInSilently` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount.|
 |`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management |
 
 ### BasicUserInfo
