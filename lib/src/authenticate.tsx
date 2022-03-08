@@ -19,9 +19,9 @@
 import {
     AuthClientConfig,
     BasicUserInfo,
+    FetchResponse,
     Hooks,
     HttpRequestConfig,
-    HttpResponse,
     SPAUtils,
     SignInConfig
 } from "@asgardeo/auth-spa";
@@ -89,7 +89,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const httpRequestAll = (configs: HttpRequestConfig[]) => AuthClient.httpRequestAll(configs);
     const requestCustomGrant = (
         config: SPACustomGrantConfig,
-        callback?: (response: BasicUserInfo | HttpResponse<any>) => void
+        callback?: (response: BasicUserInfo | FetchResponse<any>) => void
     ) => AuthClient.requestCustomGrant(config, callback, dispatch);
     const revokeAccessToken = () => AuthClient.revokeAccessToken(dispatch);
     const getOIDCServiceEndpoints = () => AuthClient.getOIDCServiceEndpoints();

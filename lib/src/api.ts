@@ -22,6 +22,7 @@ import {
     BasicUserInfo,
     Config,
     DecodedIDTokenPayload,
+    FetchResponse,
     Hooks,
     HttpClientInstance,
     HttpRequestConfig,
@@ -168,7 +169,7 @@ class AuthAPI {
      *
      * @param {HttpRequestConfig} config -  The config object containing attributes necessary to send a request.
      *
-     * @return {Promise<HttpResponse>} - Returns a Promise that resolves with the response to the request.
+     * @return {Promise<FetchResponse>} - Returns a Promise that resolves with the response to the request.
      */
     public async httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>> {
         return this._client.httpRequest(config);
@@ -182,7 +183,7 @@ class AuthAPI {
      *
      * @param {HttpRequestConfig[]} config -  The config object containing attributes necessary to send a request.
      *
-     * @return {Promise<HttpResponse[]>} - Returns a Promise that resolves with the responses to the requests.
+     * @return {Promise<FetchResponse[]>} - Returns a Promise that resolves with the responses to the requests.
      */
     public async httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
         return this._client.httpRequestAll(configs);
@@ -193,17 +194,17 @@ class AuthAPI {
      *
      * @param {CustomGrantRequestParams} config - The request parameters.
      *
-     * @return {Promise<HttpResponse<any> | SignInResponse>} - A Promise that resolves with
+     * @return {Promise<FetchResponse<any> | SignInResponse>} - A Promise that resolves with
      * the value returned by the custom grant request.
      */
     public requestCustomGrant(
         config: SPACustomGrantConfig,
-        callback: (response: BasicUserInfo | HttpResponse<any>) => void,
+        callback: (response: BasicUserInfo | FetchResponse<any>) => void,
         dispatch: (state: AuthStateInterface) => void
-    ): Promise<BasicUserInfo | HttpResponse<any>> {
+    ): Promise<BasicUserInfo | FetchResponse<any>> {
         return this._client
             .requestCustomGrant(config)
-            .then((response: BasicUserInfo | HttpResponse<any>) => {
+            .then((response: BasicUserInfo | FetchResponse<any>) => {
                 if (!response) {
                     return;
                 }
@@ -351,15 +352,7 @@ class AuthAPI {
      */
     public on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): Promise<void>;
     public on(
-        hook:
-            | Hooks.RevokeAccessToken
-            | Hooks.HttpRequestError
-            | Hooks.HttpRequestFinish
-            | Hooks.HttpRequestStart
-            | Hooks.HttpRequestSuccess
-            | Hooks.Initialize
-            | Hooks.SignIn
-            | Hooks.SignOut,
+        hook: Exclude<Hooks, Hooks.CustomGrant>,
         callback: (response?: any) => void
     ): Promise<void>;
     public on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
