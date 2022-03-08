@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { Suspense, FunctionComponent, PropsWithChildren, ReactElement, useEffect } from "react";
+import React, { FunctionComponent, PropsWithChildren, ReactElement, Suspense, useEffect } from "react";
 import { useAuthContext } from "./authenticate";
 import { AuthenticatedComponent } from "./authenticated-component";
 

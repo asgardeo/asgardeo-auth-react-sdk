@@ -23,6 +23,7 @@ import {
     Config,
     CustomGrantConfig,
     DecodedIDTokenPayload,
+    FetchResponse,
     Hooks,
     HttpClientInstance,
     HttpRequestConfig,
@@ -95,7 +96,7 @@ export interface AuthContextInterface {
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
     requestCustomGrant(
         config: CustomGrantConfig,
-        callback?: (response: BasicUserInfo | HttpResponse<any>) => void
+        callback?: (response: BasicUserInfo | FetchResponse<any>) => void
     ): void;
     revokeAccessToken(): Promise<boolean>;
     getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
@@ -111,15 +112,7 @@ export interface AuthContextInterface {
     trySignInSilently: () => Promise<boolean | BasicUserInfo>;
     on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
     on(
-        hook:
-            | Hooks.RevokeAccessToken
-            | Hooks.HttpRequestError
-            | Hooks.HttpRequestFinish
-            | Hooks.HttpRequestStart
-            | Hooks.HttpRequestSuccess
-            | Hooks.Initialize
-            | Hooks.SignIn
-            | Hooks.SignOut,
+        hook: Exclude<Hooks, Hooks.CustomGrant>,
         callback: (response?: any) => void
     ): void;
     on(hook: Hooks, callback: (response?: any) => void, id?: string): void;
