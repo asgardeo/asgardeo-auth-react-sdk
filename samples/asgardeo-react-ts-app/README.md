@@ -10,7 +10,7 @@ This app utilizes the [SecureRoute](../../README.md#secureroute) component provi
 
 Follow the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section to register an application.
 
-Make sure to add `https://localhost:5000` and `https://localhost:5000/home` as Redirect URLs. Add `https://localhost:5000` under allowed origins. 
+Make sure to add `https://localhost:3000` and `https://localhost:3000/home` as Redirect URLs. Add `https://localhost:3000` under allowed origins. 
 
 ### Download the Sample
 
@@ -28,8 +28,8 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 {
     "clientID": "<ADD_CLIENT_ID_HERE>",
     "baseUrl": "https://api.asgardeo.io/t/<org_name>",
-    "signInRedirectURL": "https://localhost:5000/home",
-    "signOutRedirectURL": "https://localhost:5000"
+    "signInRedirectURL": "https://localhost:3000/home",
+    "signOutRedirectURL": "https://localhost:3000"
 }
 ```
 
@@ -38,7 +38,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ```bash
 npm install && npm start
 ```
-The app should open at [`https://localhost:5000`](https://localhost:5000)
+The app should open at [`https://localhost:3000`](https://localhost:3000)
 
 ## Contribute
 

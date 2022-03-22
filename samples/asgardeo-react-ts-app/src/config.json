@@ -1,7 +1,7 @@
 {
     "clientID": "",
-    "signInRedirectURL": "https://localhost:5000/home",
-    "signOutRedirectURL": "https://localhost:5000",
+    "signInRedirectURL": "https://localhost:3000/home",
+    "signOutRedirectURL": "https://localhost:3000",
     "baseUrl": "",
     "scope": ["profile"]
 }

@@ -26,7 +26,7 @@ module.exports = {
         https: true,
         host: "localhost",
         inline: true,
-        port: 5000
+        port: 3000
     },
     devtool: "source-map",
     entry: ["./src/app.tsx"],
