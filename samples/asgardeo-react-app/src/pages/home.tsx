@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { useAuthContext } from "@asgardeo/auth-react";
+import { Hooks, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
@@ -45,7 +45,9 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
         signOut,
         getBasicUserInfo,
         getIDToken,
-        getDecodedIDToken
+        getDecodedIDToken,
+        on,
+        trySignInSilently,
     } = useAuthContext();
 
     const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<any>(null);
@@ -72,6 +74,18 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
             setDerivedAuthenticationState(derivedState);
         })();
     }, [ state.isAuthenticated ]);
+
+    /* 
+    *   handles the error occurs when the logout consent page is enabled
+    *   and the user clicks 'NO' at the logout consent page
+    */
+    useEffect(() => {
+        on(Hooks.SignOutFailed, (error) => {
+            if (error.description === "End User denied the logout request") {
+                trySignInSilently();
+            }
+        });
+    }, [on]);
 
     const handleLogin = () => {
         signIn()
