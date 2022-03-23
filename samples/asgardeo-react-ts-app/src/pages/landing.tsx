@@ -43,7 +43,7 @@ const LandingPage: FunctionComponent<{}> = () => {
                 trySignInSilently();
             }
         });
-    }, [on]);
+    }, [ on ]);
 
     return (
         <DefaultLayout>
