@@ -85,7 +85,7 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
                 trySignInSilently();
             }
         });
-    }, [on]);
+    }, [ on ]);
 
     const handleLogin = () => {
         signIn()
