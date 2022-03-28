@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import { useAuthContext } from "@asgardeo/auth-react";
+import { useAuthContext, Hooks } from "@asgardeo/auth-react";
 import React, { FunctionComponent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
@@ -24,7 +24,7 @@ import REACT_LOGO from "../images/react-logo.png";
 import * as authConfig from "../config.json";
 
 const LandingPage: FunctionComponent<{}> = () => {
-    const { signIn, state } = useAuthContext();
+    const { signIn, state, on, trySignInSilently } = useAuthContext();
     const history = useHistory();
 
     useEffect(() => {
@@ -32,6 +32,18 @@ const LandingPage: FunctionComponent<{}> = () => {
             history.push("/home");
         }
     }, [ state.isAuthenticated, history ]);
+
+    /* 
+    *   handles the error occurs when the logout consent page is enabled
+    *   and the user clicks 'NO' at the logout consent page
+    */
+    useEffect(() => {
+        on(Hooks.SignOutFailed, (error) => {
+            if (error.description === "End User denied the logout request") {
+                trySignInSilently();
+            }
+        });
+    }, [ on ]);
 
     return (
         <DefaultLayout>
