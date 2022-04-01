@@ -27,7 +27,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ```json
 {
     "clientID": "<ADD_CLIENT_ID_HERE>",
-    "serverOrigin": "https://api.asgardeo.io/t/<org_name>",
+    "baseUrl": "https://api.asgardeo.io/t/<org_name>",
     "signInRedirectURL": "https://localhost:5000/home",
     "signOutRedirectURL": "https://localhost:5000"
 }
