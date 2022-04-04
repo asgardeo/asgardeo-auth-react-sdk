@@ -77,9 +77,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         config?: SignInConfig,
         authorizationCode?: string,
         sessionState?: string,
+        authState?: string,
         callback?: (response: BasicUserInfo) => void
     ): Promise<BasicUserInfo> => {
-        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, callback);
+        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, authState, callback);
     };
     const signOut = (callback?: (response: boolean) => void): Promise<boolean> => {
         return AuthClient.signOut(dispatch, state, callback);
@@ -155,7 +156,12 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     || authParams?.authorizationCode
                     || url.searchParams.get("error") )
                 {
-                    await signIn({ callOnlyOnRedirect: true }, authParams?.authorizationCode, authParams?.sessionState)
+                    await signIn(
+                        { callOnlyOnRedirect: true }, 
+                        authParams?.authorizationCode, 
+                        authParams?.sessionState,
+                        authParams?.state
+                        )
                         .then(() => {
                             // TODO: Add logs when a logger is available.
                             // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.

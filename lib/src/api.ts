@@ -80,10 +80,11 @@ class AuthAPI {
         config: SignInConfig,
         authorizationCode: string,
         sessionState: string,
+        authState?: string,
         callback?: (response: BasicUserInfo) => void
     ): Promise<BasicUserInfo> {
         return this._client
-            .signIn(config, authorizationCode, sessionState)
+            .signIn(config, authorizationCode, sessionState, authState)
             .then(async (response: BasicUserInfo) => {
                 if (!response) {
                     return;

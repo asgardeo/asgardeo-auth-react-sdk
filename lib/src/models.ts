@@ -88,6 +88,7 @@ export interface AuthContextInterface {
         config?: SignInConfig,
         authorizationCode?: string,
         sessionState?: string,
+        state?: string,
         callback?: (response: BasicUserInfo) => void
     ) => Promise<BasicUserInfo>;
     signOut: (callback?: (response: boolean) => void) => Promise<boolean>;
@@ -130,4 +131,5 @@ export interface SecureRouteInterface {
 export interface AuthParams {
     authorizationCode?: string;
     sessionState?: string;
+    state?: string;
 }
