@@ -38,6 +38,17 @@ npm install && npm start
 ```
 The app should open at [`https://localhost:3000`](https://localhost:3000)
 
+### Change the Application's Development Server Port
+
+By default, the development server runs on port `3000`. Incase if you wish to change this to something else, 
+follow the steps below.
+
+1. Update the `PORT` in [.env](.env) file in the app root.
+2. Update the `signInRedirectURL` & `signOutRedirectURL` in [src/config.json](./src/config.json)
+3. Go to the Asgardeo Console and navigate to the protocol tab of your application:
+    - Update the Authorized Redirect URL.
+    - Update the Allowed Origins.
+
 ## Contribute
 
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
