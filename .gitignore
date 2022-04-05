@@ -28,6 +28,8 @@ lerna-debug.log
 
 # Environment variables files
 .env
+!samples/asgardeo-react-app/.env
+!samples/asgardeo-react-ts-app/.env
 
 # Misc
 .classpath
