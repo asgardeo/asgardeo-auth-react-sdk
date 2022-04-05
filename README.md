@@ -73,18 +73,18 @@ Create an organization in Asgardeo if you don't already have one. The organizati
 Before trying out the sample apps, you need to create an application in **Asgardeo**.
 
 1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
-   
+
 2. Click on **New Application** and then **Single Page Application**.
-   
+
 3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
-   
+
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
 5. Add `https://localhost:3000` (or whichever the URL your app is hosted on) to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
-   
-7. Copy the configuration from the Asgardeo React Quickstart guide to your React application as shown in the above code snippet. 
+
+7. Copy the configuration from the Asgardeo React Quickstart guide to your React application as shown in the above code snippet.
 
 ### 2. Running the sample apps
 
@@ -996,14 +996,14 @@ This extends the `AxiosRequestConfig` by providing an additional attribute that 
 ### Prerequisites
 
 -   `Node.js` (version 10 or above).
--   `npm` package manager.
+-   `yarn` package manager.
 
 ### Installing Dependencies
 
-The repository is a mono repository. The SDK repository is found in the [oidc-js-sdk]() directory. You can install the dependencies by running the following command at the root.
+The repository is a mono repository. The SDK repository is found in the [lib]() directory. You can install the dependencies by running the following command at the root.
 
 ```
-npm run build
+yarn build
 ```
 
 ## Contribute
