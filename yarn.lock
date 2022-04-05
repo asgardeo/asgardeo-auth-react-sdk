@@ -7,10 +7,10 @@
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-1.0.8.tgz#5535bf0cb7445c8df468a7d251c2d7ca7041e074"
   integrity sha512-MYjenMlgUGDvolkzpwGiVslJ3A8SmP5RAH0Pjy+Zq9B1xjJDnSUf6s652RGrcW7hCBRy1sayjCDK/70urMZrlw==
 
-"@asgardeo/auth-spa@^0.2.22":
-  version "0.2.22"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.2.22.tgz#5f12e7465f24795b40f85c38649ca442efa5f408"
-  integrity sha512-v3WqnsSc2o9MbxQXShxA2JFtUlP/XIt3JcwZ8xBi6h0/i4XvLj4J63+ANZUl7ZvEySEEXmqjv61Ozpg93MgUJw==
+"@asgardeo/auth-spa@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.3.0.tgz#0c7b016d388416ea31ff2ee5546ce412c42caaf1"
+  integrity sha512-xD5oGvbS878tfRaNFAphljKby2lEOQN32dmBau+mkgYVwKrGoCtTLn+o5Ns/HnDcYCrB2nDbEsd96PRiEoC3Ew==
   dependencies:
     "@asgardeo/auth-js" "^1.0.8"
     await-semaphore "^0.1.3"
