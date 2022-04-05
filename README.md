@@ -80,7 +80,7 @@ Before trying out the sample apps, you need to create an application in **Asgard
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
-5. Add `https://localhost:5000` (or whichever the URL your app is hosted on) to **Allowed Origins** under **Access** tab and check **Public client** option.
+5. Add `https://localhost:3000` (or whichever the URL your app is hosted on) to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
    
@@ -100,8 +100,8 @@ Read more about the SDK configurations [here](#configuration) .
 {
     "clientID": "",
     "baseUrl": "https://api.asgardeo.io/t/<org_name>",
-    "signInRedirectURL": "https://localhost:5000",
-    "signOutRedirectURL": "https://localhost:5000"
+    "signInRedirectURL": "https://localhost:3000",
+    "signOutRedirectURL": "https://localhost:3000"
 }
 ```
 
@@ -111,7 +111,7 @@ Read more about the SDK configurations [here](#configuration) .
 npm install && npm start
 ```
 
-4. Navigate to [`https://localhost:5000`](https://localhost:5000) (or whichever the URL you have hosted the sample app).
+4. Navigate to [`https://localhost:3000`](https://localhost:3000) (or whichever the URL you have hosted the sample app).
 
 #### Basic React Sample
 
@@ -120,7 +120,7 @@ npm install && npm start
 - Find More Info: [README](/samples/asgardeo-react-app/README.md)
 
 - **Redirect URL(s):**
-  - `https://localhost:5000`
+  - `https://localhost:3000`
 
 ## Getting Started
 
@@ -142,8 +142,8 @@ import { AuthProvider, useAuthContext } from "@asgardeo/auth-react";
 
 // The config data.
 const config = {
-     signInRedirectURL: "https://localhost:5000/sign-in",
-     signOutRedirectURL: "https://localhost:5000/dashboard",
+     signInRedirectURL: "https://localhost:3000/sign-in",
+     signOutRedirectURL: "https://localhost:3000/dashboard",
      clientID: "client ID",
      baseUrl: "https://api.asgardeo.io/t/<org_name>"
 };
@@ -822,7 +822,7 @@ This method can be used to update the configurations passed into the constructor
 
 ```TypeScript
 updateConfig({
-    signOutRedirectURL: "https://localhost:5000/sign-out"
+    signOutRedirectURL: "https://localhost:3000/sign-out"
 });
 ```
 
@@ -893,9 +893,9 @@ initialize(config);
 
 | Attribute | Required/Optional | Type | Default Value | Description |
 | --------- | ----------------- | ---- | ------------- | ----------- |
-| `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in` |
-| `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
-| `clientHost`                 | Optional          | `string`        | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:5000`                                         |
+| `signInRedirectURL`          | Required          | `string`        | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:3000/sign-in` |
+| `signOutRedirectURL`         | Optional          | `string`        | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                | signs out. eg: `https://localhost:3000/dashboard`                                                                                                           |
+| `clientHost`                 | Optional          | `string`        | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:3000`                                         |
 | `clientID`                   | Required          | `string`        | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                        |
 | `clientSecret`               | Optional          | `string`        | ""                                                                      | The client secret of the OIDC application                                                            |
 | `enablePKCE`                 | Optional          | `boolean`       | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                      |
