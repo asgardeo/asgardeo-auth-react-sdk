@@ -327,7 +327,7 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string,
 3. sessionState?: `string` (optional)
    The `signIn` method can be passed the session state as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the session state from the URL.
 4. authState?: `string` (optional)
-   The `signIn` method can be passed the authState as an argument, which will be used to obtain the token during the token-request phase of the method.
+   The `signIn` method can be passed the state parameter as an argument, which will be used to obtain the token during the token-request phase of the method.
 5. callback?: (response: [`BasicUserInfo`](#BasicUserInfo)) => `void`
    A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#BasicUserInfo) as an argument.
 #### Description
