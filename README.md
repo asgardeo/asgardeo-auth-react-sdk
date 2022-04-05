@@ -314,21 +314,22 @@ getBasicUserInfo().then((response) => {
 ### signIn
 
 ```typescript
-signIn(callback?: (response: BasicUserInfo) => void, config?: SignInConfig, authorizationCode?: string, sessionState?: string);
+signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string, authState?: string, callback?: (response: BasicUserInfo) => void);
 ```
 
 #### Arguments
 
-1. callback?: (response: [`BasicUserInfo`](#BasicUserInfo)) => `void`
-   A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#BasicUserInfo) as an argument.
-2. config?: [`SignInConfig`](#SignInConfig) (optional)
+1. config?: [`SignInConfig`](#SignInConfig) (optional)
    An object that contains attributes that allows you to configure sign in. The `forceInit` attribute of this object, allows you to force a request to the `.well-known` endpoint even if a request has previously been sent. You can also pass key-value pairs that you want to be appended as path parameters to the authorization URL to this object. To learn more, refer to [`SignInConfig`](#SignInConfig). This object is needed only during the authorization-url-generation phase.
 
-3. authorizationCode?: `string` (optional)
+2. authorizationCode?: `string` (optional)
    The `signIn` method can be passed the authorization code as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the authorization code from the URL.
-4. sessionState?: `string` (optional)
+3. sessionState?: `string` (optional)
    The `signIn` method can be passed the session state as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the session state from the URL.
-
+4. authState?: `string` (optional)
+   The `signIn` method can be passed the state parameter as an argument, which will be used to obtain the token during the token-request phase of the method.
+5. callback?: (response: [`BasicUserInfo`](#BasicUserInfo)) => `void`
+   A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#BasicUserInfo) as an argument.
 #### Description
 
 As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
