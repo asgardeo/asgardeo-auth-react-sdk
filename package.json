@@ -1,7 +1,6 @@
 {
     "name": "asgardeo-auth-react-sdk",
     "description": "Asgardeo Auth React SDK and Sample Apps",
-    "main": "index.js",
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
