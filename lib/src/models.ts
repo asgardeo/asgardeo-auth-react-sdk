@@ -119,7 +119,7 @@ export interface AuthContextInterface {
     ): void;
     on(hook: Hooks, callback: (response?: any) => void, id?: string): void;
     state: AuthStateInterface;
-    errors: AsgardeoAuthException[];
+    error: AsgardeoAuthException;
 }
 
 export interface SecureRouteInterface {

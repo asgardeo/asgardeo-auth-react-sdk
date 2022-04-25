@@ -126,9 +126,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     };
     const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
     
-    const [ errors, setErrors ] = useState<AsgardeoAuthException[]>([]);
-
-    const addError = useCallback((error: AsgardeoAuthException) => setErrors([...errors, error]), []);
+    const [ error, setError ] = useState<AsgardeoAuthException>();
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -183,7 +181,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                         );
                     } catch(error) {
                         if(error instanceof AsgardeoAuthException) {
-                            addError(error);
+                            setError(error);
                         }
                     }
                 }
@@ -241,7 +239,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     state,
                     trySignInSilently,
                     updateConfig,
-                    errors
+                    error
                 } }
             >
                 { initialized ? children : fallback ?? null }
