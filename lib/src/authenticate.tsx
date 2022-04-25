@@ -31,6 +31,7 @@ import React, {
     PropsWithChildren,
     ReactNode,
     createContext,
+    useCallback,
     useContext,
     useEffect,
     useMemo,
@@ -38,6 +39,7 @@ import React, {
 } from "react";
 import { AuthParams, ReactConfig } from ".";
 import AuthAPI from "./api";
+import { INVALID_SYSTEM_TIME } from "./constants";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
 
 /**
@@ -80,7 +82,19 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         authState?: string,
         callback?: (response: BasicUserInfo) => void
     ): Promise<BasicUserInfo> => {
-        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, authState, callback);
+        try {
+            return await AuthClient.signIn(
+                dispatch,
+                state,
+                config,
+                authorizationCode,
+                sessionState,
+                authState,
+                callback
+            );
+        } catch (error) {
+            return Promise.reject(error);
+        }
     };
     const signOut = (callback?: (response: boolean) => void): Promise<boolean> => {
         return AuthClient.signOut(dispatch, state, callback);
@@ -111,6 +125,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         return AuthClient.on(hook, callback);
     };
     const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
+    
+    const [ errors, setErrors ] = useState([]);
+
+    const addError = useCallback((message: string) => setErrors([...errors, message]), []);
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -156,21 +174,18 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     || authParams?.authorizationCode
                     || url.searchParams.get("error") )
                 {
-                    await signIn(
-                        { callOnlyOnRedirect: true }, 
-                        authParams?.authorizationCode, 
-                        authParams?.sessionState,
-                        authParams?.state
-                        )
-                        .then(() => {
-                            // TODO: Add logs when a logger is available.
-                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                        })
-                        .catch((error) => {
-                            // TODO: Add logs when a logger is available.
-                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                            throw error;
-                        });
+                    try{
+                        await signIn(
+                            { callOnlyOnRedirect: true }, 
+                            authParams?.authorizationCode, 
+                            authParams?.sessionState,
+                            authParams?.state
+                        );
+                    } catch(error) {
+                        if(error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
+                            addError(INVALID_SYSTEM_TIME);
+                        }
+                    }
                 }
             }
 
@@ -204,32 +219,33 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Render state and special case actions
      */
     return (
-        <AuthContext.Provider
-            value={ {
-                disableHttpHandler,
-                enableHttpHandler,
-                getAccessToken,
-                getBasicUserInfo,
-                getDecodedIDToken,
-                getHttpClient,
-                getIDToken,
-                getOIDCServiceEndpoints,
-                httpRequest,
-                httpRequestAll,
-                isAuthenticated,
-                on,
-                refreshAccessToken,
-                requestCustomGrant,
-                revokeAccessToken,
-                signIn,
-                signOut,
-                state,
-                trySignInSilently,
-                updateConfig
-            } }
-        >
-            { initialized ? children : fallback ?? null }
-        </AuthContext.Provider>
+            <AuthContext.Provider
+                value={ {
+                    disableHttpHandler,
+                    enableHttpHandler,
+                    getAccessToken,
+                    getBasicUserInfo,
+                    getDecodedIDToken,
+                    getHttpClient,
+                    getIDToken,
+                    getOIDCServiceEndpoints,
+                    httpRequest,
+                    httpRequestAll,
+                    isAuthenticated,
+                    on,
+                    refreshAccessToken,
+                    requestCustomGrant,
+                    revokeAccessToken,
+                    signIn,
+                    signOut,
+                    state,
+                    trySignInSilently,
+                    updateConfig,
+                    errors
+                } }
+            >
+                { initialized ? children : fallback ?? null }
+            </AuthContext.Provider>
     );
 };
 
