@@ -23,7 +23,8 @@ import {
     Hooks,
     HttpRequestConfig,
     SPAUtils,
-    SignInConfig
+    SignInConfig,
+    AsgardeoAuthException
 } from "@asgardeo/auth-spa";
 import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import React, {
@@ -39,7 +40,6 @@ import React, {
 } from "react";
 import { AuthParams, ReactConfig } from ".";
 import AuthAPI from "./api";
-import { INVALID_SYSTEM_TIME } from "./constants";
 import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./models";
 
 /**
@@ -126,9 +126,9 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     };
     const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
     
-    const [ errors, setErrors ] = useState([]);
+    const [ errors, setErrors ] = useState<AsgardeoAuthException[]>([]);
 
-    const addError = useCallback((message: string) => setErrors([...errors, message]), []);
+    const addError = useCallback((error: AsgardeoAuthException) => setErrors([...errors, error]), []);
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -182,8 +182,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                             authParams?.state
                         );
                     } catch(error) {
-                        if(error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
-                            addError(INVALID_SYSTEM_TIME);
+                        if(error instanceof AsgardeoAuthException && error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
+                            addError(error);
                         }
                     }
                 }

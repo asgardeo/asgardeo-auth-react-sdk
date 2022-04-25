@@ -17,6 +17,7 @@
  */
 
 import {
+    AsgardeoAuthException,
     AuthClientConfig,
     AuthSPAClientConfig,
     BasicUserInfo,
@@ -118,7 +119,7 @@ export interface AuthContextInterface {
     ): void;
     on(hook: Hooks, callback: (response?: any) => void, id?: string): void;
     state: AuthStateInterface;
-    errors: string[];
+    errors: AsgardeoAuthException[];
 }
 
 export interface SecureRouteInterface {
