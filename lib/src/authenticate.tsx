@@ -44,7 +44,7 @@ import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./mod
 /**
  * Default `AuthReactConfig` config.
  */
- const defaultConfig: Partial<ReactConfig> = {
+const defaultConfig: Partial<ReactConfig> = {
     disableTrySignInSilently: true
 };
 
@@ -218,33 +218,33 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Render state and special case actions
      */
     return (
-        <AuthContext.Provider
-            value={ {
-                disableHttpHandler,
-                enableHttpHandler,
-                getAccessToken,
-                getBasicUserInfo,
-                getDecodedIDToken,
-                getHttpClient,
-                getIDToken,
-                getOIDCServiceEndpoints,
-                httpRequest,
-                httpRequestAll,
-                isAuthenticated,
-                on,
-                refreshAccessToken,
-                requestCustomGrant,
-                revokeAccessToken,
-                signIn,
-                signOut,
-                state,
-                trySignInSilently,
-                updateConfig,
-                error
-            } }
-        >
-            { initialized ? children : fallback ?? null }
-        </AuthContext.Provider>
+            <AuthContext.Provider
+                value={ {
+                    disableHttpHandler,
+                    enableHttpHandler,
+                    getAccessToken,
+                    getBasicUserInfo,
+                    getDecodedIDToken,
+                    getHttpClient,
+                    getIDToken,
+                    getOIDCServiceEndpoints,
+                    httpRequest,
+                    httpRequestAll,
+                    isAuthenticated,
+                    on,
+                    refreshAccessToken,
+                    requestCustomGrant,
+                    revokeAccessToken,
+                    signIn,
+                    signOut,
+                    state,
+                    trySignInSilently,
+                    updateConfig,
+                    error
+                } }
+            >
+                { initialized ? children : fallback ?? null }
+            </AuthContext.Provider>
     );
 };
 
