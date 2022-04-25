@@ -182,7 +182,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                             authParams?.state
                         );
                     } catch(error) {
-                        if(error instanceof AsgardeoAuthException && error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
+                        if(error instanceof AsgardeoAuthException) {
                             addError(error);
                         }
                     }
