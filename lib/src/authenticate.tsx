@@ -23,7 +23,8 @@ import {
     Hooks,
     HttpRequestConfig,
     SPAUtils,
-    SignInConfig
+    SignInConfig,
+    AsgardeoAuthException
 } from "@asgardeo/auth-spa";
 import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import React, {
@@ -80,7 +81,19 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         authState?: string,
         callback?: (response: BasicUserInfo) => void
     ): Promise<BasicUserInfo> => {
-        return await AuthClient.signIn(dispatch, state, config, authorizationCode, sessionState, authState, callback);
+        try {
+            return await AuthClient.signIn(
+                dispatch,
+                state,
+                config,
+                authorizationCode,
+                sessionState,
+                authState,
+                callback
+            );
+        } catch (error) {
+            return Promise.reject(error);
+        }
     };
     const signOut = (callback?: (response: boolean) => void): Promise<boolean> => {
         return AuthClient.signOut(dispatch, state, callback);
@@ -111,6 +124,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         return AuthClient.on(hook, callback);
     };
     const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
+    
+    const [ error, setError ] = useState<AsgardeoAuthException>();
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -156,21 +171,18 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     || authParams?.authorizationCode
                     || url.searchParams.get("error") )
                 {
-                    await signIn(
-                        { callOnlyOnRedirect: true }, 
-                        authParams?.authorizationCode, 
-                        authParams?.sessionState,
-                        authParams?.state
-                        )
-                        .then(() => {
-                            // TODO: Add logs when a logger is available.
-                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                        })
-                        .catch((error) => {
-                            // TODO: Add logs when a logger is available.
-                            // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                            throw error;
-                        });
+                    try{
+                        await signIn(
+                            { callOnlyOnRedirect: true }, 
+                            authParams?.authorizationCode, 
+                            authParams?.sessionState,
+                            authParams?.state
+                        );
+                    } catch(error) {
+                        if(error instanceof AsgardeoAuthException) {
+                            setError(error);
+                        }
+                    }
                 }
             }
 
@@ -204,32 +216,33 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Render state and special case actions
      */
     return (
-        <AuthContext.Provider
-            value={ {
-                disableHttpHandler,
-                enableHttpHandler,
-                getAccessToken,
-                getBasicUserInfo,
-                getDecodedIDToken,
-                getHttpClient,
-                getIDToken,
-                getOIDCServiceEndpoints,
-                httpRequest,
-                httpRequestAll,
-                isAuthenticated,
-                on,
-                refreshAccessToken,
-                requestCustomGrant,
-                revokeAccessToken,
-                signIn,
-                signOut,
-                state,
-                trySignInSilently,
-                updateConfig
-            } }
-        >
-            { initialized ? children : fallback ?? null }
-        </AuthContext.Provider>
+            <AuthContext.Provider
+                value={ {
+                    disableHttpHandler,
+                    enableHttpHandler,
+                    getAccessToken,
+                    getBasicUserInfo,
+                    getDecodedIDToken,
+                    getHttpClient,
+                    getIDToken,
+                    getOIDCServiceEndpoints,
+                    httpRequest,
+                    httpRequestAll,
+                    isAuthenticated,
+                    on,
+                    refreshAccessToken,
+                    requestCustomGrant,
+                    revokeAccessToken,
+                    signIn,
+                    signOut,
+                    state,
+                    trySignInSilently,
+                    updateConfig,
+                    error
+                } }
+            >
+                { initialized ? children : fallback ?? null }
+            </AuthContext.Provider>
     );
 };
 
