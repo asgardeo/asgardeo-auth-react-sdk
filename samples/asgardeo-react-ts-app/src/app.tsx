@@ -19,7 +19,7 @@
 import "core-js";
 import "regenerator-runtime/runtime";
 
-import { AuthProvider, SecureRoute, useAuthContext } from "@asgardeo/auth-react";
+import { AuthProvider, AsgardeoAuthException, SecureRoute, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -40,15 +40,30 @@ const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, 
     return (<SecureRoute exact path={ path } component={ component } callback={ callback } />);
 };
 
+const AppContent: FunctionComponent = (): ReactElement => {
+    const { error } = useAuthContext();
+
+    const systemDateTimeError = error?.code === 'JS-CRYPTO_UTILS-IVIT-IV02';
+
+    console.log(systemDateTimeError)
+    
+    {
+        return systemDateTimeError ? <div>ERROR with system date</div> :
+        (
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={ LandingPage } />
+                    <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
+                    <Route component={ NotFoundPage } />
+                </Switch>
+            </Router>
+        )
+    }
+};
+
 const App = () => (
     <AuthProvider config={ authConfig.default }>
-        <Router>
-            <Switch>
-                <Route exact path="/" component={ LandingPage } />
-                <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
-                <Route component={ NotFoundPage } />
-            </Switch>
-        </Router>
+        <AppContent />
     </AuthProvider>
 );
 

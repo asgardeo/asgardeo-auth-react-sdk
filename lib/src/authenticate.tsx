@@ -179,7 +179,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                             authParams?.state
                         );
                     } catch(error) {
-                        if((error as unknown as AsgardeoAuthException) && error?.code) {
+                        if(error && Object.prototype.hasOwnProperty.call(error, "code")) {
                             setError(error);
                         }
                     }
@@ -206,7 +206,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 .catch((error) => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
-                    if((error as unknown as AsgardeoAuthException) && error?.code) {
+                    if(error && Object.prototype.hasOwnProperty.call(error, "code")) {
                         setError(error);
                     }
                 });
