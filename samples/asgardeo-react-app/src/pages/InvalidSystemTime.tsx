@@ -30,18 +30,6 @@ export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
 
   return (
     <DefaultLayout>
-      <h3
-        style={{
-          fontSize: "86px",
-          textTransform: "uppercase",
-          fontWeight: 700,
-          marginTop: 0,
-          marginBottom: "8px",
-          color: "#151515",
-        }}
-      >
-        OOPS !
-      </h3>
       <h6 style={{
           fontSize: "30px",
           textTransform: "uppercase",
