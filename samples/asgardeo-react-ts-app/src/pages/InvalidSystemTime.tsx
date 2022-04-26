@@ -20,12 +20,12 @@ import React, { FunctionComponent, ReactElement } from "react";
 import { DefaultLayout } from "../layouts/default";
 
 /**
- * Page to display for Invalid System Time Page.
- *
- * @param {InvalidSystemTimePagePropsInterface} props - Props injected to the component.
- *
- * @return {React.ReactElement}
- */
+* Page to display for Invalid System Time Page.
+*
+* @param {InvalidSystemTimePagePropsInterface} props - Props injected to the component.
+*
+* @return {React.ReactElement}
+*/
 export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
 
   return (
@@ -42,7 +42,7 @@ export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
       >
         OOPS !
       </h3>
-      <p style={{
+      <h6 style={{
           fontSize: "30px",
           textTransform: "uppercase",
           fontWeight: 600,
@@ -51,6 +51,15 @@ export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
           color: "#151515"
         }}>
           Your Clock is Invalid !
+      </h6>
+      <p style={{
+          fontSize: "20px",
+          fontWeight: 400,
+          marginTop: "3rem",
+          marginBottom: "3rem",
+          color: "#151515"
+        }}>
+          Please set your clock to the current date and time
       </p>
     </DefaultLayout>
   );
