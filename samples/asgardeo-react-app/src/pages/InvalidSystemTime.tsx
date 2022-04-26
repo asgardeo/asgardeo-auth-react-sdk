@@ -59,7 +59,7 @@ export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
           marginBottom: "3rem",
           color: "#151515"
         }}>
-          Please set your clock to the current date and time
+          It looks like your computer&rsquo;s date and time is incorrect. Please validate and try again
       </p>
     </DefaultLayout>
   );
