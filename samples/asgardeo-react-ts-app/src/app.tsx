@@ -43,21 +43,20 @@ const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, 
 const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
 
-    const systemDateTimeError = error?.code === 'JS-CRYPTO_UTILS-IVIT-IV02';
-
-    console.log(systemDateTimeError)
+    const systemDateTimeError: string = error?.code === "JS-CRYPTO_UTILS-IVIT-IV02";
     
     {
-        return systemDateTimeError ? <div>ERROR with system date</div> :
-        (
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={ LandingPage } />
-                    <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
-                    <Route component={ NotFoundPage } />
-                </Switch>
-            </Router>
-        )
+        return systemDateTimeError
+            ? <div>ERROR with system date</div>
+            : (
+                <Router>
+                    <Switch>
+                        <Route exact path="/" component={ LandingPage } />
+                        <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
+                        <Route component={ NotFoundPage } />
+                    </Switch>
+                </Router>
+            )
     }
 };
 
