@@ -28,6 +28,7 @@ import * as authConfig from "./config.json";
 import LandingPage from "./pages/landing";
 import HomePage from "./pages/home";
 import NotFoundPage from "./pages/404";
+import { ErrorBoundary } from "./error-boundary";
 
 const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, exact: boolean}> = (props): ReactElement => {
     const { component, path } = props;
@@ -40,15 +41,25 @@ const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, 
     return (<SecureRoute exact path={ path } component={ component } callback={ callback } />);
 };
 
+const AppContent: FunctionComponent = (): ReactElement => {
+    const { error } = useAuthContext();
+
+    return (
+        <ErrorBoundary error={error}>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={ LandingPage } />
+                    <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
+                    <Route component={ NotFoundPage } />
+                </Switch>
+            </Router>
+        </ErrorBoundary>
+    )
+};
+
 const App = () => (
     <AuthProvider config={ authConfig.default }>
-        <Router>
-            <Switch>
-                <Route exact path="/" component={ LandingPage } />
-                <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
-                <Route component={ NotFoundPage } />
-            </Switch>
-        </Router>
+        <AppContent />
     </AuthProvider>
 );
 
