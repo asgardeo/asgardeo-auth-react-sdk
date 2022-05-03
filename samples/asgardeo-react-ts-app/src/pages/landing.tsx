@@ -17,15 +17,23 @@
  */
 
 import { useAuthContext, Hooks } from "@asgardeo/auth-react";
-import React, { FunctionComponent, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 import REACT_LOGO from "../images/react-logo.png";
 import * as authConfig from "../config.json";
+import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
+import { USER_DENIED_LOGOUT } from "../constants/errors";
 
 const LandingPage: FunctionComponent<{}> = () => {
-    const { signIn, state, on, trySignInSilently } = useAuthContext();
+    const { signIn, signOut, state, on } = useAuthContext();
     const history = useHistory();
+
+    const search = useLocation().search;
+    const stateParam = new URLSearchParams(search).get('state');
+    const errorParam = new URLSearchParams(search).get('error');
+
+    const [ hasError, setHasError ] = useState<boolean>();
 
     useEffect(() => {
         if (state?.isAuthenticated) {
@@ -33,17 +41,36 @@ const LandingPage: FunctionComponent<{}> = () => {
         }
     }, [ state.isAuthenticated, history ]);
 
-    /* 
-    *   handles the error occurs when the logout consent page is enabled
-    *   and the user clicks 'NO' at the logout consent page
-    */
     useEffect(() => {
-        on(Hooks.SignOutFailed, (error) => {
-            if (error.description === "End User denied the logout request") {
-                trySignInSilently();
-            }
+        if(stateParam && errorParam) {
+            setHasError(true);
+        }
+    }, [stateParam, errorParam]);
+
+    useEffect(() => {
+        on(Hooks.SignOut, () => {
+            setHasError(false);
         });
     }, [ on ]);
+
+    const handleLogin = () => {
+        setHasError(false);
+        signIn();
+    };
+
+    const handleLogout = () => {
+        signOut();
+    };
+
+    if (hasError) {
+        return (
+            <LogoutRequestDenied
+                errorMessage={USER_DENIED_LOGOUT}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+            />
+        );
+    }
 
     return (
         <DefaultLayout>

@@ -22,7 +22,13 @@ import { DefaultLayout } from "../layouts/default";
 import ReactJson from "react-json-view";
 
 const HomePage: FunctionComponent<{}> = () => {
-    const { state, signOut, getBasicUserInfo, getIDToken, getDecodedIDToken } = useAuthContext();
+    const {
+        state,
+        signOut,
+        getBasicUserInfo,
+        getIDToken,
+        getDecodedIDToken,
+      } = useAuthContext();
     const [authenticateState, setAuthenticateState] = useState(null);
 
     useEffect(() => {
