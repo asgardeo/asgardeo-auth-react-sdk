@@ -31,9 +31,9 @@ const LandingPage: FunctionComponent<{}> = () => {
 
     const search = useLocation().search;
     const stateParam = new URLSearchParams(search).get('state');
-    const errorParam = new URLSearchParams(search).get('error');
+    const errorDescParam = new URLSearchParams(search).get('error_description');
 
-    const [ hasError, setHasError ] = useState<boolean>();
+    const [ hasLogoutFailureError, setHasLogoutFailureError ] = useState<boolean>();
 
     useEffect(() => {
         if (state?.isAuthenticated) {
@@ -42,19 +42,21 @@ const LandingPage: FunctionComponent<{}> = () => {
     }, [ state.isAuthenticated, history ]);
 
     useEffect(() => {
-        if(stateParam && errorParam) {
-            setHasError(true);
+        if(stateParam && errorDescParam) {
+            if(errorDescParam === "End User denied the logout request") {
+                setHasLogoutFailureError(true);
+            }
         }
-    }, [stateParam, errorParam]);
+    }, [stateParam, errorDescParam]);
 
     useEffect(() => {
         on(Hooks.SignOut, () => {
-            setHasError(false);
+            setHasLogoutFailureError(false);
         });
     }, [ on ]);
 
     const handleLogin = () => {
-        setHasError(false);
+        setHasLogoutFailureError(false);
         signIn();
     };
 
@@ -62,7 +64,7 @@ const LandingPage: FunctionComponent<{}> = () => {
         signOut();
     };
 
-    if (hasError) {
+    if (hasLogoutFailureError) {
         return (
             <LogoutRequestDenied
                 errorMessage={USER_DENIED_LOGOUT}

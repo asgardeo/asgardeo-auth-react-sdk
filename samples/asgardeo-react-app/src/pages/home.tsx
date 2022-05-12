@@ -38,9 +38,7 @@ type HomePagePropsInterface = {};
  *
  * @return {React.ReactElement}
  */
-export const HomePage: FunctionComponent<HomePagePropsInterface> = (
-    props: HomePagePropsInterface
-): ReactElement => {
+export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElement => {
 
     const {
         state,
@@ -54,11 +52,11 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
 
     const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<any>(null);
     const [ hasAuthenticationErrors, setHasAuthenticationErrors ] = useState<boolean>(false);
-    const [ hasError, setHasError ] = useState<boolean>();
+    const [ hasLogoutFailureError, setHasLogoutFailureError ] = useState<boolean>();
 
     const search = useLocation().search;
     const stateParam = new URLSearchParams(search).get('state');
-    const errorParam = new URLSearchParams(search).get('error');
+    const errorDescParam = new URLSearchParams(search).get('error_description');
 
     useEffect(() => {
 
@@ -83,10 +81,12 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
     }, [ state.isAuthenticated ]);
 
     useEffect(() => {
-        if(stateParam && errorParam) {
-            setHasError(true);
+        if(stateParam && errorDescParam) {
+            if(errorDescParam === "End User denied the logout request") {
+                setHasLogoutFailureError(true);
+            }
         }
-    }, [stateParam, errorParam]);
+    }, [stateParam, errorDescParam]);
 
     /* 
     *   handles the error occurs when the logout consent page is enabled
@@ -94,12 +94,12 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
     */
     useEffect(() => {
         on(Hooks.SignOut, () => {
-            setHasError(false);
+            setHasLogoutFailureError(false);
         });
     }, [ on ]);
 
     const handleLogin = () => {
-        setHasError(false);
+        setHasLogoutFailureError(false);
         signIn()
             .catch(() => setHasAuthenticationErrors(true));
     };
@@ -123,7 +123,7 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
         );
     }
 
-    if (hasError) {
+    if (hasLogoutFailureError) {
         return (
             <LogoutRequestDenied
                 errorMessage={USER_DENIED_LOGOUT}
