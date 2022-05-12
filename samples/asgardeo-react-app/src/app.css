@@ -209,3 +209,11 @@ code {
 .pointer {
     cursor: pointer;
 }
+
+.ui.attached.negative.message,
+.ui.negative.message {
+    background-color: #fff6f6;
+    color: #9f3a38;
+    box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 0 0 transparent;
+    padding: 1em 1.5em;
+}
