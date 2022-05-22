@@ -88,10 +88,10 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
         }
     }, [stateParam, errorDescParam]);
 
-    /* 
-    *   handles the error occurs when the logout consent page is enabled
-    *   and the user clicks 'NO' at the logout consent page
-    */
+   /**
+     * handles the error occurs when the logout consent page is enabled
+     * and the user clicks 'NO' at the logout consent page
+     */
     useEffect(() => {
         on(Hooks.SignOut, () => {
             setHasLogoutFailureError(false);
