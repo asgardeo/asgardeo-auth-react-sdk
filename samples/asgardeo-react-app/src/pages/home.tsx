@@ -22,6 +22,9 @@ import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
 import { AuthenticationResponse } from "../components";
+import { useLocation } from "react-router-dom";
+import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
+import { USER_DENIED_LOGOUT } from "../constants/errors";
 
 /**
  * Decoded ID Token Response component Prop types interface.
@@ -35,9 +38,7 @@ type HomePagePropsInterface = {};
  *
  * @return {React.ReactElement}
  */
-export const HomePage: FunctionComponent<HomePagePropsInterface> = (
-    props: HomePagePropsInterface
-): ReactElement => {
+export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElement => {
 
     const {
         state,
@@ -46,12 +47,16 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
         getBasicUserInfo,
         getIDToken,
         getDecodedIDToken,
-        on,
-        trySignInSilently,
+        on
     } = useAuthContext();
 
     const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<any>(null);
     const [ hasAuthenticationErrors, setHasAuthenticationErrors ] = useState<boolean>(false);
+    const [ hasLogoutFailureError, setHasLogoutFailureError ] = useState<boolean>();
+
+    const search = useLocation().search;
+    const stateParam = new URLSearchParams(search).get('state');
+    const errorDescParam = new URLSearchParams(search).get('error_description');
 
     useEffect(() => {
 
@@ -75,19 +80,26 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
         })();
     }, [ state.isAuthenticated ]);
 
-    /* 
-    *   handles the error occurs when the logout consent page is enabled
-    *   and the user clicks 'NO' at the logout consent page
-    */
     useEffect(() => {
-        on(Hooks.SignOutFailed, (error) => {
-            if (error.description === "End User denied the logout request") {
-                trySignInSilently();
+        if(stateParam && errorDescParam) {
+            if(errorDescParam === "End User denied the logout request") {
+                setHasLogoutFailureError(true);
             }
+        }
+    }, [stateParam, errorDescParam]);
+
+   /**
+     * handles the error occurs when the logout consent page is enabled
+     * and the user clicks 'NO' at the logout consent page
+     */
+    useEffect(() => {
+        on(Hooks.SignOut, () => {
+            setHasLogoutFailureError(false);
         });
     }, [ on ]);
 
     const handleLogin = () => {
+        setHasLogoutFailureError(false);
         signIn()
             .catch(() => setHasAuthenticationErrors(true));
     };
@@ -108,6 +120,16 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (
                     href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">README</a> for
                     more details.</p>
             </div>
+        );
+    }
+
+    if (hasLogoutFailureError) {
+        return (
+            <LogoutRequestDenied
+                errorMessage={USER_DENIED_LOGOUT}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+            />
         );
     }
 

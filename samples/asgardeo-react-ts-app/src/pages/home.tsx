@@ -21,8 +21,14 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { DefaultLayout } from "../layouts/default";
 import ReactJson from "react-json-view";
 
-const HomePage: FunctionComponent<{}> = () => {
-    const { state, signOut, getBasicUserInfo, getIDToken, getDecodedIDToken } = useAuthContext();
+const HomePage: FunctionComponent = () => {
+    const {
+        state,
+        signOut,
+        getBasicUserInfo,
+        getIDToken,
+        getDecodedIDToken,
+      } = useAuthContext();
     const [authenticateState, setAuthenticateState] = useState(null);
 
     useEffect(() => {
@@ -44,7 +50,7 @@ const HomePage: FunctionComponent<{}> = () => {
 
             getData();
         }
-    }, [state.isAuthenticated]);
+    }, [ state.isAuthenticated ]);
 
     return (
         <DefaultLayout>
@@ -55,7 +61,7 @@ const HomePage: FunctionComponent<{}> = () => {
                         Derived by the&nbsp;
                         <code className="inline-code-block">
                             <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
-                               target="_blank">
+                               target="_blank" rel="noreferrer">
                                 @asgardeo/auth-react
                             </a>
                         </code>&nbsp;SDK

@@ -27,7 +27,7 @@ import { HomePage, NotFoundPage } from "./pages";
 
 const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
-
+    
     return (
         <ErrorBoundary error={error}>
             <Router>

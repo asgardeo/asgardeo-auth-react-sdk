@@ -1,5 +1,6 @@
 import { AsgardeoAuthException } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
+import { AuthenticationFailure } from "./pages/AuthenticationFailure";
 import { InvalidSystemTimePage } from "./pages/InvalidSystemTime";
 
 interface ErrorBoundaryProps {
@@ -12,7 +13,11 @@ export const ErrorBoundary: FunctionComponent<ErrorBoundaryProps> = (
 ): ReactElement => {
   const { error, children } = props;
 
-  return error?.code === "JS-CRYPTO_UTILS-IVIT-IV02" ? <InvalidSystemTimePage /> : error ? null : (
-    children
-  );
+  if (error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
+    return <InvalidSystemTimePage />
+  } else if (error?.code === "SPA-MAIN_THREAD_CLIENT-SI-SE01") {
+    return <AuthenticationFailure />
+  }
+
+  return children;
 };
