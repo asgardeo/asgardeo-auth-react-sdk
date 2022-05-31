@@ -17,14 +17,15 @@
  */
 
 import {
+    AsgardeoAuthException,
+    AsgardeoSPAClient,
     AuthClientConfig,
     BasicUserInfo,
     FetchResponse,
     Hooks,
     HttpRequestConfig,
     SPAUtils,
-    SignInConfig,
-    AsgardeoAuthException
+    SignInConfig
 } from "@asgardeo/auth-spa";
 import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import React, {
@@ -48,8 +49,6 @@ const defaultConfig: Partial<ReactConfig> = {
     disableTrySignInSilently: true
 };
 
-const AuthClient = new AuthAPI();
-
 /**
  * Authentication Context to hold global states in react components.
  */
@@ -60,15 +59,19 @@ interface AuthProviderPropsInterface {
     fallback?: ReactNode;
     getAuthParams?: () => Promise<AuthParams>;
     onSignOut?: () => void;
+    spaclient?: AsgardeoSPAClient;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
     props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
+    const { children, config: passedConfig, fallback, getAuthParams, onSignOut, spaclient } = props;
+    const AuthClient: AuthAPI = useMemo(() => {
+        return new AuthAPI(spaclient);
+    }, [ props?.spaclient ]);
+
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
-
-    const { children, config: passedConfig, fallback, getAuthParams, onSignOut } = props;
 
     const config = useMemo(
         (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
@@ -252,4 +255,4 @@ const useAuthContext = (): AuthContextInterface => {
     return useContext(AuthContext);
 };
 
-export { AuthClient, AuthProvider, useAuthContext };
+export { AuthProvider, useAuthContext };
