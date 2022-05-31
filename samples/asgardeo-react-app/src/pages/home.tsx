@@ -96,6 +96,12 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
         on(Hooks.SignOut, () => {
             setHasLogoutFailureError(false);
         });
+
+        on(Hooks.SignOutFailed, () => {
+            if(!errorDescParam) {
+                handleLogin();
+            }
+        })
     }, [ on ]);
 
     const handleLogin = () => {

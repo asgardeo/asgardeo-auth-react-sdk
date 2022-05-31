@@ -39,8 +39,8 @@ class AuthAPI {
     private _authState = AuthAPI.DEFAULT_STATE;
     private _client: AsgardeoSPAClient;
 
-    constructor() {
-        this._client = AsgardeoSPAClient.getInstance();
+    constructor(spaClient?: AsgardeoSPAClient) {
+        this._client = spaClient ?? AsgardeoSPAClient.getInstance();
 
         this.getState = this.getState.bind(this);
         this.init = this.init.bind(this);
@@ -296,6 +296,18 @@ class AuthAPI {
         return this._client.getAccessToken();
     }
 
+    /**
+     * This method return a Promise that resolves with the idp access token.
+     *
+     * **This method will not return the idp access token if the storage type is set to `webWorker`.**
+     * **This can be used to access the IDP access token when custom auth grant functionalities are used**
+     *
+     * @return {Promise<string>} - A Promise that resolves with the idp access token.
+     */
+    public async getIDPAccessToken(): Promise<string> {
+        return this._client.getIDPAccessToken();
+    }
+    
     /**
      * This method refreshes the access token.
      *
