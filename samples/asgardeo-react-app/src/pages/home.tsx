@@ -104,7 +104,6 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
         })
     }, [ on ]);
 
-
     const handleLogin = () => {
         setHasLogoutFailureError(false);
         signIn()
