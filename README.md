@@ -219,7 +219,7 @@ The provider takes a prop called `config` that accepts a config object of type [
 
 In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
 
-As an optional parameter, `spaClient` parameter can be used to initialize external Auth SPA Client.
+As an optional parameter, `spaClient` parameter can be used to initialize the external Auth SPA Client.
 
 The `AuthProvider` also automatically requests for the access token should the URL contain the `code` query parameter.
 
@@ -244,7 +244,7 @@ import { ChoreoSPAClient } from "@asgardeo/choreo-auth-spa";
 
 export const MyApp = (): ReactElement => {
     return (
-        <AuthProvider config={ config } spaClient={ChoreoSPAClient.getInstance()}>
+        <AuthProvider config={ config } spaClient={ ChoreoSPAClient.getInstance() }>
             <Dashboard />
         </AuthProvider>
     )
