@@ -219,6 +219,8 @@ The provider takes a prop called `config` that accepts a config object of type [
 
 In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
 
+As an optional parameter, `spaClient` parameter can be used to initialize external Auth SPA Client.
+
 The `AuthProvider` also automatically requests for the access token should the URL contain the `code` query parameter.
 
 If the response mode is set to `form_post`, then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
@@ -229,6 +231,20 @@ If the response mode is set to `form_post`, then you will have your own ways of 
 export const MyApp = (): ReactElement => {
     return (
         <AuthProvider config={ config } fallback={ <div>Initializing...</div> }>
+            <Dashboard />
+        </AuthProvider>
+    )
+}
+```
+
+#### Example with External Auth SPA Client
+
+```TypeScript
+import { ChoreoSPAClient } from "@asgardeo/choreo-auth-spa";
+
+export const MyApp = (): ReactElement => {
+    return (
+        <AuthProvider config={ config } spaClient={ChoreoSPAClient.getInstance()}>
             <Dashboard />
         </AuthProvider>
     )
