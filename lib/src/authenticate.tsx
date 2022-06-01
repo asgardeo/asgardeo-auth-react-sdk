@@ -59,16 +59,16 @@ interface AuthProviderPropsInterface {
     fallback?: ReactNode;
     getAuthParams?: () => Promise<AuthParams>;
     onSignOut?: () => void;
-    spaclient?: AsgardeoSPAClient;
+    spaClient?: AsgardeoSPAClient;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
     props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
-    const { children, config: passedConfig, fallback, getAuthParams, onSignOut, spaclient } = props;
+    const { children, config: passedConfig, fallback, getAuthParams, onSignOut, spaClient } = props;
     const AuthClient: AuthAPI = useMemo(() => {
-        return new AuthAPI(spaclient);
-    }, [ props?.spaclient ]);
+        return new AuthAPI(spaClient);
+    }, [ spaClient ]);
 
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
