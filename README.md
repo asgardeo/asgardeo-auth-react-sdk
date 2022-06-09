@@ -126,10 +126,10 @@ npm install && npm start
 
 ### 1. Installing the Package
 
-Install the library from the npm registry.
+Install `@asgardeo/auth-react` & `react-router-dom` from the npm registry.
 
 ```
-npm install --save @asgardeo/auth-react
+npm install @asgardeo/auth-react react-router-dom --save
 ```
 
 ### 2. Import `AuthProvider`, `useAuthContext` and Provide Configuration Parameters
