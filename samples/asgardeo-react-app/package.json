@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/react-app",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "description": "React based sample SPA to demonstrate Asgardeo / WSO2 Identity Server Auth React SDK usage",
     "keywords": [
         "Asgardeo",
@@ -33,7 +33,7 @@
         "build": "webpack -p"
     },
     "dependencies": {
-        "@asgardeo/auth-react": "^1.1.10",
+        "@asgardeo/auth-react": "^1.1.11",
         "@babel/runtime-corejs3": "^7.11.2",
         "react": "^16.14.0",
         "react-dom": "16.14.0",
