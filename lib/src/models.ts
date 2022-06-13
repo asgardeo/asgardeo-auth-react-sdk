@@ -103,6 +103,7 @@ export interface AuthContextInterface {
     revokeAccessToken(): Promise<boolean>;
     getOIDCServiceEndpoints(): Promise<OIDCEndpoints>;
     getHttpClient(): Promise<HttpClientInstance>;
+    getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>;
     getDecodedIDToken(): Promise<DecodedIDTokenPayload>;
     getIDToken(): Promise<string>;
     getAccessToken(): Promise<string>;

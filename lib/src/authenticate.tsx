@@ -59,16 +59,16 @@ interface AuthProviderPropsInterface {
     fallback?: ReactNode;
     getAuthParams?: () => Promise<AuthParams>;
     onSignOut?: () => void;
-    spaClient?: AsgardeoSPAClient;
+    plugin?: AsgardeoSPAClient;
 }
 
 const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterface>> = (
     props: PropsWithChildren<AuthProviderPropsInterface>
 ) => {
-    const { children, config: passedConfig, fallback, getAuthParams, onSignOut, spaClient } = props;
+    const { children, config: passedConfig, fallback, getAuthParams, onSignOut, plugin } = props;
     const AuthClient: AuthAPI = useMemo(() => {
-        return new AuthAPI(spaClient);
-    }, [ spaClient ]);
+        return new AuthAPI(plugin);
+    }, [ plugin ]);
 
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
@@ -85,6 +85,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         callback?: (response: BasicUserInfo) => void
     ): Promise<BasicUserInfo> => {
         try {
+            setError(null);
             return await AuthClient.signIn(
                 dispatch,
                 state,
@@ -111,6 +112,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const revokeAccessToken = () => AuthClient.revokeAccessToken(dispatch);
     const getOIDCServiceEndpoints = () => AuthClient.getOIDCServiceEndpoints();
     const getHttpClient = () => AuthClient.getHttpClient();
+    const getDecodedIDPIDToken = () => AuthClient.getDecodedIDPIDToken();
     const getDecodedIDToken = () => AuthClient.getDecodedIDToken();
     const getAccessToken = () => AuthClient.getAccessToken();
     const refreshAccessToken = () => AuthClient.refreshAccessToken();
@@ -181,6 +183,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                             authParams?.sessionState,
                             authParams?.state
                         );
+                        setError(null);
                     } catch(error) {
                         if(error && Object.prototype.hasOwnProperty.call(error, "code")) {
                             setError(error);
@@ -205,6 +208,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 .then(() => {
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
+                    setError(null);
                 })
                 .catch((error) => {
                     // TODO: Add logs when a logger is available.
@@ -227,6 +231,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     enableHttpHandler,
                     getAccessToken,
                     getBasicUserInfo,
+                    getDecodedIDPIDToken,
                     getDecodedIDToken,
                     getHttpClient,
                     getIDToken,
