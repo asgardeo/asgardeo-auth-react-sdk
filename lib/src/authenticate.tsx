@@ -96,8 +96,6 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 callback
             );
         } catch (error) {
-            console.log('error signin react sdk')
-            console.log(error)
             return Promise.reject(error);
         }
     };
