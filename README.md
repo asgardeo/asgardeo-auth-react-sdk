@@ -629,6 +629,32 @@ getDecodedIDToken().then((idToken) => {
 });
 ```
 ---
+
+### getDecodedIDPIDToken
+
+```typescript
+getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
+```
+
+#### Returns
+
+A promise that returns with the IDP [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
+
+#### Description
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
+
+#### Example
+
+```TypeScript
+getDecodedIDPIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+---
+
 ### getIDToken
 
 ```TypeScript
