@@ -219,7 +219,7 @@ The provider takes a prop called `config` that accepts a config object of type [
 
 In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
 
-As an optional parameter, `spaClient` parameter can be used to initialize the external Auth SPA Client.
+As an optional parameter, `plugin` parameter can be used to pass an external plugin.
 
 The `AuthProvider` also automatically requests for the access token should the URL contain the `code` query parameter.
 
@@ -237,14 +237,14 @@ export const MyApp = (): ReactElement => {
 }
 ```
 
-#### Example with External Auth SPA Client
+#### Example with an external Auth SPA plugin
 
 ```TypeScript
-import { ChoreoSPAClient } from "@asgardeo/choreo-auth-spa";
+import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 
 export const MyApp = (): ReactElement => {
     return (
-        <AuthProvider config={ config } spaClient={ ChoreoSPAClient.getInstance() }>
+        <AuthProvider config={ config } plugin={ TokenExchangePlugin.getInstance() }>
             <Dashboard />
         </AuthProvider>
     )
@@ -429,6 +429,7 @@ httpRequest(config: `HttpRequestConfig`): Promise<HttpResponse>;
    |--|--|--|--|
    |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
    |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
+   |`shouldAttachIDPAccessToken`|`boolean`|`false`| If set to `true`, the IDP access token will be attached to the the request `Authorization` header. |
 
 #### Returns
 
@@ -628,6 +629,32 @@ getDecodedIDToken().then((idToken) => {
 });
 ```
 ---
+
+### getDecodedIDPIDToken
+
+```typescript
+getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
+```
+
+#### Returns
+
+A promise that returns with the IDP [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
+
+#### Description
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
+
+#### Example
+
+```TypeScript
+getDecodedIDPIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+---
+
 ### getIDToken
 
 ```TypeScript

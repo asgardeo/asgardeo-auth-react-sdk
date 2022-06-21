@@ -277,6 +277,16 @@ class AuthAPI {
     }
 
     /**
+     * This method decodes the payload of the idp id token and returns it.
+     *
+     * @return {Promise<DecodedIDTokenPayloadInterface>} - A Promise that resolves with
+     * the decoded payload of the idp id token.
+     */
+     public async getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload> {
+        return this._client.getDecodedIDToken();
+    }
+
+    /**
      * This method returns the ID token.
      *
      * @return {Promise<string>} - A Promise that resolves with the id token.

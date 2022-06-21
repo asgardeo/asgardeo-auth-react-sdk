@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-react",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [
         "WSO2",
@@ -36,7 +36,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardeo/auth-spa": "^0.3.13"
+        "@asgardeo/auth-spa": "^0.4.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",
