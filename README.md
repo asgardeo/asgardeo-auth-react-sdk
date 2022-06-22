@@ -715,15 +715,6 @@ A Promise that resolves with the [`BasicUserInfo`](#BasicUserInfo) object.
 
 This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method cannot be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
 
-This method also returns a Promise that resolves with an object containing the attributes mentioned in the table below.
-|Attribute|Description|
-|--|--|
-`"accessToken"`| The new access token |
-`"expiresIn"`| The expiry time in seconds|
-`"idToken"`| The ID token|
-`"refreshToken"`| The refresh token|
-`"scope"`| The scope of the access token|
-`"tokenType"`| The type of the token. E.g.: Bearer|
 
 #### Example
 
