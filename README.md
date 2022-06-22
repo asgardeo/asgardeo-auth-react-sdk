@@ -728,7 +728,7 @@ This method also returns a Promise that resolves with an object containing the a
 #### Example
 
 ```TypeScript
-refreshToken().then((response)=>{
+refreshAccessToken().then((response)=>{
       // console.log(response);
  }).catch((error)=>{
       // console.error(error);
