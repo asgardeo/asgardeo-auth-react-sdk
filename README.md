@@ -126,7 +126,7 @@ npm install && npm start
 
 ### 1. Installing the Package
 
-Install `@asgardeo/auth-react` & `react-router-dom` from the npm registry.
+Install `@asgardeo/auth-react` and `react-router-dom` from the npm registry.
 
 ```
 npm install @asgardeo/auth-react react-router-dom --save
