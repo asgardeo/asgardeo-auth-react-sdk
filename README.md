@@ -348,7 +348,7 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string,
    A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#BasicUserInfo) as an argument.
 #### Description
 
-As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
+As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
 
 The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
 
@@ -689,7 +689,7 @@ A Promise that resolves with the access token.
 
 #### Description
 
-This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise an error is thrown.
+This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise, an error is thrown.
 
 #### Example
 
@@ -886,7 +886,7 @@ const httpClient = getHttpClient();
 
 When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
 
-The backend can then inject the authorization code into a JavaSCript variable while rendering the webpage in the server side. But this results in the authorization code getting printed in the HTML of the page creating a **threat vector**.
+The backend can then inject the authorization code into a JavaScript variable while rendering the webpage in the server side. But this results in the authorization code getting printed in the HTML of the page creating a **threat vector**.
 
 To address this issue, we recommend storing the authorization code in a server session variable and providing the Single Page Application a separate API endpoint to request the authorization code. The server, when the request is received, can then respond with the authorization code from the server session.
 
@@ -947,7 +947,7 @@ initialize(config);
 | `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. | |
 |`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
 | `disableTrySignInSilently` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount.                                                                                                                                                                                                                                                                              |
-|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management. Set this flag to `true` to add single logout capabilities in your application.                                                                                                                                                                                                                                                                                                   |
+|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management. Set this flag to `true` to add single logout capabilities into your application.                                                                                                                                                                                                                   |
 
 ### BasicUserInfo
 
