@@ -713,7 +713,7 @@ A Promise that resolves with the [`BasicUserInfo`](#BasicUserInfo) object.
 
 #### Description
 
-This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method cannot be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
+This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method is not required to be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
 
 
 #### Example
