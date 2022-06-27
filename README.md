@@ -279,10 +279,10 @@ is used to render a fallback component during sign in. The `onSignIn` prop is us
 ---
 ### AuthenticatedComponent
 
-This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop. Besides, the component also takes a prop called `signingOutFallback` that is shown while the user is signing out.
+This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop.
 #### Example
 ```TypeScript
-<AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } signingOutFallback={ <div>Signing out...</div> }>
+<AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } >
     <SecureComponent />
 </AuthenticatedComponent>
 ```
