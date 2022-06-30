@@ -148,6 +148,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     useEffect(() => {
         (async () => {
             let isSignedOut: boolean = false;
+            // If the component was mounted after the user was redirected to the application upon a successful logout,
+            // then the locally stored user session will be cleared as a side effect of registering this sign-out hook.
             await on(Hooks.SignOut, () => {
                 isSignedOut = true;
 
