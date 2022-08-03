@@ -13,7 +13,7 @@ export const ErrorBoundary: FunctionComponent<ErrorBoundaryProps> = (
 ): ReactElement => {
   const { error, children } = props;
 
-  if (error?.code === "JS-CRYPTO_UTILS-IVIT-IV02") {
+  if (error?.code === "SPA-CRYPTO-UTILS-VJ-IV01" || error?.message === "ERR_JWT_CLAIM_VALIDATION_FAILED nbf") {
     return <InvalidSystemTimePage />
   } else if (error?.code === "SPA-MAIN_THREAD_CLIENT-SI-SE01") {
     return <AuthenticationFailure />
