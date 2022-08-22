@@ -36,6 +36,7 @@ import React, {
     useContext,
     useEffect,
     useMemo,
+    useRef,
     useState
 } from "react";
 import { AuthParams, ReactConfig } from ".";
@@ -76,6 +77,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const config = useMemo(
         (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
     );
+
+    const isSignInInitiated = useRef(null);
 
     const signIn = async(
         config?: SignInConfig,
@@ -146,6 +149,13 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Try signing in when the component is mounted.
      */
     useEffect(() => {
+        // Prevent multiple renderings
+        if (isSignInInitiated.current) {
+            return;
+        }
+
+        isSignInInitiated.current = true;
+
         (async () => {
             let isSignedOut: boolean = false;
             // If the component was mounted after the user was redirected to the application upon a successful logout,
