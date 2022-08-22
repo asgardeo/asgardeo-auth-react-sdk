@@ -1,7 +1,7 @@
 {
-    "clientID": "",
-    "baseUrl": "",
+    "clientID": "M3H5oOqEjkmWFuYDnRPaMF90LHIa",
     "signInRedirectURL": "https://localhost:3000",
     "signOutRedirectURL": "https://localhost:3000",
-    "scope": ["profile"]
+    "baseUrl": "https://localhost:9443",
+    "scope": [ "openid","profile" ]
 }

@@ -78,7 +78,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
     );
 
-    const isSignInInitiated = useRef(null);
+    const isSignInInitiated = useRef(false);
 
     const signIn = async(
         config?: SignInConfig,

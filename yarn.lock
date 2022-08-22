@@ -14,10 +14,8 @@
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-2.0.14.tgz#171b6c7b610f0c2993a7e5c17b92d9e5cf5e6b07"
   integrity sha512-Wl+JzGF+xy7yesscJh57jXYMqMKd9X13n9Xuxhlhi1n+wb/jcVsYua5Fw6UvOA/+eCwh6f7F93frfzZdVHpqmg==
 
-"@asgardeo/auth-spa@^0.4.7":
+"@asgardeo/auth-spa@file:../asgardeo-auth-spa-sdk/lib":
   version "0.4.7"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.4.7.tgz#3a6bde2ed005e6eca546e7196d14b78cf100267e"
-  integrity sha512-wQ9Qvj5Eqzc+yvgRsmmndwhy/fghx4o39en/RXHlwHKGTmbQyDrzE7mOXS0QET3ZXLZVzCsxJhP03EJ7rPHl1g==
   dependencies:
     "@asgardeo/auth-js" "^2.0.14"
     await-semaphore "^0.1.3"
@@ -2061,7 +2059,7 @@
   dependencies:
     "@types/react" "^16"
 
-"@types/react-router-dom@^5.1.6":
+"@types/react-router-dom@^5.1.6", "@types/react-router-dom@^5.3.3":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-5.3.3.tgz#e9d6b4a66fcdbd651a5f106c2656a30088cc1e83"
   integrity sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==
@@ -8431,6 +8429,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-notifications-component@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-4.0.1.tgz#c4cf71eb40375f346e2a4dc2b395a8590895d253"
+  integrity sha512-NRBkWO19AsXmN0b8YQ0L12eoCAhrnmIZtGm77ATWSfQEXPL5PYSyeACpx7tePP+R2De9b0IP4yk9vY4TtzC02w==
 
 react-router-dom@5.2.0:
   version "5.2.0"

@@ -1,0 +1,17 @@
+{
+    "clientID": "q2m7uqJnrKEXcN2aZdElykyOPiIa",
+    "signInRedirectURL": "https://localhost:3000",
+    "signOutRedirectURL": "https://localhost:3000",
+    "baseUrl": "https://api.asgardeo.io/t/yathindra",
+    "scope": [ "openid","profile" ],
+    "disableTrySignInSilently": false,
+    "resourceServerURLs": "https://api.github.com",
+    "tokenExchangeConfig": {
+        "clientId": "vF8GILIaLb26GFcXfF4ifWa5MqIa",
+        "endpoint": "https://sts.choreo.dev/oauth2/token",
+        "parameters": {
+            "orgHandle": "yathindrak"
+        }
+    },
+    "enableOIDCSessionManagement": true
+}
