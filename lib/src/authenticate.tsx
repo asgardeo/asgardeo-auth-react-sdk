@@ -16,7 +16,7 @@
  * under the License.
  */
 
- import {
+import {
     AsgardeoAuthException,
     AsgardeoSPAClient,
     AuthClientConfig,
