@@ -22,6 +22,7 @@
         "fix-lint": "eslint --ext .js,.ts . --fix",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=development",
+        "build:watch": "npm run build:dev -- --watch",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
