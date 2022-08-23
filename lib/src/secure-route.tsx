@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement, useEffect } from "react";
+import React, { FunctionComponent, MutableRefObject, ReactElement, useEffect, useRef } from "react";
 import { Route, RouteProps } from "react-router-dom";
 import { useAuthContext } from "./authenticate";
 import { SecureRouteInterface } from "./models";
@@ -31,15 +31,28 @@ import { SecureRouteInterface } from "./models";
 const SecureRoute: FunctionComponent<SecureRouteInterface & RouteProps> = (props: SecureRouteInterface & RouteProps
 ): ReactElement => {
     const { state } = useAuthContext();
+    const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
 
     const { component: Component, callback, ...rest } = props;
 
     useEffect(() => {
-        if (!state.isAuthenticated) {
-            callback && callback();
+        if (state.isAuthenticated || state.isLoading) {
+            return;
         }
 
-    }, [ state.isAuthenticated ]);
+        // React 18.x Strict.Mode has a new check for `Ensuring reusable state` to facilitate an upcoming react feature.
+        // https://reactjs.org/docs/strict-mode.html#ensuring-reusable-state
+        // This will remount all the useEffects to ensure that there are no unexpected side effects.
+        // When react remounts the signIn hook of the AuthProvider, it will cause a race condition. Hence, we have to
+        // prevent the re-render of this hook as suggested in the following discussion.
+        // https://github.com/reactwg/react-18/discussions/18#discussioncomment-795623
+        if (reRenderCheckRef.current) {
+            return;
+        }
+
+        reRenderCheckRef.current = true;
+        callback && callback();
+    }, [ state.isAuthenticated, state.isLoading ]);
 
     if (!state.isAuthenticated) {
         return null;
