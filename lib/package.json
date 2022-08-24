@@ -37,7 +37,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardeo/auth-spa": "^0.4.7"
+        "@asgardeo/auth-spa": "^0.4.8"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",
