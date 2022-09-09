@@ -1,0 +1,35 @@
+{
+  "name": "@asgardeo/choreo-react-express",
+  "version": "1.1.18",
+  "description": "React and Express based sample fullstack app to demonstrate Asgardeo / WSO2 Identity Server Auth React SDK usage",
+  "keywords": [
+      "Asgardeo",
+      "WSO2",
+      "WSO2 IS",
+      "WSO2 Identity Server",
+      "OIDC",
+      "SDK",
+      "React",
+      "Express",
+      "Fullstack",
+      "Sample",
+      "Javascript",
+      "Typescript",
+      "Authenticate"
+  ],
+  "scripts": {
+    "build": "curr_dir=$(pwd) && yarn build:client && cd $curr_dir && npm run build:server",
+    "build:client": "cd apps/client && npm run build",
+    "build:server": "cd apps/server && npm run build"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "*",
+    "prettier": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.15"
+}
