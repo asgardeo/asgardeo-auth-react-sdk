@@ -26,10 +26,6 @@
     "eslint-config-custom": "*",
     "prettier": "latest"
   },
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
-  },
   "dependencies": {},
   "packageManager": "yarn@1.22.15"
 }
