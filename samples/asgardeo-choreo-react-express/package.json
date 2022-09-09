@@ -20,7 +20,7 @@
   "scripts": {
     "prebuild": "curr_dir=$(pwd) && npm run install:client && cd $curr_dir && npm run install:server",
     "build": "curr_dir=$(pwd) && npm run build:client && cd $curr_dir && npm run build:server",
-    "install:client": "cd apps/client && npm install",
+    "install:client": "cd apps/client && CI=false npm install --if-present",
     "install:server": "cd apps/server && npm install",
     "build:client": "cd apps/client && npm run build",
     "build:server": "cd apps/server && npm run build"

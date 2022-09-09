@@ -27,8 +27,8 @@
     "eslint-config-react-app": "^7.0.1"
   },
   "scripts": {
-    "start": "npx react-scripts start",
-    "build": "npx react-scripts build",
+    "start": "react-scripts start",
+    "build": "CI=false && react-scripts build",
     "test": "npx react-scripts test",
     "eject": "npx react-scripts eject"
   },
