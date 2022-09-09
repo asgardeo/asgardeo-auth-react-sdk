@@ -30,6 +30,7 @@
     "private": false,
     "scripts": {
         "start": "webpack-dev-server --mode development --inline --hot --open",
+        "prebuild": "npm install",
         "build": "webpack -p"
     },
     "dependencies": {

@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "1.1.18",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@asgardeo/auth-react": "^1.1.18",
     "@testing-library/jest-dom": "^5.16.5",
