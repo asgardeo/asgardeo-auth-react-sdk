@@ -33,7 +33,6 @@ const handleError = (res, e, path) => {
   res.sendStatus(500);
 };
 
-
 const proxy = to => (req, res) => {
   const path = `${to}${req.originalUrl}`;
   logger.info(`Forwarding request to ${path}`);

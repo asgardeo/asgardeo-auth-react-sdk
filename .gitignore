@@ -14,7 +14,7 @@ umd/
 .npm
 .eslintcache
 .node_repl_history
-*.node-persist/*
+**/.node-persist/**
 
 # Log files
 logs
@@ -45,4 +45,3 @@ lerna-debug.log
 
 # testing
 coverage
-**/.node-persist
