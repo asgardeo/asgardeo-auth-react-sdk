@@ -30,12 +30,14 @@ import {
 import { SPACustomGrantConfig } from "@asgardeo/auth-spa/src/models/request-custom-grant";
 import React, {
     FunctionComponent,
+    MutableRefObject,
     PropsWithChildren,
     ReactNode,
     createContext,
     useContext,
     useEffect,
     useMemo,
+    useRef,
     useState
 } from "react";
 import { AuthParams, ReactConfig } from ".";
@@ -131,6 +133,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
     
     const [ error, setError ] = useState<AsgardeoAuthException>();
+    const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
 
     useEffect(() => {
         if (state.isAuthenticated) {
@@ -146,6 +149,18 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
      * Try signing in when the component is mounted.
      */
     useEffect(() => {
+        // React 18.x Strict.Mode has a new check for `Ensuring reusable state` to facilitate an upcoming react feature.
+        // https://reactjs.org/docs/strict-mode.html#ensuring-reusable-state
+        // This will remount all the useEffects to ensure that there are no unexpected side effects.
+        // When react remounts the signIn hook of the AuthProvider, it will cause a race condition. Hence, we have to
+        // prevent the re-render of this hook as suggested in the following discussion.
+        // https://github.com/reactwg/react-18/discussions/18#discussioncomment-795623
+        if (reRenderCheckRef.current) {
+            return;
+        }
+
+        reRenderCheckRef.current = true;
+
         (async () => {
             let isSignedOut: boolean = false;
             // If the component was mounted after the user was redirected to the application upon a successful logout,

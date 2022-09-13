@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2020",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "outDir": "dist"
+  },
+  "include": ["."],
+  "exclude": ["node_modules"]
+}

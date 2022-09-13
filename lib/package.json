@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-react",
-    "version": "1.1.13",
+    "version": "1.1.18",
     "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [
         "WSO2",
@@ -22,6 +22,7 @@
         "fix-lint": "eslint --ext .js,.ts . --fix",
         "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
         "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=development",
+        "build:watch": "npm run build:dev -- --watch",
         "type-check": "tsc --emitDeclarationOnly",
         "type-check:watch": "npm run type-check -- --watch"
     },
@@ -36,7 +37,7 @@
     "author": "WSO2",
     "license": "Apache-2.0",
     "dependencies": {
-        "@asgardeo/auth-spa": "^0.4.4"
+        "@asgardeo/auth-spa": "^0.4.8"
     },
     "devDependencies": {
         "@babel/cli": "^7.10.5",
