@@ -58,7 +58,7 @@
 
 ## Introduction
 
-Asgardeo Auth React SDK for JavaScript allows React applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the Asgardeo Auth React SDK, developers will be able to add identity management to their React applications fast and secure.
+Asgardeo Auth React SDK for JavaScript allows React applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the Asgardeo Auth React SDK, developers will be able to add identity management to their React applications faster and securely.
 
 To enable authentication for this sample, we are using Asgardeo as the Identity Provider.
 
@@ -68,6 +68,8 @@ Create an organization in Asgardeo if you don't already have one. The organizati
 
 ## Try Out the Sample Apps
 
+Follow this guide to try out the sample app curated by Asgardeo. If you want to integrate Asgardeo for your own app, follow [this guide](#getting-started).
+
 ### 1. Create an Application in Asgardeo
 
 Before trying out the sample apps, you need to create an application in **Asgardeo**.
@@ -76,34 +78,36 @@ Before trying out the sample apps, you need to create an application in **Asgard
 
 2. Click on **New Application** and then **Single Page Application**.
 
-3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+3. Enter any name you prefer as the name of the app
 
-4. Click on Register. You will be navigated to management page of the **sample** application.
-   
-5. Add `https://localhost:3000` (or whichever the URL your app is hosted on) to **Allowed Origins** under **Access** tab and check **Public client** option.
-   
-6. Click on **Update** at the bottom.
+4. Add the redirect URL(s). The redirect URL usually is the URL in which your React application is hosted. For local environments, it will be something like `https://localhost:3000`. This will be used as a configuration in [Running the sample apps](#2-running-the-sample-apps) section.<img width="1439" alt="Screenshot 2022-09-14 at 17 26 57" src="https://user-images.githubusercontent.com/42619922/190148189-bb933d6b-2f8e-41e7-8c42-9d67e6746d17.png">
 
-7. Copy the configuration from the Asgardeo React Quickstart guide to your React application as shown in the above code snippet.
+4. Click on Register. You will be navigated to management page of the sample application. In the **Quick Start** tab, select **React** as the preferred technology.
+
+5. Since we are using sample app, select **Try out a sample** option and follow the guide.
 
 ### 2. Running the sample apps
 
-1. Download the sample from the given link in the Asgardeo Console.
+1. In the Quick Start guide, download the sample React application from the given link in the Asgardeo Console.
 
 2. Update configuration file `src/config.json` with your registered app details.
-
-**Note:** You will only have to paste in the `clientID`(**OAuth Client Key**) generated for the application you registered.
-
-Read more about the SDK configurations [here](#configuration) .
 
 ```json
 {
     "clientID": "",
     "baseUrl": "https://api.asgardeo.io/t/<org_name>",
     "signInRedirectURL": "https://localhost:3000",
-    "signOutRedirectURL": "https://localhost:3000"
+    "signOutRedirectURL": "https://localhost:3000",
+    "scope": [ "openid","profile" ]
 }
 ```
+| Attribute             | Description                                                                        |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `"clientID"`         | The Client ID of your OIDC app. |
+| `"baseUrl"`              | The Asgardeo server's host name along with your organization name.                          |
+| `"signInRedirectURL"` | The URL which the sample app redirects to after user login. |
+| `"signOutRedirectURL"`            | The URL which the sample app redirects to after user logout                     |
+| `"scope"`             | The list of OIDC scopes that are used for requesting user information. The `openid` scope is mandatory to get the ID token. You can add other OIDC scopes such as `profile` and `email`.                           |
 
 3. Build and deploy the apps by running the following command at the root directory.
 
@@ -123,6 +127,8 @@ npm install && npm start
   - `https://localhost:3000`
 
 ## Getting Started
+
+Follow this guide to integrate Asgardeo to your own React Application. To try out the sample apps, use [this guide](#try-out-the-sample-apps).
 
 ### 1. Installing the Package
 
@@ -145,7 +151,8 @@ const config = {
      signInRedirectURL: "https://localhost:3000/sign-in",
      signOutRedirectURL: "https://localhost:3000/dashboard",
      clientID: "client ID",
-     baseUrl: "https://api.asgardeo.io/t/<org_name>"
+     baseUrl: "https://api.asgardeo.io/t/<org_name>",
+     scope: [ "openid","profile" ]
 };
 
 // Encapsulate your components with the `AuthProvider`.
@@ -177,8 +184,6 @@ const Dashboard = (): ReactElement => {
     );
 }
 ```
-
-[Learn more](#apis).
 
 <!-- ## Browser Compatibility
 
