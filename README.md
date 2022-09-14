@@ -161,8 +161,12 @@ const Dashboard = (): ReactElement => {
     const { signIn, state } = useAuthContext();
     const handleClick = (): void => {
         signIn()
-            .then(userInfo => console.log(userInfo))
-            .catch(e => console.error(e));
+            .then(() => {
+                // handle successful sign-in
+            })
+            .catch(() =>{
+                // handle errors of sign-in
+            });
     }
 
     return (
