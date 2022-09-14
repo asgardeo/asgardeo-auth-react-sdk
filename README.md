@@ -158,18 +158,20 @@ export const MyApp = (): ReactElement => {
 }
 
 const Dashboard = (): ReactElement => {
-    const { signIn } = useAuthContext();
-    const [ signedIn, setSignedIn ] = useState(false);
-
+    const { signIn, state } = useAuthContext();
     const handleClick = (): void => {
-        signIn(() => {
-            setSignedIn(true);
-        });
+        signIn()
+            .then(() => {
+                // handle successful sign-in
+            })
+            .catch(() =>{
+                // handle errors of sign-in
+            });
     }
 
     return (
         <div>
-            { signedIn && <div>You have signed in!</div> }
+            { state.isAuthenticated && <div>You have signed in!</div> }
             <button onClick={handleClick}> Sign In </button>
         </div>
     );
