@@ -222,7 +222,7 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-spa/polyfilled/umd";
 This is a React Context Provider that provides the session state that contains information such as the authenticated user's display name, email address, etc., and the methods that are required to implement authentication in the React app.
 Like every other provider, the `AuthProvider` also encapsulates the components that would need the data provided by the provider.
 
-The provider takes a prop called `config` that accepts a config object of type [`AuthClientConfig<Config>`](#AuthClientConfig<Config>). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthClientConfig<Config>`](#AuthClientConfig<Config>) section.
+The provider takes a prop called `config` that accepts a config object of type [`AuthClientConfig<Config>`](#authreactconfig). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthClientConfig<Config>`](#authreactconfig) section.
 
 In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
 
@@ -259,9 +259,9 @@ export const MyApp = (): ReactElement => {
 ```
 ---
 ### SecureRoute
-The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router`dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
+The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
 
-This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access teh route. Developers can use this callback function to either to redirect the user to the login page of the app to call the [`signIn`](#signIn) method.
+This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
 #### Example
 ```TypeScript
 <SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
@@ -450,30 +450,72 @@ If the `storage` type is set to `sessionStorage` or `localStorage`, the develope
 
 This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
 
-For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+#### Approaches
 
-#### Example
+There are two approaches when sending HTTP requests.
 
-```TypeScript
-const auth = AsgardeoSPAClient.getInstance();
+1. **Within React Components** - When sending HTTP requests from inside React components or React Hooks, always use the `httpRequest` and  `httpRequestAll` methods exposed from the `useAuthContext` hook.
 
-const requestConfig = {
-    headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/scim+json"
-    },
-    method: "GET",
-    url: "https://api.asgardeo.io/scim2/me"
-};
+    For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
 
-return httpRequest(requestConfig)
-    .then((response) => {
-        // console.log(response);
-    })
-    .catch((error) => {
-        // console.error(error);
-    });
-```
+    #### Example
+
+    ```TypeScript
+    import { useAuthContext } from "@asgardeo/auth-react";
+
+
+    const { httpRequest } = useAuthContext();
+
+    const requestConfig = {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/scim+json"
+        },
+        method: "GET",
+        url: "https://api.asgardeo.io/scim2/me"
+    };
+
+    return httpRequest(requestConfig)
+        .then((response) => {
+            // console.log(response);
+        })
+        .catch((error) => {
+            // console.error(error);
+        });
+    ```
+
+2. **From Non-Components** - When sending HTTP requests from JS or TS logic files which are non components, you do not have access to React Hooks. Therefore, if you want to invoke APIs from a logic file, you have to get an instance of the HTTP client and use that instance to invoke the APIs.
+
+    For example, to get the user profile details after signing in, you can query the `me` endpoint via a custom function `getUser()` as follows:
+
+    #### Example
+
+    ```TypeScript
+    import { AsgardeoSPAClient } from "@asgardeo/auth-react";
+
+
+    const spaClient = AsgardeoSPAClient.getInstance();
+
+    const getUser = () => {
+        const requestConfig = {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json"
+            },
+            method: "GET",
+            url: "https://api.asgardeo.io/scim2/me"
+        };
+
+        spaClient.httpRequest(requestConfig)
+            .then((response) => {
+               // do something with response
+            })
+            .catch((error) => {
+              // do something with error.
+            });
+    };
+
+    ```
 
 ---
 
@@ -496,17 +538,79 @@ A Promise that resolves with the responses.
 
 This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
-#### Example
+#### Approaches
 
-```TypeScript
-httpRequestAll(configs).then((responses) => {
-    response.forEach((response) => {
-        // console.log(response);
+There are two approaches when sending HTTP requests.
+
+1. **Within React Components** - When sending HTTP requests from inside React components or React Hooks, always use the `httpRequest` and  `httpRequestAll` methods exposed from the `useAuthContext` hook.
+
+    For example, to get the user profile details after signing in, you can query the `me` endpoint and other requests as follows:
+
+    #### Example
+
+    ```TypeScript
+    import { useAuthContext } from "@asgardeo/auth-react";
+
+
+    const { httpRequest } = useAuthContext();
+
+    const requestConfigs = [
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json"
+            },
+            method: "GET",
+            url: "https://api.asgardeo.io/scim2/me"
+        },
+        .
+        .
+        .
+    ];
+
+    httpRequestAll(requestConfigs).then((responses) => {
+        response.forEach((response) => {
+            // console.log(response);
+        });
+    }).catch((error) => {
+        // console.error(error);
     });
-}).catch((error) => {
-    // console.error(error);
-});
-```
+    ```
+
+2. **From Non-Components** - When sending HTTP requests from JS or TS logic files which are non components, you do not have access to React Hooks. Therefore, if you want to invoke APIs from a logic file, you have to get an instance of the HTTP client and use that instance to invoke the APIs.
+
+    For example, to get the user profile details after signing in, you can query the `me` endpoint and other requests as follows:
+
+    #### Example
+
+     ```TypeScript
+    import { AsgardeoSPAClient } from "@asgardeo/auth-react";
+
+
+    const spaClient = AsgardeoSPAClient.getInstance();
+
+    const requestConfigs = [
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json"
+            },
+            method: "GET",
+            url: "https://api.asgardeo.io/scim2/me"
+        },
+        .
+        .
+        .
+    ];
+
+    spaClient.httpRequestAll(requestConfigs).then((responses) => {
+        response.forEach((response) => {
+            // console.log(response);
+        });
+    }).catch((error) => {
+        // console.error(error);
+    });
+    ```
 
 ---
 
