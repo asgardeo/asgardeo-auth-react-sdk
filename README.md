@@ -242,7 +242,7 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
 When including React SDK as a dependency:
 
 **DO** ✅
-```json
+```
 // In package.json
 
 dependencies: {
@@ -251,7 +251,7 @@ dependencies: {
 ```
 
 **DON’T** ❌
-```json
+```
 // In package.json
 
 dependencies: {
@@ -306,6 +306,11 @@ export const MyApp = (): ReactElement => {
 The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
 
 This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
+
+Use this if you want a route to be an authenticated route. So, this route will be rendered only if a user is authenticated. Otherwise, the callback function will be fired.
+
+> :warning: **This will only support `react-router` v4**
+
 #### Example
 ```TypeScript
 <SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
@@ -321,6 +326,8 @@ initiates the sign-in flow.
 The component takes three props, namely `fallback`, `onSignIn`, and `overrideSignIn`. The `fallback` prop
 is used to render a fallback component during sign in. The `onSignIn` prop is used to pass a callback function that will be called after signing in. The `overrideSignIn` prop is used to specify a function that will be called to initiate the sign-in flow. By default, the `signIn` method is used to initiate the sign-in flow.
 
+Use this if you want to sign-in a user on app load. This component renders its children if a user is authenticated. Otherwise, it initiates the sign-in flow.
+
 #### Example
 ```TypeScript
 <SecureApp fallback={ <Loader /> } onSignIn{ ()=> { history.push("/home") } } >
@@ -331,6 +338,7 @@ is used to render a fallback component during sign in. The `onSignIn` prop is us
 ### AuthenticatedComponent
 
 This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop.
+
 #### Example
 ```TypeScript
 <AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } >
@@ -471,7 +479,7 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string,
 
 As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
 
-The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
 
@@ -492,15 +500,27 @@ This will be useful when you want to sign a user in automatically while avoiding
 
 This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
 
-To dispatch a token request, the `[signIn()](#signIn)` or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+To dispatch a token request, the [`signIn()`](#signIn) or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
 
-This returns a promise that resolves with a `[BasicUserInfo](#BasicUserInfo)` object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
+This returns a promise that resolves with a [`BasicUserInfo`](#BasicUserInfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
 
-The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [`on()`](#on) section for more information.
 
 > :warning: ***Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.***
 
 #### Example
+
+To use this method, first you have to set the following config in the [Asgardeo SDK configuration](#authreactconfig):
+
+```
+{
+    .
+    .
+    .
+    disableTrySignInSilently: false,
+    enableOIDCSessionManagement: true
+}
+```
 
 ```typescript
 trySignInSilently().then((response)=>{
@@ -525,7 +545,7 @@ signOut();
 
 This method ends the user session at the identity server and logs the user out.
 
-The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
+The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
 
@@ -749,7 +769,7 @@ A Promise that resolves either with the response or the [`BasicUserInfo`](#Basic
 
 This method allows developers to use custom grants provided by their Identity Providers. This method accepts an object that has the following attributes as the argument.
 
-The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
+The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [`on()`](#on) section for more information.
 
 ```TypeScript
     const config = {
@@ -785,7 +805,7 @@ revokeAccessToken();
 
 This method revokes the access token and clears the session information from the storage.
 
-The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [on()](#on) section for more information.
+The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
 
