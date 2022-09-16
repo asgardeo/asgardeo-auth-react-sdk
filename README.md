@@ -217,6 +217,50 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-spa/polyfilled/umd";
 
 ## APIs
 
+### Using APIs
+
+Asgardeo Auth React SDK is built on top of Asgardeo Auth SPA SDK. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK.
+
+- The only SDK that should be listed in the app dependencies is `@asgardeo/auth-react`.
+- Always try to import APIs from `@asgardeo/auth-react`.
+
+> :warning: ***IDE or Editor auto import will sometimes import certain APIs from `@asgardeo/auth-spa`, change them back manually.***
+
+
+When importing a component from React SDK:
+
+**DO** ✅
+```TypeScript
+import { AsgardeoSPAClient } from "@asgardeo/auth-react";
+```
+
+**DON’T** ❌
+```TypeScript
+import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
+```
+---
+When including React SDK as a dependency:
+
+**DO** ✅
+```json
+// In package.json
+
+dependencies: {
+    "@asgardeo/auth-react": "1.1.18"
+}
+```
+
+**DON’T** ❌
+```json
+// In package.json
+
+dependencies: {
+    "@asgardeo/auth-react": "1.1.18",
+    "@asgardeo/auth-spa": "0.4.9"
+}
+```
+
+
 ### AuthProvider
 
 This is a React Context Provider that provides the session state that contains information such as the authenticated user's display name, email address, etc., and the methods that are required to implement authentication in the React app.
@@ -303,14 +347,84 @@ This is a React hook that returns the session state that contains information su
 const { signIn } = useAuthContext();
 ```
 
-The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#AuthStateInterface). You can refer the link to know more about what data is contained by the `state` object.
+The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#authstateinterface). You can refer the topic below to know more about what data is contained by the `state` object.
 
-In addition to the `state` object, the hook also returns the following methods.
+### `state` Object
 
+The state object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. It is an object of type [`AuthStateInterface`](#authstateinterface).
+
+#### Example
+```json
+{
+    "allowedScopes": "",
+    "displayName": "",
+    "email": "",
+    "isAuthenticated": false,
+    "isLoading": true,
+    "sub": "",
+    "username": ""
+}
+```
+
+#### Consuming the `isLoading` State of the Auth Flow
+
+Based on the loading state of the authentication flow, you may want to take some actions like show spinners etc.
+
+Always use the `isLoading` flag from the `state` object rather than maintaining your own React state.
+
+**DO** ✅
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+  const { state } = useAuthContext();
+  const { isLoading } = state;
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  return (
+    <main>
+     …
+    </main>
+  );
+}
+```
+
+**DON’T** ❌
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+  const { signIn } = useAuthContext();
+  const [ isLoading, setIsLoading ] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    signIn()
+      .finally(() => setIsLoading(false));
+  });
+
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  return (
+    <main>
+     …
+    </main>
+  );
+}
+```
+
+In addition to the `state` object, the `useAuthContext()` hook also returns the following methods.
 
 ### getBasicUserInfo
 
-```typescript
+```TypeScript
 getBasicUserInfo(): Promise<BasicUserInfo>;
 ```
 
