@@ -80,9 +80,18 @@ const Dashboard = (): ReactElement => {
     }
 
     return (
-        <div>
-            { state.isAuthenticated && <div>You have signed in!</div> }
-            <button onClick={handleClick}> Sign In </button>
+        <div className="App">
+            {
+                state.isAuthenticated
+                    ? (
+                    <div>
+                        <ul>
+                            <li>{state.username}</li>
+                        </ul>
+                        <button onClick={() => signOut()}>Logout</button>
+                    </div>
+                ) : <button onClick={() => signIn()}>Login</button>
+            }
         </div>
     );
 }
