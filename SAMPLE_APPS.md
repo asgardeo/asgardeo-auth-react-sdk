@@ -67,12 +67,12 @@ Follow the steps given below to run the sample:
 
 ## Change the app's development server port
 
-By default, the development server runs on port `3000`. Incase if you wish to change this to something else, 
+By default, the development server runs on port `3000`. If you wish to change this to something else, 
 follow the steps below.
 
 1. Update the `PORT` in the [.env](.env) file in the app root.
 2. Update the `signInRedirectURL` and `signOutRedirectURL` parameters in [src/config.json](./src/config.json).
-3. Go to the Asgardeo Console and navigate to the **Protocol** tab of your application:
+3. Go to the Asgardeo Console, navigate to the **Protocol** tab of your application, and do the following:
     - Update the Authorized Redirect URL.
     - Update the Allowed Origins.
 
