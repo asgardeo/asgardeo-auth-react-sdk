@@ -15,13 +15,16 @@ Follow this guide to try out the sample app curated by Asgardeo. If you want to 
 
 Before trying out the sample apps, you need to create an application in **Asgardeo**.
 
-1. Open the [**Asgardeo Console**](https://console.asgardeo.io/login) and go to **Applications** > **Develop** tab
+1. Open the [**Asgardeo Console**](https://console.asgardeo.io/login) and go to the **Applications** > **Develop** tab.
 
 2. Click **New Application** and then **Single Page Application**.
 
-3. Enter any name you prefer as the name of the app
+3. Enter any name you prefer as the name of the app.
 
-4. Add the redirect URL(s). The redirect URL usually is the URL in which your React application is hosted. For local environments, it will be something like `https://localhost:3000`. This will be used as a configuration in [Running the sample apps](#2-running-the-sample-apps) section.<img width="1439" alt="Screenshot 2022-09-14 at 17 26 57" src="https://user-images.githubusercontent.com/42619922/190148189-bb933d6b-2f8e-41e7-8c42-9d67e6746d17.png">
+4. Add the redirect URL(s). For local environments, it will be something like `https://localhost:3000`. This will be used as a configuration in [Running the sample apps](#2-running-the-sample-apps) section.<img width="1439" alt="Screenshot 2022-09-14 at 17 26 57" src="https://user-images.githubusercontent.com/42619922/190148189-bb933d6b-2f8e-41e7-8c42-9d67e6746d17.png">
+
+    > **Note** 
+    > The redirect URL usually is the URL in which your React application is hosted.
 
 4. Click **Register**. You will be navigated to management page of the sample application. In the **Quick Start** tab, select **React** as the preferred technology.
 
