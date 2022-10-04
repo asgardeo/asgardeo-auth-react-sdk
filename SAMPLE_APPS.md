@@ -26,9 +26,11 @@ Before trying out the sample apps, you need to create an application in **Asgard
     > **Note** 
     > The redirect URL usually is the URL in which your React application is hosted.
 
-4. Click **Register**. You will be navigated to management page of the sample application. In the **Quick Start** tab, select **React** as the preferred technology.
+5. Click **Register**. You will be navigated to the management page of the sample application. 
 
-5. Since we are using a sample app, select **Try out a sample** option and follow the guide.
+6. In the **Quick Start** tab, select **React** as the preferred technology.
+
+7. Since we are using a sample app, select **Try out a sample** option and follow the guide.
 
 ## Running the sample apps
 
