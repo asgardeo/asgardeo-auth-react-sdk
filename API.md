@@ -2,7 +2,6 @@
 
 ## Table of Content
 
--   [Best practices when using APIs](#best-practices-when-using-apis)
 -   [AuthProvider](#authprovider)
 -   [Securing routes with Asgardeo](#securing-routes-with-asgardeo)
     -   [SecureRoute](#secureroute)
@@ -48,51 +47,6 @@
     -   [Installing Dependencies](#installing-dependencies)
 - [Other Links](#other-links)
 
-## Best practices when using APIs
-
-Asgardeo Auth React SDK is built on top of Asgardeo Auth SPA SDK. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK.
-
-- The only SDK that should be listed in the app dependencies is `@asgardeo/auth-react`.
-- Always try to import APIs from `@asgardeo/auth-react`.
-
->**Warning**
->IDE or Editor auto import may sometimes import certain APIs from `@asgardeo/auth-spa`, change them back manually.
-
-
-When importing a component from React SDK:
-
-#### DO ✅
-```TypeScript
-import { AsgardeoSPAClient } from "@asgardeo/auth-react";
-```
-
-#### DON’T ❌
-```TypeScript
-import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
-```
----
-When including React SDK as a dependency:
-
-#### DO ✅
-```
-// In package.json
-
-dependencies: {
-    "@asgardeo/auth-react": "1.1.18"
-}
-```
-
-#### DON’T ❌
-```
-// In package.json
-
-dependencies: {
-    "@asgardeo/auth-react": "1.1.18",
-    "@asgardeo/auth-spa": "0.4.9"
-}
-```
-
-
 ## AuthProvider
 
 This is a React Context Provider that provides the session state that contains information such as the authenticated user's display name, email address, etc., and the methods that are required to implement authentication in the React app.
@@ -133,11 +87,12 @@ export const MyApp = (): ReactElement => {
     )
 }
 ```
+---
 ## Securing routes with Asgardeo
 
 There are 3 approaches you can use to secure routes in your React application with Asgardeo.
 
-### SecureRoute
+### 1. SecureRoute
 The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
 
 This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
@@ -152,9 +107,8 @@ Use this if you want a route to be an authenticated route. So, this route will b
 <SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
 ```
 
----
 
-### SecureApp
+### 2. SecureApp
 This is a component that can be used to secure a React app. This component wraps a React component and renders it only
 if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically
 initiates the sign-in flow.
@@ -170,8 +124,8 @@ Use this if you want to sign-in a user on app load. This component renders its c
     <App />
 </SecureApp>
 ```
----
-### AuthenticatedComponent
+
+### 3. AuthenticatedComponent
 
 This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop.
 
@@ -181,6 +135,7 @@ This component is used to wrap the components that need authentication. If the u
     <SecureComponent />
 </AuthenticatedComponent>
 ```
+---
 ## useAuthContext React Hook
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
@@ -193,6 +148,7 @@ const { signIn } = useAuthContext();
 
 The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#authstateinterface). You can refer the topic below to know more about what data is contained by the `state` object.
 
+---
 ## `state` Object
 
 The state object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. It is an object of type [`AuthStateInterface`](#authstateinterface).
@@ -263,7 +219,7 @@ const App = () => {
   );
 }
 ```
-
+---
 ## Additional APIs
 In addition to the `state` object, the `useAuthContext()` hook also returns the following methods.
 
