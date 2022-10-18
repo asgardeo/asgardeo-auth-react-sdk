@@ -29,11 +29,11 @@
 Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authentication with Asgardeo as the Identity Provider. The SDK supports following capabilities
 -   [Authenticate users](#add-a-loginlogout-button)
 -   [Show Authenticated User's Information](#show-authenticated-users-information)
--   Retrieve Additional User Information
--   Secure Routes
--   Secure Components
--   Send HTTP Requests to Asgardeo
--   Silent Sign In
+-   [Retrieve Additional User Information](/API.md#getbasicuserinfo)
+-   [Secure Routes](/API.md#1-secureroute)
+-   [Secure Components](/API.md#3-authenticatedcomponent)
+-   [Send HTTP Requests to Asgardeo](/API.md#httprequest)
+-   [Silent Sign In](/API.md#trysigninsilently)
 
 ## Prerequisite
 
