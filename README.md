@@ -109,11 +109,6 @@ Asgardeo Auth React SDK is built on top of Asgardeo Auth SPA SDK. Hence, almost 
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 ```
 
-##### DON’T ❌
-```TypeScript
-import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
-```
-
 #### When including React SDK as a dependency:
 
 ##### DO ✅
@@ -122,16 +117,6 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
 
 dependencies: {
     "@asgardeo/auth-react": "1.1.18"
-}
-```
-
-##### DON’T ❌
-```
-// In package.json
-
-dependencies: {
-    "@asgardeo/auth-react": "1.1.18",
-    "@asgardeo/auth-spa": "0.4.9"
 }
 ```
 
