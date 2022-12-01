@@ -3,50 +3,91 @@ name: Send Notification
 on:
   issues:
     types: [opened]
-  pull_request:
+  pull_request_target:
     types: [opened]
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Escape Issue Title
+        if: ${{github.event.issue}}
+        id: escapeIssueTitle
+        env:
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          export title=$(echo $TITLE | sed "s/'//g" | sed 's/"//g')
+          echo "issueTitle=$title" >> $GITHUB_OUTPUT
+      - name: Escape Issue Body
+        if: ${{github.event.issue}}
+        id: escapeIssueBody
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          export body=$(echo $BODY | sed "s/'//g" | sed 's/\"//g')
+          echo "issueBody=$body" >> $GITHUB_OUTPUT
+      - name: Escape PR Title
+        if: ${{github.event.pull_request}}
+        id: escapePRTitle
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          export title=$(echo $TITLE | sed "s/'//g" | sed 's/"//g')
+          echo "pRTitle=$title" >> $GITHUB_OUTPUT
+      - name: Escape PR Body
+        if: ${{github.event.pull_request}}
+        id: escapePRBody
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          export body=$(echo $BODY | sed "s/'//g" | sed 's/\"//g')
+          echo "pRBody=$body" >> $GITHUB_OUTPUT
       - name: Send notification on issue creation
         if: ${{github.event.issue}}
         run: |
           curl --location --request POST '${{secrets.WEBHOOK_CHAT}}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
-              "cards": [
-                  {
-                      "header": {
-                          "title": "ISSUE: ${{ github.event.issue.title }}",
-                          "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo React SDK Repo",
-                          "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
-                          "imageStyle": "IMAGE"
-                      },
-                      "sections": {
-                          "widgets": [
-                              {
-                                  "buttons": [
-                                      {
-                                          "textButton": {
-                                              "text": "Open Issue",
-                                              "onClick": {
-                                                  "openLink": {
-                                                      "url": "${{ github.event.issue.html_url }}"
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  ],
-                                  "textParagraph": {
-                                      "text": "${{ github.event.issue.body }}"
-                                  }
-                              }
-                          ]
-                      }
-                  }
-              ]
+                "cardsV2": [
+                    {
+                        "card": {
+                            "header": {
+                                "title": "PR: ${{ steps.escapeIssueTitle.outputs.issueTitle }}",
+                                "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo SPA SDK Repo",
+                                "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
+                                "imageType": "CIRCLE",
+                                "imageAltText": "GitHub Avatar"
+                            },
+                            "sections": [
+                                {
+                                    "header": "Issue Details",
+                                    "collapsible": false,
+                                    "widgets": [
+                                        {
+                                            "buttonList": {
+                                                "buttons": [
+                                                    {
+                                                        "text": "Open Issue",
+                                                        "onClick": {
+                                                            "openLink": {
+                                                                "url": "${{ github.event.issue.html_url }}"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "textParagraph": {
+                                                "text": "${{ steps.escapeIssueBody.outputs.issueBody }}"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
           }'
 
       - name: Send notification on pull request creation
@@ -55,32 +96,41 @@ jobs:
             curl --location --request POST '${{secrets.WEBHOOK_CHAT}}' \
             --header 'Content-Type: application/json' \
             --data-raw '{
-                "cards": [
+                "cardsV2": [
                     {
-                        "header": {
-                            "title": "PR: ${{ github.event.pull_request.title }}",
-                            "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo React SDK Repo",
-                            "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
-                            "imageStyle": "IMAGE"
-                        },
-                        "sections": {
-                            "widgets": [
+                        "card": {
+                            "header": {
+                                "title": "PR: ${{ steps.escapePRTitle.outputs.prTitle }}",
+                                "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo SPA SDK Repo",
+                                "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
+                                "imageType": "CIRCLE",
+                                "imageAltText": "GitHub Avatar"
+                            },
+                            "sections": [
                                 {
-                                    "buttons": [
+                                    "header": "PR Details",
+                                    "collapsible": false,
+                                    "widgets": [
                                         {
-                                            "textButton": {
-                                                "text": "Open PR",
-                                                "onClick": {
-                                                    "openLink": {
-                                                        "url": "${{ github.event.pull_request.html_url }}"
+                                            "buttonList": {
+                                                "buttons": [
+                                                    {
+                                                        "text": "Open PR",
+                                                        "onClick": {
+                                                            "openLink": {
+                                                                "url": "${{ github.event.pull_request.html_url }}"
+                                                            }
+                                                        }
                                                     }
-                                                }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "textParagraph": {
+                                                "text": "${{ steps.escapePRBody.outputs.pRBody }}",
                                             }
                                         }
-                                    ],
-                                    "textParagraph": {
-                                        "text": "${{ github.event.pull_request.body }}"
-                                    }
+                                    ]
                                 }
                             ]
                         }
