@@ -26,7 +26,7 @@
 
 ## Introduction
 
-Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authentication with Asgardeo as the Identity Provider. The SDK supports following capabilities
+Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authentication with [Asgardeo](https://wso2.com/asgardeo) as the Identity Provider. The SDK supports following capabilities
 -   [Authenticate users](#add-a-loginlogout-button)
 -   [Show Authenticated User's Information](#show-authenticated-users-information)
 -   [Retrieve Additional User Information](/API.md#getbasicuserinfo)
@@ -37,7 +37,8 @@ Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authent
 
 ## Prerequisite
 
-Create an organization in Asgardeo if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+1. Register to [Asgardeo](https://wso2.com/asgardeo) and create an organization if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. 
 
 
 ## Getting Started
@@ -126,7 +127,7 @@ dependencies: {
 
 ---
 ### `useAuthContext()` hook
-The `useAuthContext()` hook provided by the SDK could be used to access the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
+The `useAuthContext()` hook provided by the SDK could be used to implement the necessory authentication functionalities and access the session state that contains information such as the email address of the authenticated user.
 
 Import the `useAuthContext()` hook from `@asgardeo/auth-react`.
 ```Typescript
