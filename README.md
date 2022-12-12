@@ -57,15 +57,17 @@ npm install @asgardeo/auth-react react-router-dom --save
 
 Asgardeo React SDK exposes the `AuthProvider` component, which helps you easily integrate Asgardeo to your application.
 
-First, import the `AuthProvider` component from `@asgardeo/auth-react.`
+First, import the `AuthProvider` component from `@asgardeo/auth-react.` where you applications root component is defined.
 
 ```TypeScript
 import { AuthProvider } from "@asgardeo/auth-react";
 ```
 Then, wrap your root component with the `AuthProvider`.
+> **Note**
+> Typically the root component of a react app is defined in the index.* file.
 
 ```TypeScript
-import React from "react";
+<strong>import React from "react";<strong>
 import { AuthProvider } from "@asgardeo/auth-react";
 
 const config = {
@@ -85,9 +87,8 @@ export const MyApp = (): ReactElement => {
 }
 ```
 
-## Sample Apps
+Once the root component is wrapped with AuthProvider, [`useAuthContext()` hook](#useauthcontext-hook) can be used anywhere within the application to implement user authentication capabilities in the application.
 
-Sample React Apps offered by Asgardeo will allow you to take Asgardeo for a spin without having to setup your own application. You can see [how to setup sample apps here](/SAMPLE_APPS.md).
 
 ## Using APIs
 
@@ -193,6 +194,10 @@ If your application needs routing, the SDK provides a multiple approaches to sec
 ### API Documentation
 
 Additionally to above, Asgardeo offers a wide range of APIs that you can use to integrate and make use of Asgardeo within your React Application. You can refer to a [detailed API documentation here](/API.md).
+
+## Sample Apps
+
+Sample React Apps offered by Asgardeo will allow you to take Asgardeo for a spin without having to setup your own application. You can see [how to setup sample apps here](/SAMPLE_APPS.md).
 
 ## Contribute
 
