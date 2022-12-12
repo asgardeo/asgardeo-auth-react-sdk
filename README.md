@@ -35,10 +35,10 @@ Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC
 -   [Send HTTP Requests to Asgardeo](/API.md#httprequest)
 -   [Silent Sign In](/API.md#trysigninsilently)
 
-## Prerequisite
+## Prerequisite - Register your application in Asgardeo
 
 1. Register to [Asgardeo](https://wso2.com/asgardeo) and create an organization if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
-2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. 
+2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. You will obtain a `client-ID` from Asgardeo for your application which will need to embedd later in your application for the integration. 
 
 
 ## Getting Started
@@ -75,7 +75,7 @@ import { AuthProvider } from "@asgardeo/auth-react";
 const config = {
      signInRedirectURL: "https://localhost:3000/sign-in",
      signOutRedirectURL: "https://localhost:3000/dashboard",
-     clientID: "client ID",
+     clientID: "<client-ID>",
      baseUrl: "https://api.asgardeo.io/t/<org_name>",
      scope: [ "openid","profile" ]
 };
