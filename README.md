@@ -58,13 +58,14 @@ npm install @asgardeo/auth-react react-router-dom --save
 Asgardeo React SDK exposes the `AuthProvider` component, which helps you easily integrate Asgardeo to your application.
 
 First, import the `AuthProvider` component from `@asgardeo/auth-react.` where you applications root component is defined.
+> **Note**
+> Typically the root component of a react app is defined in the index.* file.
 
 ```TypeScript
 import { AuthProvider } from "@asgardeo/auth-react";
 ```
 Then, wrap your root component with the `AuthProvider`.
-> **Note**
-> Typically the root component of a react app is defined in the index.* file.
+
 
 ```TypeScript
 <strong>import React from "react";<strong>
