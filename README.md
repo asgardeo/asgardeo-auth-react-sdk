@@ -38,7 +38,7 @@ Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC
 ## Prerequisite - Register your application in Asgardeo
 
 1. Register to [Asgardeo](https://wso2.com/asgardeo) and create an organization if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
-2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. You will obtain a `client-ID` from Asgardeo for your application which will need to embedd later in your application for the integration. 
+2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. You will obtain a `client-ID` from Asgardeo for your application which will need to embed later in your application for the integration. 
 
 
 ## Getting Started
@@ -148,7 +148,7 @@ Few common methods that you will require when implementing authentication capabi
 -   [`getIDToken`](API.md#getidtoken) - Get the id_token (JWT) obtained in the authentication response. 
 -   [`getAccessToken`](API.md#getaccesstoken) - Get the access_token obtained in the authentication response. 
 -   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the refresh_token obtained in the authentication response. 
--   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the Access token to the request. 
+-   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the necessory Authorization headers to the request. 
 
 The [`state`](API.md#state-object) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
 
