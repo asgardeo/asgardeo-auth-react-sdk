@@ -26,7 +26,7 @@
 
 ## Introduction
 
-Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authentication with Asgardeo as the Identity Provider. The SDK supports following capabilities
+Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC](https://openid.net/specs/openid-connect-core-1_0.html) authentication with [Asgardeo](https://wso2.com/asgardeo) as the Consumer Identity and Access Management(CIAM) Provider. The SDK supports following capabilities
 -   [Authenticate users](#add-a-loginlogout-button)
 -   [Show Authenticated User's Information](#show-authenticated-users-information)
 -   [Retrieve Additional User Information](/API.md#getbasicuserinfo)
@@ -35,9 +35,10 @@ Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authent
 -   [Send HTTP Requests to Asgardeo](/API.md#httprequest)
 -   [Silent Sign In](/API.md#trysigninsilently)
 
-## Prerequisite
+## Prerequisite - Register your application in Asgardeo
 
-Create an organization in Asgardeo if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+1. Register to [Asgardeo](https://wso2.com/asgardeo) and create an organization if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+2. [Register a Single Page Application in Asgardeo](https://wso2.com/asgardeo/docs/guides/applications/register-single-page-app/#register-the-app) to obtain necessory keys to integrate your application with Asgardeo. You will obtain a `client_ID` from Asgardeo for your application which will need to embed later in your application for the integration. 
 
 
 ## Getting Started
@@ -57,12 +58,15 @@ npm install @asgardeo/auth-react react-router-dom --save
 
 Asgardeo React SDK exposes the `AuthProvider` component, which helps you easily integrate Asgardeo to your application.
 
-First, import the `AuthProvider` component from `@asgardeo/auth-react.`
+First, import the `AuthProvider` component from `@asgardeo/auth-react.` where you applications root component is defined.
+> **Note**
+> Typically the root component of a react app is defined in the index.* file.
 
 ```TypeScript
 import { AuthProvider } from "@asgardeo/auth-react";
 ```
 Then, wrap your root component with the `AuthProvider`.
+
 
 ```TypeScript
 import React from "react";
@@ -71,7 +75,7 @@ import { AuthProvider } from "@asgardeo/auth-react";
 const config = {
      signInRedirectURL: "https://localhost:3000/sign-in",
      signOutRedirectURL: "https://localhost:3000/dashboard",
-     clientID: "client ID",
+     clientID: "<client_ID>",
      baseUrl: "https://api.asgardeo.io/t/<org_name>",
      scope: [ "openid","profile" ]
 };
@@ -85,25 +89,24 @@ export const MyApp = (): ReactElement => {
 }
 ```
 
-## Sample Apps
+Once the root component is wrapped with AuthProvider, [`useAuthContext()` hook](#useauthcontext-hook) can be used anywhere within the application to implement user authentication capabilities in the application.
 
-Sample React Apps offered by Asgardeo will allow you to take Asgardeo for a spin without having to setup your own application. You can see [how to setup sample apps here](/SAMPLE_APPS.md).
 
 ## Using APIs
 
 ### Best practices when using APIs
 
-Asgardeo Auth React SDK is built on top of Asgardeo Auth SPA SDK. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK.
+Asgardeo Auth React SDK is built on top of [Asgardeo Auth SPA SDK](https://github.com/asgardeo/asgardeo-auth-spa-sdk), a base library. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK and you don't need to import dependencies from the base library to your application.
 
 - The only SDK that should be listed in the app dependencies is `@asgardeo/auth-react`.
-- Always try to import APIs from `@asgardeo/auth-react`.
+- Always import APIs from `@asgardeo/auth-react`.
 
 >**Warning**
 >IDE or Editor auto import may sometimes import certain APIs from `@asgardeo/auth-spa`, change them back manually.
 
-
-#### When importing a component from React SDK:
-
+<details><summary><strong>Click here for Tips:</strong> Do's When importing a component from Asgardeo React SDK</summary>
+<p>
+    
 ##### DO ✅
 ```TypeScript
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
@@ -119,10 +122,12 @@ dependencies: {
     "@asgardeo/auth-react": "1.1.18"
 }
 ```
+</p>
+</details>
 
 ---
 ### `useAuthContext()` hook
-The `useAuthContext()` hook provided by the SDK could be used to access the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
+The `useAuthContext()` hook provided by the SDK could be used to implement the necessary authentication functionalities and access the session state that contains information such as a unique identifier for the authenticated user.
 
 Import the `useAuthContext()` hook from `@asgardeo/auth-react`.
 ```Typescript
@@ -133,10 +138,26 @@ And then inside your components, you can access the context as follows
 ```Typescript
 const { state, signIn, signOut } = useAuthContext();
 ```
+
+Few common methods that you will require when implementing authentication capabilities in your application.
+-   [`signIn`](API.md#signin) - Initiate a login request to Asgardeo, process the response to obtain authentication response.  
+-   [`signOut`](API.md#signout) - Logout the user from Asgardeo and clear any authentication data from the SDK storage.
+-   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is an authenticated user session. Based on the result you can decide to change the application view/behaviour.
+-   [`getBasicUserInfo`](API.md#getbasicuserinfo) - Get authenticated user's basic information from the authentication response.
+-   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded `id_token` obtained in the authentication response. From there you can derive more information such as additional user-attributes.
+-   [`getIDToken`](API.md#getidtoken) - Get the `id_token` (JWT) obtained in the authentication response. 
+-   [`getAccessToken`](API.md#getaccesstoken) - Get the `access_token` obtained in the authentication response. 
+-   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the `refresh_token` obtained in the authentication response. 
+-   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the necessary Authorization headers to the request. 
+
+The [`state`](API.md##authstateinterface) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
+
+> <sub>Note:You can refer to the [detailed API documentation here](/API.md).</sub>
+
 ---
 ### Add a Login/Logout Button
 
-We can use the `signIn()` method from `useAuthContext()` to easily implement a **login button**.
+You can use the `signIn()` method from `useAuthContext()` to easily implement a **login button**.
 ```Typescript
 <button onClick={ () => signIn() }>Login</button>
 ```
@@ -193,6 +214,10 @@ If your application needs routing, the SDK provides a multiple approaches to sec
 ### API Documentation
 
 Additionally to above, Asgardeo offers a wide range of APIs that you can use to integrate and make use of Asgardeo within your React Application. You can refer to a [detailed API documentation here](/API.md).
+
+## Sample Apps
+
+Sample React Apps offered by Asgardeo will allow you to take Asgardeo for a spin without having to setup your own application. You can see [how to setup sample apps here](/SAMPLE_APPS.md).
 
 ## Contribute
 
