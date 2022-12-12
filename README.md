@@ -26,7 +26,7 @@
 
 ## Introduction
 
-Asgardeo Auth React SDK  allows React applications to use OIDC or OAuth2 authentication with [Asgardeo](https://wso2.com/asgardeo) as the Identity Provider. The SDK supports following capabilities
+Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC](https://openid.net/specs/openid-connect-core-1_0.html) authentication with [Asgardeo](https://wso2.com/asgardeo) as the Consumer Identity and Access Management(CIAM) Provider. The SDK supports following capabilities
 -   [Authenticate users](#add-a-loginlogout-button)
 -   [Show Authenticated User's Information](#show-authenticated-users-information)
 -   [Retrieve Additional User Information](/API.md#getbasicuserinfo)
@@ -142,9 +142,9 @@ const { state, signIn, signOut } = useAuthContext();
 Few common methods that you will require when implementing authentication capabilities in your application.
 -   [`signIn`](API.md#signin) - Initiate a login request to Asgardeo, process the response to obtain authentication response.  
 -   [`signOut`](API.md#signout) - Logout the user from Asgardeo and clear any authentication data from the SDK storage.
--   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is a authenticated session for the application.
+-   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is a authenticated user session. Based on the result you can decide to change the application view/behaviour.
 -   [`getBasicUserInfo`](API.md#getbasicuserinfo) - Get authenticated user's basic information from the authencation response.
--   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded id_token obtained in the authentication response. 
+-   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded id_token obtained in the authentication response. From there you can derive more information such as additinal user-attributes.
 -   [`getIDToken`](API.md#getidtoken) - Get the id_token (JWT) obtained in the authentication response. 
 -   [`getAccessToken`](API.md#getaccesstoken) - Get the access_token obtained in the authentication response. 
 -   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the refresh_token obtained in the authentication response. 
@@ -157,7 +157,7 @@ The [`state`](API.md#state-object) object will contain attributes such as whethe
 ---
 ### Add a Login/Logout Button
 
-We can use the `signIn()` method from `useAuthContext()` to easily implement a **login button**.
+You can use the `signIn()` method from `useAuthContext()` to easily implement a **login button**.
 ```Typescript
 <button onClick={ () => signIn() }>Login</button>
 ```
