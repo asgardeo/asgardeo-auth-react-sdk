@@ -127,7 +127,7 @@ dependencies: {
 
 ---
 ### `useAuthContext()` hook
-The `useAuthContext()` hook provided by the SDK could be used to implement the necessory authentication functionalities and access the session state that contains information such as the email address of the authenticated user.
+The `useAuthContext()` hook provided by the SDK could be used to implement the necessory authentication functionalities and access the session state that contains information such as a unique identifier for the authenticated user.
 
 Import the `useAuthContext()` hook from `@asgardeo/auth-react`.
 ```Typescript
@@ -138,6 +138,22 @@ And then inside your components, you can access the context as follows
 ```Typescript
 const { state, signIn, signOut } = useAuthContext();
 ```
+
+Few common methods that you will require when implementing authentication capabilities in your application.
+-   [`signIn`](API.md#signin) - Initiate a login request to Asgardeo, process the response to obtain authentication response.  
+-   [`signOut`](API.md#signout) - Logout the user from Asgardeo and clear any authentication data from the SDK storage.
+-   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is a authenticated session for the application.
+-   [`getBasicUserInfo`](API.md#getbasicuserinfo) - Get authenticated user's basic information from the authencation response.
+-   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded id_token obtained in the authentication response. 
+-   [`getIDToken`](API.md#getidtoken) - Get the id_token (JWT) obtained in the authentication response. 
+-   [`getAccessToken`](API.md#getaccesstoken) - Get the access_token obtained in the authentication response. 
+-   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the refresh_token obtained in the authentication response. 
+-   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the Access token to the request. 
+
+The [`state`](API.md#state-object) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
+
+> <sub>Note:You can refer to the [detailed API documentation here](/API.md).</sub>
+
 ---
 ### Add a Login/Logout Button
 
