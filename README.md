@@ -145,7 +145,7 @@ Few common methods that you will require when implementing authentication capabi
 -   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is an authenticated user session. Based on the result you can decide to change the application view/behaviour.
 -   [`getBasicUserInfo`](API.md#getbasicuserinfo) - Get authenticated user's basic information from the authentication response.
 -   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded `id_token` obtained in the authentication response. From there you can derive more information such as additional user-attributes.
--   [`getIDToken`](API.md#getidtoken) - Get the id_token (JWT) obtained in the authentication response. 
+-   [`getIDToken`](API.md#getidtoken) - Get the `id_token` (JWT) obtained in the authentication response. 
 -   [`getAccessToken`](API.md#getaccesstoken) - Get the access_token obtained in the authentication response. 
 -   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the `refresh_token` obtained in the authentication response. 
 -   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the necessory Authorization headers to the request. 
