@@ -150,7 +150,7 @@ Few common methods that you will require when implementing authentication capabi
 -   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the refresh_token obtained in the authentication response. 
 -   [`getHttpClient`](API.md#gethttpclient) - Get an HttpClient instance so that the you can make RESTful calls to the backend, where the client will attach the necessory Authorization headers to the request. 
 
-The [`state`](API.md#state-object) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
+The [`state`](API.md##authstateinterface) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
 
 > <sub>Note:You can refer to the [detailed API documentation here](/API.md).</sub>
 
