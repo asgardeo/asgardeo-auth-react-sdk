@@ -95,17 +95,17 @@ Once the root component is wrapped with AuthProvider, [`useAuthContext()` hook](
 
 ### Best practices when using APIs
 
-Asgardeo Auth React SDK is built on top of Asgardeo Auth SPA SDK. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK.
+Asgardeo Auth React SDK is built on top of [Asgardeo Auth SPA SDK](https://github.com/asgardeo/asgardeo-auth-spa-sdk), a base library. Hence, almost all the usable APIs from Auth SPA SDK are re-exported from Asgardeo Auth React SDK and you don't need to import dependencies from the base libray to your application.
 
 - The only SDK that should be listed in the app dependencies is `@asgardeo/auth-react`.
-- Always try to import APIs from `@asgardeo/auth-react`.
+- Always import APIs from `@asgardeo/auth-react`.
 
 >**Warning**
 >IDE or Editor auto import may sometimes import certain APIs from `@asgardeo/auth-spa`, change them back manually.
 
-
-#### When importing a component from React SDK:
-
+<details><summary><strong>Click here for Tips:</strong> Do's When importing a component from Asgardeo React SDK</summary>
+<p>
+    
 ##### DO ✅
 ```TypeScript
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
@@ -121,6 +121,8 @@ dependencies: {
     "@asgardeo/auth-react": "1.1.18"
 }
 ```
+</p>
+</details>
 
 ---
 ### `useAuthContext()` hook
