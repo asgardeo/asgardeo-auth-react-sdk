@@ -127,7 +127,7 @@ dependencies: {
 
 ---
 ### `useAuthContext()` hook
-The `useAuthContext()` hook provided by the SDK could be used to implement the necessory authentication functionalities and access the session state that contains information such as a unique identifier for the authenticated user.
+The `useAuthContext()` hook provided by the SDK could be used to implement the necessary authentication functionalities and access the session state that contains information such as a unique identifier for the authenticated user.
 
 Import the `useAuthContext()` hook from `@asgardeo/auth-react`.
 ```Typescript
