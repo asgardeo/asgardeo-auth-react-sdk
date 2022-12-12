@@ -144,7 +144,7 @@ Few common methods that you will require when implementing authentication capabi
 -   [`signOut`](API.md#signout) - Logout the user from Asgardeo and clear any authentication data from the SDK storage.
 -   [`isAuthenticated`](API.md#isauthenticated) - Check whether there is an authenticated user session. Based on the result you can decide to change the application view/behaviour.
 -   [`getBasicUserInfo`](API.md#getbasicuserinfo) - Get authenticated user's basic information from the authencation response.
--   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded id_token obtained in the authentication response. From there you can derive more information such as additinal user-attributes.
+-   [`getDecodedIDToken`](API.md#getdecodedidtoken) - Get the decoded `id_token` obtained in the authentication response. From there you can derive more information such as additional user-attributes.
 -   [`getIDToken`](API.md#getidtoken) - Get the id_token (JWT) obtained in the authentication response. 
 -   [`getAccessToken`](API.md#getaccesstoken) - Get the access_token obtained in the authentication response. 
 -   [`refreshAccessToken`](API.md#refreshaccesstoken) - Get the refresh_token obtained in the authentication response. 
