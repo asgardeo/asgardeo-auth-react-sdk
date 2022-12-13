@@ -221,9 +221,19 @@ const App = () => {
 ```
 ---
 ## Additional APIs
-In addition to the `state` object, the `useAuthContext()` hook also returns the following methods.
+In addition to the `state` object, the `useAuthContext()` hook also returns the following methods. You can use the methods as follows.
+
+```typescript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+  const { <method_name> } = useAuthContext();
+  ...
+}
+```
 
 ### getBasicUserInfo
+This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#basicuserinfo) section.
 
 ```TypeScript
 getBasicUserInfo(): Promise<BasicUserInfo>;
@@ -232,10 +242,6 @@ getBasicUserInfo(): Promise<BasicUserInfo>;
 #### Returns
 
 A Promise that resolves with [`BasicUserInfo`](#BasicUserInfo).
-
-#### Description
-
-This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#BasicUserInfo) section.
 
 #### Example
 
@@ -250,14 +256,24 @@ getBasicUserInfo().then((response) => {
 ---
 
 ### signIn
-
+As the name implies, this method is used to sign-in users. This method can be bound to an `onClick` function as follows.
 ```typescript
-signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string, authState?: string, callback?: (response: BasicUserInfo) => void);
+<button onClick={ () => signIn() }>Login</button>
+```
+Clicking on **Login button** will take the user to Asgardeo login page. Upon successful `signIn()`, the user will be redirected to the app (based on the specified `signInRedirectURL`) and the `state.isAuthenticated` will be set to `true`.
+```typescript
+signIn(
+    config?: SignInConfig,
+    authorizationCode?: string,
+    sessionState?: string,
+    authState?: string,
+    callback?: (response: BasicUserInfo) => void
+): Promise<BasicUserInfo>;
 ```
 
 #### Arguments
 
-1. config?: [`SignInConfig`](#SignInConfig) (optional)
+1. config?: [`SignInConfig`](#signinconfig) (optional)
    An object that contains attributes that allows you to configure sign in. The `forceInit` attribute of this object, allows you to force a request to the `.well-known` endpoint even if a request has previously been sent. You can also pass key-value pairs that you want to be appended as path parameters to the authorization URL to this object. To learn more, refer to [`SignInConfig`](#SignInConfig). This object is needed only during the authorization-url-generation phase.
 
 2. authorizationCode?: `string` (optional)
@@ -268,11 +284,6 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string,
    The `signIn` method can be passed the state parameter as an argument, which will be used to obtain the token during the token-request phase of the method.
 5. callback?: (response: [`BasicUserInfo`](#BasicUserInfo)) => `void`
    A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#BasicUserInfo) as an argument.
-#### Description
-
-As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
-
-The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
 
@@ -281,23 +292,20 @@ signIn();
 ```
 ---
 ### trySignInSilently
-
-```typescript
-trySignInSilently();
-```
-
-#### Description
-
 This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
 This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
 
 This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
 
-To dispatch a token request, the [`signIn()`](#signIn) or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+To dispatch a token request, the [`signIn()`](#signin) or this `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
 
-This returns a promise that resolves with a [`BasicUserInfo`](#BasicUserInfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
+This returns a promise that resolves with a [`BasicUserInfo`](#basicuserinfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
 
 The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [`on()`](#on) section for more information.
+
+```typescript
+trySignInSilently();
+```
 
 >**Warning**
 >Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.
