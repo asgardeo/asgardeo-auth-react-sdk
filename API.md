@@ -30,6 +30,7 @@
     -   [disableHttpHandler](#disablehttphandler)
     -   [updateConfig](#updateconfig)
     -   [getHttpClient](#gethttpclient)
+-   [Storage](#storage)
 -   [Using the `form_post` response mode](#using-the-form_post-response-mode)
 -   [Models](#models)
     -   [AuthStateInterface](#authstateinterface)
@@ -41,7 +42,6 @@
     -   [Custom Grant Template Tags](#custom-grant-template-tags)
     -   [DecodedIDTokenPayload](#decodedidtokenpayload)
     -   [HttpRequestConfig](#httprequestconfig)
--   [Storage](#storage)
 -   [Develop](#develop)
     -   [Prerequisites](#prerequisites)
     -   [Installing Dependencies](#installing-dependencies)
@@ -921,6 +921,63 @@ This method returns the `HttpClientInstance`. This is the client that is used to
 const httpClient = getHttpClient();
 ```
 
+## Storage
+
+Asgardeo allows the session information including the access token to be stored in three different places, namely,
+
+1. [Session storage](#session-storage)
+2. [Web worker](#web-worker)
+3. [Local storage](#local-storage)
+
+
+The storage mechanism can be defined in the configuration provided to the `<AuthProvider />` as follows.
+
+```
+{
+   "clientID": "",
+   "baseUrl": "https://api.asgardeo.io/t/<org_name>",
+   "signInRedirectURL": "https://localhost:3000/sign-in",
+   "signOutRedirectURL": "https://localhost:3000/sign-out",
+   "scope": ["openid", "profile"],
+   "storage": "sessionStorage"
+}
+```
+
+### Session Storage
+The token is stored in the session of the browser via Javascript. The tokens can be seen when inspected via the browser console. The token stored are only available per tab. Changes made are saved and available for the current page in that tab until it is closed. Once it is closed, the stored data is deleted.
+
+#### Pros
+- Easier to use and developer friendly as the tokens can be accessed via browser storage. Therefore, the developer will have access to the methods like `getAccessToken()` and `getIDPAccessToken()` in the SDK.
+- The tokens will persist in browser refresh as the browser storage is not cleared on refreshes. This eliminates the need to get the token from Asgardeo on every reload.
+- The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
+
+#### Cons
+- The **drawback** on this approach is that the tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com). Below are some resources to guide you on how to implement a CSP in your application.
+    - link 1
+
+### Web Worker
+Web Workers are a simple means for web content to run scripts in background threads. The worker thread can perform tasks without interfering with the user interface. Once created, a worker can send messages to the JavaScript code that created it by posting messages to an event handler specified by that code (and vice versa).
+
+#### Pros
+- Out of the above three methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and the data cannot be stolen through XSS attacks. 
+
+#### Cons
+- Since the token is inside the web worker, it cannot be accessed from outside by the developer. Therefore, if they need to send an HTTP request with the token, it needs to be done within the web worker. This means that the APIs such as `getAccessToken()` and `getIDPAccessToken()` **do not work** with the web worker approach.
+- If a request is made to Asgardeo (with the token), it needs to be done via the web worker, using it's own HTTP client using the [`httpRequest`](#httprequest) method. But if you do not require the token (when talking to their own APIs), you can use any HTTP client.
+- Since the tokens are stored in the browser memory, when a page reloads happens the token gets lost as the browser resets the memory. Therefore, the token does not persist on page refreshes and browser tabs.
+
+### Local Storage
+The token is stored in the local storage of the browser via Javascript. The tokens can be seen when inspected via the browser console.  The difference between local and session storage is that the local storage does not expire and needs to be explicitly deleted which is an elevated security risk.
+#### Pros
+- Easier to use and developer friendly as the tokens can be accessed via browser storage. Therefore, the developer will have access to the methods like `getAccessToken()` and `getIDPAccessToken()` in the SDK.
+- The tokens will persist in browser refresh as the browser storage is not cleared on refreshes. This eliminates the need to get the token from Asgardeo on every reload.
+- The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
+
+#### Cons
+- The tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com). Below are some resources to guide you on how to implement a CSP in your application.
+    - link 1
+
+- Needs to be explicitly deleted from the browser. Does not lose on browser tab closing.
 ## Using the `form_post` response mode
 
 When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
@@ -1049,20 +1106,6 @@ This extends the `AxiosRequestConfig` by providing an additional attribute that 
 |--|--|--|
 |attachToken| `boolean`| Specifies if the access token should be attached to the header of the request.|
 
-## Storage
-
-Asgardeo allows the session information including the access token to be stored in three different places, namely,
-
-1. Session storage
-2. Local storage
-3. Web worker
-4. Browser memory
-
-Of the four methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and data there cannot be stolen through XSS attacks. However, when using a web worker to store the session information, the [`httpRequest`](#httprequest) method has to be used to send http requests. This method will route the request through the web worker and the web worker will attach the access token to the request before sending it to the server.
-
-```TypeScript
-initialize(config);
-```
 ## Develop
 
 ### Prerequisites
