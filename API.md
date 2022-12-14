@@ -333,9 +333,7 @@ Silent sign-in can be performed in **two ways**.
 1. You can enable silent sign-in as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
     ```json
     {
-        .
-        .
-        .
+        ...
         disableTrySignInSilently: false
     }
     ```
@@ -353,6 +351,7 @@ Silent sign-in can be performed in **two ways**.
                     // handle basic user info
                 }
 
+                // If response is false,
                 // The user is not signed in.
             });
         }, []);
