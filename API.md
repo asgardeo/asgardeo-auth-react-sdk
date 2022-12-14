@@ -362,6 +362,41 @@ Silent sign-in can be performed in **two ways**.
     ```
 ---
 
+### isAuthenticated
+This method returns a promise that resolves with the boolean value of `true` or `false` indicating if the user is authenticated or not. The result returned will be similar to `state.isAuthenticated` value.
+
+```TypeScript
+isAuthenticated(): <promise>boolean
+```
+
+#### Returns
+A promise that resolves with a boolean value.
+
+#### Example
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { isAuthenticated } = useAuthContext();
+    
+    useEffect(() => {
+        isAuthenticated().then((response) => {
+            if (response === true) {
+                // User is authenticated
+            } else {
+                // User is not authenticated
+            }
+        }).catch((error) => {
+            // console.log(error)
+        });
+    }, [])
+    .
+    .
+    .
+}
+```
+---
+
 ### signOut
 As the name implies, this method is used to sign out users. This method ends the user session in the Asgardeo and logs the user out. It method can be bound to an `onClick` function as follows.
 ```Typescript
@@ -377,19 +412,118 @@ The `sign-out` hook is used to fire a callback function after signing out is suc
 import { useAuthContext } from "@asgardeo/auth-react";
 
 const App = () => {
-  const { signOut } = useAuthContext();
-  .
-  .
-  .
-  return (
-        .
-        .
-        .
-        <button onClick={ () => signOut() }>Login</button>
-  )
+    const { signOut } = useAuthContext();
+    .
+    .
+    .
+    return (
+            .
+            .
+            .
+            <button onClick={ () => signOut() }>Login</button>
+    )
 }
 ```
+---
+### getIDToken
+An ID token contains information about what happened when a user authenticated, and is intended to be read by the OAuth client. The ID token may also contain information about the user such as their name or email address.
 
+This method returns the `ID token` in a form of a string. To get the decoded ID token, you can use [`getDecodedIDToken()`](#getdecodedidtoken).
+```TypeScript
+getIDToken(): Promise<string>
+```
+>**Warning**
+>The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
+
+#### Returns
+A promise that resolves with the ID token as a string.
+
+#### Example
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { getDecodedIDToken } = useAuthContext();
+    
+    useEffect(() => {
+        getIDToken().then((idToken) => {
+            //console.log(idToken)
+        }).catch((error) => {
+            //console.log(error)
+        })
+    }, []);
+    .
+    .
+    .
+}
+```
+---
+
+### getAccessToken
+An Access Token is a string that the OAuth client uses to make requests to the resource server (Asgardeo). The application receives an access token from the SDK after a user is successfully authenticated. The [token storage mechanism](#storage) can be configured according to your preference.
+
+The access token will be used as a credential when it calls the Asgardeo APIs.
+
+This methods returns a promise that resolves with the access token as a string.
+```typescript
+getAccessToken(): Promise<string>;
+```
+>**Warning**
+>The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
+
+#### Returns
+A Promise that resolves with the access token.
+
+#### Example
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { getAccessToken } = useAuthContext();
+    
+    useEffect(() => {
+        getAccessToken().then((accessToken) => {
+            //console.log(accessToken);
+        }).catch((error) => {
+            //console.log(error);
+        });
+    }, []);
+    .
+    .
+    .
+}
+```
+---
+### refreshAccessToken
+This refreshes the access token and stores the refreshed session information in either the session storage or local storage as per your configuration.
+```typescript
+refreshAccessToken(): Promise<BasicUserInfo>;
+```
+>**Warning**
+>Note that this method is not required to be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
+
+#### Returns
+A Promise that resolves with the [`BasicUserInfo`](#basicuserinfo) object.
+
+#### Example
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { refreshAccessToken } = useAuthContext();
+    
+    useEffect(() => {
+        refreshAccessToken().then((basicUserInfo) => {
+            //console.log(basicUserInfo);
+        }).catch((error) => {
+            //console.log(error);
+        });
+    }, []);
+    .
+    .
+    .
+}
+```
 ---
 
 ### httpRequest
@@ -572,120 +706,157 @@ There are two approaches when sending HTTP requests.
 ---
 
 ### requestCustomGrant
+This method allows developers to use custom grants provided by their Identity Providers. This method accepts an object that has the following attributes as the argument.
+```TypeScript
+const config = {
+    attachToken: false,
+    data: {
+        client_id: "{{clientID}}",
+        grant_type: "account_switch",
+        scope: "{{scope}}",
+        token: "{{token}}",
+    },
+    id: "account-switch",
+    returnResponse: true,
+    returnsSession: true,
+    signInRequired: true
+}
+
+requestCustomGrant(config).then((response)=>{
+    console.log(response);
+}).catch((error)=>{
+    console.error(error);
+});
+```
+The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [`on()`](#on) section for more information.
 
 ```typescript
-requestCustomGrant(config: CustomGranConfig, callback?: (response: BasicUserInfo | HttpResponse<any>) => void): Promise<HttpResponse | BasicUserInfo>;
+requestCustomGrant(
+    config: CustomGranConfig,
+    callback?: (response: BasicUserInfo | HttpResponse<any>) => void
+): Promise<HttpResponse | BasicUserInfo>;
 ```
 
 #### Arguments
-
-1. config: [`CustomGrantConfig`](#CustomGrantConfig)
-   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#CustomGrantConfig) section.
-2. callback?: (response: [`BasicUserInfo`](#BasicUserInfo) | `HttpResponse`<any>) => void
-   A callback function that takes an object of type [`BasicUserInfo`](#BasicUserInfo) or `HttpResponse` (depending on the `config`) as an argument and is fired when the request is successful.
+1. config: [`CustomGrantConfig`](#customgrantconfig)
+   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#customgrantconfig) section.
+2. callback?: (response: [`BasicUserInfo`](#basicuserinfo) | `HttpResponse`<any>) => void
+   A callback function that takes an object of type [`BasicUserInfo`](#basicuserinfo) or `HttpResponse` (depending on the `config`) as an argument and is fired when the request is successful.
 
 #### Returns
+A Promise that resolves either with the response or the [`BasicUserInfo`](#basicuserinfo).
 
-A Promise that resolves either with the response or the [`BasicUserInfo`](#BasicUserInfo).
+#### Example
+```typescript
+import { useAuthContext } from "@asgardeo/auth-react";
 
-#### Description
+const App = () => {
+    const { requestCustomGrant } = useAuthContext();
 
-This method allows developers to use custom grants provided by their Identity Providers. This method accepts an object that has the following attributes as the argument.
-
-The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [`on()`](#on) section for more information.
-
-```TypeScript
     const config = {
-      attachToken: false,
-      data: {
-          client_id: "{{clientID}}",
-          grant_type: "account_switch",
-          scope: "{{scope}}",
-          token: "{{token}}",
-      },
-      id: "account-switch",
-      returnResponse: true,
-      returnsSession: true,
-      signInRequired: true
+        attachToken: false,
+        data: {
+            client_id: "{{clientID}}",
+            grant_type: "account_switch",
+            scope: "{{scope}}",
+            token: "{{token}}",
+        },
+        id: "account-switch",
+        returnResponse: true,
+        returnsSession: true,
+        signInRequired: true
     }
 
-    requestCustomGrant(config).then((response)=>{
-        console.log(response);
-    }).catch((error)=>{
-        console.error(error);
-    });
-```
+    useEffect(() => {
+        requestCustomGrant(config).then((response)=>{
+            //console.log(response);
+        }).catch((error)=>{
+            ///console.error(error);
+        });
+    }, []);
+    .
+    .
+    .
+}
 
+```
 ---
 
 ### revokeAccessToken
-
+This method revokes the access token and clears the session information from the storage.
 ```typescript
 revokeAccessToken();
 ```
-
-#### Description
-
-This method revokes the access token and clears the session information from the storage.
-
 The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
+```typeScript
+import { useAuthContext } from "@asgardeo/auth-react";
 
-```TypeScript
-revokeAccessToken();
+const App = () => {
+    const { revokeAccessToken } = useAuthContext();
+
+    return (
+        .
+        .
+        .
+        <button onClick={() => revokeAccessToken()}>Revoke Access</button>
+    )
+}
 ```
 
 ---
 
 ### getOIDCServiceEndpoints
-
+This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. 
 ```TypeScript
 getOIDCServiceEndpoints(): Promise<OIDCEndpoints>
 ```
 
-#### Returns
-
-A Promise that resolves with an object containing the endpoints. To learn more about what endpoints are returned, refer to the [`OIDCEndpoints`](#OIDCEndpoints) section.
-
-#### Description
-
-This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
-
+The object contains the following attributes.
 | Attribute             | Description                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------- |
-| `"authorize"`         | The endpoint to which the authorization request should be sent.                    |
-| `"jwks"`              | The endpoint from which JSON Web Key Set can be obtained.                          |
-| `"oidcSessionIFrame"` | The URL of the page that should be loaded in an IFrame to get session information. |
-| `"revoke"`            | The endpoint to which the revoke-token request should be sent.                     |
-| `"token"`             | The endpoint to which the token request should be sent.                            |
-| `"wellKnown"`         | The well-known endpoint from which OpenID endpoints of the server can be obtained. |
+| `"authorizationEndpoint"`| The endpoint to which the authorization request should be sent.                    |
+| `"checkSessionIframe"` | The URL of the page that should be loaded in an IFrame to get session information. |
+| `"endSessionEndpoint"` | The endpoint which should be called to end the session. |
+| `"introspectionEndpoint"` | The endpoint which should be called to validate an access token and retrieve its underlying authorization. |
+| `"issuer"` | The endpoint which should be called to end the session. |
+| `"jwksUri"` | The endpoint from which JSON Web Key Set can be obtained.                          |
+| `"registrationEndpoint"` | The endpoint from which a Client can be registered at the Authorization Server.                          |
+| `"revocationEndpoint"`| The endpoint to which the revoke-token request should be sent.                     |
+| `"tokenEndpoint"` | The endpoint to which the token request should be sent.                            |
+| `"userinfoEndpoint"` | The endpoint to retrieve profile information and other attributes for a logged-in end-user. |
+#### Returns
+A Promise that resolves with an object containing the endpoints. To learn more about what endpoints are returned, refer to the [`OIDCEndpoints`](#oidcendpoints) section.
 
 #### Example
+```typeScript
+import { useAuthContext } from "@asgardeo/auth-react";
 
-```TypeScript
-getOIDCServiceEndpoints().then((endpoints) => {
-    // console.log(endpoints);
-}).error((error) => {
-    // console.error(error);
-});
+const App = () => {
+    const { getOIDCServiceEndpoints } = useAuthContext();
+
+    useEffect(() => {
+        getOIDCServiceEndpoints().then((endpoints) => {
+            //console.log(endpoints);
+        }).catch((error) => {
+            //console.log(error)
+        });
+    }, []);
+}
 ```
 
 ---
 
 ### getDecodedIDToken
-
+This method returns a promise that resolves with the decoded payload of the JWT ID token. Use this method if you want to get the **decoded value** of the object returned from [`getIdToken()`](#getidtoken)
 ```typescript
 getDecodedIDToken(): Promise<DecodedIDTokenPayload>
 ```
 
 #### Returns
 
-A promise that returns with the [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
-
-#### Description
-
-This method returns a promise that resolves with the decoded payload of the JWT ID token.
+A promise that returns with the [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
 
 #### Example
 
@@ -723,76 +894,7 @@ getDecodedIDPIDToken().then((idToken) => {
 ```
 ---
 
-### getIDToken
 
-```TypeScript
-getIDToken(): Promise<string>
-```
-
-#### Returns
-
-idToken: `Promise<string>`
-The id token.
-
-#### Description
-
-This method returns the id token.
-
-#### Example
-
-```TypeScript
-const idToken = await getIDToken();
-```
----
-
-### getAccessToken
-
-```typescript
-getAccessToken(): Promise<string>;
-```
-
-#### Returns
-
-A Promise that resolves with the access token.
-
-#### Description
-
-This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise, an error is thrown.
-
-#### Example
-
-```TypeScript
-getAccessToken().then((token) => {
-    // console.log(token);
-}).error((error) => {
-    // console.error(error);
-});
-```
-
-### refreshAccessToken
-
-```typescript
-refreshAccessToken(): Promise<BasicUserInfo>;
-```
-
-#### Returns
-
-A Promise that resolves with the [`BasicUserInfo`](#BasicUserInfo) object.
-
-#### Description
-
-This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method is not required to be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
-
-
-#### Example
-
-```TypeScript
-refreshAccessToken().then((response)=>{
-      // console.log(response);
- }).catch((error)=>{
-      // console.error(error);
-});
-```
 
 ### on
 
@@ -835,29 +937,6 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 on("sign-in", () => {
     //called after signing in.
 });
-```
-
----
-
-### isAuthenticated
-
-```TypeScript
-isAuthenticated(): boolean
-```
-
-#### Returns
-
-isAuth: `boolean`
-A boolean value that indicates of the user is authenticated or not.
-
-#### Description
-
-This method returns a boolean value indicating if the user is authenticated or not.
-
-#### Example
-
-```TypeScript
-const isAuth = isAuthenticated();
 ```
 
 ---
