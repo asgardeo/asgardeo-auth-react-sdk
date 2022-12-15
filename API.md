@@ -11,26 +11,30 @@
 -   [`state` Object](#state-object)
 -   [Consuming the `isLoading` State of the Auth Flow](#consuming-the-isloading-state-of-the-auth-flow)
 -   [Additional APIs](#additional-apis)
-    -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signIn](#signin)
     -   [trySignInSilently](#trysigninsilently)
+    -   [isAuthenticated](#isauthenticated)
+    -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signOut](#signout)
+    -   [getIDToken](#getidtoken)
+    -   [getDecodedIDToken](#getdecodedidtoken)
+    -   [getDecodedIDPIDToken](#getdecodedidpidtoken)
+    -   [getAccessToken](#getaccesstoken)
+    -   [refreshAccessToken](#refreshaccesstoken)
+    -   [revokeAccessToken](#revokeaccesstoken)
     -   [httpRequest](#httprequest)
     -   [httpRequestAll](#httprequestall)
     -   [requestCustomGrant](#requestcustomgrant)
-    -   [revokeAccessToken](#revokeaccesstoken)
     -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
-    -   [getDecodedIDToken](#getdecodedidtoken)
-    -   [getIDToken](#getidtoken)
-    -   [getAccessToken](#getaccesstoken)
-    -   [refreshAccessToken](#refreshaccesstoken)
     -   [on](#on)
-    -   [isAuthenticated](#isauthenticated)
     -   [enableHttpHandler](#enablehttphandler)
     -   [disableHttpHandler](#disablehttphandler)
     -   [updateConfig](#updateconfig)
     -   [getHttpClient](#gethttpclient)
 -   [Storage](#storage)
+    -  [Session Storage](#session-storage)
+    -  [Web Worker](#web-worker)
+    -  [Local Storage](#local-storage)
 -   [Using the `form_post` response mode](#using-the-form_post-response-mode)
 -   [Models](#models)
     -   [AuthStateInterface](#authstateinterface)
@@ -63,7 +67,6 @@ The `AuthProvider` also automatically requests for the access token should the U
 If the response mode is set to `form_post`, then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
 
 #### Example
-
 ```TypeScript
 export const MyApp = (): ReactElement => {
     return (
@@ -75,7 +78,6 @@ export const MyApp = (): ReactElement => {
 ```
 
 #### Example with an external Auth SPA plugin
-
 ```TypeScript
 import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 
@@ -88,6 +90,7 @@ export const MyApp = (): ReactElement => {
 }
 ```
 ---
+---
 ## Securing routes with Asgardeo
 
 There are 3 approaches you can use to secure routes in your React application with Asgardeo.
@@ -99,7 +102,7 @@ This component takes three props. The `path` and `component` props just relay th
 
 Use this if you want a route to be an authenticated route. So, this route will be rendered only if a user is authenticated. Otherwise, the callback function will be fired.
 
->**Warning:**
+>**Warning**
 >This will only support `react-router` v4**
 
 #### Example
@@ -136,6 +139,7 @@ This component is used to wrap the components that need authentication. If the u
 </AuthenticatedComponent>
 ```
 ---
+---
 ## useAuthContext React Hook
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
@@ -148,6 +152,7 @@ const { signIn } = useAuthContext();
 
 The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#authstateinterface). You can refer the topic below to know more about what data is contained by the `state` object.
 
+---
 ---
 ## `state` Object
 
@@ -172,7 +177,7 @@ Based on the loading state of the authentication flow, you may want to take some
 
 Always use the `isLoading` flag from the `state` object rather than maintaining your own React state.
 
-#### DO ✅
+#### Example
 ```TypeScript
 import { useAuthContext } from "@asgardeo/auth-react";
 
@@ -191,34 +196,10 @@ const App = () => {
   );
 }
 ```
+>**Hint**
+>Similar to `isLoading` state, other properties of the [state object](#state-object) also can be consumed.
 
-#### DON’T ❌
-```TypeScript
-import { useAuthContext } from "@asgardeo/auth-react";
-
-const App = () => {
-  const { signIn } = useAuthContext();
-  const [ isLoading, setIsLoading ] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    signIn()
-      .finally(() => setIsLoading(false));
-  });
-
-
-  if (isLoading) {
-    return <Spinner />
-  }
-
-  return (
-    <main>
-     …
-    </main>
-  );
-}
-```
+---
 ---
 ## Additional APIs
 In addition to the `state` object, the `useAuthContext()` hook also returns the following methods. You can use the methods as follows.
@@ -253,9 +234,9 @@ const App = () => {
 
     useEffect(() => {
         getBasicUserInfo().then((response) => {
-            // console.log(response);
+            //console.log(response);
         }).catch((error) => {
-            // console.error(error);
+            //console.error(error);
         });
     }, []);
     .
@@ -387,7 +368,7 @@ const App = () => {
                 // User is not authenticated
             }
         }).catch((error) => {
-            // console.log(error)
+            //console.log(error);
         });
     }, [])
     .
@@ -447,9 +428,9 @@ const App = () => {
     
     useEffect(() => {
         getIDToken().then((idToken) => {
-            //console.log(idToken)
+            //console.log(idToken);
         }).catch((error) => {
-            //console.log(error)
+            //console.log(error);
         })
     }, []);
     .
@@ -780,31 +761,6 @@ const App = () => {
 }
 
 ```
----
-
-### revokeAccessToken
-This method revokes the access token and clears the session information from the storage.
-```typescript
-revokeAccessToken();
-```
-The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [`on()`](#on) section for more information.
-
-#### Example
-```typeScript
-import { useAuthContext } from "@asgardeo/auth-react";
-
-const App = () => {
-    const { revokeAccessToken } = useAuthContext();
-
-    return (
-        .
-        .
-        .
-        <button onClick={() => revokeAccessToken()}>Revoke Access</button>
-    )
-}
-```
-
 ---
 
 ### getOIDCServiceEndpoints
