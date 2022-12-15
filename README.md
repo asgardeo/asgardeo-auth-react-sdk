@@ -21,6 +21,7 @@
     - [Show Authenticated User's Information](#show-authenticated-users-information)
     - [Add Routing](#add-routing)
     - [API Documentation](#api-documentation)
+-   [Develop](#develop)
 -   [Contribute](#contribute)
 -   [License](#license)
 
@@ -193,6 +194,21 @@ If your application needs routing, the SDK provides a multiple approaches to sec
 ### API Documentation
 
 Additionally to above, Asgardeo offers a wide range of APIs that you can use to integrate and make use of Asgardeo within your React Application. You can refer to a [detailed API documentation here](/API.md).
+
+## Develop
+
+### Prerequisites
+
+-   `Node.js` (version 10 or above).
+-   `yarn` package manager.
+
+### Installing Dependencies
+
+The repository is a mono repository. The SDK repository is found in the [lib](/lib/) directory. You can install the dependencies by running the following command at the root.
+
+```bash
+yarn build
+```
 
 ## Contribute
 

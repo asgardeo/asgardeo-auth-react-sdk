@@ -18,7 +18,7 @@
     -   [signOut](#signout)
     -   [getIDToken](#getidtoken)
     -   [getDecodedIDToken](#getdecodedidtoken)
-    -   [getDecodedIDPIDToken](#getdecodedidpidtoken)
+    -   [getDecodedIPDIDToken](#getdecodedidpidtoken)
     -   [getAccessToken](#getaccesstoken)
     -   [refreshAccessToken](#refreshaccesstoken)
     -   [revokeAccessToken](#revokeaccesstoken)
@@ -32,9 +32,9 @@
     -   [updateConfig](#updateconfig)
     -   [getHttpClient](#gethttpclient)
 -   [Storage](#storage)
-    -  [Session Storage](#session-storage)
-    -  [Web Worker](#web-worker)
-    -  [Local Storage](#local-storage)
+    -   [Session Storage](#session-storage)
+    -   [Web Worker](#web-worker)
+    -   [Local Storage](#local-storage)
 -   [Using the `form_post` response mode](#using-the-form_post-response-mode)
 -   [Models](#models)
     -   [AuthStateInterface](#authstateinterface)
@@ -46,25 +46,30 @@
     -   [Custom Grant Template Tags](#custom-grant-template-tags)
     -   [DecodedIDTokenPayload](#decodedidtokenpayload)
     -   [HttpRequestConfig](#httprequestconfig)
--   [Develop](#develop)
-    -   [Prerequisites](#prerequisites)
-    -   [Installing Dependencies](#installing-dependencies)
 - [Other Links](#other-links)
 
 ## AuthProvider
 
-This is a React Context Provider that provides the session state that contains information such as the authenticated user's display name, email address, etc., and the methods that are required to implement authentication in the React app.
+This is a [React Context](https://reactjs.org/docs/context.html) Provider that provides the session state which contains information such as the authenticated user's display name, email address, etc., and the methods that are required to implement authentication in the React app.
 Like every other provider, the `AuthProvider` also encapsulates the components that would need the data provided by the provider.
+`AuthProvider` takes following properties.
+| Property         | Type      | Required/Optional                                                               |
+| :---------------- | :-------- | :------------------------------------------------------------------------ |
+| `config`   | `AuthReactConfig`  | Required
+| `fallback` | `ReactNode` | Optional
+| `plugin` | `AsgardeoSPAClient` | Optional
+| `getAuthParams` | `() => Promise<AuthParams>` | Optional
+| `onSignOut` | `() => void` | Optional
 
-The provider takes a prop called `config` that accepts a config object of type [`AuthClientConfig<Config>`](#authreactconfig). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthClientConfig<Config>`](#authreactconfig) section.
-
-In addition, the `fallback` prop is used to specify a fallback component that will be rendered when the user is not authenticated.
-
-As an optional parameter, `plugin` parameter can be used to pass an external plugin.
+1. **config** - Accepts a config object of type [`AuthClientConfig<AuthReactConfig>`](#authreactconfig). This config object contains attributes that provide the configurations necessary for authentication. To learn more about what attributes the object takes, refer to the [`AuthReactConfig`](#authreactconfig) section.
+2. **fallback?** - Used to specify a fallback component that will be rendered when the user is not authenticated. This accepts any React element.
+3. **plugin?** - A parameter that can be used to pass an external plugin. (Ex: `TokenExchangePlugin`)
+4. **getAuthParams?** - Pass an async callback function that would return the `authorizationCode`, `sessionState` and `state` in a Promise
+5. **onSignOut?** - A function can be passed which gets called upon sign out.
 
 The `AuthProvider` also automatically requests for the access token should the URL contain the `code` query parameter.
 
-If the response mode is set to `form_post`, then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
+If the response mode is set to [`form_post`](#using-the-form_post-response-mode), then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
 
 #### Example
 ```TypeScript
@@ -90,10 +95,9 @@ export const MyApp = (): ReactElement => {
 }
 ```
 ---
----
 ## Securing routes with Asgardeo
 
-There are 3 approaches you can use to secure routes in your React application with Asgardeo.
+There are 3 approaches you can use to secure routes in your React application with Asgardeo. To learn more about the implementation, you can refer to [this article.](https://stackoverflow.com/collectives/wso2/articles/74041550/authenticate-react-applications-with-asgardeo-part-2-securing-routes)
 
 ### 1. SecureRoute
 The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
@@ -139,7 +143,6 @@ This component is used to wrap the components that need authentication. If the u
 </AuthenticatedComponent>
 ```
 ---
----
 ## useAuthContext React Hook
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
@@ -152,7 +155,6 @@ const { signIn } = useAuthContext();
 
 The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#authstateinterface). You can refer the topic below to know more about what data is contained by the `state` object.
 
----
 ---
 ## `state` Object
 
@@ -196,10 +198,6 @@ const App = () => {
   );
 }
 ```
->**Hint**
->Similar to `isLoading` state, other properties of the [state object](#state-object) also can be consumed.
-
----
 ---
 ## Additional APIs
 In addition to the `state` object, the `useAuthContext()` hook also returns the following methods. You can use the methods as follows.
@@ -212,40 +210,6 @@ const App = () => {
   ...
 }
 ```
-
-### getBasicUserInfo
-This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#basicuserinfo) section.
-
-```TypeScript
-getBasicUserInfo(): Promise<BasicUserInfo>;
-```
-
-#### Returns
-
-A Promise that resolves with [`BasicUserInfo`](#BasicUserInfo).
-
-#### Example
-
-```TypeScript
-import { useAuthContext } from "@asgardeo/auth-react";
-
-const App = () => {
-    const { getBasicUserInfo } = useAuthContext();
-
-    useEffect(() => {
-        getBasicUserInfo().then((response) => {
-            //console.log(response);
-        }).catch((error) => {
-            //console.error(error);
-        });
-    }, []);
-    .
-    .
-    .
-}
-```
-
----
 
 ### signIn
 As the name implies, this method is used to sign-in users. This method can be bound to an `onClick` function as follows.
@@ -377,6 +341,38 @@ const App = () => {
 }
 ```
 ---
+### getBasicUserInfo
+This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#basicuserinfo) section.
+
+```TypeScript
+getBasicUserInfo(): Promise<BasicUserInfo>;
+```
+
+#### Returns
+
+A Promise that resolves with [`BasicUserInfo`](#BasicUserInfo).
+
+#### Example
+
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { getBasicUserInfo } = useAuthContext();
+
+    useEffect(() => {
+        getBasicUserInfo().then((response) => {
+            //console.log(response);
+        }).catch((error) => {
+            //console.error(error);
+        });
+    }, []);
+    .
+    .
+    .
+}
+```
+---
 
 ### signOut
 As the name implies, this method is used to sign out users. This method ends the user session in the Asgardeo and logs the user out. It method can be bound to an `onClick` function as follows.
@@ -424,7 +420,7 @@ A promise that resolves with the ID token as a string.
 import { useAuthContext } from "@asgardeo/auth-react";
 
 const App = () => {
-    const { getDecodedIDToken } = useAuthContext();
+    const { getIDToken } = useAuthContext();
     
     useEffect(() => {
         getIDToken().then((idToken) => {
@@ -439,7 +435,54 @@ const App = () => {
 }
 ```
 ---
+### getDecodedIDToken
+This method returns a promise that resolves with the decoded payload of the JWT ID token. Use this method if you want to get the **decoded value** of the object returned from [`getIdToken()`](#getidtoken)
+```typescript
+getDecodedIDToken(): Promise<DecodedIDTokenPayload>
+```
 
+#### Returns
+A promise that returns with the [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
+
+#### Example
+```TypeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { getDecodedIDToken } = useAuthContext();
+    
+    useEffect(() => {
+        getIDToken().then((decodedIdToken) => {
+            //console.log(decodedIdToken);
+        }).catch((error) => {
+            //console.log(error);
+        })
+    }, []);
+    .
+    .
+    .
+}
+```
+---
+### getDecodedIDPIDToken
+This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
+```typescript
+getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
+```
+
+#### Returns
+A promise that returns with the IDP [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
+
+#### Example
+
+```TypeScript
+getDecodedIDPIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+---
 ### getAccessToken
 An Access Token is a string that the OAuth client uses to make requests to the resource server (Asgardeo). The application receives an access token from the SDK after a user is successfully authenticated. The [token storage mechanism](#storage) can be configured according to your preference.
 
@@ -506,7 +549,29 @@ const App = () => {
 }
 ```
 ---
+### revokeAccessToken
+This method revokes the access token and clears the session information from the storage.
+```typescript
+revokeAccessToken();
+```
+The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [`on()`](#on) section for more information.
 
+#### Example
+```typeScript
+import { useAuthContext } from "@asgardeo/auth-react";
+
+const App = () => {
+    const { revokeAccessToken } = useAuthContext();
+
+    return (
+        .
+        .
+        .
+        <button onClick={() => revokeAccessToken()}>Revoke Access</button>
+    )
+}
+```
+---
 ### httpRequest
 This method is used to send http requests to Asgardeo. The developer doesn't need to manually attach the access token since this method does it automatically.
 
@@ -607,7 +672,7 @@ httpRequestAll(config[]: ): Promise<[]>;
 
 #### Arguments
 
-1. config[]: `HttpRequestConfig[]`
+1. **config[]**: `HttpRequestConfig[]`
    An array config objects with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig`.
 
 #### Returns
@@ -719,9 +784,9 @@ requestCustomGrant(
 ```
 
 #### Arguments
-1. config: [`CustomGrantConfig`](#customgrantconfig)
+1. **config**: [`CustomGrantConfig`](#customgrantconfig)
    A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#customgrantconfig) section.
-2. callback?: (response: [`BasicUserInfo`](#basicuserinfo) | `HttpResponse`<any>) => void
+2. **callback?**: (response: [`BasicUserInfo`](#basicuserinfo) | `HttpResponse`<any>) => void
    A callback function that takes an object of type [`BasicUserInfo`](#basicuserinfo) or `HttpResponse` (depending on the `config`) as an argument and is fired when the request is successful.
 
 #### Returns
@@ -801,75 +866,25 @@ const App = () => {
     }, []);
 }
 ```
-
 ---
-
-### getDecodedIDToken
-This method returns a promise that resolves with the decoded payload of the JWT ID token. Use this method if you want to get the **decoded value** of the object returned from [`getIdToken()`](#getidtoken)
-```typescript
-getDecodedIDToken(): Promise<DecodedIDTokenPayload>
-```
-
-#### Returns
-
-A promise that returns with the [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
-
-#### Example
-
-```TypeScript
-getDecodedIDToken().then((idToken) => {
-    // console.log(idToken);
-}).error((error) => {
-    // console.error(error);
-});
-```
----
-
-### getDecodedIDPIDToken
-
-```typescript
-getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
-```
-
-#### Returns
-
-A promise that returns with the IDP [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
-
-#### Description
-
-This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
-
-#### Example
-
-```TypeScript
-getDecodedIDPIDToken().then((idToken) => {
-    // console.log(idToken);
-}).error((error) => {
-    // console.error(error);
-});
-```
----
-
-
-
 ### on
-
+The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
 ```typescript
 on(hook: string, callback: () => void, id?: string): void
 ```
 
 #### Arguments
 
-1. hook: `string`
+1. **hook**: `string`
    The name of the hook.
-2. callback: `() => void`
+2. **callback**: `() => void`
    The callback function that should be fired.
-3. id?: `string`
+3. **id?**: `string`
    An id for the method. This is required only when the hook type is `custom-grant`.
 
 #### Description
 
-The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
+
 
 If you are using TypeScript, you may want to use the `Hooks` enum that consists of the following string literals instead of directly inputting the string value.
 
@@ -890,26 +905,41 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 #### Example
 
 ```TypeScript
-on("sign-in", () => {
-    //called after signing in.
-});
+import { useAuthContext } from "@asgardeo/auth-react";
+
+enum Hooks {
+    SignIn = "sign-in",
+    SignOut = "sign-out"
+}
+
+const App = () => {
+    const { on } = useAuthContext();
+
+    useEffect(() => {
+        on(Hooks.SignIn, () => {
+            //called after signing in.
+        });
+        
+        on(Hooks.SignOut, () => {
+            //called after signing out.
+        });
+        .
+        .
+        .
+    }, [on]);
+}
 ```
 
 ---
 
 ### enableHttpHandler
-
+This enables the callback functions attached to the HTTP client. The callback functions are enabled by default. This needs to be called **only** if the [disableHttpHandler](#disablehttphandler) method was called previously.
 ```typescript
 enableHttpHandler(): Promise<Boolean>
 ```
 
 #### Returns
-
 A Promise that resolves with a `boolean` value indicating if the call was successful.
-
-#### Description
-
-This enables the callback functions attached to the http client. The callback functions are enabled by default. This needs to be called only if the [disableHttpHandler](#disableHttpHandler) method was called previously.
 
 #### Example
 
@@ -920,43 +950,32 @@ enableHttpHandler();
 ---
 
 ### disableHttpHandler
+This disables the callback functions attached to the HTTP client.
 
 ```typescript
 disableHttpHandler(): Promise<boolean>
 ```
 
 #### Returns
-
 A Promise that resolves with a `boolean` value indicating if the call was successful.
 
-#### Description
-
-This disables the callback functions attached to the http client.
-
 #### Example
-
 ```TypeScript
 disableHttpHandler();
 ```
-
+---
 ### updateConfig
-
+This method can be used to update the configurations passed into the constructor of the `AsgardeoAuthClient`. Please note that every attribute in the config object passed as the argument here is optional. Use this method if you want to update certain attributes after instantiating the class.
 ```TypeScript
-updateConfig(config: Partial<AuthClientConfig<T>>): void
+updateConfig(config: Partial<AuthClientConfig<AuthReactConfig>>): void
 ```
 
 #### Arguments
+1. **config**: [`AuthClientConfig<AuthReactConfig>`](#authreactconfig)
 
-1. config: [`AuthClientConfig<T>`](#AuthClientConfig<T>)
-
-The config object containing the attributes that can be used to configure the SDK. To learn more about the available attributes, refer to the [`AuthClientConfig>T>`](#AuthClientConfig<T>) model.
-
-#### Description
-
-This method can be used to update the configurations passed into the constructor of the `AsgardeoAuthClient`. Please note that every attribute in the config object passed as the argument here is optional. Use this method if you want to update certain attributes after instantiating the class.
+The config object containing the attributes that can be used to configure the SDK. To learn more about the available attributes, refer to the [`AuthClientConfig<AuthReactConfig>`](#authreactconfig) model.
 
 #### Example
-
 ```TypeScript
 updateConfig({
     signOutRedirectURL: "https://localhost:3000/sign-out"
@@ -966,27 +985,21 @@ updateConfig({
 ---
 
 ### getHttpClient
-
+This method returns the `HttpClientInstance`. This is the client that is used to send http requests internally.
 ```TypeScript
 getHttpClient(): `HttpClientInstance`
 ```
 
 #### Returns
-
 An `HttpClientInstance`
 
-#### Description
-
-This method returns the `HttpClientInstance`. This is the client that is used to send http requests internally.
-
 #### Example
-
 ```TypeScript
 const httpClient = getHttpClient();
 ```
-
+---
+---
 ## Storage
-
 Asgardeo allows the session information including the access token to be stored in three different places, namely,
 
 1. [Session storage](#session-storage)
@@ -996,7 +1009,7 @@ Asgardeo allows the session information including the access token to be stored 
 
 The storage mechanism can be defined in the configuration provided to the `<AuthProvider />` as follows.
 
-```
+```json
 {
    "clientID": "",
    "baseUrl": "https://api.asgardeo.io/t/<org_name>",
@@ -1042,6 +1055,9 @@ The token is stored in the local storage of the browser via Javascript. The toke
     - link 1
 
 - Needs to be explicitly deleted from the browser. Does not lose on browser tab closing.
+
+---
+---
 ## Using the `form_post` response mode
 
 When the `responseMode` is set to `form_post`, the authorization code is sent in the body of a `POST` request as opposed to in the URL. So, the Single Page Application should have a backend to receive the authorization code and send it back to the Single Page Application.
@@ -1053,7 +1069,8 @@ To address this issue, we recommend storing the authorization code in a server s
 
 You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 
-
+---
+---
 ## Models
 
 ### AuthStateInterface
@@ -1151,8 +1168,6 @@ Session information can be attached to the body of a custom-grant request using 
 |`clientID` | The client ID.|
 |`clientSecret` | The client secret.|
 
-#### The data attribute
-
 ### DecodedIDTokenPayload
 
 | Method             | Type                   | Description                                    |
@@ -1169,23 +1184,8 @@ This extends the `AxiosRequestConfig` by providing an additional attribute that 
 |Attribute | Type | Description|
 |--|--|--|
 |attachToken| `boolean`| Specifies if the access token should be attached to the header of the request.|
-
-## Develop
-
-### Prerequisites
-
--   `Node.js` (version 10 or above).
--   `yarn` package manager.
-
-### Installing Dependencies
-
-The repository is a mono repository. The SDK repository is found in the [lib]() directory. You can install the dependencies by running the following command at the root.
-
-```
-yarn build
-```
-
+---
+---
 ## Other Links
-
 - [README](/README.md)
 - [Sample Apps](/SAMPLE_APPS.md)
