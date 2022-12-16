@@ -4,9 +4,9 @@
 
 -   [AuthProvider](#authprovider)
 -   [Securing routes with Asgardeo](#securing-routes-with-asgardeo)
-    -   [SecureRoute](#secureroute)
-    -   [SecureApp](#secureapp)
-    -   [AuthenticatedComponent](#authenticatedcomponent)
+    -   [SecureRoute](#1-secureroute)
+    -   [SecureApp](#2-secureapp)
+    -   [AuthenticatedComponent](#3-authenticatedcomponent)
 -   [useAuthContext React Hook](#useauthcontext-react-hook)
 -   [`state` Object](#state-object)
 -   [Consuming the `isLoading` State of the Auth Flow](#consuming-the-isloading-state-of-the-auth-flow)
@@ -18,7 +18,6 @@
     -   [signOut](#signout)
     -   [getIDToken](#getidtoken)
     -   [getDecodedIDToken](#getdecodedidtoken)
-    -   [getDecodedIPDIDToken](#getdecodedidpidtoken)
     -   [getAccessToken](#getaccesstoken)
     -   [refreshAccessToken](#refreshaccesstoken)
     -   [revokeAccessToken](#revokeaccesstoken)
@@ -100,48 +99,135 @@ export const MyApp = (): ReactElement => {
 There are 3 approaches you can use to secure routes in your React application with Asgardeo. To learn more about the implementation, you can refer to [this article.](https://stackoverflow.com/collectives/wso2/articles/74041550/authenticate-react-applications-with-asgardeo-part-2-securing-routes)
 
 ### 1. SecureRoute
-The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route. The component let's you pass a callback function that would be fired if the user is not authenticated.
+The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route.
 
-This component takes three props. The `path` and `component` props just relay the prop values directly to the `Route` component. The `callback` prop takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
+Use this if you want a route to be an authenticated route. So, this route will be rendered only if a user is authenticated. Otherwise, the `callback` function will be fired.
 
-Use this if you want a route to be an authenticated route. So, this route will be rendered only if a user is authenticated. Otherwise, the callback function will be fired.
+```TypeScript
+<SecureRoute
+    path="/secure-page"
+    component={ <SecureComponent /> }
+    callback={ signInFunction }
+/>
+```
+This component takes three props. The `path`, `component` and `callback`.
 
->**Warning**
->This will only support `react-router` v4**
+1. **path**: `string`
+The path pattern to match against the URL to determine if this route matches a URL, link href, or form action. This prop just relay the prop values directly to the `<Route />` component of the `react-router-dom`.
+2. **component**: `React.ReactNode | null`
+The element to render when the route matches the URL. This prop just relay the prop values directly to the `<Route />` component of the `react-router-dom`.
+3. **callback**: `() => void`
+This takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
+
+
 
 #### Example
-```TypeScript
-<SecureRoute path={ "/secure-page" } component={ <SecureComponent /> } callback={ callback } />
-```
+```typescript
+import { SecureRoute, useAuthContext } from "@asgardeo/auth-react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+const Routes = () => {
+    const { signIn } = useAuthContext();
+
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/home" component={ HomePage } />
+                <SecureRoute
+                    path="/secure-page"
+                    component={ SecurePageComponent } 
+                    callback={ () => {
+                        // Fires when the user is not authenticated.
+                        // Will be directed to sign in.
+                        signIn();
+                    }
+                />
+                <Route component={NotFoundPage} />
+            </Switch>
+        </Router>
+    )
+}
+```
+In the above example, an unauthenticated user can visit `/home` route. But they cannot visit the `/secure-page` route and they will be redirected to the Asgardeo sign-in page via [`signIn()`](#signin) function.
 
 ### 2. SecureApp
-This is a component that can be used to secure a React app. This component wraps a React component and renders it only
-if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically
-initiates the sign-in flow.
+This is a component that can be used to secure a whole React app. This component wraps a React component and renders it only if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically initiates the sign-in flow.
+```TypeScript
+<SecureApp
+    fallback={ <Loader /> }
+    onSignIn={ onSignInFunction }
+    overrideSignIn={ overrideSignInFunction }
+>
+    <App />
+</SecureApp>
+```
+The component takes three props, namely `fallback`, `onSignIn`, and `overrideSignIn`.
 
-The component takes three props, namely `fallback`, `onSignIn`, and `overrideSignIn`. The `fallback` prop
-is used to render a fallback component during sign in. The `onSignIn` prop is used to pass a callback function that will be called after signing in. The `overrideSignIn` prop is used to specify a function that will be called to initiate the sign-in flow. By default, the `signIn` method is used to initiate the sign-in flow.
+1. **fallback?**: `ReactNode` (optional)
+Takes a React component is used to render a fallback component during sign in.
+2. **onSignIn?**: `() => void` (optional)
+Used to pass a callback function that will be called after signing in. 
+2. **overrideSignIn?**: `() => Promise<void>` (optional)
+Used to specify a function that will be called to initiate the sign-in flow. By default, the [`signIn()`](#signin) method is used to initiate the sign-in flow. If you want to use a custom sign in method, you can pass it here. 
+For example, if you use the [`form_post`](#using-the-form_post-response-mode) method to retrieve the authorization code, then you can call the `signIn` with the code within this method.
 
 Use this if you want to sign-in a user on app load. This component renders its children if a user is authenticated. Otherwise, it initiates the sign-in flow.
 
 #### Example
 ```TypeScript
-<SecureApp fallback={ <Loader /> } onSignIn{ ()=> { history.push("/home") } } >
-    <App />
-</SecureApp>
+import { SecureApp } from "@asgardeo/auth-react";
+
+const App = () => {
+    return (
+        <SecureApp 
+            fallback={ <Loader /> }
+            onSignIn={ functionToFireOnSignIn }
+            overrideSignIn={ customSignInMethod}
+        >
+            <App />
+        </SecureApp>
+    );
+}
 ```
 
 ### 3. AuthenticatedComponent
-
-This component is used to wrap the components that need authentication. If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop.
-
-#### Example
+This component is used to wrap the components that need authentication. This offers more granular control of the elements that should or should not be rendered depending on whether the user is authenticated or not. 
 ```TypeScript
-<AuthenticatedComponent fallback={ <div>Sign in to view this section.</div> } >
+<AuthenticatedComponent
+    fallback={ <FallbackComponent /> }
+>
     <SecureComponent />
 </AuthenticatedComponent>
 ```
+If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop which accepts any **React element**.
+
+#### Example
+```TypeScript
+import { AuthenticatedComponent } from "@asgardeo/auth-react";
+
+const FallbackComponent = () => {
+    return (
+        <div>Sign in to view this section.</div>
+    )
+}
+
+const App = () => {
+    return (
+        <>
+            <Header />
+            <AuthenticatedComponent
+                fallback={ FallbackComponent }
+            >
+                <SecureComponent />
+            </AuthenticatedComponent>
+            <Footer />
+        </>
+    )
+}
+```
+In this case, `<Header />` and `<Footer />` will render regardless of user's authenticated status. But the `<SecureComponent />` will be only rendered when the user is authenticated. If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded.
+If you didn't include a `fallback`, it will render a `null` instead.
+
 ---
 ## useAuthContext React Hook
 
@@ -462,25 +548,6 @@ const App = () => {
     .
     .
 }
-```
----
-### getDecodedIDPIDToken
-This method returns a promise that resolves with the decoded payload of the JWT ID token provided by the IDP.
-```typescript
-getDecodedIDPIDToken(): Promise<DecodedIDTokenPayload>
-```
-
-#### Returns
-A promise that returns with the IDP [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
-
-#### Example
-
-```TypeScript
-getDecodedIDPIDToken().then((idToken) => {
-    // console.log(idToken);
-}).error((error) => {
-    // console.error(error);
-});
 ```
 ---
 ### getAccessToken
