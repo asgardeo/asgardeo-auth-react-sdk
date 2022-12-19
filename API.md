@@ -240,6 +240,8 @@ const { signIn } = useAuthContext();
 
 The object returned by the `useAuthContext` has a `state` attribute the value of which is an object of type [`AuthStateInterface`](#authstateinterface). You can refer the topic below to know more about what data is contained by the `state` object.
 
+You can see all the APIs that can be accessed via `useAuthContext()` [in here](#list-of-supported-apis).
+
 ---
 ## `state` Object
 
@@ -325,6 +327,7 @@ signIn(
 5. **callback?**: (response: [`BasicUserInfo`](#basicuserinfo)) => `void`
    A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#basicuserinfo) as an argument.
 
+The `sign-in` hook is used to fire a callback function after signing out is successful. Check the [`on()`](#on) section for more information.
 #### Example
 
 ```TypeScript
@@ -573,6 +576,10 @@ This method revokes the access token and clears the session information from the
 ```typescript
 revokeAccessToken();
 ```
+>**Note**
+>The [`signOut()`](#signout) method will automatically revoke the access token when called. Use the above method if you want to forcefully revoke the access token.
+
+
 The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [`on()`](#on) section for more information.
 
 #### Example
@@ -639,7 +646,7 @@ Silent sign-in can be performed in **two ways**.
     ```
 ---
 ### httpRequest
-This method is used to send http requests to Asgardeo. The developer doesn't need to manually attach the access token since this method does it automatically.
+This method is used to send http requests to Asgardeo or desired backend. The developer doesn't need to manually attach the access token since this method does it automatically.
 
 If the **storage type** is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent with the token.
 
@@ -657,7 +664,7 @@ httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
    |--|--|--|--|
    |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
    |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
-   |`shouldAttachIDPAccessToken`|`boolean`|`false`| If set to `true`, the IDP access token will be attached to the the request `Authorization` header. |
+
 
 #### Returns
 A Promise that resolves with the response relevant to the HTTP request that was sent.
@@ -729,7 +736,7 @@ There are two approaches when sending HTTP requests.
     ```
 ---
 ### httpRequestAll
-This method is used to send multiple http requests to the Asgardeo at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
+This method is used to send multiple http requests to the Asgardeo or a desired backend at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
 If the **storage type** is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent with the token.
 ```typescript

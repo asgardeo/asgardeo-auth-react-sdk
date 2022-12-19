@@ -237,7 +237,6 @@ The repository is a mono repository. The SDK repository is found in the [lib](/l
 yarn build
 ```
 
-
 ## Contribute
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
