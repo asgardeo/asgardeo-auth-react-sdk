@@ -95,7 +95,6 @@ export const MyApp = (): ReactElement => {
 ```
 ---
 ## Securing routes with Asgardeo
-
 There are 3 approaches you can use to secure routes in your React application with Asgardeo. To learn more about the implementation, you can refer to [this article.](https://stackoverflow.com/collectives/wso2/articles/74041550/authenticate-react-applications-with-asgardeo-part-2-securing-routes)
 
 ### 1. SecureRoute
@@ -1096,8 +1095,7 @@ The token is stored in the session of the browser via Javascript. The tokens can
 - The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
 
 #### Cons
-- The **drawback** on this approach is that the tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com). Below are some resources to guide you on how to implement a CSP in your application.
-    - link 1
+- The **drawback** on this approach is that the tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com).
 
 ### Web Worker
 Web Workers are a simple means for web content to run scripts in background threads. The worker thread can perform tasks without interfering with the user interface. Once created, a worker can send messages to the JavaScript code that created it by posting messages to an event handler specified by that code (and vice versa).
@@ -1118,8 +1116,7 @@ The token is stored in the local storage of the browser via Javascript. The toke
 - The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
 
 #### Cons
-- The tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com). Below are some resources to guide you on how to implement a CSP in your application.
-    - link 1
+- The tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com).
 
 - Needs to be explicitly deleted from the browser. Does not lose on browser tab closing.
 
