@@ -10,9 +10,8 @@
 -   [useAuthContext React Hook](#useauthcontext-react-hook)
 -   [`state` Object](#state-object)
 -   [Consuming the `isLoading` State of the Auth Flow](#consuming-the-isloading-state-of-the-auth-flow)
--   [Additional APIs](#additional-apis)
+-   [List of supported APIs](#list-of-supported-apis)
     -   [signIn](#signin)
-    -   [trySignInSilently](#trysigninsilently)
     -   [isAuthenticated](#isauthenticated)
     -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signOut](#signout)
@@ -21,9 +20,9 @@
     -   [getAccessToken](#getaccesstoken)
     -   [refreshAccessToken](#refreshaccesstoken)
     -   [revokeAccessToken](#revokeaccesstoken)
+    -   [trySignInSilently](#trysigninsilently)
     -   [httpRequest](#httprequest)
     -   [httpRequestAll](#httprequestall)
-    -   [requestCustomGrant](#requestcustomgrant)
     -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
     -   [on](#on)
     -   [enableHttpHandler](#enablehttphandler)
@@ -224,8 +223,9 @@ const App = () => {
     )
 }
 ```
-In this case, `<Header />` and `<Footer />` will render regardless of user's authenticated status. But the `<SecureComponent />` will be only rendered when the user is authenticated. If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded.
-If you didn't include a `fallback`, it will render a `null` instead.
+In this case, `<Header />` and `<Footer />` will render regardless of user's authenticated status. But the `<SecureComponent />` will be only rendered when the user is authenticated. 
+
+If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded. If you didn't include a `fallback`, it will render a `null` instead.
 
 ---
 ## useAuthContext React Hook
@@ -248,13 +248,13 @@ The state object will contain attributes such as whether a user is currently log
 #### Example
 ```json
 {
-    "allowedScopes": "",
-    "displayName": "",
-    "email": "",
-    "isAuthenticated": false,
-    "isLoading": true,
-    "sub": "",
-    "username": ""
+    "allowedScopes": "openid profile",
+    "displayName": "alica",
+    "isAuthenticated": true,
+    "isLoading": false,
+    "sub": "d33ab8c0-1234-4567-7890-b5c3619cb356",
+    "username": "alica@bifrost.com",
+    "isSigningOut": false
 }
 ```
 
@@ -284,7 +284,7 @@ const App = () => {
 }
 ```
 ---
-## Additional APIs
+## List of supported APIs
 In addition to the `state` object, the `useAuthContext()` hook also returns the following methods. You can use the methods as follows.
 
 ```typescript
@@ -343,53 +343,6 @@ const App = () => {
   )
 }
 ```
----
-### trySignInSilently
-This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
-This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
-
-This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
-
-To dispatch a token request, the [`signIn()`](#signin) or `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
-```typescript
-trySignInSilently(): Promise<boolean | BasicUserInfo>;
-```
->**Warning**
->Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.
-#### Returns
-This returns a promise that resolves with a [`BasicUserInfo`](#basicuserinfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
-#### Example
-Silent sign-in can be performed in **two ways**.
-1. You can enable silent sign-in as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
-    ```json
-    {
-        ...
-        disableTrySignInSilently: false
-    }
-    ```
-2. Or, you can call the `trySignInSilently()` function within the application and perform silent sign-in.
-    ```typescript
-    import { useAuthContext } from "@asgardeo/auth-react";
-
-    const App = () => {
-        const { trySignInSilently } = useAuthContext();
-
-        useEffect(() => {
-            trySignInSilently().then((response)=>{
-                if(response) {
-                    // The user is signed in.
-                    // handle basic user info
-                }
-
-                // If response is false,
-                // The user is not signed in.
-            });
-        }, []);
-        .
-        .
-        .
-    }
-    ```
 ---
 
 ### isAuthenticated
@@ -638,6 +591,53 @@ const App = () => {
 }
 ```
 ---
+### trySignInSilently
+This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
+This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
+
+This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+
+To dispatch a token request, the [`signIn()`](#signin) or `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+```typescript
+trySignInSilently(): Promise<boolean | BasicUserInfo>;
+```
+>**Warning**
+>Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.
+#### Returns
+This returns a promise that resolves with a [`BasicUserInfo`](#basicuserinfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
+#### Example
+Silent sign-in can be performed in **two ways**.
+1. You can enable silent sign-in as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
+    ```json
+    {
+        ...
+        disableTrySignInSilently: false
+    }
+    ```
+2. Or, you can call the `trySignInSilently()` function within the application and perform silent sign-in.
+    ```typescript
+    import { useAuthContext } from "@asgardeo/auth-react";
+
+    const App = () => {
+        const { trySignInSilently } = useAuthContext();
+
+        useEffect(() => {
+            trySignInSilently().then((response)=>{
+                if(response) {
+                    // The user is signed in.
+                    // handle basic user info
+                }
+
+                // If response is false,
+                // The user is not signed in.
+            });
+        }, []);
+        .
+        .
+        .
+    }
+    ```
+---
 ### httpRequest
 This method is used to send http requests to Asgardeo. The developer doesn't need to manually attach the access token since this method does it automatically.
 
@@ -681,7 +681,7 @@ There are two approaches when sending HTTP requests.
                 "Content-Type": "application/scim+json"
             },
             method: "GET",
-            url: "https://api.asgardeo.io/scim2/me"
+            url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
         };
 
         useEffect(() => {
@@ -714,7 +714,7 @@ There are two approaches when sending HTTP requests.
                 "Content-Type": "application/scim+json"
             },
             method: "GET",
-            url: "https://api.asgardeo.io/scim2/me"
+            url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
         };
 
         spaClient.httpRequest(requestConfig)
@@ -762,7 +762,7 @@ There are two approaches when sending HTTP requests.
                     "Content-Type": "application/scim+json"
                 },
                 method: "GET",
-                url: "https://api.asgardeo.io/scim2/me"
+                url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
             },
             .
             .
@@ -799,7 +799,7 @@ There are two approaches when sending HTTP requests.
                 "Content-Type": "application/scim+json"
             },
             method: "GET",
-            url: "https://api.asgardeo.io/scim2/me"
+            url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
         },
         .
         .
@@ -814,84 +814,6 @@ There are two approaches when sending HTTP requests.
         // console.error(error);
     });
     ```
-
----
-
-### requestCustomGrant
-This method allows developers to use custom grants provided by their Identity Providers. This method accepts an object that has the following attributes as the argument.
-```TypeScript
-const config = {
-    attachToken: false,
-    data: {
-        client_id: "{{clientID}}",
-        grant_type: "account_switch",
-        scope: "{{scope}}",
-        token: "{{token}}",
-    },
-    id: "account-switch",
-    returnResponse: true,
-    returnsSession: true,
-    signInRequired: true
-}
-
-requestCustomGrant(config).then((response)=>{
-    console.log(response);
-}).catch((error)=>{
-    console.error(error);
-});
-```
-The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [`on()`](#on) section for more information.
-
-```typescript
-requestCustomGrant(
-    config: CustomGranConfig,
-    callback?: (response: BasicUserInfo | HttpResponse<any>) => void
-): Promise<HttpResponse | BasicUserInfo>;
-```
-
-#### Arguments
-1. **config**: [`CustomGrantConfig`](#customgrantconfig)
-   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#customgrantconfig) section.
-2. **callback?**: (response: [`BasicUserInfo`](#basicuserinfo) | `HttpResponse`<any>) => void
-   A callback function that takes an object of type [`BasicUserInfo`](#basicuserinfo) or `HttpResponse` (depending on the `config`) as an argument and is fired when the request is successful.
-
-#### Returns
-A Promise that resolves either with the response or the [`BasicUserInfo`](#basicuserinfo).
-
-#### Example
-```typescript
-import { useAuthContext } from "@asgardeo/auth-react";
-
-const App = () => {
-    const { requestCustomGrant } = useAuthContext();
-
-    const config = {
-        attachToken: false,
-        data: {
-            client_id: "{{clientID}}",
-            grant_type: "account_switch",
-            scope: "{{scope}}",
-            token: "{{token}}",
-        },
-        id: "account-switch",
-        returnResponse: true,
-        returnsSession: true,
-        signInRequired: true
-    }
-
-    useEffect(() => {
-        requestCustomGrant(config).then((response)=>{
-            //console.log(response);
-        }).catch((error)=>{
-            ///console.error(error);
-        });
-    }, []);
-    .
-    .
-    .
-}
-
-```
 ---
 
 ### getOIDCServiceEndpoints
