@@ -543,7 +543,7 @@ This refreshes the access token and stores the refreshed session information in 
 refreshAccessToken(): Promise<BasicUserInfo>;
 ```
 >**Warning**
->Note that this method is not required to be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
+>The token refresh is handled **automatically** by the SDK. Use this method if you need to explicitly refresh the token. Note that this method will not work when the storage type is set to `webWorker` since the web worker automatically refreshes the token.
 
 #### Returns
 A Promise that resolves with the [`BasicUserInfo`](#basicuserinfo) object.
