@@ -13,7 +13,6 @@
 -   [Introduction](#introduction)
 -   [Prerequisite](#prerequisite)
 -   [Getting Started](#getting-started)
--   [Sample Apps](#sample-apps)
 -   [Using APIs](#using-apis)
     - [Best practices when using APIs](#best-practices-when-using-apis)
     - [`useAuthContext()` hook](#useauthcontext-hook)
@@ -21,6 +20,8 @@
     - [Show Authenticated User's Information](#show-authenticated-users-information)
     - [Add Routing](#add-routing)
     - [API Documentation](#api-documentation)
+-   [Sample Apps](#sample-apps)
+-   [Develop](#develop)
 -   [Contribute](#contribute)
 -   [License](#license)
 
@@ -48,7 +49,7 @@ Follow this guide to integrate Asgardeo to your own React Application. To try ou
 ### 1. Installing the Package
 
 Run the following command to install `@asgardeo/auth-react` & `react-router-dom` from the npm registry.
-```
+```bash
 npm install @asgardeo/auth-react react-router-dom --save
 ```
 > **Note**
@@ -115,7 +116,7 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 #### When including React SDK as a dependency:
 
 ##### DO ✅
-```
+```json
 // In package.json
 
 dependencies: {
@@ -127,6 +128,7 @@ dependencies: {
 
 ---
 ### `useAuthContext()` hook
+
 The `useAuthContext()` hook provided by the SDK could be used to implement the necessary authentication functionalities and access the session state that contains information such as a unique identifier for the authenticated user.
 
 Import the `useAuthContext()` hook from `@asgardeo/auth-react`.
@@ -152,7 +154,8 @@ Few common methods that you will require when implementing authentication capabi
 
 The [`state`](API.md##authstateinterface) object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. 
 
-> <sub>Note:You can refer to the [detailed API documentation here](/API.md).</sub>
+>**Note**
+>You can refer to the [detailed API documentation here](/API.md)
 
 ---
 ### Add a Login/Logout Button
@@ -219,19 +222,28 @@ If your application needs routing, the SDK provides a multiple approaches to sec
 Additionally to above, Asgardeo offers a wide range of APIs that you can use to integrate and make use of Asgardeo within your React Application. You can refer to a [detailed API documentation here](/API.md).
 
 ## Sample Apps
-
 Sample React Apps offered by Asgardeo will allow you to take Asgardeo for a spin without having to setup your own application. You can see [how to setup sample apps here](/SAMPLE_APPS.md).
 
-## Contribute
+## Develop
 
+### Prerequisites
+-   `Node.js` (version 10 or above).
+-   `yarn` package manager.
+
+### Installing Dependencies
+The repository is a mono repository. The SDK repository is found in the [lib](/lib/) directory. You can install the dependencies by running the following command at the root.
+
+```bash
+yarn build
+```
+
+## Contribute
 Please read [Contributing to the Code Base](http://wso2.github.io/) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ### Reporting issues
-
 We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardeo/asgardeo-auth-react-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
 ## License
-
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
