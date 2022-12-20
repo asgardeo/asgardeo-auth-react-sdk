@@ -61,8 +61,7 @@ const SecureRoute: FunctionComponent<SecureRouteInterface & RouteProps> = (props
     return (
         <Route
             { ...rest }
-            render={ (props) =>
-                <Component { ...props } />
+            element={ <Component />
             }
         />
     );
