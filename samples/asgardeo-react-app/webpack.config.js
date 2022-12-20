@@ -17,7 +17,6 @@
  */
 
 require("dotenv").config();
-const chalk = require("chalk");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const { findPort } = require("dev-server-ports");
@@ -25,7 +24,10 @@ const { findPort } = require("dev-server-ports");
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = "localhost";
 
-const PORT_IN_USE_PROMPT = `${ chalk.blue("Be sure to update the following configurations if you proceed with the port change.") }
+const generatePortInUsePrompt = async () => {
+    const chalk = await import("chalk");
+
+    return `${ chalk.blue("Be sure to update the following configurations if you proceed with the port change.") }
 
     1. Update the ${ chalk.bgBlack("PORT") } in ${ chalk.bgBlack(".env") } file in the app root.
     2. Update the signInRedirectURL & signOutRedirectURL in ${ chalk.bgBlack("src/config.json") }.
@@ -33,6 +35,8 @@ const PORT_IN_USE_PROMPT = `${ chalk.blue("Be sure to update the following confi
         - Update the Authorized Redirect URL.
         - Update the Allowed Origins.
 `;
+};
+
 
 module.exports = {
     devServer: {
@@ -43,14 +47,15 @@ module.exports = {
         inline: true,
         port: findPort(PORT, HOST, false, {
             extensions: {
-                BEFORE_getProcessTerminationMessage: () => {
-                  return PORT_IN_USE_PROMPT;
+                BEFORE_getProcessTerminationMessage: async () => {
+                    return await generatePortInUsePrompt();
                 }
             }
         })
     },
     devtool: "source-map",
-    entry: ["./src/app.tsx"],
+    entry: [ "./src/app.tsx" ],
+    mode: "development",
     module: {
         rules: [
             {
@@ -62,11 +67,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"]
+                use: [ "style-loader", "css-loader" ]
             },
             {
                 test: /\.(png|jpg|cur|gif|eot|ttf|woff|woff2)$/,
-                use: ["url-loader"]
+                use: [ "url-loader" ]
             },
             {
                 test: /\.html$/,
@@ -79,12 +84,9 @@ module.exports = {
             {
                 test: /\.js$/,
                 enforce: "pre",
-                use: ["source-map-loader"],
+                use: [ "source-map-loader" ],
             }
         ]
-    },
-    node: {
-        fs: "empty"
     },
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -96,6 +98,6 @@ module.exports = {
         })
     ],
     resolve: {
-        extensions: [".tsx", ".ts", ".js", ".json"]
+        extensions: [ ".tsx", ".ts", ".js", ".json" ]
     }
 };
