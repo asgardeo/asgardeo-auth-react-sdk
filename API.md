@@ -23,12 +23,11 @@
     -   [trySignInSilently](#trysigninsilently)
     -   [httpRequest](#httprequest)
     -   [httpRequestAll](#httprequestall)
-    -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
-    -   [on](#on)
     -   [enableHttpHandler](#enablehttphandler)
     -   [disableHttpHandler](#disablehttphandler)
+    -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
+    -   [on](#on)
     -   [updateConfig](#updateconfig)
-    -   [getHttpClient](#gethttpclient)
 -   [Storage](#storage)
     -   [Session Storage](#session-storage)
     -   [Web Worker](#web-worker)
@@ -40,8 +39,6 @@
     -   [BasicUserInfo](#basicuserinfo)
     -   [SignInConfig](#signinconfig)
     -   [OIDCEndpoints](#oidcendpoints)
-    -   [CustomGrantConfig](#customgrantconfig)
-    -   [Custom Grant Template Tags](#custom-grant-template-tags)
     -   [DecodedIDTokenPayload](#decodedidtokenpayload)
     -   [HttpRequestConfig](#httprequestconfig)
 - [Other Links](#other-links)
@@ -452,6 +449,7 @@ getIDToken(): Promise<string>
 ```
 >**Warning**
 >The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
+>The reason is that the token is stored inside the web worker and cannot be accessed from outside.
 
 #### Returns
 A promise that resolves with the ID token as a string.
@@ -481,7 +479,9 @@ This method returns a promise that resolves with the decoded payload of the JWT 
 ```typescript
 getDecodedIDToken(): Promise<DecodedIDTokenPayload>
 ```
-
+>**Warning**
+>The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
+>The reason is that the token is stored inside the web worker and cannot be accessed from outside.
 #### Returns
 A promise that returns with the [`DecodedIDTokenPayload`](#decodedidtokenpayload) object.
 
@@ -516,7 +516,7 @@ getAccessToken(): Promise<string>;
 ```
 >**Warning**
 >The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
-
+>The reason is that the token is stored inside the web worker and cannot be accessed from outside.
 #### Returns
 A Promise that resolves with the access token.
 
@@ -602,7 +602,7 @@ const App = () => {
 This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
 This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
 
-This uses an iFrame to check if there is an active user session in the identity server by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+This uses an iFrame to check if there is an active user session in Asgardeo by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
 
 To dispatch a token request, the [`signIn()`](#signin) or `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
 ```typescript
@@ -657,7 +657,7 @@ httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
 
 #### Arguments
 
-1. config: [`HttpRequestConfig`](#httpRequestConfig)
+1. config: [`HttpRequestConfig`](#httprequestconfig)
    A config object with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig` but provides these additional attributes:
 
    |Attribute|Type|Default|Description|
@@ -736,7 +736,14 @@ There are two approaches when sending HTTP requests.
     ```
 ---
 ### httpRequestAll
-This method is used to send multiple http requests to the Asgardeo or a desired backend at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
+This method is used to send multiple, **concurrent** http requests to the Asgardeo or a desired backend at the same time. Instead of making multiple HTTP requests individually, this method allows you to make multiple HTTP requests to different endpoints altogether.
+
+This might be useful when you want to call multiple endpoints at once to get an accumulated result from the responses of those endpoints.
+
+>**Note**
+> This methods sends the requests concurrently, **not** sequentially.
+
+This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
 
 If the **storage type** is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent with the token.
 ```typescript
@@ -745,17 +752,24 @@ httpRequestAll(config[]: ): Promise<[]>;
 
 #### Arguments
 
-1. **config[]**: `HttpRequestConfig[]`
-   An array config objects with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig`.
+1. **config[]**: [`HttpRequestConfig[]`](#httprequestconfig)
+   An array config objects with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig`, but provides these additional attributes:
+
+   |Attribute|Type|Default|Description|
+   |--|--|--|--|
+   |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
+   |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
 
 #### Returns
-An array of promises that resolve with the responses relevant to the HTTP requests that was sent.
+An array of promises that resolve with the responses relevant to the HTTP requests that was sent. The responses will be returned **in the order of requests that was sent.**
+>**Warning**
+> If one of the requests in the `httpRequestAll` fail, it will **not** return a response (even if the other requests were successful). Therefore, for this method to return a successful response, all the requests should be successful.
 #### Examples
 There are two approaches when sending HTTP requests.
 
 1. **Within React Components** - When sending HTTP requests from inside React components or React Hooks, always use the `httpRequest` and  `httpRequestAll` methods exposed from the `useAuthContext` hook.
 
-    For example, to get the user profile details after signing in, you can query the `me` endpoint and other requests as follows:
+    For example, to get the user profile details after signing in, you can query the `userinfo` endpoint and other requests as follows:
     ```TypeScript
     import { useAuthContext } from "@asgardeo/auth-react";
 
@@ -769,7 +783,15 @@ There are two approaches when sending HTTP requests.
                     "Content-Type": "application/scim+json"
                 },
                 method: "GET",
-                url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
+                url: "https://api.asgardeo.io/t/<org_name>/oauth2/userinfo"
+            },
+            {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/scim+json"
+                },
+                method: "GET",
+                url: "https://api.asgardeo.io/t/<org_name>/oauth2/jwks"
             },
             .
             .
@@ -778,8 +800,13 @@ There are two approaches when sending HTTP requests.
 
         useEffect(() => {
             httpRequestAll(requestConfigs).then((responses) => {
-                response.forEach((response) => {
-                    // console.log(response);
+                // responses are returned in the order of the requests.
+                // responses[0] will return response from userinfo endpoint.
+                // responses[1] will return response from jwks endpoint.
+
+                // responses array can be iterated as follows.
+                responses.forEach((response) => {
+                    // console.log(response.data);
                 });
             }).catch((error) => {
                 // console.error(error);
@@ -793,7 +820,7 @@ There are two approaches when sending HTTP requests.
 
 2. **From Non-Components** - When sending HTTP requests from JS or TS logic files which are non components, you do not have access to React Hooks. Therefore, if you want to invoke APIs from a logic file, you have to get an instance of the HTTP client and use that instance to invoke the APIs.
 
-    For example, to get the user profile details after signing in, you can query the `me` endpoint and other requests as follows:
+    For example, to get the user profile details after signing in, you can query the `userinfo` endpoint and other requests as follows:
      ```TypeScript
     import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 
@@ -806,7 +833,15 @@ There are two approaches when sending HTTP requests.
                 "Content-Type": "application/scim+json"
             },
             method: "GET",
-            url: "https://api.asgardeo.io/t/<org_name>/scim2/me"
+            url: "https://api.asgardeo.io/t/<org_name>/oauth2/userinfo"
+        },
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json"
+            },
+            method: "GET",
+            url: "https://api.asgardeo.io/t/<org_name>/oauth2/jwks"
         },
         .
         .
@@ -814,15 +849,52 @@ There are two approaches when sending HTTP requests.
     ];
 
     spaClient.httpRequestAll(requestConfigs).then((responses) => {
-        response.forEach((response) => {
-            // console.log(response);
+        // responses are returned in the order of the requests.
+        // responses[0] will return response from userinfo endpoint.
+        // responses[1] will return response from jwks endpoint.
+
+        // responses array can be iterated as follows.
+        responses.forEach((response) => {
+            // console.log(response.data);
         });
     }).catch((error) => {
         // console.error(error);
     });
     ```
 ---
+### enableHttpHandler
+This enables the callback functions attached to the HTTP client. The callback functions are enabled by default. This needs to be called **only** if the [disableHttpHandler](#disablehttphandler) method was called previously.
 
+This will allow you to intercept the HTTP requests and responses sent by the SDK, before dispatching the request.
+```typescript
+enableHttpHandler(): Promise<Boolean>
+```
+
+#### Returns
+A Promise that resolves with a `boolean` value indicating if the call was successful.
+
+#### Example
+
+```TypeScript
+enableHttpHandler();
+```
+---
+### disableHttpHandler
+This disables the callback functions attached to the HTTP client.
+
+This will allow you to prevent intercepting the HTTP requests and responses sent by the SDK, before dispatching the request.
+```typescript
+disableHttpHandler(): Promise<boolean>
+```
+
+#### Returns
+A Promise that resolves with a `boolean` value indicating if the call was successful.
+
+#### Example
+```TypeScript
+disableHttpHandler();
+```
+---
 ### getOIDCServiceEndpoints
 This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. 
 ```TypeScript
@@ -863,7 +935,7 @@ const App = () => {
 ```
 ---
 ### on
-The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
+The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments. The following hooks are available.
 ```typescript
 on(hook: string, callback: () => void, id?: string): void
 ```
@@ -893,12 +965,11 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 | `"http-request-error"`   | `httpRequest()` (Called when an http request returns an error)                   |
 | `"http-request-success"` | `httpRequest()` (Called when an http requests returns a response successfully)   |
 | `"end-user-session"`     | `endUserSession()`                                                               | A boolean value indicating if the process was successful or not                         |
-| `"custom-grant"`         | `customGrant()`                                                                  | Returns the response from the custom grant request.                                     |
 
-**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful logout. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
+**When the user signs out, the user is taken to the Asgardeo's logout page and then redirected back to the SPA on successful logout. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 #### Example
-
+In this example, the `sign-in` and the `sign-out` hooks are used to show a welcome message and a goodbye message respectively.
 ```TypeScript
 import { useAuthContext } from "@asgardeo/auth-react";
 
@@ -913,10 +984,12 @@ const App = () => {
     useEffect(() => {
         on(Hooks.SignIn, () => {
             //called after signing in.
+            showWelcomeMessage();
         });
         
         on(Hooks.SignOut, () => {
             //called after signing out.
+            showGoodbyeMessage();
         });
         .
         .
@@ -924,73 +997,23 @@ const App = () => {
     }, [on]);
 }
 ```
-
----
-
-### enableHttpHandler
-This enables the callback functions attached to the HTTP client. The callback functions are enabled by default. This needs to be called **only** if the [disableHttpHandler](#disablehttphandler) method was called previously.
-```typescript
-enableHttpHandler(): Promise<Boolean>
-```
-
-#### Returns
-A Promise that resolves with a `boolean` value indicating if the call was successful.
-
-#### Example
-
-```TypeScript
-enableHttpHandler();
-```
-
----
-
-### disableHttpHandler
-This disables the callback functions attached to the HTTP client.
-
-```typescript
-disableHttpHandler(): Promise<boolean>
-```
-
-#### Returns
-A Promise that resolves with a `boolean` value indicating if the call was successful.
-
-#### Example
-```TypeScript
-disableHttpHandler();
-```
 ---
 ### updateConfig
-This method can be used to update the configurations passed into the constructor of the `AsgardeoAuthClient`. Please note that every attribute in the config object passed as the argument here is optional. Use this method if you want to update certain attributes after instantiating the class.
+This method can be used to update the configurations passed into the constructor of the [`AuthReactConfig`](#authreactconfig). Please note that every attribute in the config object passed as the argument here is optional. Use this method if you want to update certain attributes after instantiating the class.
 ```TypeScript
 updateConfig(config: Partial<AuthClientConfig<AuthReactConfig>>): void
 ```
 
 #### Arguments
-1. **config**: [`AuthClientConfig<AuthReactConfig>`](#authreactconfig)
+1. **config**: [`Partial<AuthClientConfig<AuthReactConfig>>`](#authreactconfig)
 
-The config object containing the attributes that can be used to configure the SDK. To learn more about the available attributes, refer to the [`AuthClientConfig<AuthReactConfig>`](#authreactconfig) model.
+The config object containing the attributes that can be used to configure the SDK. To learn more about the available attributes, refer to the [`AuthReactConfig`](#authreactconfig) model.
 
 #### Example
 ```TypeScript
 updateConfig({
     signOutRedirectURL: "https://localhost:3000/sign-out"
 });
-```
-
----
-
-### getHttpClient
-This method returns the `HttpClientInstance`. This is the client that is used to send http requests internally.
-```TypeScript
-getHttpClient(): `HttpClientInstance`
-```
-
-#### Returns
-An `HttpClientInstance`
-
-#### Example
-```TypeScript
-const httpClient = getHttpClient();
 ```
 ---
 ---
@@ -1140,27 +1163,6 @@ You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 | `issuer`                | `string` | ""                                                 | The issuer of the token.                                                  |
 | `wellKnownEndpoint` | `string` | `"/oauth2/token/.well-known/openid-configuration"` | The well-known endpoint. This is the default endpoint defined in the SDK. |
 
-### CustomGrantConfig
-
-| Attribute        | Required/Optional | Type      | Default Value | Description                                                                                                                                                                                                                   |
-| ---------------- | ----------------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`             | Required          | `string`  | ""            | Every custom-grant request should have an id. This attributes takes that id.                                                                                                                                                  |
-| `data`           | Required          | `any`     | `null`        | The data that should be sent in the body of the custom-grant request. You can use template tags to send session information. Refer to the [Custom Grant Template Tags](#custom-grant-template-tags) section for more details. |
-| `signInRequired` | Required          | `boolean` | `false`       | Specifies if the user should be sign-in or not to dispatch this custom-grant request.                                                                                                                                         |
-| `attachToken`    | Required          | `boolean` | `false`       | Specifies if the access token should be attached to the header of the request.                                                                                                                                                |
-| `returnsSession` | Required          | `boolean` | `false`       | Specifies if the the request returns session information such as the access token.                                                                                                                                            |
-
-#### Custom Grant Template Tags
-
-Session information can be attached to the body of a custom-grant request using template tags. This is useful when the session information is not exposed outside the SDK but you want such information to be used in custom-grant requests. The following table lists the available template tags.
-|Tag|Data|
-|--|--|
-|`token` | The access token.|
-|`username` | The username.|
-|`scope` | The scope.|
-|`clientID` | The client ID.|
-|`clientSecret` | The client secret.|
-
 ### DecodedIDTokenPayload
 
 | Method             | Type                   | Description                                    |
@@ -1177,6 +1179,7 @@ This extends the `AxiosRequestConfig` by providing an additional attribute that 
 |Attribute | Type | Description|
 |--|--|--|
 |attachToken| `boolean`| Specifies if the access token should be attached to the header of the request.|
+   |shouldEncodeToFormData|`boolean`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
 ---
 ---
 ## Other Links
