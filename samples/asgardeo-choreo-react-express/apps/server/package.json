@@ -5,8 +5,8 @@
   "type": "module",
   "author": "Yathindra Kodithuwakku <yathindrarawya123@gmail.com>",
   "scripts": {
-    "start": "npm run server:local",
-    "prestart": "npm run build",
+    "start": "yarn run server:local",
+    "prestart": "yarn run build",
     "build": "rimraf dist && npx tsc",
     "server:local": "concurrently \"npx tsc --watch\" \"NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon -q dist/index.js\""
   },
@@ -34,6 +34,6 @@
     "@types/cors": "^2.8.12",
     "concurrently": "^7.3.0",
     "nodemon": "^2.0.19",
-    "typescript": "^4.7.4"
+    "typescript": "^4.9.4"
   }
 }
