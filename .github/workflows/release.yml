@@ -63,7 +63,7 @@ jobs:
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          npm run bump-${{ github.event.inputs.Type }}-version
+          yarn run bump-${{ github.event.inputs.Type }}-version
           git push --follow-tags
 
       - name: Pack Release Artifacts
