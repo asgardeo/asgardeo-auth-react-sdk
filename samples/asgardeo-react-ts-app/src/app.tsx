@@ -22,7 +22,7 @@ import "regenerator-runtime/runtime";
 import { AuthProvider, SecureRoute, useAuthContext } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./app.css";
 import * as authConfig from "./config.json";
 import LandingPage from "./pages/landing";
@@ -38,7 +38,7 @@ const SecureRouteWithRedirect: FunctionComponent<{component: any, path: string, 
         signIn();
     };
 
-    return (<SecureRoute exact path={ path } component={ component } callback={ callback } />);
+    return (<SecureRoute path={ path } component={ component } callback={ callback } />);
 };
 
 const AppContent: FunctionComponent = (): ReactElement => {
@@ -47,11 +47,11 @@ const AppContent: FunctionComponent = (): ReactElement => {
     return (
         <ErrorBoundary error={error}>
             <Router>
-                <Switch>
-                    <Route exact path="/" component={ LandingPage } />
+                <Routes>
+                    <Route path="/" element={ <LandingPage /> } />
                     <SecureRouteWithRedirect exact path="/home" component={ HomePage } />
-                    <Route component={ NotFoundPage } />
-                </Switch>
+                    <Route element={ <NotFoundPage /> } />
+                </Routes>
             </Router>
         </ErrorBoundary>
     )
