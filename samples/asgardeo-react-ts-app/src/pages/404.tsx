@@ -17,19 +17,19 @@
  */
 
 import React, { FunctionComponent } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 
-const NotFoundPage: FunctionComponent<{}> = () => {
+const NotFoundPage: FunctionComponent = () => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <DefaultLayout>
             <h3>
                 404: Page not found
             </h3>
-            <button className="btn primary" onClick={() => { history.push("/home") }}>Go back to home</button>
+            <button className="btn primary" onClick={() => { navigate("/home") }}>Go back to home</button>
         </DefaultLayout>
     );
 };

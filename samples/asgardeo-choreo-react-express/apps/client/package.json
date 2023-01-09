@@ -15,7 +15,6 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "swr": "^1.3.0",
-    "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -24,7 +23,8 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/react-resizable": "^3.0.2",
-    "eslint-config-react-app": "^7.0.1"
+    "eslint-config-react-app": "^7.0.1",
+    "typescript": "^4.9.4"
   },
   "scripts": {
     "start": "react-scripts start",

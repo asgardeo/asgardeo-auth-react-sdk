@@ -17,31 +17,26 @@
  */
 
 import React, { FunctionComponent, ReactElement } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
-
-/**
- * Decoded ID Token Response component Prop types interface.
- */
-type NotFoundPagePropsInterface = {};
 
 /**
  * Page to display for 404.
  *
- * @param {NotFoundPagePropsInterface} props - Props injected to the component.
+ * @param props - Props injected to the component.
  *
  * @return {React.ReactElement}
  */
-export const NotFoundPage: FunctionComponent<NotFoundPagePropsInterface> = (): ReactElement => {
+export const NotFoundPage: FunctionComponent = (): ReactElement => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <DefaultLayout>
             <h3>
                 404: Page not found
             </h3>
-            <button className="btn primary" onClick={() => { history.push("/home") }}>Go back to home</button>
+            <button className="btn primary" onClick={() => { navigate("/home") }}>Go back to home</button>
         </DefaultLayout>
     );
 };

@@ -35,6 +35,10 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -46,6 +50,11 @@ jobs:
       - uses: actions/checkout@v2
         if: github.repository != 'asgardeo/asgardeo-auth-react-sdk'
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Build
         run: |
           yarn build
@@ -54,7 +63,7 @@ jobs:
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          npm run bump-${{ github.event.inputs.Type }}-version
+          yarn run bump-${{ github.event.inputs.Type }}-version
           git push --follow-tags
 
       - name: Pack Release Artifacts

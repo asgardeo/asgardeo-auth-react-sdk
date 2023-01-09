@@ -8,10 +8,11 @@
         "prebuild": "yarn install && lerna run prebuild && lerna bootstrap",
         "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
         "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
+        "remove-yarn-lock": "npx lerna exec -- rimraf -rf yarn.lock && rimraf -rf yarn.lock",
         "lint": "lerna run lint",
         "fix-lint": "lerna run fix-lint",
         "clean": "lerna run clean --stream",
-        "clean-all": "npm run remove-package-lock && npm run remove-node-modules",
+        "clean-all": "yarn run remove-package-lock && yarn run remove-yarn-lock && yarn run remove-node-modules",
         "bump-patch-version": "lerna version patch --yes",
         "bump-minor-version": "lerna version minor --yes",
         "bump-major-version": "lerna version major --yes"
@@ -34,14 +35,14 @@
     },
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^4.8.1",
-        "@typescript-eslint/parser": "^3.10.1",
-        "eslint": "^7.13.0",
-        "eslint-loader": "^3.0.3",
-        "eslint-plugin-import": "^2.22.1",
-        "lerna": "^3.22.1",
-        "rimraf": "^3.0.0",
-        "typescript": "~4.0.5"
+        "@typescript-eslint/eslint-plugin": "^5.47.0",
+        "@typescript-eslint/parser": "^5.47.0",
+        "eslint": "^8.30.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-import": "^2.26.0",
+        "lerna": "^6.1.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.9.4"
     },
     "workspaces": [
         "lib",

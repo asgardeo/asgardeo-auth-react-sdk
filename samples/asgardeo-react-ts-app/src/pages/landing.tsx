@@ -18,16 +18,16 @@
 
 import { useAuthContext, Hooks } from "@asgardeo/auth-react";
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 import REACT_LOGO from "../images/react-logo.png";
 import * as authConfig from "../config.json";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
 
-const LandingPage: FunctionComponent<{}> = () => {
+const LandingPage: FunctionComponent = () => {
     const { signIn, signOut, state, on } = useAuthContext();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const search = useLocation().search;
     const stateParam = new URLSearchParams(search).get('state');
@@ -37,9 +37,9 @@ const LandingPage: FunctionComponent<{}> = () => {
 
     useEffect(() => {
         if (state?.isAuthenticated) {
-            history.push("/home");
+            navigate("/home");
         }
-    }, [ state.isAuthenticated, history ]);
+    }, [state?.isAuthenticated, navigate]);
 
     useEffect(() => {
         if(stateParam && errorDescParam) {
@@ -91,7 +91,7 @@ const LandingPage: FunctionComponent<{}> = () => {
                         Sample demo to showcase authentication for a Single Page Application
                         via the OpenID Connect Authorization Code flow,
                         which is integrated using the&nbsp;
-                        <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
+                        <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank" rel="noopener noreferrer">
                             Asgardeo Auth React SDK
                         </a>.
                     </h4>

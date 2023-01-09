@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import { Hooks, useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { BasicUserInfo, Hooks, useAuthContext } from "@asgardeo/auth-react";
+import React, { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
@@ -26,19 +26,21 @@ import { useLocation } from "react-router-dom";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
 
-/**
- * Decoded ID Token Response component Prop types interface.
- */
-type HomePagePropsInterface = {};
+interface DerivedState {
+    authenticateResponse: BasicUserInfo,
+    idToken: string[],
+    decodedIdTokenHeader: string,
+    decodedIDTokenPayload: Record<string, string | number | boolean>;
+}
 
 /**
  * Home page for the Sample.
  *
- * @param {HomePagePropsInterface} props - Props injected to the component.
+ * @param props - Props injected to the component.
  *
  * @return {React.ReactElement}
  */
-export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElement => {
+export const HomePage: FunctionComponent = (): ReactElement => {
 
     const {
         state,
@@ -50,7 +52,7 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
         on
     } = useAuthContext();
 
-    const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<any>(null);
+    const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<DerivedState>(null);
     const [ hasAuthenticationErrors, setHasAuthenticationErrors ] = useState<boolean>(false);
     const [ hasLogoutFailureError, setHasLogoutFailureError ] = useState<boolean>();
 
@@ -69,7 +71,7 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
             const idToken = await getIDToken();
             const decodedIDToken = await getDecodedIDToken();
 
-            const derivedState = {
+            const derivedState: DerivedState = {
                 authenticateResponse: basicUserInfo,
                 idToken: idToken.split("."),
                 decodedIdTokenHeader: JSON.parse(atob(idToken.split(".")[0])),
@@ -78,7 +80,7 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
 
             setDerivedAuthenticationState(derivedState);
         })();
-    }, [ state.isAuthenticated ]);
+    }, [ state.isAuthenticated , getBasicUserInfo, getIDToken, getDecodedIDToken ]);
 
     useEffect(() => {
         if(stateParam && errorDescParam) {
@@ -87,6 +89,12 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
             }
         }
     }, [stateParam, errorDescParam]);
+
+    const handleLogin = useCallback(() => {
+        setHasLogoutFailureError(false);
+        signIn()
+            .catch(() => setHasAuthenticationErrors(true));
+    }, [ signIn ]);
 
    /**
      * handles the error occurs when the logout consent page is enabled
@@ -102,26 +110,20 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
                 handleLogin();
             }
         })
-    }, [ on ]);
-
-    const handleLogin = () => {
-        setHasLogoutFailureError(false);
-        signIn()
-            .catch(() => setHasAuthenticationErrors(true));
-    };
+    }, [ on, handleLogin, errorDescParam]);
 
     const handleLogout = () => {
         signOut();
     };
 
-    // If `clientID` is not defined in `config.json`, show a UI warning. 
+    // If `clientID` is not defined in `config.json`, show a UI warning.
     if (!authConfig?.clientID) {
 
         return (
             <div className="content">
                 <h2>You need to update the Client ID to proceed.</h2>
-                <p>Please open "src/config.json" file using an editor, and update
-                    the <code>clientID</code> value with the registered application's client ID.</p>
+                <p>Please open &quot;src/config.json&quot; file using an editor, and update
+                    the <code>clientID</code> value with the registered application&apos;s client ID.</p>
                 <p>Visit repo <a
                     href="https://github.com/asgardeo/asgardeo-auth-react-sdk/tree/master/samples/asgardeo-react-app">README</a> for
                     more details.</p>
@@ -164,13 +166,13 @@ export const HomePage: FunctionComponent<HomePagePropsInterface> = (): ReactElem
                     : (
                         <div className="content">
                             <div className="home-image">
-                                <img src={ REACT_LOGO } className="react-logo-image logo"/>
+                                <img alt="react-logo" src={ REACT_LOGO } className="react-logo-image logo"/>
                             </div>
                             <h4 className={ "spa-app-description" }>
                                 Sample demo to showcase authentication for a Single Page Application
                                 via the OpenID Connect Authorization Code flow,
                                 which is integrated using the&nbsp;
-                                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank">
+                                <a href="https://github.com/asgardeo/asgardeo-auth-react-sdk" target="_blank" rel="noreferrer noopener">
                                     Asgardeo Auth React SDK
                                 </a>.
                             </h4>

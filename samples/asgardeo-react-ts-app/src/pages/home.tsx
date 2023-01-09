@@ -61,7 +61,7 @@ const HomePage: FunctionComponent = () => {
                         Derived by the&nbsp;
                         <code className="inline-code-block">
                             <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
-                               target="_blank" rel="noreferrer">
+                               target="_blank" rel="noreferrer noopener">
                                 @asgardeo/auth-react
                             </a>
                         </code>&nbsp;SDK
