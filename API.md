@@ -1050,7 +1050,7 @@ The token is stored in the session of the browser via Javascript. The tokens can
 - The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
 
 #### Cons
-- The **drawback** on this approach is that the tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com).
+- The **drawback** on this approach is that the tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. React applications are mostly immune to these kind of attacks. But you can make your React application more secure against XSS by following [this guide](https://stackoverflow.com/collectives/wso2/articles/75138459/mitigating-xss-attacks-in-react-applications). Additionally, you can also use a [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) to mitigate XSS attacks. For more information on the usage of CSP in React, refer to [this article](https://stackoverflow.com/collectives/wso2/articles/75138459/mitigating-xss-attacks-in-react-applications).
 
 ### Web Worker
 Web Workers are a simple means for web content to run scripts in background threads. The worker thread can perform tasks without interfering with the user interface. Once created, a worker can send messages to the JavaScript code that created it by posting messages to an event handler specified by that code (and vice versa).
@@ -1071,7 +1071,7 @@ The token is stored in the local storage of the browser via Javascript. The toke
 - The responsibility of handling the token falls on the application developer and they can use it however they wish as they have full control over the token.
 
 #### Cons
-- The tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. But this can be mitigated by following a [Content Security Policy (CSP)](https://content-security-policy.com).
+- The tokens can be subjected to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss) attacks. React applications are mostly immune to these kind of attacks. But you can make your React application more secure against XSS by following [this guide](https://stackoverflow.com/collectives/wso2/articles/75138459/mitigating-xss-attacks-in-react-applications). Additionally, you can also use a [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) to mitigate XSS attacks. For more information on the usage of CSP in React, refer to [this article](https://stackoverflow.com/collectives/wso2/articles/75138459/mitigating-xss-attacks-in-react-applications).
 
 - Needs to be explicitly deleted from the browser. Does not lose on browser tab closing.
 
