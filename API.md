@@ -20,7 +20,6 @@
     -   [getAccessToken](#getaccesstoken)
     -   [refreshAccessToken](#refreshaccesstoken)
     -   [revokeAccessToken](#revokeaccesstoken)
-    -   [trySignInSilently](#trysigninsilently)
     -   [httpRequest](#httprequest)
     -   [httpRequestAll](#httprequestall)
     -   [enableHttpHandler](#enablehttphandler)
@@ -28,6 +27,7 @@
     -   [getOIDCServiceEndpoints](#getoidcserviceendpoints)
     -   [on](#on)
     -   [updateConfig](#updateconfig)
+    -   [trySignInSilently](#trysigninsilently)
 -   [Storage](#storage)
     -   [Session Storage](#session-storage)
     -   [Web Worker](#web-worker)
@@ -598,53 +598,6 @@ const App = () => {
 }
 ```
 ---
-### trySignInSilently
-This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
-This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
-
-This uses an iFrame to check if there is an active user session in Asgardeo by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
-
-To dispatch a token request, the [`signIn()`](#signin) or `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
-```typescript
-trySignInSilently(): Promise<boolean | BasicUserInfo>;
-```
->**Warning**
->Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser.
-#### Returns
-This returns a promise that resolves with a [`BasicUserInfo`](#basicuserinfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
-#### Example
-Silent sign-in can be performed in **two ways**.
-1. You can enable silent sign-in as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
-    ```json
-    {
-        ...
-        disableTrySignInSilently: false
-    }
-    ```
-2. Or, you can call the `trySignInSilently()` function within the application and perform silent sign-in.
-    ```typescript
-    import { useAuthContext } from "@asgardeo/auth-react";
-
-    const App = () => {
-        const { trySignInSilently } = useAuthContext();
-
-        useEffect(() => {
-            trySignInSilently().then((response)=>{
-                if(response) {
-                    // The user is signed in.
-                    // handle basic user info
-                }
-
-                // If response is false,
-                // The user is not signed in.
-            });
-        }, []);
-        .
-        .
-        .
-    }
-    ```
----
 ### httpRequest
 This method is used to send http requests to Asgardeo or desired backend. The developer doesn't need to manually attach the access token since this method does it automatically.
 
@@ -1015,6 +968,56 @@ updateConfig({
     signOutRedirectURL: "https://localhost:3000/sign-out"
 });
 ```
+---
+### trySignInSilently
+>**Warning**
+>Since this method uses an iFrame, it will not work if third-party cookies are blocked in the browser. Most modern browsers block third-party cookies by default and can cause some unexpected behavior with this function. 
+>Therefore it is recommended to use your own implementation of silent sign-in from the application side using the [`signIn()`](#signin) method.
+
+This method attempts to sign a user in silently by sending an authorization request with the `prompt` query parameter set to `none`.
+This will be useful when you want to sign a user in automatically while avoiding the browser redirects.
+
+This uses an iFrame to check if there is an active user session in Asgardeo by sending an authorization request. If the request returns an authorization code, then the token request is dispatched and the returned token is stored effectively signing the user in.
+
+To dispatch a token request, the [`signIn()`](#signin) or `trySignInSilently()` method should be called by the page/component rendered by the redirect URL.
+```typescript
+trySignInSilently(): Promise<boolean | BasicUserInfo>;
+```
+
+#### Returns
+This returns a promise that resolves with a [`BasicUserInfo`](#basicuserinfo) object following a successful sign in. If the user is not signed into the Asgardeo, then the promise resolves with the boolean value of `false`.
+#### Example
+Silent sign-in can be performed in **two ways**.
+1. You can enable silent sign-in as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
+    ```json
+    {
+        ...
+        disableTrySignInSilently: false
+    }
+    ```
+2. Or, you can call the `trySignInSilently()` function within the application and perform silent sign-in.
+    ```typescript
+    import { useAuthContext } from "@asgardeo/auth-react";
+
+    const App = () => {
+        const { trySignInSilently } = useAuthContext();
+
+        useEffect(() => {
+            trySignInSilently().then((response)=>{
+                if(response) {
+                    // The user is signed in.
+                    // handle basic user info
+                }
+
+                // If response is false,
+                // The user is not signed in.
+            });
+        }, []);
+        .
+        .
+        .
+    }
+    ```
 ---
 ---
 ## Storage
