@@ -34,7 +34,6 @@ Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC
 -   [Secure Routes](/API.md#1-secureroute)
 -   [Secure Components](/API.md#3-authenticatedcomponent)
 -   [Send HTTP Requests to Asgardeo](/API.md#httprequest)
--   [Silent Sign In](/API.md#trysigninsilently)
 
 ## Prerequisite - Register your application in Asgardeo
 
