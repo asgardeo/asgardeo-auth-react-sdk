@@ -135,7 +135,7 @@ const Routes = () => {
                         // Fires when the user is not authenticated.
                         // Will be directed to sign in.
                         signIn();
-                    }
+                    }}
                 />
                 <Route component={NotFoundPage} />
             </Switch>
