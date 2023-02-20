@@ -22,7 +22,9 @@ const path = require("path");
 const { findPort } = require("dev-server-ports");
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
-const HOST = "localhost";
+const HOST = process.env.HOST || "localhost";
+const devServerHostCheckDisabled = process.env.DISABLE_DEV_SERVER_HOST_CHECK === "true";
+const devServerHTTPSDisabled = process.env.DISABLE_DEV_SERVER_HTTPS === "true";
 
 const generatePortInUsePrompt = async () => {
     const chalk = await import("chalk");
@@ -42,8 +44,9 @@ module.exports = {
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         historyApiFallback: true,
-        https: true,
+        https: !devServerHTTPSDisabled,
         host: HOST,
+        disableHostCheck: devServerHostCheckDisabled,
         inline: true,
         port: findPort(PORT, HOST, false, {
             extensions: {
