@@ -615,7 +615,7 @@ httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
 
    |Attribute|Type|Default|Description|
    |--|--|--|--|
-   |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header.|
+   |`attachToken`|`boolean`|`true`|If set to `true`, the token will be attached to the request header. <br/><br/> 💡 **Note** : If the request is credentialed,  server must specify a domain, and cannot use wild carding. This would lead to [CORS errors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) and if you intend to bypass this behavior per request, add `wihCredentials: false` to the `httpRequest` config.|
    |`shouldEncodeToFormData`|`boolean`|`false`|If set to `true`, the request body will be encoded to `FormData`. The body (specified by the `data` attribute) should be a Javascript object. |
 
 
