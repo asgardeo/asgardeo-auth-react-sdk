@@ -20,7 +20,7 @@
     "scripts": {
         "lint": "eslint --ext .js,.ts .",
         "fix-lint": "eslint --ext .js,.ts . --fix",
-        "build": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=production",
+        "build": "rimraf dist && npm run type-check && cross-env NODE_OPTIONS=--openssl-legacy-provider webpack -p --env.NODE_ENV=production",
         "build:dev": "rimraf dist && npm run type-check && webpack -p --env.NODE_ENV=development",
         "build:watch": "npm run build:dev -- --watch",
         "type-check": "tsc --emitDeclarationOnly",
