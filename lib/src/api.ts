@@ -338,6 +338,15 @@ class AuthAPI {
     }
 
     /**
+     * This method specifies if the session is active or not.
+     *
+     * @return {Promise<boolean>} - A Promise that resolves with `true` if there is an active session.
+     */
+    public async isSessionActive(): Promise<boolean> {        
+        return this._client.isSessionActive();
+    }    
+
+    /**
      * This method enables callback functions attached to the http client.
      *
      * @return {Promise<boolean>} - A promise that resolves with True.

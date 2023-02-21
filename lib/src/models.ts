@@ -45,6 +45,7 @@ export interface ReactConfig {
      * with the latest session information from the server. This option could be used to disable that behaviour.
      */
     disableTrySignInSilently?: boolean;
+    checkActiveSession?: boolean;
 }
 
 export type AuthReactConfig = AuthSPAClientConfig & ReactConfig;
