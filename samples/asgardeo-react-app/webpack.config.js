@@ -27,13 +27,11 @@ const devServerHostCheckDisabled =
     process.env.DISABLE_DEV_SERVER_HOST_CHECK === "true";
 const https = process.env.HTTPS === "true";
 
-const generatePortInUsePrompt = async () => {
-    const chalk = await import("chalk");
+const generatePortInUsePrompt = () => {
+    return `Be sure to update the following configurations if you proceed with the port change.
 
-    return `${ chalk.blue("Be sure to update the following configurations if you proceed with the port change.") }
-
-    1. Update the ${ chalk.bgBlack("PORT") } in ${ chalk.bgBlack(".env") } file in the app root.
-    2. Update the signInRedirectURL & signOutRedirectURL in ${ chalk.bgBlack("src/config.json") }.
+    1. Update the "PORT" in ".env" file in the app root.
+    2. Update the signInRedirectURL & signOutRedirectURL in "src/config.json".
     3. Go to the Asgardeo console and navigate to the protocol tab of your application:
         - Update the Authorized Redirect URL.
         - Update the Allowed Origins.
@@ -43,8 +41,8 @@ const generatePortInUsePrompt = async () => {
 module.exports = async () => {
     const PORT = await findPort(DEFAULT_PORT, HOST, false, {
         extensions: {
-            BEFORE_getProcessTerminationMessage: async () => {
-                return await generatePortInUsePrompt();
+            BEFORE_getProcessTerminationMessage: () => {
+                return generatePortInUsePrompt();
             },
         },
     });
