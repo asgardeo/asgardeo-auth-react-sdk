@@ -15,6 +15,13 @@
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-3.0.3.tgz#759225dd0d842ebafdeb5129dd443b639617207a"
   integrity sha512-nXiU8i5UfPGcMIrb8t21hqGRiOJQqrdqPfLMVcFun20H4Emi5z7k5M5gwInZt87oYcMT+ZKANF0Woa1YKUDxgw==
 
+"@asgardeo/auth-react@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-react/-/auth-react-2.0.0.tgz#3ecff31d8cbe062150ddbda226a9c1fd9a709666"
+  integrity sha512-mUy4xVBOFQleeAePluarw+GkmYnMPnic4yO/ZVrAT4c+xjoAOw+e+NykrkdcJakcG0hezhYOqKdPUb+SylfvMQ==
+  dependencies:
+    "@asgardeo/auth-spa" "^1.0.0"
+
 "@asgardeo/auth-spa@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-1.0.0.tgz#ee1a4c1302362f5d25f8633b0e71f646c1354c54"
@@ -2320,7 +2327,7 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router@*", "@types/react-router@^5.1.19":
+"@types/react-router@*":
   version "5.1.19"
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.19.tgz#9b404246fba7f91474d7008a3d48c17b6e075ad6"
   integrity sha512-Fv/5kb2STAEMT3wHzdKQK2z8xKq38EDIGVrutYLmQVVLe+4orDFquU52hQrULnEHinMKv9FSA6lf9+uNT1ITtA==

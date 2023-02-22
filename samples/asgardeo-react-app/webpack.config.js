@@ -21,9 +21,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const { findPort } = require("dev-server-ports");
 
-const PORT = parseInt(process.env.PORT, 10) || 3000;
 const HOST = process.env.HOST || "localhost";
-const devServerHostCheckDisabled = process.env.DISABLE_DEV_SERVER_HOST_CHECK === "true";
+const DEFAULT_PORT = 3000;
+const devServerHostCheckDisabled =
+    process.env.DISABLE_DEV_SERVER_HOST_CHECK === "true";
 const https = process.env.HTTPS === "true";
 
 const generatePortInUsePrompt = async () => {
@@ -39,68 +40,70 @@ const generatePortInUsePrompt = async () => {
 `;
 };
 
+module.exports = async () => {
+    const PORT = await findPort(DEFAULT_PORT, HOST, false, {
+        extensions: {
+            BEFORE_getProcessTerminationMessage: async () => {
+                return await generatePortInUsePrompt();
+            },
+        },
+    });
 
-module.exports = {
-    devServer: {
-        contentBase: path.resolve(__dirname, "dist"),
-        historyApiFallback: true,
-        https: https,
-        host: HOST,
-        disableHostCheck: devServerHostCheckDisabled,
-        inline: true,
-        port: findPort(PORT, HOST, false, {
-            extensions: {
-                BEFORE_getProcessTerminationMessage: async () => {
-                    return await generatePortInUsePrompt();
-                }
-            }
-        })
-    },
-    devtool: "source-map",
-    entry: [ "./src/app.tsx" ],
-    mode: "development",
-    module: {
-        rules: [
-            {
-                test: /\.(tsx|ts|js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader"
-                }
-            },
-            {
-                test: /\.css$/,
-                use: [ "style-loader", "css-loader" ]
-            },
-            {
-                test: /\.(png|jpg|cur|gif|eot|ttf|woff|woff2)$/,
-                use: [ "url-loader" ]
-            },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader"
+    return ({
+        devServer: {
+            static: path.resolve(__dirname, "dist"),
+            historyApiFallback: true,
+            https: https,
+            host: HOST,
+            allowedHosts: devServerHostCheckDisabled ? "all" : undefined,
+            port: PORT,
+        },
+        devtool: "source-map",
+        entry: [ "./src/app.tsx" ],
+        mode: "development",
+        module: {
+            rules: [
+                {
+                    test: /\.(tsx|ts|js|jsx)$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader"
                     }
-                ]
-            },
-            {
-                test: /\.js$/,
-                enforce: "pre",
-                use: [ "source-map-loader" ],
-            }
-        ]
-    },
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "[name].js"
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "./src/index.html"
-        })
-    ],
-    resolve: {
-        extensions: [ ".tsx", ".ts", ".js", ".json" ]
-    }
+                },
+                {
+                    test: /\.css$/,
+                    use: [ "style-loader", "css-loader" ]
+                },
+                {
+                    test: /\.(png|jpg|cur|gif|eot|ttf|woff|woff2)$/,
+                    use: [ "url-loader" ]
+                },
+                {
+                    test: /\.html$/,
+                    use: [
+                        {
+                            loader: "html-loader"
+                        }
+                    ]
+                },
+                {
+                    test: /\.js$/,
+                    enforce: "pre",
+                    use: [ "source-map-loader" ]
+                }
+            ]
+        },
+        output: {
+            path: path.resolve(__dirname, "dist"),
+            filename: "[name].js"
+        },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: "./src/index.html"
+            })
+        ],
+        resolve: {
+            extensions: [ ".tsx", ".ts", ".js", ".json" ]
+        }
+    });
 };
