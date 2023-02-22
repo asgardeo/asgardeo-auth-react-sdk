@@ -48,9 +48,18 @@ Follow this guide to integrate Asgardeo to your own React Application. To try ou
 ### 1. Installing the Package
 
 Run the following command to install `@asgardeo/auth-react` & `react-router-dom` from the npm registry.
+
+Use below command if you are using *React v16.8* or greater & *React Router v6*
+
 ```bash
 npm install @asgardeo/auth-react react-router-dom --save
 ```
+Else if you are using *React v16.8* or greater & *React Router v5*, use below command
+
+```bash
+npm install @asgardeo/auth-react@1.1.19 react-router-dom@5.3.4 --save
+```
+
 > **Note**
 > The `react-router-dom` package is a peer-dependency of the SDK and it is required to be installed for the SDK to work. We are working on making it optional.
 
