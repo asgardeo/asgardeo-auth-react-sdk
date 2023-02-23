@@ -142,6 +142,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         }
         (async () => {
             setInitialized(await AuthClient.init(config));
+            checkIsAuthenticated();
         })();
 
     }, [ config ]);
@@ -242,6 +243,18 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         })();
 
     }, [ config ]);
+
+    /**
+     * Check if the user is authenticated and update the state.isAuthenticated value.
+     */
+    const checkIsAuthenticated = async () => {
+        const isAuthenticatedState = await AuthClient.isAuthenticated();        
+
+        if (isAuthenticatedState) {
+            AuthClient.updateState({ ...state, isAuthenticated: isAuthenticatedState, isLoading: false });
+            dispatch({ ...state, isAuthenticated: isAuthenticatedState, isLoading: false });
+        }
+    };
 
     /**
      * Render state and special case actions
