@@ -1,0 +1,22 @@
+name: Release Asgardeo React App Docker Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        default: 'latest'
+        type: string
+
+jobs:
+  docker:
+    uses: ./.github/workflows/docker-build-template.yml
+    with:
+      repository_name: 'asgardeo/react-app-sample'
+      version: ${{ inputs.version }}
+      docker_context: './samples/asgardeo-react-app/'
+      platforms: 'linux/amd64,linux/arm64'
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
