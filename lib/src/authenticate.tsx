@@ -252,19 +252,27 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
         if (isAuthenticatedState) {
             const response = await AuthClient.getBasicUserInfo();
-            const stateToUpdate ={
-                allowedScopes: response.allowedScopes,
-                displayName: response.displayName,
-                email: response.email,
-                isAuthenticated: true,
-                isLoading: false,
-                isSigningOut: false,
-                sub: response.sub,
-                username: response.username
-            };
-            
-            AuthClient.updateState(stateToUpdate);
-            dispatch({ ...state, ...stateToUpdate });
+
+            if (response) {
+                const stateToUpdate ={
+                    allowedScopes: response.allowedScopes,
+                    displayName: response.displayName,
+                    email: response.email,
+                    isAuthenticated: true,
+                    isLoading: false,
+                    isSigningOut: false,
+                    sub: response.sub,
+                    username: response.username
+                };
+
+                AuthClient.updateState(stateToUpdate);
+                dispatch({ ...state, ...stateToUpdate });
+
+                return;
+            }
+
+            AuthClient.updateState({ ...state, isAuthenticated: isAuthenticatedState, isLoading: false });
+            dispatch({ ...state, isAuthenticated: isAuthenticatedState, isLoading: false });
         }
     };
 
