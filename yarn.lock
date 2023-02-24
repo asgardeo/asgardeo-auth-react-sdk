@@ -15,13 +15,6 @@
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-3.0.3.tgz#759225dd0d842ebafdeb5129dd443b639617207a"
   integrity sha512-nXiU8i5UfPGcMIrb8t21hqGRiOJQqrdqPfLMVcFun20H4Emi5z7k5M5gwInZt87oYcMT+ZKANF0Woa1YKUDxgw==
 
-"@asgardeo/auth-react@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-react/-/auth-react-2.0.0.tgz#3ecff31d8cbe062150ddbda226a9c1fd9a709666"
-  integrity sha512-mUy4xVBOFQleeAePluarw+GkmYnMPnic4yO/ZVrAT4c+xjoAOw+e+NykrkdcJakcG0hezhYOqKdPUb+SylfvMQ==
-  dependencies:
-    "@asgardeo/auth-spa" "^1.0.0"
-
 "@asgardeo/auth-spa@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-1.0.0.tgz#ee1a4c1302362f5d25f8633b0e71f646c1354c54"
@@ -3680,6 +3673,13 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
+cross-env@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+  integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
+  dependencies:
+    cross-spawn "^7.0.1"
+
 cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
@@ -3687,7 +3687,7 @@ cross-fetch@^3.1.5:
   dependencies:
     node-fetch "2.6.7"
 
-cross-spawn@^7.0.2, cross-spawn@^7.0.3:
+cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
   integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
