@@ -99,6 +99,7 @@ code {
     word-break: break-all;
     padding: 20px;
     text-align: left;
+    border-radius: 4px;
 }
 
 .code .id-token-0 {
@@ -216,4 +217,9 @@ code {
     color: #9f3a38;
     box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 0 0 transparent;
     padding: 1em 1.5em;
+}
+
+.asg-json-viewer {
+    background-color: #272822 !important;
+    padding: 20px;
 }
