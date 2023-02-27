@@ -74,6 +74,9 @@ jobs:
             cd samples
             rm -rf **/node_modules/
             rm -rf samples/**/dist/
+            rm -rf samples/asgardeo-choreo-react-express/apps/**/node_modules/
+            rm -rf samples/asgardeo-choreo-react-express/apps/client/build/
+            rm -rf samples/asgardeo-choreo-react-express/apps/server/dist/
             for dir in */ ; do
                 zip -r "../artifacts/${dir%/}.zip" $dir
             done
