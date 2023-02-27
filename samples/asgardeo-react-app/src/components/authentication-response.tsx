@@ -18,7 +18,7 @@
 
 import { BasicUserInfo } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
-import ReactJson from "react-json-view";
+import { JsonViewer } from '@textea/json-viewer'
 
 /**
  * Decoded ID Token Response component Prop types interface.
@@ -71,20 +71,22 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                 Derived by the&nbsp;
                 <code className="inline-code-block">
                     <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
-                       target="_blank">
+                       target="_blank"
+                       rel="noreferrer"
+                    >
                         @asgardeo/auth-react
                     </a>
                 </code>&nbsp;SDK
             </h4>
             <div className="json">
-                <ReactJson
-                    src={ derivedResponse?.authenticateResponse }
-                    name={ null }
+                <JsonViewer
+                    className="asg-json-viewer"
+                    value={ derivedResponse?.authenticateResponse }
                     enableClipboard={ false }
                     displayObjectSize={ false }
                     displayDataTypes={ false }
-                    iconStyle="square"
-                    theme="monokai"
+                    rootName={ false }
+                    theme="dark"
                 />
             </div>
             <h2 className="mb-0 mt-4">ID token</h2>
@@ -108,14 +110,14 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                         <h5>
                             <b>Decoded:</b> Header
                         </h5>
-                        <ReactJson
-                            src={ derivedResponse?.decodedIdTokenHeader }
-                            name={ null }
+                        <JsonViewer
+                            className="asg-json-viewer"
+                            value={ derivedResponse?.decodedIdTokenHeader }
                             enableClipboard={ false }
                             displayObjectSize={ false }
                             displayDataTypes={ false }
-                            iconStyle="square"
-                            theme="monokai"
+                            rootName={ false }
+                            theme="dark"
                         />
                     </div>
 
@@ -123,14 +125,14 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
                         <h5>
                             <b>Decoded:</b> Payload
                         </h5>
-                        <ReactJson
-                            src={ derivedResponse?.decodedIDTokenPayload }
-                            name={ null }
+                        <JsonViewer
+                            className="asg-json-viewer"
+                            value={ derivedResponse?.decodedIDTokenPayload }
                             enableClipboard={ false }
                             displayObjectSize={ false }
                             displayDataTypes={ false }
-                            iconStyle="square"
-                            theme="monokai"
+                            rootName={ false }
+                            theme="dark"
                         />
                     </div>
                     <div className="json">

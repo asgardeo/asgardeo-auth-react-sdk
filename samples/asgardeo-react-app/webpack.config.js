@@ -22,7 +22,7 @@ const path = require("path");
 const { findPort } = require("dev-server-ports");
 
 const HOST = process.env.HOST || "localhost";
-const DEFAULT_PORT = 3000;
+const DEFAULT_PORT = process.env.PORT || 3000;
 const devServerHostCheckDisabled =
     process.env.DISABLE_DEV_SERVER_HOST_CHECK === "true";
 const https = process.env.HTTPS === "true";
@@ -51,7 +51,7 @@ module.exports = async () => {
         devServer: {
             static: path.resolve(__dirname, "dist"),
             historyApiFallback: true,
-            https: https,
+            server: https ? "https": "http",
             host: HOST,
             allowedHosts: devServerHostCheckDisabled ? "all" : undefined,
             port: PORT,
