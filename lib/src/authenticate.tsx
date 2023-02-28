@@ -48,8 +48,8 @@ import { AuthContextInterface, AuthReactConfig, AuthStateInterface } from "./mod
  * Default `AuthReactConfig` config.
  */
 const defaultConfig: Partial<ReactConfig> = {
-    disableTrySignInSilently: true,
-    checkActiveSession: false
+    disableAutoSignIn: true,
+    disableTrySignInSilently: true
 };
 
 /**
@@ -215,7 +215,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 return;
             }
 
-            if (config.checkActiveSession && await AuthClient.isSessionActive()) {
+            if (config.disableAutoSignIn && await AuthClient.isSessionActive()) {
                 signIn();
             }  
 

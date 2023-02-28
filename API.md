@@ -13,7 +13,7 @@
 -   [List of supported APIs](#list-of-supported-apis)
     -   [signIn](#signin)
     -   [isAuthenticated](#isauthenticated)
-    -   [checkActiveSession](#checkactivesession)
+    -   [autoSignIn](#autoSignIn)
     -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signOut](#signout)
     -   [getIDToken](#getidtoken)
@@ -381,7 +381,7 @@ const App = () => {
 ```
 ---
 
-### checkActiveSession
+### autoSignIn
 
 This will enable a mechanism where the application will sign in automatically if there is an already active session in an instance of the same application in the same browser. This behaves similar to [`trySignInSilently()`](#trySignInSilently), but does not use an iFrame to check the session and instead uses a parameter in the local storage of the browser.
 
@@ -390,11 +390,11 @@ This will enable a mechanism where the application will sign in automatically if
 >The reason is that this method uses a parameter in the local storage of the browser.
 
 
-You can add `checkActiveSession` as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
+You can add `disableAutoSignIn` as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
 ```json
 {
     ...
-    checkActiveSession: true
+    disableAutoSignIn: false
 }
 ```
 
@@ -1135,7 +1135,7 @@ You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 | `clientID`                   | Required          | `string`        | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                                             |
 | `clientSecret`               | Optional          | `string`        | ""                                                                      | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                                 |
 | `enablePKCE`                 | Optional          | `boolean`       | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                                           |
-| `checkActiveSession` | Optional | `boolean` | `false` | Specifies if the SDK should try to sign in silently on mount using the browser storage approach. |
+| `disableAutoSignIn` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount using the browser storage approach. |
 | `prompt`                     | Optional          | `string`        | ""                                                                      | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                                              |
 | `responseMode`               | Optional          | `ResponseMode`  | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                               |
 | `scope`                      | Optional          | `string[]`      | `["openid"]`                                                            | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                                           |
