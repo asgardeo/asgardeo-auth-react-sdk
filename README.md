@@ -128,7 +128,7 @@ import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 // In package.json
 
 dependencies: {
-    "@asgardeo/auth-react": "1.1.18"
+    "@asgardeo/auth-react": "^2.0.0"
 }
 ```
 </p>

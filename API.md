@@ -13,6 +13,7 @@
 -   [List of supported APIs](#list-of-supported-apis)
     -   [signIn](#signin)
     -   [isAuthenticated](#isauthenticated)
+    -   [autoSignIn](#autoSignIn)
     -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signOut](#signout)
     -   [getIDToken](#getidtoken)
@@ -378,6 +379,26 @@ const App = () => {
     .
 }
 ```
+---
+
+### autoSignIn
+
+This will enable a mechanism where the application will sign in automatically if there is an already active session in an instance of the same application in the same browser. This behaves similar to [`trySignInSilently()`](#trySignInSilently), but does not use an iFrame to check the session and instead uses a parameter in the local storage of the browser.
+
+>**Warning**
+>The will only work if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
+>The reason is that this method uses a parameter in the local storage of the browser.
+
+
+You can add `disableAutoSignIn` as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
+```json
+{
+    ...
+    disableAutoSignIn: false
+}
+```
+
+
 ---
 ### getBasicUserInfo
 This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#basicuserinfo) section.
@@ -1114,6 +1135,7 @@ You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 | `clientID`                   | Required          | `string`        | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                                             |
 | `clientSecret`               | Optional          | `string`        | ""                                                                      | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                                 |
 | `enablePKCE`                 | Optional          | `boolean`       | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                                           |
+| `disableAutoSignIn` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in on app load using the browser storage approach. |
 | `prompt`                     | Optional          | `string`        | ""                                                                      | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                                              |
 | `responseMode`               | Optional          | `ResponseMode`  | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                               |
 | `scope`                      | Optional          | `string[]`      | `["openid"]`                                                            | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                                           |
@@ -1127,8 +1149,8 @@ You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 | [`storage`](#storage) | Optional | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"` | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                               | |
 | `resourceServerURLs` |Required if the `storage` is set to `webWorker` | `string[]` | `[]` | The URLs of the API endpoints. This is required if the storage method is set to `webWorker`. Additionally, when API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified either in `baseURL` or in `resourceServerURLs` attributes will be allowed. Everything else will be denied. | |
 |`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                                             |
-| `disableTrySignInSilently` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount.                                                                                                                                                                                                                                                                                             |
-|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management. Set this flag to `true` to add single logout capabilities to your application.                                                                                                                                                                                                                                    |
+| `disableTrySignInSilently` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount using the iFrame. |
+|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management. Set this flag to `true` to add single logout capabilities to your application. |
 
 ### BasicUserInfo
 
