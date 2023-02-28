@@ -215,7 +215,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 return;
             }
 
-            if (config.disableAutoSignIn && await AuthClient.isSessionActive()) {
+            if (!config.disableAutoSignIn && await AuthClient.isSessionActive()) {
                 signIn();
             }  
 
