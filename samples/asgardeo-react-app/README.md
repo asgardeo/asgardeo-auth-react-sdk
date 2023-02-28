@@ -6,7 +6,6 @@ This sample is developed to demonstrate the basic usage of the Asgardeo Auth Rea
 
 ### Prerequisites
 -   `Node.js` (version 10 or above).
--   `yarn` package manager.
 
 ### Register an Application
 
@@ -39,7 +38,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ### Run the Application
 
 ```bash
-yarn install && npm start
+npm install && npm start
 ```
 The app should open at [`https://localhost:3000`](https://localhost:3000)
 
