@@ -390,7 +390,7 @@ This will enable a mechanism where the application will sign in automatically if
 >The reason is that this method uses a parameter in the local storage of the browser.
 
 
-You can `checkActiveSession` as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
+You can add `checkActiveSession` as a config in the [Asgardeo SDK configuration](#authreactconfig) as follows. This will make the application to attempt silent sign-in as soon as it loads.
 ```json
 {
     ...
