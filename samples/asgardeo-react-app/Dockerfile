@@ -26,7 +26,7 @@ ENV DISABLE_DEV_SERVER_HOST_CHECK=true
 ENV HTTPS=false
 
 # Install dependencies
-RUN yarn install
+RUN npm install
 
 # Expose port 3000
 EXPOSE 3000
