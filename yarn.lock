@@ -14,10 +14,10 @@
   resolved "https://registry.npmjs.org/@asgardeo/auth-js/-/auth-js-2.0.14.tgz"
   integrity sha512-Wl+JzGF+xy7yesscJh57jXYMqMKd9X13n9Xuxhlhi1n+wb/jcVsYua5Fw6UvOA/+eCwh6f7F93frfzZdVHpqmg==
 
-"@asgardeo/auth-spa@^0.4.11":
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.4.11.tgz#8c291dc4ef4dfd8604d340c70b5bfe66d1b56d4f"
-  integrity sha512-XAj+IFH8xrYMhH4liCc4Hpq80HzmJcLRB7JpEWSSyxIg2QKwlVk+jjpU4t9W8aGXfj+0qqqs9XNx0bFPXMerOQ==
+"@asgardeo/auth-spa@^0.4.12":
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.4.12.tgz#38f2f0278993fd80c14a43fa8b0d043ef4c56d7a"
+  integrity sha512-b3cn81uJUDGYZPmg6GYmQVMlowrNzVlbtKfUpJ/TbVLtGxs8cJagk4ffncI9/j5U8jI8Z85hajVkybUOBRtSZw==
   dependencies:
     "@asgardeo/auth-js" "^2.0.14"
     await-semaphore "^0.1.3"
