@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -28,24 +28,11 @@ export const IssuerClaimValidationFailure: FunctionComponent = (): ReactElement 
 
     return (
         <DefaultLayout>
-            <h6 style={{
-                fontSize: "30px",
-                textTransform: "uppercase",
-                fontWeight: 600,
-                marginTop: "3rem",
-                marginBottom: "8px",
-                color: "#151515"
-            }}>
+            <h6 className="error-page_h6">
                 Issuer claim validation failed!
             </h6>
-            <p style={{
-                fontSize: "20px",
-                fontWeight: 400,
-                marginTop: "3rem",
-                marginBottom: "3rem",
-                color: "#151515"
-            }}>
-                The configured BaseURL in config.json might be incorrect.Make sure to remove any
+            <p className="error-page_p">
+                The configured BaseURL in config.json might be incorrect. Make sure to remove any
                 trailing spaces if present.
             </p>
         </DefaultLayout>

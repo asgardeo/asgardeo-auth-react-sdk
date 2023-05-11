@@ -2,8 +2,8 @@ import { AsgardeoAuthException } from "@asgardeo/auth-react";
 import React, { FunctionComponent, ReactElement } from "react";
 import { AuthenticationFailure } from "./pages/AuthenticationFailure";
 import { InvalidSystemTimePage } from "./pages/InvalidSystemTime";
-import {IssuerClaimValidationFailure} from "./pages/IssuerClaimValidationFailuer";
-import {VerifyIDTokenFailure} from "./pages/VerifyIDTokenFailure";
+import { IssuerClaimValidationFailure } from "./pages/IssuerClaimValidationFailure";
+import { VerifyIDTokenFailure } from "./pages/VerifyIDTokenFailure";
 
 interface ErrorBoundaryProps {
   error: AsgardeoAuthException;
