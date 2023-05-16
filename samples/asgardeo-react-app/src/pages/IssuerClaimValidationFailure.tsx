@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2023, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -20,22 +20,21 @@ import React, { FunctionComponent, ReactElement } from "react";
 import { DefaultLayout } from "../layouts/default";
 
 /**
- * Page to display for Invalid System Time Page.
- *
- * @param {InvalidSystemTimePagePropsInterface} props - Props injected to the component.
+ * Page to display for ID token claim validation failure.
  *
  * @return {React.ReactElement}
  */
-export const InvalidSystemTimePage: FunctionComponent = (): ReactElement => {
+export const IssuerClaimValidationFailure: FunctionComponent = (): ReactElement => {
 
-  return (
-    <DefaultLayout>
-      <h6 className="error-page_h6">
-          Your Clock is Invalid !
-      </h6>
-      <p className="error-page_p">
-          It looks like your computer&rsquo;s date and time is incorrect. Please validate and try again
-      </p>
-    </DefaultLayout>
-  );
+    return (
+        <DefaultLayout>
+            <h6 className="error-page_h6">
+                Issuer claim validation failed!
+            </h6>
+            <p className="error-page_p">
+                The configured BaseURL in config.json might be incorrect. Make sure to remove any
+                trailing spaces if present.
+            </p>
+        </DefaultLayout>
+    );
 };
