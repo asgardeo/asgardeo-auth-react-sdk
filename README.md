@@ -63,7 +63,7 @@ npm install @asgardeo/auth-react@1.1.19 react-router-dom@5.3.4 --save
 > **Note**
 > The `react-router-dom` package is a peer-dependency of the SDK and it is required to be installed for the SDK to work. We are working on making it optional.
 
-### 2. Import `AuthProvider` and Provide Configuration Parameters
+### 2. Import [`AuthProvider`](/API.md#authprovider) and Provide [Configuration Parameters](/API.md#authreactconfig)
 
 Asgardeo React SDK exposes the `AuthProvider` component, which helps you easily integrate Asgardeo to your application.
 
@@ -97,6 +97,8 @@ export const MyApp = (): ReactElement => {
     )
 }
 ```
+> **Note**
+> You can refer to the [details of `AuthProvider` `config` here](/API.md#authreactconfig)
 
 Once the root component is wrapped with AuthProvider, [`useAuthContext()` hook](#useauthcontext-hook) can be used anywhere within the application to implement user authentication capabilities in the application.
 
