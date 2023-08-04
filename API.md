@@ -403,6 +403,9 @@ You can add `disableAutoSignIn` as a config in the [Asgardeo SDK configuration](
 ### getBasicUserInfo
 This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#basicuserinfo) section.
 
+> **Note**
+> Use [`getDecodedIDToken`](#getdecodedidtoken) method to get the additional user attributes that are not returned from the `getBasicUserInfo` method.
+
 ```TypeScript
 getBasicUserInfo(): Promise<BasicUserInfo>;
 ```
