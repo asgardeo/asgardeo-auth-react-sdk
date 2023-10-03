@@ -9,17 +9,17 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
-"@asgardeo/auth-js@^2.0.14":
-  version "2.0.14"
-  resolved "https://registry.npmjs.org/@asgardeo/auth-js/-/auth-js-2.0.14.tgz"
-  integrity sha512-Wl+JzGF+xy7yesscJh57jXYMqMKd9X13n9Xuxhlhi1n+wb/jcVsYua5Fw6UvOA/+eCwh6f7F93frfzZdVHpqmg==
+"@asgardeo/auth-js@^2.0.15":
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-2.0.15.tgz#1fae42052b5a4bc15bc55e193793ca33f164597e"
+  integrity sha512-ciMLhrm/M//CvyMpCvaoA82S3tKvB529L+MwKKBbRZFe+d0HRPuDfruDhclWl7i07XO1+AVp9Dy1MdUDkhzR4Q==
 
-"@asgardeo/auth-spa@^0.4.13":
-  version "0.4.13"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.4.13.tgz#3a62bb2aad554178e2e099d4d902b059b289671c"
-  integrity sha512-PK0dMqG4Bxt+BfYKCuKaN68HVXDSlzpyW6e425wASApNx589QPvKR9EY0edGJBECnZ3Dvsc+9C8mggmKFlC/OQ==
+"@asgardeo/auth-spa@^0.4.14":
+  version "0.4.14"
+  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-0.4.14.tgz#4f67591b059c31b3db107d371be27fb274daa467"
+  integrity sha512-Eh1eBflbOftdeS42uy5yLYHW+G12dPQkdQRbQ52MMXYN212RXatqTzjtzS3f8xJs6i3qZGGI6LXdrav7ksJFXQ==
   dependencies:
-    "@asgardeo/auth-js" "^2.0.14"
+    "@asgardeo/auth-js" "^2.0.15"
     await-semaphore "^0.1.3"
     axios "^0.26.0"
     base64url "^3.0.1"
