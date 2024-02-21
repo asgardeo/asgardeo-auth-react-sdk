@@ -4,7 +4,6 @@
 
 -   [AuthProvider](#authprovider)
 -   [Securing routes with Asgardeo](#securing-routes-with-asgardeo)
-    -   [SecureRoute](#1-secureroute)
     -   [SecureApp](#2-secureapp)
     -   [AuthenticatedComponent](#3-authenticatedcomponent)
 -   [useAuthContext React Hook](#useauthcontext-react-hook)
@@ -67,7 +66,8 @@ The `AuthProvider` also automatically requests for the access token should the U
 
 If the response mode is set to [`form_post`](#using-the-form_post-response-mode), then you will have your own ways of retrieving the authorization code and session state from your backend. In that case, you can use the `getAuthParams()` prop method to pass an async callback function that would return the `authorizationCode` and `sessionState` in a Promise. This way, the `AuthProvider` will use the authorization code returned by this method to automatically request for an access token.
 
-#### Example
+Example:
+
 ```TypeScript
 export const MyApp = (): ReactElement => {
     return (
@@ -78,7 +78,8 @@ export const MyApp = (): ReactElement => {
 }
 ```
 
-#### Example with an external Auth SPA plugin
+Example with an external Auth SPA plugin:
+
 ```TypeScript
 import { TokenExchangePlugin } from "@asgardeo/token-exchange-plugin";
 
@@ -92,62 +93,13 @@ export const MyApp = (): ReactElement => {
 ```
 ---
 ## Securing routes with Asgardeo
+
 There are 3 approaches you can use to secure routes in your React application with Asgardeo. To learn more about the implementation, you can refer to [this article.](https://stackoverflow.com/collectives/wso2/articles/74041550/authenticate-react-applications-with-asgardeo-part-2-securing-routes)
 
-### 1. SecureRoute
-The SDK also provides a component called `SecureRoute` that wraps the `Route` component provided by `react-router-dom`. This allows you to secure your routes using the SDK. Only authenticated users will be taken to the route.
+### 1. SecureApp
 
-Use this if you want a route to be an authenticated route. So, this route will be rendered only if a user is authenticated. Otherwise, the `callback` function will be fired.
-
-```TypeScript
-<SecureRoute
-    path="/secure-page"
-    component={ <SecureComponent /> }
-    callback={ signInFunction }
-/>
-```
-This component takes three props. The `path`, `component` and `callback`.
-
-1. **path**: `string`
-The path pattern to match against the URL to determine if this route matches a URL, link href, or form action. This prop just relay the prop values directly to the `<Route />` component of the `react-router-dom`.
-2. **component**: `React.ReactNode | null`
-The element to render when the route matches the URL. This prop just relay the prop values directly to the `<Route />` component of the `react-router-dom`.
-3. **callback**: `() => void`
-This takes a callback function that is fired when an unauthenticated user access the route. Developers can use this callback function to either to redirect the user to the login page of the app or to call the [`signIn`](#signIn) method.
-
-
-
-#### Example
-```typescript
-import { SecureRoute, useAuthContext } from "@asgardeo/auth-react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-const Routes = () => {
-    const { signIn } = useAuthContext();
-
-    return (
-        <Router>
-            <Switch>
-                <Route exact path="/home" component={ HomePage } />
-                <SecureRoute
-                    path="/secure-page"
-                    component={ SecurePageComponent } 
-                    callback={ () => {
-                        // Fires when the user is not authenticated.
-                        // Will be directed to sign in.
-                        signIn();
-                    }}
-                />
-                <Route component={NotFoundPage} />
-            </Switch>
-        </Router>
-    )
-}
-```
-In the above example, an unauthenticated user can visit `/home` route. But they cannot visit the `/secure-page` route and they will be redirected to the Asgardeo sign-in page via [`signIn()`](#signin) function.
-
-### 2. SecureApp
 This is a component that can be used to secure a whole React app. This component wraps a React component and renders it only if the user is signed in. Otherwise, it renders the `fallback` prop. If the user is not signed in, this component automatically initiates the sign-in flow.
+
 ```TypeScript
 <SecureApp
     fallback={ <Loader /> }
@@ -186,8 +138,10 @@ const App = () => {
 }
 ```
 
-### 3. AuthenticatedComponent
+### 2. AuthenticatedComponent
+
 This component is used to wrap the components that need authentication. This offers more granular control of the elements that should or should not be rendered depending on whether the user is authenticated or not. 
+
 ```TypeScript
 <AuthenticatedComponent
     fallback={ <FallbackComponent /> }
@@ -195,7 +149,25 @@ This component is used to wrap the components that need authentication. This off
     <SecureComponent />
 </AuthenticatedComponent>
 ```
+
 If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop which accepts any **React element**.
+
+### 3. Bring Your Own Router
+
+It's also possible to implement your own routing logic to secure the protected routes, based on the routing library you use.
+
+#### React Router
+
+
+
+#### Tanstack Router
+
+
+
+#### Reach Router
+
+
+
 
 #### Example
 ```TypeScript
@@ -230,7 +202,7 @@ If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded.
 
 This is a React hook that returns the session state that contains information such as the email address of the authenticated user and the methods that are required for implementing authentication.
 
-#### Example
+Example:
 
 ```TypeScript
 const { signIn } = useAuthContext();
@@ -245,7 +217,8 @@ You can see all the APIs that can be accessed via `useAuthContext()` [in here](#
 
 The state object will contain attributes such as whether a user is currently logged in, the username of the currently logged-in user etc. It is an object of type [`AuthStateInterface`](#authstateinterface).
 
-#### Example
+Example:
+
 ```json
 {
     "allowedScopes": "openid profile",
