@@ -131,7 +131,9 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
         return AuthClient.on(hook, callback);
     };
-    const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
+    const trySignInSilently = (
+        additionalParams?: Record<string, string | boolean>
+    ) => AuthClient.trySignInSilently(state, dispatch, additionalParams);
     
     const [ error, setError ] = useState<AsgardeoAuthException>();
     const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
