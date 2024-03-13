@@ -130,7 +130,9 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
         return AuthClient.on(hook, callback);
     };
-    const trySignInSilently = () => AuthClient.trySignInSilently(state, dispatch);
+    const trySignInSilently = (
+        additionalParams?: Record<string, string | boolean>
+    ) => AuthClient.trySignInSilently(state, dispatch, additionalParams);
     
     const [ error, setError ] = useState<AsgardeoAuthException>();
     const reRenderCheckRef: MutableRefObject<boolean> = useRef(false);
@@ -224,6 +226,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
             await trySignInSilently()
                 .then(() => {
+                    console.log("authenticate-react", "hi" )
+
                     // TODO: Add logs when a logger is available.
                     // Tracked here https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/151.
                     setError(null);
