@@ -124,11 +124,6 @@ export interface AuthContextInterface {
     error: AsgardeoAuthException;
 }
 
-export interface SecureRouteInterface {
-    callback: () => void;
-    component: any;
-}
-
 /**
  * The model of the object returned by the `getAuthParams` prop method of the `AuthProvider`.
  */
