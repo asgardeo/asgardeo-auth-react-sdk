@@ -410,10 +410,11 @@ class AuthAPI {
      */
     public async trySignInSilently(
         state: AuthStateInterface,
-        dispatch: (state: AuthStateInterface) => void
+        dispatch: (state: AuthStateInterface) => void,
+        additionalParams?: Record<string, string | boolean>
     ): Promise<BasicUserInfo | boolean | undefined> {
         return this._client
-            .trySignInSilently()
+            .trySignInSilently(additionalParams)
             .then(async (response: BasicUserInfo | boolean) => {
                 if (!response) {
                     this.updateState({ ...this.getState(), isLoading: false });
