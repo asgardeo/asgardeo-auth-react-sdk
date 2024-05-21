@@ -517,7 +517,7 @@ const App = () => {
     const { getDecodedIDToken } = useAuthContext();
     
     useEffect(() => {
-        getIDToken().then((decodedIdToken) => {
+        getDecodedIDToken().then((decodedIdToken) => {
             //console.log(decodedIdToken);
         }).catch((error) => {
             //console.log(error);
