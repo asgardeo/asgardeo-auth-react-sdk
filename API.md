@@ -4,15 +4,16 @@
 
 -   [AuthProvider](#authprovider)
 -   [Securing routes with Asgardeo](#securing-routes-with-asgardeo)
-    -   [SecureApp](#2-secureapp)
-    -   [AuthenticatedComponent](#3-authenticatedcomponent)
+    -   [SecureApp](#1-secureapp)
+    -   [AuthenticatedComponent](#2-authenticatedcomponent)
+    -   [Bring Your Own Router](#3-bring-your-own-router)
 -   [useAuthContext React Hook](#useauthcontext-react-hook)
 -   [`state` Object](#state-object)
 -   [Consuming the `isLoading` State of the Auth Flow](#consuming-the-isloading-state-of-the-auth-flow)
 -   [List of supported APIs](#list-of-supported-apis)
     -   [signIn](#signin)
     -   [isAuthenticated](#isauthenticated)
-    -   [autoSignIn](#autoSignIn)
+    -   [autoSignIn](#autosignin)
     -   [getBasicUserInfo](#getbasicuserinfo)
     -   [signOut](#signout)
     -   [getIDToken](#getidtoken)
@@ -152,23 +153,6 @@ This component is used to wrap the components that need authentication. This off
 
 If the user is authenticated, the component renders the wrapped component. If the user is not authenticated, the component renders the `fallback` prop which accepts any **React element**.
 
-### 3. Bring Your Own Router
-
-It's also possible to implement your own routing logic to secure the protected routes, based on the routing library you use.
-
-#### React Router
-
-
-
-#### Tanstack Router
-
-
-
-#### Reach Router
-
-
-
-
 #### Example
 ```TypeScript
 import { AuthenticatedComponent } from "@asgardeo/auth-react";
@@ -196,6 +180,63 @@ const App = () => {
 In this case, `<Header />` and `<Footer />` will render regardless of user's authenticated status. But the `<SecureComponent />` will be only rendered when the user is authenticated. 
 
 If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded. If you didn't include a `fallback`, it will render a `null` instead.
+
+### 3. Bring Your Own Router
+
+It's also possible to implement your own routing logic to secure the protected routes, based on the routing library you use.
+
+#### React Router v6
+
+Create a reusable component that redirects user to the sign in page based on the authentication status.
+
+**ProtectedRoute.js**
+
+```js
+import { Navigate } from 'react-router-dom';
+import { useAs}
+
+const ProtectedRoute = ({ children }) => {
+  const {
+    on,
+    signIn,
+    state: { isAuthenticated }
+  } = useAuthContext();
+
+  if (!isAuthenticated) {
+    signIn();
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;
+```
+
+Use the `ProtectedRoute` as follows, in your route definition.
+
+```js
+const App = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+};
+
+export default App;
+```
 
 ---
 ## useAuthContext React Hook
