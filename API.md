@@ -95,7 +95,7 @@ export const MyApp = (): ReactElement => {
 ---
 ## Securing routes with Asgardeo
 
-There are 3 approaches you can use to secure routes in your React application with Asgardeo. To learn more about the implementation, you can refer to [this article.](https://stackoverflow.com/collectives/wso2/articles/74041550/authenticate-react-applications-with-asgardeo-part-2-securing-routes)
+There are 3 approaches you can use to secure routes in your React application with Asgardeo.
 
 ### 1. SecureApp
 
@@ -181,7 +181,7 @@ In this case, `<Header />` and `<Footer />` will render regardless of user's aut
 
 If the user is **not** authenticated, the `<FallbackComponent/>` will be loaded. If you didn't include a `fallback`, it will render a `null` instead.
 
-### 3. Bring Your Own Router
+### 3. Implement Your Own Routing Logic
 
 It's also possible to implement your own routing logic to secure the protected routes, based on the routing library you use.
 
@@ -192,18 +192,22 @@ Create a reusable component that redirects user to the sign in page based on the
 **ProtectedRoute.js**
 
 ```js
-import { Navigate } from 'react-router-dom';
-import { useAs}
+import { useAuthContext } from '@asgardeo/auth-react';
 
 const ProtectedRoute = ({ children }) => {
   const {
-    on,
     signIn,
     state: { isAuthenticated }
   } = useAuthContext();
 
   if (!isAuthenticated) {
-    signIn();
+    return (
+        <button
+          onClick={ () => signIn }
+        >
+          Sign In
+        </button>
+    )
   }
 
   return children;
@@ -215,6 +219,12 @@ export default ProtectedRoute;
 Use the `ProtectedRoute` as follows, in your route definition.
 
 ```js
+import { AuthProvider } from '@asgardeo/auth-react'
+import { Routes, Route } from 'react-router-dom'
+import ProtectedRoute from './components/ProtectedRoute'
+import Home from './pages/Home'
+import Dashboard from './pages/Dashboard'
+
 const App = () => {
   return (
     <AuthProvider>
