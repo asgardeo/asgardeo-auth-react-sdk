@@ -31,7 +31,6 @@ Asgardeo Auth React SDK  allows React applications to use [OpenID Connect - OIDC
 -   [Authenticate users](#add-a-loginlogout-button)
 -   [Show Authenticated User's Information](#show-authenticated-users-information)
 -   [Retrieve Additional User Information](/API.md#getbasicuserinfo)
--   [Secure Routes](/API.md#1-secureroute)
 -   [Secure Components](/API.md#3-authenticatedcomponent)
 -   [Send HTTP Requests to Asgardeo](/API.md#httprequest)
 
@@ -47,27 +46,18 @@ Follow this guide to integrate Asgardeo to your own React Application. To try ou
 
 ### 1. Installing the Package
 
-Run the following command to install `@asgardeo/auth-react` & `react-router-dom` from the npm registry.
-
-Use below command if you are using *React v16.8* or greater & *React Router v6*
+Run the following command to install `@asgardeo/auth-react` from the npm registry.
 
 ```bash
-npm install @asgardeo/auth-react react-router-dom --save
+npm install @asgardeo/auth-react --save
 ```
-Else if you are using *React v16.8* or greater & *React Router v5*, use below command
-
-```bash
-npm install @asgardeo/auth-react@1.1.19 react-router-dom@5.3.4 --save
-```
-
-> **Note**
-> The `react-router-dom` package is a peer-dependency of the SDK and it is required to be installed for the SDK to work. We are working on making it optional.
 
 ### 2. Import [`AuthProvider`](/API.md#authprovider) and Provide [Configuration Parameters](/API.md#authreactconfig)
 
 Asgardeo React SDK exposes the `AuthProvider` component, which helps you easily integrate Asgardeo to your application.
 
 First, import the `AuthProvider` component from `@asgardeo/auth-react.` where you applications root component is defined.
+
 > **Note**
 > Typically the root component of a react app is defined in the index.* file.
 
@@ -75,7 +65,6 @@ First, import the `AuthProvider` component from `@asgardeo/auth-react.` where yo
 import { AuthProvider } from "@asgardeo/auth-react";
 ```
 Then, wrap your root component with the `AuthProvider`.
-
 
 ```TypeScript
 import React from "react";
@@ -102,7 +91,6 @@ export const MyApp = (): ReactElement => {
 
 Once the root component is wrapped with AuthProvider, [`useAuthContext()` hook](#useauthcontext-hook) can be used anywhere within the application to implement user authentication capabilities in the application.
 
-
 ## Using APIs
 
 ### Best practices when using APIs
@@ -118,7 +106,7 @@ Asgardeo Auth React SDK is built on top of [Asgardeo Auth SPA SDK](https://githu
 <details><summary><strong>Click here for Tips:</strong> Do's When importing a component from Asgardeo React SDK</summary>
 <p>
     
-##### DO ✅
+#### DO ✅
 ```TypeScript
 import { AsgardeoSPAClient } from "@asgardeo/auth-react";
 ```
