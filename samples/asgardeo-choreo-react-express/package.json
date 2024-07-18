@@ -1,6 +1,6 @@
 {
   "name": "@asgardeo/choreo-react-express",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "React and Express based sample fullstack app to demonstrate Asgardeo / WSO2 Identity Server Auth React SDK usage",
   "keywords": [
     "Asgardeo",
