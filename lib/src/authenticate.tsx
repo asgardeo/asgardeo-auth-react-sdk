@@ -85,7 +85,10 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         authorizationCode?: string,
         sessionState?: string,
         authState?: string,
-        callback?: (response: BasicUserInfo) => void
+        callback?: (response: BasicUserInfo) => void,
+        tokenRequestConfig?: {
+            params: Record<string, unknown>
+        }
     ): Promise<BasicUserInfo> => {
         try {
             setError(null);
@@ -96,7 +99,8 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 authorizationCode,
                 sessionState,
                 authState,
-                callback
+                callback,
+                tokenRequestConfig
             );
         } catch (error) {
             return Promise.reject(error);
