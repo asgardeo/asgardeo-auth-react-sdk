@@ -35,7 +35,7 @@
     },
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "@typescript-eslint/eslint-plugin": "^5.47.0",
         "@typescript-eslint/parser": "^5.47.0",
         "eslint": "^8.30.0",
         "eslint-plugin-import": "^2.26.0",
