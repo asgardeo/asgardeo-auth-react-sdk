@@ -38,6 +38,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    
+    - name: Install dependencies
+      run: |
+        yarn
+        git diff --exit-code
+        if [ $? -ne 0 ]; then
+          echo "There are modified files after running yarn."
+          exit 1
+        fi
 
     - name: Build
       run: |
