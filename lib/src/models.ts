@@ -91,7 +91,10 @@ export interface AuthContextInterface {
         authorizationCode?: string,
         sessionState?: string,
         state?: string,
-        callback?: (response: BasicUserInfo) => void
+        callback?: (response: BasicUserInfo) => void,
+        tokenRequestConfig?: {
+            params: Record<string, unknown>
+        }
     ) => Promise<BasicUserInfo>;
     signOut: (callback?: (response: boolean) => void) => Promise<boolean>;
     getBasicUserInfo(): Promise<BasicUserInfo>;
