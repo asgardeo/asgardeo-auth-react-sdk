@@ -42,8 +42,7 @@ jobs:
     - name: Install dependencies
       run: |
         yarn
-        git diff --exit-code > /dev/null
-        if [ $? -ne 0 ]; then
+        if ! git diff --exit-code > /dev/null 2>&1; then
           echo "ERR! There are modified files after running yarn."
           exit 1
         fi
