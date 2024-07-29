@@ -332,7 +332,10 @@ signIn(
     authorizationCode?: string,
     sessionState?: string,
     authState?: string,
-    callback?: (response: BasicUserInfo) => void
+    callback?: (response: BasicUserInfo) => void,
+    tokenRequestConfig?: {
+            params: Record<string, unknown>
+    }
 );
 ```
 
@@ -348,6 +351,15 @@ signIn(
    The `signIn` method can be passed the state parameter as an argument, which will be used to obtain the token during the token-request phase of the method.
 5. **callback?**: (response: [`BasicUserInfo`](#basicuserinfo)) => `void`
    A callback function that fires when sign-in is successful. The callback function takes an object of type [`BasicUserInfo`](#basicuserinfo) as an argument.
+6. **tokenRequestConfig?**: `object` (optional)
+    An optional configuration object that allows you to augment the token request.
+    - `params` (Mandatory): Key-value pairs to be sent as additional parameters in the token request payload.
+
+       ```TypeScript
+       tokenRequestConfig: {
+           params: Record<string, unknown>
+       }
+       ```
 
 The `sign-in` hook is used to fire a callback function after signing out is successful. Check the [`on()`](#on) section for more information.
 #### Example
