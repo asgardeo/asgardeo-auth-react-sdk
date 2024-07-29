@@ -334,7 +334,7 @@ signIn(
     authState?: string,
     callback?: (response: BasicUserInfo) => void,
     tokenRequestConfig?: {
-            params: Record<string, unknown>
+        params: Record<string, unknown>
     }
 );
 ```
