@@ -116,7 +116,8 @@ export interface AuthContextInterface {
     enableHttpHandler(): Promise<boolean>;
     disableHttpHandler(): Promise<boolean>;
     updateConfig(config: Partial<AuthClientConfig<Config>>): Promise<void>;
-    trySignInSilently: (additionalParams?: Record<string, string | boolean>) => Promise<boolean | BasicUserInfo>;
+    trySignInSilently: (additionalParams?: Record<string, string | boolean>,
+        tokenRequestConfig?: { params: Record<string, unknown> }) => Promise<boolean | BasicUserInfo>;
     on(hook: Hooks.CustomGrant, callback: (response?: any) => void, id: string): void;
     on(
         hook: Exclude<Hooks, Hooks.CustomGrant>,
