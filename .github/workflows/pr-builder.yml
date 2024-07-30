@@ -44,6 +44,7 @@ jobs:
         yarn
         if ! git diff --exit-code > /dev/null 2>&1; then
           echo "ERR! There are modified files after running yarn."
+          git status -s
           exit 1
         fi
 
