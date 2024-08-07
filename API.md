@@ -203,7 +203,7 @@ const ProtectedRoute = ({ children }) => {
   if (!isAuthenticated) {
     return (
         <button
-          onClick={ () => signIn }
+          onClick={ signIn }
         >
           Sign In
         </button>
