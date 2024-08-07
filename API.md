@@ -189,7 +189,7 @@ It's also possible to implement your own routing logic to secure the protected r
 
 Create a reusable component that redirects user to the sign in page based on the authentication status.
 
-**ProtectedRoute.js**
+**ProtectedRoute.jsx**
 
 ```js
 import { useAuthContext } from '@asgardeo/auth-react';
@@ -220,7 +220,7 @@ Use the `ProtectedRoute` as follows, in your route definition.
 
 ```js
 import { AuthProvider } from '@asgardeo/auth-react'
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
