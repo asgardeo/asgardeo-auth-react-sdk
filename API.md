@@ -507,9 +507,6 @@ This method returns the `ID token` in a form of a string. To get the decoded ID 
 ```TypeScript
 getIDToken(): Promise<string>
 ```
->**Warning**
->The promise resolves successfully only if the storage type is set to [`sessionStorage`](#session-storage) or [`localStorage`](#local-storage). If it is set to [`webWorker`](#web-worker), an error is thrown.
->The reason is that the token is stored inside the web worker and cannot be accessed from outside.
 
 #### Returns
 A promise that resolves with the ID token as a string.
