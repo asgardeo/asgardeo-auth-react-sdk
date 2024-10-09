@@ -6,7 +6,7 @@
 -   [Securing routes with Asgardeo](#securing-routes-with-asgardeo)
     -   [SecureApp](#1-secureapp)
     -   [AuthenticatedComponent](#2-authenticatedcomponent)
-    -   [Bring Your Own Router](#3-bring-your-own-router)
+    -   [Bring Your Own Router](#3-implement-your-own-routing-logic)
 -   [useAuthContext React Hook](#useauthcontext-react-hook)
 -   [`state` Object](#state-object)
 -   [Consuming the `isLoading` State of the Auth Flow](#consuming-the-isloading-state-of-the-auth-flow)
