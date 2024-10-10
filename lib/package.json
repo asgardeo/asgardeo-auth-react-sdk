@@ -36,6 +36,13 @@
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
+    "files": [
+        "dist",
+        "!dist/tsconfig.tsbuildinfo",
+        "package.json",
+        "README.md",
+        "LICENSE"
+    ],
     "dependencies": {
         "@asgardeo/auth-spa": "^3.1.2"
     },
