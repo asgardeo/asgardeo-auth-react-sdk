@@ -15,7 +15,7 @@
         "React"
     ],
     "main": "dist/main.js",
-    "types": "dist/src/index.d.ts",
+    "types": "dist/types/src/index.d.ts",
     "module": "dist/main.js",
     "scripts": {
         "lint": "eslint --ext .js,.ts .",
