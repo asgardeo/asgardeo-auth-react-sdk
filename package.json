@@ -3,19 +3,7 @@
     "description": "Asgardeo Auth React SDK and Sample Apps",
     "private": true,
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "lerna run build --stream",
-        "prebuild": "yarn install && lerna run prebuild && lerna bootstrap",
-        "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
-        "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
-        "remove-yarn-lock": "npx lerna exec -- rimraf -rf yarn.lock && rimraf -rf yarn.lock",
-        "lint": "lerna run lint",
-        "fix-lint": "lerna run fix-lint",
-        "clean": "lerna run clean --stream",
-        "clean-all": "yarn run remove-package-lock && yarn run remove-yarn-lock && yarn run remove-node-modules",
-        "bump-patch-version": "lerna version patch --yes",
-        "bump-minor-version": "lerna version minor --yes",
-        "bump-major-version": "lerna version major --yes"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
@@ -39,12 +27,7 @@
         "@typescript-eslint/parser": "^5.47.0",
         "eslint": "^8.30.0",
         "eslint-plugin-import": "^2.26.0",
-        "lerna": "^6.1.0",
         "rimraf": "^3.0.2",
         "typescript": "^4.9.4"
-    },
-    "workspaces": [
-        "lib",
-        "samples/*"
-    ]
+    }
 }
