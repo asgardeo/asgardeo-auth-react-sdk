@@ -29,8 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=false && react-scripts build",
-    "test": "npx react-scripts test",
-    "eject": "npx react-scripts eject"
+    "test": "pnpm react-scripts test",
+    "eject": "pnpm react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

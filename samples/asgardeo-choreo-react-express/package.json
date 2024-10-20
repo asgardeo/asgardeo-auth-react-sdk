@@ -18,12 +18,12 @@
     "Authenticate"
   ],
   "scripts": {
-    "prebuild": "curr_dir=$(pwd) && yarn run install:client && cd $curr_dir && yarn run install:server",
-    "build": "curr_dir=$(pwd) && yarn run build:client && cd $curr_dir && yarn run build:server",
-    "install:client": "cd apps/client && CI=false yarn install --if-present",
-    "install:server": "cd apps/server && yarn install",
-    "build:client": "cd apps/client && yarn run build",
-    "build:server": "cd apps/server && yarn run build"
+    "prebuild": "curr_dir=$(pwd) && pnpm run install:client && cd $curr_dir && pnpm run install:server",
+    "build": "curr_dir=$(pwd) && pnpm run build:client && cd $curr_dir && pnpm run build:server",
+    "install:client": "cd apps/client && CI=false pnpm install",
+    "install:server": "cd apps/server && pnpm install",
+    "build:client": "cd apps/client && pnpm run build",
+    "build:server": "cd apps/server && pnpm run build"
   },
   "devDependencies": {
     "eslint-config-custom": "*",

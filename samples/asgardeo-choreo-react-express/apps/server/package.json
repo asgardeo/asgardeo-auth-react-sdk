@@ -5,10 +5,10 @@
   "type": "module",
   "author": "Yathindra Kodithuwakku <yathindrarawya123@gmail.com>",
   "scripts": {
-    "start": "yarn run server:local",
-    "prestart": "yarn run build",
-    "build": "rimraf dist && npx tsc",
-    "server:local": "concurrently \"npx tsc --watch\" \"NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon -q dist/index.js\""
+    "start": "pnpm run server:local",
+    "prestart": "pnpm run build",
+    "build": "rimraf dist && pnpm tsc",
+    "server:local": "concurrently \"pnpm tsc --watch\" \"NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon -q dist/index.js\""
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.3",

@@ -20,11 +20,11 @@
     "scripts": {
         "lint": "eslint --ext .js,.ts .",
         "fix-lint": "eslint --ext .js,.ts . --fix",
-        "build": "rimraf dist && yarn run type-check && webpack --env NODE_ENV=production",
-        "build:dev": "rimraf dist && yarn run type-check && webpack --env NODE_ENV=development",
-        "build:watch": "yarn run build:dev -- --watch",
+        "build": "rimraf dist && pnpm run type-check && webpack --env NODE_ENV=production",
+        "build:dev": "rimraf dist && pnpm run type-check && webpack --env NODE_ENV=development",
+        "build:watch": "pnpm run build:dev --watch",
         "type-check": "tsc --emitDeclarationOnly",
-        "type-check:watch": "yarn run type-check -- --watch"
+        "type-check:watch": "pnpm run type-check --watch"
     },
     "repository": {
         "type": "git",
