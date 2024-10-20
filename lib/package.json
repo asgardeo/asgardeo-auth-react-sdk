@@ -18,6 +18,7 @@
     "types": "dist/types/src/index.d.ts",
     "module": "dist/main.js",
     "scripts": {
+        "test": "jest",
         "lint": "eslint --ext .js,.ts .",
         "fix-lint": "eslint --ext .js,.ts . --fix",
         "build": "rimraf dist && yarn run type-check && webpack --env NODE_ENV=production",
