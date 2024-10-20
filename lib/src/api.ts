@@ -45,8 +45,7 @@ class AuthAPI {
         this.getState = this.getState.bind(this);
         this.init = this.init.bind(this);
         this.signIn = this.signIn.bind(this);
-        this.signOut = this.signOut.bind(this);
-        this.updateState = this.updateState.bind(this);
+        this.signOut = this.signOut.bind(this);        this.updateState = this.updateState.bind(this);
     }
 
     /**
