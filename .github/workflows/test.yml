@@ -17,5 +17,6 @@ jobs:
           node-version: "14"
       - run: npm install
       - run: npm install --save-dev jest
+      - run: cd lib
       - run: npm test
     
