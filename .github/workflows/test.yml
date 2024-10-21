@@ -15,8 +15,11 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: "14"
-      - run: npm install
-      - run: npm install --save-dev jest
-      - run: cd lib
-      - run: npm test
+      - name: Setup and run tests
+        working-directory: ../../lib
+        run: |
+            npm install
+            npm audit fix
+            npm install --save-dev jest
+            npm test
     
