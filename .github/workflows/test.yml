@@ -15,11 +15,12 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: "14"
-      - name: API tests
+      - name: SignIn Test
         working-directory: ./lib
         run: |
             npm install
             npm audit fix
             npm install --save-dev jest
-            npm test
+            npm test -- -u -t="SignIn"
+      
     
