@@ -16,7 +16,7 @@ jobs:
         with: 
           node-version: "14"
       - name: Setup and run tests
-        working-directory: ../../lib
+        working-directory: ./lib
         run: |
             npm install
             npm audit fix
