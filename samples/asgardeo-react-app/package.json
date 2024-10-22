@@ -30,7 +30,7 @@
     "private": false,
     "scripts": {
         "start": "webpack-dev-server --mode development --hot --open",
-        "prebuild": "yarn install",
+        "prebuild": "pnpm install",
         "build": "webpack"
     },
     "dependencies": {
