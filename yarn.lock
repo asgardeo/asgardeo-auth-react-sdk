@@ -15,7 +15,7 @@
   resolved "https://registry.npmjs.org/@asgardeo/auth-js/-/auth-js-5.1.0.tgz"
   integrity sha512-o+bo3r9RDo97CqEAFpneYIGdulBRUbdjR6QhZgF89zy3rnss1U1MA2v2heMwXKNbMfvbZCBiBDq2yhUcAk9SIA==
 
-"@asgardeo/auth-react@file:C:\\Users\\PCCF(HOFF)\\argardeo-auth\\asgardeo-auth-react-sdk\\lib":
+"@asgardeo/auth-react@file:C:\\Users\\PCCF(HOFF)\\Desktop\\asgardeo-auth-react-sdk\\lib":
   version "5.2.0"
   resolved "file:lib"
   dependencies:
