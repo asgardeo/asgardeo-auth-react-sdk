@@ -36,5 +36,9 @@ jobs:
         working-directory: ./lib
         run: |
             npm test -- -u -t="SignOut"
+      - name: SignOut Test
+        working-directory: ./lib
+        run: |
+            npm test -- -u -t="isAuthenticated()"
       
     
