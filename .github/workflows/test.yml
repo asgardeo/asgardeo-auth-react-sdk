@@ -22,5 +22,19 @@ jobs:
             npm audit fix
             npm install --save-dev jest
             npm test -- -u -t="SignIn"
+      - name: Setup
+        working-directory: ./lib
+        run: |
+            npm install
+            npm audit fix
+            npm install --save-dev jest
+      - name: SignIn Test
+        working-directory: ./lib
+        run: |
+            npm test -- -u -t="SignIn"
+      - name: SignOut Test
+        working-directory: ./lib
+        run: |
+            npm test -- -u -t="SignOut"
       
     
