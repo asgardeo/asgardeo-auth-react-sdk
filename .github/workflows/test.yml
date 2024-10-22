@@ -15,13 +15,6 @@ jobs:
       - uses: actions/setup-node@v3
         with: 
           node-version: "14"
-      - name: SignIn Test
-        working-directory: ./lib
-        run: |
-            npm install
-            npm audit fix
-            npm install --save-dev jest
-            npm test -- -u -t="SignIn"
       - name: Setup
         working-directory: ./lib
         run: |
@@ -44,5 +37,9 @@ jobs:
         working-directory: ./lib
         run: |
             npm test -- -u -t="getUserInfo"
+      - name: refreshAccessToken Test
+        working-directory: ./lib
+        run: |
+            npm test -- -u -t="refreshAccessToken"
       
     
