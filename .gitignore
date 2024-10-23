@@ -30,7 +30,7 @@ lerna-debug.log
 
 # Environment variables files
 .env
-!samples/asgardeo-react-app/.env
+!samples/asgardeo-vite-app/.env
 !samples/asgardeo-react-ts-app/.env
 .env.local
 .env.development.local
