@@ -1,7 +1,21 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json"},
-    { "path": "./tsconfig.node.json"}
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src",
+    "declarations.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
+
