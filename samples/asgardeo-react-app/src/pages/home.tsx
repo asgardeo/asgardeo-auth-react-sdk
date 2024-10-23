@@ -17,14 +17,14 @@
  */
 
 import { BasicUserInfo, Hooks, useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
-import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
 import { AuthenticationResponse } from "../components";
 import { useLocation } from "react-router-dom";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
+import {ReactLogo} from "../images";
 
 interface DerivedState {
     authenticateResponse: BasicUserInfo,
@@ -166,7 +166,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
                     : (
                         <div className="content">
                             <div className="home-image">
-                                <img alt="react-logo" src={ REACT_LOGO } className="react-logo-image logo"/>
+                                <img alt="react-logo" src={ ReactLogo } className="react-logo-image logo"/>
                             </div>
                             <h4 className={ "spa-app-description" }>
                                 Sample demo to showcase authentication for a Single Page Application

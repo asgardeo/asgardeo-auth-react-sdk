@@ -16,8 +16,8 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement } from "react";
-import { DefaultLayout } from "../layouts/default";
+import {FunctionComponent, ReactElement} from "react";
+import {DefaultLayout} from "../layouts/default";
 
 /**
  * Page to display for ID token claim validation failure.

@@ -1,23 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "jsx": "react",
-        "module": "ESNext",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "typeRoots": [
-            "./typings"
-        ]
-    },
-    "include": [
-        "typings/**/*",
-        "src/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "**/*.spec.ts"
-    ]
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src",
+    "declarations.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
+

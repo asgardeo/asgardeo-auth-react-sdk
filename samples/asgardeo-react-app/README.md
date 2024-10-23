@@ -1,4 +1,4 @@
-# Asgardeo Auth React SDK Usage Example (Single Page Application)
+# Asgardeo Auth React SDK Usage Vite Example (Single Page Application)
 
 This sample is developed to demonstrate the basic usage of the Asgardeo Auth React SDK.
 
@@ -11,7 +11,7 @@ This sample is developed to demonstrate the basic usage of the Asgardeo Auth Rea
 
 Follow the instructions in the [Try Out the Sample Apps](../../SAMPLE_APPS.md#try-out-the-sample-apps) section to register an application.
 
-Make sure to add `https://localhost:3000` as a Redirect URL and also add it under allowed origins. 
+Make sure to add `https://localhost:3000` as a Redirect URL and also add it under allowed origins.
 
 ### Download the Sample
 
@@ -38,16 +38,16 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ### Run the Application
 
 ```bash
-npm install && npm start
+npm install && npm run dev
 ```
 The app should open at [`https://localhost:3000`](https://localhost:3000)
 
 ### Change the Application's Development Server Port
 
-By default, the development server runs on port `3000`. Incase if you wish to change this to something else, 
+By default, the development server runs on port `3000`. Incase if you wish to change this to something else,
 follow the steps below.
 
-1. Update the `PORT` in [.env](../asgardeo-vite-app/.env) file in the app root.
+1. Update the `PORT` in [.env](.env) file in the app root.
 2. Update the `signInRedirectURL` & `signOutRedirectURL` in [src/config.json](./src/config.json)
 3. Go to the Asgardeo Console and navigate to the protocol tab of your application:
     - Update the Authorized Redirect URL.
