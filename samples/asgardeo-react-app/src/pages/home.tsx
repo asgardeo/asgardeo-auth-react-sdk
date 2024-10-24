@@ -116,6 +116,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         signOut();
     };
 
+    console.log(state.isAuthenticated)
     // If `clientID` is not defined in `config.json`, show a UI warning.
     if (!authConfig?.clientID) {
 
