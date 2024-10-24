@@ -24,7 +24,7 @@ import { AuthenticationResponse } from "../components";
 import { useLocation } from "react-router-dom";
 import { LogoutRequestDenied } from "../components/LogoutRequestDenied";
 import { USER_DENIED_LOGOUT } from "../constants/errors";
-import {ReactLogo} from "../images";
+import ReactLogo from "../images/react-logo.png";
 
 interface DerivedState {
     authenticateResponse: BasicUserInfo,
@@ -115,8 +115,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
     const handleLogout = () => {
         signOut();
     };
-
-    console.log(state.isAuthenticated)
+    
     // If `clientID` is not defined in `config.json`, show a UI warning.
     if (!authConfig?.clientID) {
 
