@@ -1,4 +1,4 @@
-# Asgardeo Auth React SDK Usage Vite Example (Single Page Application)
+# Asgardeo Auth React SDK Usage Example (Single Page Application)
 
 This sample is developed to demonstrate the basic usage of the Asgardeo Auth React SDK.
 
