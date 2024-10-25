@@ -1,4 +1,4 @@
-name: API Tests
+name: Tests
 
 on: 
   pull_request:
@@ -8,7 +8,7 @@ on:
 
 jobs: 
   unit-test:
-    name: API Tests
+    name: Tests
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
@@ -19,27 +19,10 @@ jobs:
         working-directory: ./lib
         run: |
             npm install
-            npm audit fix
             npm install --save-dev jest
-      - name: SignIn Test
+            npm install --save-dev @testing-library/react 
+            npm install --save-dev @testing-library/jest-dom
+            npm audit fix
+      - name: Test All
         working-directory: ./lib
-        run: |
-            npm test -- -u -t="SignIn"
-      - name: SignOut Test
-        working-directory: ./lib
-        run: |
-            npm test -- -u -t="SignOut"
-      - name: isAuth Test
-        working-directory: ./lib
-        run: |
-            npm test -- -u -t="isAuthenticated"
-      - name: getBasicUserInfo Test
-        working-directory: ./lib
-        run: |
-            npm test -- -u -t="getUserInfo"
-      - name: refreshAccessToken Test
-        working-directory: ./lib
-        run: |
-            npm test -- -u -t="refreshAccessToken"
-      
-    
+        run: npm test
