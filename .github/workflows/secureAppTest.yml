@@ -21,6 +21,7 @@ jobs:
             npm install
             npm audit fix
             npm install --save-dev jest
+            npm install --save-dev jest @testing-library/react @testing-library/jest-dom
             npm install --save-dev @testing-library/jest-dom
 
       - name: SecureApp Test
