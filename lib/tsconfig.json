@@ -9,6 +9,7 @@
         "resolveJsonModule": true,
         "sourceMap": true,
         "noLib": false,
+        "suppressImplicitAnyIndexErrors": true,
         "experimentalDecorators": true,
         "declaration": true,
         "declarationDir": "./dist/types",
