@@ -1,0 +1,29 @@
+name: useAuthContext Test
+
+on: 
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs: 
+  unit-test:
+    name: Auth Context Test
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: "14"
+      - name: Setup
+        working-directory: ./lib
+        run: |
+            npm install
+            npm audit fix
+            npm install --save-dev jest
+            npm install --save-dev @testing-library/jest-dom
+
+      - name: SecureApp Test
+        working-directory: ./lib
+        run: |
+            npm test -- -u -t="useAuthContext"
