@@ -19,8 +19,11 @@ jobs:
         working-directory: ./lib
         run: |
             npm install
+            npm audit fix
             npm install --save-dev jest
+            npm audit fix
             npm install --save-dev @testing-library/react 
+            npm audit fix
             npm install --save-dev @testing-library/jest-dom
             npm audit fix
       - name: Test All
