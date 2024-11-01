@@ -13,15 +13,13 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
-      - name: Cache node modules
+      - name: Cache Node Modules
         uses: actions/cache@v3
         with:
           path: node_modules
@@ -29,24 +27,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-            npm install
-            npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
-            npm install --save-dev crypto-browserify
+             npm install
+             npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
+             npm install --save-dev crypto-browserify
+             
 
-      - name: Configure Jest with Babel
+      - name: Configure Jest
         run: |
-          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json 
+          echo '{"preset": "jest-preset-angular"}' > jest.config.js
 
-      - name: Create Jest setup file for global crypto mock
-        run: |
-          echo "global.crypto = { getRandomValues: (arr) => require('crypto').randomFillSync(arr) };" > jest.setup.js
+      - name: Run Tests
+        run: npm test --coverage --verbose
 
-      - name: Run tests with coverage and verbose output
-        run: npm test -- --coverage --verbose
-
-      - name: Print environment details
+      - name: Print Environment Details
         run: |
           echo "Node.js version:"
           node -v
