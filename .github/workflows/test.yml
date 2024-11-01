@@ -30,10 +30,8 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: |
-             npm install
-             npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
-             npm install --save-dev crypto-browserify 
+        run: npm install
+
       - name: Configure Jest with Babel
         run: |
           echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json 
@@ -42,5 +40,14 @@ jobs:
         run: |
           echo "global.crypto = { getRandomValues: (arr) => require('crypto').randomFillSync(arr) };" > jest.setup.js
 
-      - name: Run tests
-        run: npm test -- --coverage
+      - name: Run tests with coverage and verbose output
+        run: npm test -- --coverage --verbose
+
+      - name: Print environment details
+        run: |
+          echo "Node.js version:"
+          node -v
+          echo "OS information:"
+          uname -a
+          echo "Environment variables:"
+          env
