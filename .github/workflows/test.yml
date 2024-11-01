@@ -33,13 +33,11 @@ jobs:
         run: |
              npm install
              npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
-
+             npm install crypto-browserify --save-dev
+             npm audit fix
       - name: Configure Jest with Babel
         run: |
-          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json
-
-      - name: Install crypto-browserify polyfill
-        run: npm install crypto-browserify --save-dev
+          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json 
 
       - name: Create Jest setup file for global crypto mock
         run: |
