@@ -5,7 +5,7 @@
 "@adobe/css-tools@^4.4.0":
   version "4.4.0"
 
-"@ampproject/remapping@^2.1.0":
+"@ampproject/remapping@^2.2.0":
   version "2.2.0"
   resolved "https://registry.npmjs.org/@ampproject/remapping/-/remapping-2.2.0.tgz"
   integrity sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==
@@ -13,33 +13,21 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-<<<<<<< HEAD
-"@asgardeo/auth-js@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.npmjs.org/@asgardeo/auth-js/-/auth-js-5.1.0.tgz"
-  integrity sha512-o+bo3r9RDo97CqEAFpneYIGdulBRUbdjR6QhZgF89zy3rnss1U1MA2v2heMwXKNbMfvbZCBiBDq2yhUcAk9SIA==
+"@asgardeo/auth-js@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/@asgardeo/auth-js/-/auth-js-5.1.1.tgz"
+  integrity sha512-yIgBKvHbt9ENczm2n3FGPET/Xf0I9H+Jm6oMXb8ClB/5m5qygHLoF3bsiDlzNuw3wuz8RH8F+waRudVI+IoLtQ==
 
-"@asgardeo/auth-react@^5.2.0", "@asgardeo/auth-react@file:C:\\Users\\PCCF(HOFF)\\Desktop\\asgardeo-auth-react-sdk\\lib":
-  version "5.2.0"
+"@asgardeo/auth-react@^5.2.2", "@asgardeo/auth-react@file:C:\\Users\\PCCF(HOFF)\\Desktop\\asgardeo-auth-react-sdk\\lib":
+  version "5.2.2"
   resolved "file:lib"
   dependencies:
     "@asgardeo/auth-spa" "^3.1.2"
 
-"@asgardeo/auth-spa@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/@asgardeo/auth-spa/-/auth-spa-3.1.2.tgz"
-  integrity sha512-tKpfa2I+Euoob8VUYsMufGz7TltEwwpRE8DykavS59IVWn5CY3qrlzCXMr3rX7/eRUAlBDz+LXSLvZKAE3esyg==
-=======
-"@asgardeo/auth-js@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-js/-/auth-js-5.1.1.tgz#aa7454224a3dd45fc85add3eb4d32229f30232d1"
-  integrity sha512-yIgBKvHbt9ENczm2n3FGPET/Xf0I9H+Jm6oMXb8ClB/5m5qygHLoF3bsiDlzNuw3wuz8RH8F+waRudVI+IoLtQ==
-
 "@asgardeo/auth-spa@^3.1.3":
   version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@asgardeo/auth-spa/-/auth-spa-3.1.3.tgz#5fe001fd043016a14aca109a61676c5a231c16c1"
+  resolved "https://registry.npmjs.org/@asgardeo/auth-spa/-/auth-spa-3.1.3.tgz"
   integrity sha512-c9t0rhAnySgcNtpo9OFksbo/mo3GF+DUAsvgRvbdGXVQGo3HsDkqBaUV+hhseKzc5KiO2nIJ6EEjfRCKZrI3jQ==
->>>>>>> 9072c8286c3cd8b566574c491d94efd976f384c1
   dependencies:
     "@asgardeo/auth-js" "^5.1.1"
     await-semaphore "^0.1.3"
@@ -51,14 +39,14 @@
     randombytes "^2.1.0"
 
 "@asgardeo/choreo-react-express@file:C:\\Users\\PCCF(HOFF)\\Desktop\\asgardeo-auth-react-sdk\\samples\\asgardeo-choreo-react-express":
-  version "5.2.0"
+  version "5.2.2"
   resolved "file:samples/asgardeo-choreo-react-express"
 
 "@asgardeo/react-app@file:C:\\Users\\PCCF(HOFF)\\Desktop\\asgardeo-auth-react-sdk\\samples\\asgardeo-react-app":
-  version "5.2.0"
+  version "5.2.2"
   resolved "file:samples/asgardeo-react-app"
   dependencies:
-    "@asgardeo/auth-react" "^5.2.0"
+    "@asgardeo/auth-react" "^5.2.2"
     "@babel/runtime-corejs3" "^7.20.6"
     "@textea/json-viewer" "^2.14.0"
     react "^18.2.0"
@@ -81,7 +69,7 @@
     "@nicolo-ribaudo/chokidar-2" "2.1.8-no-fsevents.3"
     chokidar "^3.4.0"
 
-"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.18.6", "@babel/code-frame@^7.25.9":
+"@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.25.9", "@babel/code-frame@^7.26.0":
   version "7.26.0"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.26.0.tgz"
   integrity sha512-INCKxTtbXtcNbUZ3YXutwMpEleqttcswhAdee7dhuoVrD2cnuc3PqtERBtxkX5nziX9vnBL8WXmSGwv8CuPV6g==
@@ -95,28 +83,28 @@
   resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.26.0.tgz"
   integrity sha512-qETICbZSLe7uXv9VE8T/RWOdIE5qqyTucOt4zLYMafj2MRO271VGgLd4RACJMeBO37UPWhXiKMBk7YlJ0fOzQA==
 
-"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.20.5", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.8.0":
-  version "7.20.5"
-  resolved "https://registry.npmjs.org/@babel/core/-/core-7.20.5.tgz"
-  integrity sha512-UdOWmk4pNWTm/4DlPUl/Pt4Gz4rcEMb7CY0Y3eJl5Yz1vI8ZJGmHWaVE55LoxRjdpx0z259GE9U5STA9atUinQ==
+"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.20.5", "@babel/core@^7.26.0", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.8.0":
+  version "7.26.0"
+  resolved "https://registry.npmjs.org/@babel/core/-/core-7.26.0.tgz"
+  integrity sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==
   dependencies:
-    "@ampproject/remapping" "^2.1.0"
-    "@babel/code-frame" "^7.18.6"
-    "@babel/generator" "^7.20.5"
-    "@babel/helper-compilation-targets" "^7.20.0"
-    "@babel/helper-module-transforms" "^7.20.2"
-    "@babel/helpers" "^7.20.5"
-    "@babel/parser" "^7.20.5"
-    "@babel/template" "^7.18.10"
-    "@babel/traverse" "^7.20.5"
-    "@babel/types" "^7.20.5"
-    convert-source-map "^1.7.0"
+    "@ampproject/remapping" "^2.2.0"
+    "@babel/code-frame" "^7.26.0"
+    "@babel/generator" "^7.26.0"
+    "@babel/helper-compilation-targets" "^7.25.9"
+    "@babel/helper-module-transforms" "^7.26.0"
+    "@babel/helpers" "^7.26.0"
+    "@babel/parser" "^7.26.0"
+    "@babel/template" "^7.25.9"
+    "@babel/traverse" "^7.25.9"
+    "@babel/types" "^7.26.0"
+    convert-source-map "^2.0.0"
     debug "^4.1.0"
     gensync "^1.0.0-beta.2"
-    json5 "^2.2.1"
-    semver "^6.3.0"
+    json5 "^2.2.3"
+    semver "^6.3.1"
 
-"@babel/generator@^7.20.5", "@babel/generator@^7.25.9", "@babel/generator@^7.7.2":
+"@babel/generator@^7.25.9", "@babel/generator@^7.26.0", "@babel/generator@^7.7.2":
   version "7.26.0"
   resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.26.0.tgz"
   integrity sha512-/AIkAmInnWwgEAJGQr9vY0c66Mj6kjkE2ZPB1PurTRaRAh3U+J45sAQMjQDJdh4WbR3l0x5xkimXBKyBXXAu2w==
@@ -142,7 +130,7 @@
     "@babel/traverse" "^7.25.9"
     "@babel/types" "^7.25.9"
 
-"@babel/helper-compilation-targets@^7.20.0", "@babel/helper-compilation-targets@^7.22.6", "@babel/helper-compilation-targets@^7.25.9":
+"@babel/helper-compilation-targets@^7.22.6", "@babel/helper-compilation-targets@^7.25.9":
   version "7.25.9"
   resolved "https://registry.npmjs.org/@babel/helper-compilation-targets/-/helper-compilation-targets-7.25.9.tgz"
   integrity sha512-j9Db8Suy6yV/VHa4qzrj9yZfZxhLWQdVnRlXxmKLYlhWUVB1sB2G5sxuWYXk/whHD9iW76PmNzxZ4UCnTQTVEQ==
@@ -202,7 +190,7 @@
     "@babel/traverse" "^7.25.9"
     "@babel/types" "^7.25.9"
 
-"@babel/helper-module-transforms@^7.20.2", "@babel/helper-module-transforms@^7.25.9":
+"@babel/helper-module-transforms@^7.25.9", "@babel/helper-module-transforms@^7.26.0":
   version "7.26.0"
   resolved "https://registry.npmjs.org/@babel/helper-module-transforms/-/helper-module-transforms-7.26.0.tgz"
   integrity sha512-xO+xu6B5K2czEnQye6BHA7DolFFmS3LB7stHZFaOLb1pAwO1HWLS8fXA+eh0A2yIvltPVmx3eNNDBJA2SLHXFw==
@@ -288,16 +276,15 @@
     "@babel/traverse" "^7.25.9"
     "@babel/types" "^7.25.9"
 
-"@babel/helpers@^7.20.5":
-  version "7.20.6"
-  resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.20.6.tgz"
-  integrity sha512-Pf/OjgfgFRW5bApskEz5pvidpim7tEDPlFtKcNRXWmfHGn9IEI2W2flqRQXTFb7gIPTyK++N6rVHuwKut4XK6w==
+"@babel/helpers@^7.26.0":
+  version "7.26.0"
+  resolved "https://registry.npmjs.org/@babel/helpers/-/helpers-7.26.0.tgz"
+  integrity sha512-tbhNuIxNcVb21pInl3ZSjksLCvgdZy9KwJ8brv993QtIVKJBBkYXz4q4ZbAv31GdnC+R90np23L5FbEBlthAEw==
   dependencies:
-    "@babel/template" "^7.18.10"
-    "@babel/traverse" "^7.20.5"
-    "@babel/types" "^7.20.5"
+    "@babel/template" "^7.25.9"
+    "@babel/types" "^7.26.0"
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.20.5", "@babel/parser@^7.20.7", "@babel/parser@^7.25.9", "@babel/parser@^7.26.0":
+"@babel/parser@^7.1.0", "@babel/parser@^7.14.7", "@babel/parser@^7.20.7", "@babel/parser@^7.25.9", "@babel/parser@^7.26.0":
   version "7.26.0"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.26.0.tgz"
   integrity sha512-aP8x5pIw3xvYr/sXT+SEUwyhrXT8rUJRZltK/qN3Db80dcKpTett8cJxHyjk+xYSVXvNnl2SfcJVjbwxpOSscA==
@@ -1063,7 +1050,7 @@
   dependencies:
     regenerator-runtime "^0.13.11"
 
-"@babel/template@^7.18.10", "@babel/template@^7.25.9", "@babel/template@^7.3.3":
+"@babel/template@^7.25.9", "@babel/template@^7.3.3":
   version "7.25.9"
   resolved "https://registry.npmjs.org/@babel/template/-/template-7.25.9.tgz"
   integrity sha512-9DGttpmPvIxBb/2uwpVo3dqJ+O6RooAFOS+lB+xDqoE2PVCE8nfoHMdZLpfCQRLwvohzXISPZcgxt80xLfsuwg==
@@ -1072,7 +1059,7 @@
     "@babel/parser" "^7.25.9"
     "@babel/types" "^7.25.9"
 
-"@babel/traverse@^7.20.5", "@babel/traverse@^7.25.9":
+"@babel/traverse@^7.25.9":
   version "7.25.9"
   resolved "https://registry.npmjs.org/@babel/traverse/-/traverse-7.25.9.tgz"
   integrity sha512-ZCuvfwOwlz/bawvAuvcj8rrithP2/N55Tzz342AkTvq4qaWbGfmCk/tKhNaV2cthijKrPAA8SRJV5WWe7IBMJw==
@@ -1085,7 +1072,7 @@
     debug "^4.3.1"
     globals "^11.1.0"
 
-"@babel/types@^7.0.0", "@babel/types@^7.18.6", "@babel/types@^7.20.5", "@babel/types@^7.20.7", "@babel/types@^7.25.9", "@babel/types@^7.26.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
+"@babel/types@^7.0.0", "@babel/types@^7.18.6", "@babel/types@^7.20.7", "@babel/types@^7.25.9", "@babel/types@^7.26.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4":
   version "7.26.0"
   resolved "https://registry.npmjs.org/@babel/types/-/types-7.26.0.tgz"
   integrity sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==
@@ -4417,7 +4404,7 @@ conventional-recommended-bump@^6.1.0:
     meow "^8.0.0"
     q "^1.5.1"
 
-convert-source-map@^1.1.0, convert-source-map@^1.5.0, convert-source-map@^1.7.0:
+convert-source-map@^1.1.0, convert-source-map@^1.5.0:
   version "1.9.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.9.0.tgz"
   integrity sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==
@@ -7277,10 +7264,10 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2, json5@^2.2.1, json5@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.npmjs.org/json5/-/json5-2.2.2.tgz"
-  integrity sha512-46Tk9JiOL2z7ytNQWFLpj99RZkVgeHf87yGQKsIkaPz1qSH9UczKH1rO7K3wgRselo0tYMUNfecYpm/p1vC7tQ==
+json5@^2.1.2, json5@^2.2.2, json5@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
+  integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
 jsonc-parser@3.2.0:
   version "3.2.0"
