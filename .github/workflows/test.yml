@@ -30,7 +30,9 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install
+        run: |
+             npm install
+             npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
 
       - name: Configure Jest with Babel
         run: |
