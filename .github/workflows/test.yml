@@ -3,34 +3,33 @@ name: Run Tests
 on:
   pull_request:
   push:
-    branches: [main]
 
 jobs:
-  run-tests:
+  test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        node-version: [18.x] 
+        node-version: [18.x]
 
     steps:
-      - name: Checkout repository
+      - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          
-      - name: Install dependencies
-        run: |
-          npm install
-          npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react
-          npm install --save-dev @testing-library/react @testing-library/jest-dom
-          npm install --save-dev @babel/preset-typescript
 
-      - name: Configure Jest with Babel
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install crypto-browserify polyfill
+        run: npm install crypto-browserify --save-dev
+          
+      - name: Create Jest setup file for global crypto mock
         run: |
-          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json
+          echo "global.crypto = require('crypto-browserify');" > jest.setup.js
 
       - name: Run tests
         run: npm test
