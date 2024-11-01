@@ -30,9 +30,7 @@ jobs:
 
       - name: Configure Jest with Babel
         run: |
-          echo '{
-            "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]
-          }' > babel.config.json
+          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json
 
       - name: Run tests
         run: npm test
