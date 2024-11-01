@@ -21,22 +21,27 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
-        run: |
-            npm install
-            npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react
-            npm install --save-dev @testing-library/react @testing-library/jest-dom
-            npm install --save-dev @babel/preset-typescript
+        run: npm ci
+
       - name: Configure Jest with Babel
         run: |
           echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json
 
       - name: Install crypto-browserify polyfill
         run: npm install crypto-browserify --save-dev
-          
+
       - name: Create Jest setup file for global crypto mock
         run: |
-          echo "global.crypto = require('crypto-browserify');" > jest.setup.js
+          echo "global.crypto = { getRandomValues: (arr) => require('crypto').randomFillSync(arr) };" > jest.setup.js
 
       - name: Run tests
-        run: npm test
+        run: npm test -- --coverage
