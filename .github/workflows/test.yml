@@ -43,4 +43,4 @@ jobs:
           echo "global.crypto = { getRandomValues: (arr) => require('crypto').randomFillSync(arr) };" > jest.setup.js
 
       - name: Run tests
-        run: npm test -- --coverage
+        run: npm test -- --coverage --experimental-global-webcrypt
