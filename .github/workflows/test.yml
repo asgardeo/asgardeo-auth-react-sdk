@@ -13,39 +13,34 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18.x'
 
-      - name: Cache Node Modules
+      - name: Cache node modules
         uses: actions/cache@v3
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
-      - name: Install Dependencies
+      
+      - name: Install dependencies
         run: |
-             npm install
-             npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom
-             npm install --save-dev crypto-browserify
-             
+          npm install
+          npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom crypto-browserify
 
-      - name: Configure Jest
+      - name: Configure Jest with Babel
         run: |
-          echo '{"preset": "jest-preset-angular"}' > jest.config.js
+          echo '{"presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]}' > babel.config.json 
 
-      - name: Run Tests
-        run: npm test --coverage --verbose
-
-      - name: Print Environment Details
+      - name: Create Jest setup file for global crypto mock
         run: |
-          echo "Node.js version:"
-          node -v
-          echo "OS information:"
-          uname -a
-          echo "Environment variables:"
-          env
+          echo "global.crypto = { getRandomValues: (arr) => require('crypto').randomFillSync(arr) };" > jest.setup.js
+
+      - name: Run tests
+        run: npm test -- --coverage
