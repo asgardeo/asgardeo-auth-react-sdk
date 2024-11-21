@@ -16,9 +16,10 @@
  * under the License.
  */
 
-import { BasicUserInfo } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement } from "react";
+import { BasicUserInfo, useAuthContext, HttpRequestConfig } from "@asgardeo/auth-react";
+import React, { FunctionComponent, ReactElement, useState, useEffect } from "react";
 import { JsonViewer } from '@textea/json-viewer'
+import config from "../config.json";
 
 /**
  * Decoded ID Token Response component Prop types interface.
@@ -64,8 +65,55 @@ export const AuthenticationResponse: FunctionComponent<AuthenticationResponsePro
         derivedResponse
     } = props;
 
+    const [resp, setResp] = useState<object>({});
+
+    const { httpRequest } = useAuthContext();
+    const requestConfig: HttpRequestConfig = {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/scim+json"
+        },
+        method: "GET",
+        attachToken: true,
+        url: `${config.baseUrl}/scim2/Me?attributes=emails,roles,name,phoneNumbers`,
+    };
+
+    useEffect(() => {
+        httpRequest(requestConfig)
+            .then((response) => {
+                setResp(response.data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, [])
+
     return (
         <>
+            { Object.keys(resp).length !== 0 &&
+            (<><h2>httpRequest method Response</h2>
+                <p>Derived by the&nbsp;
+                <code className="inline-code-block">
+                    <a href="https://www.npmjs.com/package/@asgardeo/auth-react/v/latest"
+                       target="_blank"
+                       rel="noreferrer"
+                    >
+                        @asgardeo/auth-react
+                    </a>
+                </code>&nbsp;SDK
+                </p>
+            <div className="json">
+                <JsonViewer
+                    className="asg-json-viewer"
+                    value={ resp }
+                    enableClipboard={ false }
+                    displayObjectSize={ false }
+                    displayDataTypes={ false }
+                    rootName={ false }
+                    theme="dark"
+                />
+            </div></>)
+            }
             <h2>Authentication Response</h2>
             <h4 className="sub-title">
                 Derived by the&nbsp;
