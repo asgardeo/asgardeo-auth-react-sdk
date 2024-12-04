@@ -18,32 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asgardeo/asgardeo-auth-react-sdk.git"
-  },
-  "bugs": {
-    "url": "https://github.com/asgardeo/asgardeo-auth-react-sdk/issues"
-  },
-  "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
-  "author": "WSO2",
-  "license": "Apache-2.0",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@asgardeo/auth-react": "^5.2.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.13.0",
-    "@textea/json-viewer": "^4.0.0",
+    "url": "git+htt    "@textea/json-viewer": "^4.0.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
