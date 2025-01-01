@@ -1,5 +1,5 @@
 import { AsgardeoAuthException } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { AuthenticationFailure } from "./pages/AuthenticationFailure";
 import { InvalidSystemTimePage } from "./pages/InvalidSystemTime";
 import { IssuerClaimValidationFailure } from "./pages/IssuerClaimValidationFailure";

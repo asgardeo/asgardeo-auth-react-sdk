@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { DefaultLayout } from "../layouts/default";
 import { AsgardeoAuthException } from "@asgardeo/auth-react";
 

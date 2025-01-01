@@ -17,7 +17,7 @@
  */
 
 import { BasicUserInfo, Hooks, useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
+import { FunctionComponent, ReactElement, useCallback, useEffect, useState } from "react";
 import { default as authConfig } from "../config.json";
 import REACT_LOGO from "../images/react-logo.png";
 import { DefaultLayout } from "../layouts/default";
@@ -52,7 +52,7 @@ export const HomePage: FunctionComponent = (): ReactElement => {
         on
     } = useAuthContext();
 
-    const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<DerivedState>(null);
+    const [ derivedAuthenticationState, setDerivedAuthenticationState ] = useState<DerivedState>();
     const [ hasAuthenticationErrors, setHasAuthenticationErrors ] = useState<boolean>(false);
     const [ hasLogoutFailureError, setHasLogoutFailureError ] = useState<boolean>();
 
