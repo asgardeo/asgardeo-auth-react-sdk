@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import { DefaultLayout } from "../layouts/default";
 
