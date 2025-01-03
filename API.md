@@ -1187,6 +1187,7 @@ You can refer to a sample implementation using JSP [here](/samples/java-webapp).
 |`requestTimeout` | Optional | `number`| 60000 (seconds) | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                                             |
 | `disableTrySignInSilently` | Optional | `boolean` | `true` | Specifies if the SDK should try to sign in silently on mount using the iFrame. |
 |`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management. Set this flag to `true` to add single logout capabilities to your application. |
+| `periodicTokenRefresh` | Optional | `boolean` | `false` | Flag to enable periodic token refresh. Set this flag to `true` to enable the SDK to refresh the access token periodically. |
 
 ### BasicUserInfo
 
