@@ -17,7 +17,7 @@
  */
 
 import { BasicUserInfo } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement } from "react";
+import { FunctionComponent, ReactElement } from "react";
 import { JsonViewer } from '@textea/json-viewer'
 
 /**
@@ -27,6 +27,7 @@ interface AuthenticationResponsePropsInterface {
     /**
      * Derived Authenticated Response.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     derivedResponse?: any;
 }
 
