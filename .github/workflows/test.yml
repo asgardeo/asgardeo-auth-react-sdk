@@ -1,0 +1,39 @@
+name: Run Tests
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Install dependencies
+        run: |
+            npm install  # Use npm ci for a clean install
+            npm install --save-dev jest @testing-library/react @testing-library/jest-dom @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom crypto-browserify
+
+      - name: Run tests
+        working-directory: ./lib
+        run: npm test  # Just run npm test, which should call jest

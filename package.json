@@ -3,7 +3,7 @@
     "description": "Asgardeo Auth React SDK and Sample Apps",
     "private": true,
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "build": "lerna run build --stream",
         "prebuild": "yarn install && lerna run prebuild && lerna bootstrap",
         "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
