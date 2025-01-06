@@ -16,6 +16,10 @@ export default defineConfig({
       cert: fs.readFileSync(path.resolve(__dirname, 'public', 'cert', 'localhost-cert.pem')),
     },
     host: 'localhost',
-    port: 3000,
-  }
+    port: 3000
+  },
+  build: {
+    commonjsOptions: { include: [] },
+    // commonjsOptions: { },                               // Edit: 
+  },   
 })
