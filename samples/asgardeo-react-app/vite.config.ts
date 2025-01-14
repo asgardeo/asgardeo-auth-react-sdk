@@ -26,12 +26,7 @@ export default defineConfig({
   },
   build: {
     commonjsOptions: {
-      include: [/node_modules/, /react/, /react-router/, /react-router-dom/],
-    },                  // Edit: 
-  },
-  resolve: {
-    alias: {
-      'react/jsx-runtime': 'react/jsx-runtime',
-    },
-  },
+      include: [ /react/ ],
+    }, 
+  }
 })
