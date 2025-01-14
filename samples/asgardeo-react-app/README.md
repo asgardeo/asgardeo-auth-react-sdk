@@ -38,7 +38,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ### Run the Application
 
 ```bash
-npm install && npm start
+npm install && npm run dev
 ```
 The app should open at [`https://localhost:3000`](https://localhost:3000)
 
