@@ -8,7 +8,13 @@ export default defineConfig({
     react()
   ],
   optimizeDeps: {
-    include: ['@asgardeo/auth-react']
+    include: [
+      '@asgardeo/auth-react',
+      'react/jsx-runtime',
+      'react-router',
+      'react-router-dom',
+      'react',
+    ],
   },
   server: {
     https: {
@@ -19,7 +25,13 @@ export default defineConfig({
     port: 3000
   },
   build: {
-    commonjsOptions: { include: [] },
-    // commonjsOptions: { },                               // Edit: 
-  },   
+    commonjsOptions: {
+      include: [/node_modules/, /react/, /react-router/, /react-router-dom/],
+    },                  // Edit: 
+  },
+  resolve: {
+    alias: {
+      'react/jsx-runtime': 'react/jsx-runtime',
+    },
+  },
 })
