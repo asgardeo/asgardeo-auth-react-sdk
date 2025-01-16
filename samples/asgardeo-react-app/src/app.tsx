@@ -17,7 +17,7 @@
  */
 
 import { AuthProvider, useAuthContext } from "@asgardeo/auth-react";
-import {default as authConfig } from "./config.json";
+import { default as authConfig } from "./config.json";
 import { FunctionComponent, ReactElement } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ErrorBoundary } from "./error-boundary";
