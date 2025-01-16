@@ -38,7 +38,7 @@ Read more about the SDK configurations [here](../../README.md#authprovider).
 ### Run the Application
 
 ```bash
-npm install && npm run dev
+npm install && npm start
 ```
 The app should open at [`https://localhost:3000`](https://localhost:3000)
 
@@ -47,7 +47,7 @@ The app should open at [`https://localhost:3000`](https://localhost:3000)
 By default, the development server runs on port `3000`. Incase if you wish to change this to something else, 
 follow the steps below.
 
-1. Update `server.port` in [vite.config.ts](vite.config.ts) file in the app root.
+1. Update the `PORT` in [.env](.env) file in the app root.
 2. Update the `signInRedirectURL` & `signOutRedirectURL` in [src/config.json](./src/config.json)
 3. Go to the Asgardeo Console and navigate to the protocol tab of your application:
     - Update the Authorized Redirect URL.
