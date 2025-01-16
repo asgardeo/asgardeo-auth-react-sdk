@@ -16,7 +16,7 @@
  * under the License.
  */
 
-import React, { FunctionComponent, PropsWithChildren, ReactElement } from "react";
+import { FunctionComponent, PropsWithChildren, ReactElement } from "react";
 import FOOTER_LOGOS from "../images/footer.png";
 
 /**

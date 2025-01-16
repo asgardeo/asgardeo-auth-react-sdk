@@ -5,7 +5,7 @@ This sample is developed to demonstrate the basic usage of the Asgardeo Auth Rea
 ## Getting Started
 
 ### Prerequisites
--   `Node.js` (version 10 or above).
+-   `Node.js` (version 18 or above).
 
 ### Register an Application
 
@@ -52,6 +52,18 @@ follow the steps below.
 3. Go to the Asgardeo Console and navigate to the protocol tab of your application:
     - Update the Authorized Redirect URL.
     - Update the Allowed Origins.
+
+## Update application certificates
+
+Vite uses self signed certificates to run this sample app on HTTPS. To update the certificate,
+
+1. Navigate to `public/cert`.
+2. Delete exisiting `.pem` files.
+3. Run the following command to regenerate certificate.
+
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost-key.pem -out localhost-cert.pem
+```
 
 ## Contribute
 

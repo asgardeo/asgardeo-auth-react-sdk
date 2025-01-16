@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2025, WSO2 LLC. (https://wso2.com).
  *
- * WSO2 Inc. licenses this file to you under the Apache License,
+ * WSO2 LLC. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,33 +17,34 @@
  */
 
 import { AuthProvider, useAuthContext } from "@asgardeo/auth-react";
-import React, { FunctionComponent, ReactElement } from "react";
-import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./app.css";
 import { default as authConfig } from "./config.json";
+import { FunctionComponent, ReactElement } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { ErrorBoundary } from "./error-boundary";
-import { HomePage, NotFoundPage } from "./pages";
+import { HomePage } from "./pages/home";
+import { NotFoundPage } from "./pages/404";
 
 const AppContent: FunctionComponent = (): ReactElement => {
     const { error } = useAuthContext();
 
     return (
-        <ErrorBoundary error={error}>
-            <Router>
-            <Routes>
-                <Route path="/" element={ <HomePage /> } />
-                <Route element={ <NotFoundPage /> } />
-            </Routes>
+      <ErrorBoundary error={error}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route element={<NotFoundPage />} />
+          </Routes>
         </Router>
-        </ErrorBoundary>
-    )
+      </ErrorBoundary>
+    );
 };
 
-const App = () => (
-    <AuthProvider config={authConfig}>
-        <AppContent />
-    </AuthProvider>
-);
+function App() {
+    return (
+        <AuthProvider config={authConfig}>
+            <AppContent />
+        </AuthProvider>
+    );
+}
 
-render((<App />), document.getElementById("root"));
+export default App;
