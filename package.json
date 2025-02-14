@@ -15,7 +15,10 @@
         "clean-all": "yarn run remove-package-lock && yarn run remove-yarn-lock && yarn run remove-node-modules",
         "bump-patch-version": "lerna version patch --yes",
         "bump-minor-version": "lerna version minor --yes",
-        "bump-major-version": "lerna version major --yes"
+        "bump-major-version": "lerna version major --yes",
+        "publish:packages": "changeset publish",
+        "version:packages": "changeset version",
+        "changeset": "changeset"
     },
     "repository": {
         "type": "git",
@@ -35,6 +38,7 @@
     },
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "devDependencies": {
+        "@changesets/cli": "^2.27.12",
         "@typescript-eslint/eslint-plugin": "^5.47.0",
         "@typescript-eslint/parser": "^5.47.0",
         "eslint": "^8.30.0",
