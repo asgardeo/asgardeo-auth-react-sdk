@@ -27,7 +27,7 @@
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "author": "WSO2",
     "license": "Apache-2.0",
-    "private": false,
+    "private": true,
     "scripts": {
         "start": "webpack-dev-server --mode development --hot --open",
         "prebuild": "yarn install",
