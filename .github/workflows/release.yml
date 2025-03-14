@@ -1,4 +1,4 @@
-#  Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#  Copyright (c) 2020-2025, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 #  WSO2 Inc. licenses this file to you under the Apache License,
 #  Version 2.0 (the "License"); you may not use this file except
@@ -20,6 +20,11 @@ name: Release
 
 # Controls when the action will run.
 on:
+  # Triggers the workflow on push for the main branch.
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - "LICENSE"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -59,14 +64,25 @@ jobs:
         run: |
           yarn build
 
-      - name: Bump Version
+      - name: Setup Git User
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          yarn run bump-${{ github.event.inputs.Type }}-version
-          git push --follow-tags
+
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: yarn publish:packages
+          version: yarn version:packages
+          commit: "[Asgardeo Release] [GitHub Actions]  Update package versions"
+          title: "[Release] [GitHub Action] Update package versions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.ASGARDIO_GITHUB_BOT_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Pack Release Artifacts
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           mkdir artifacts
           if test -d samples
@@ -83,6 +99,7 @@ jobs:
           fi
 
       - name: Release Asgardeo Auth React SDK
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
@@ -92,12 +109,3 @@ jobs:
           else
             gh release create $version
           fi
-
-      - name: Publish Asgardeo Auth React SDK
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          cp README.md lib
-          cd lib
-          npm publish --access public

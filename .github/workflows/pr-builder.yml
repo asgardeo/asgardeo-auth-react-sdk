@@ -24,6 +24,7 @@ on:
 
 jobs:
   build:
+    if: github.actor != 'asgardeo-github-bot'
 
     runs-on: ubuntu-latest
 

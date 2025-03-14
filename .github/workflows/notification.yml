@@ -53,7 +53,7 @@ jobs:
                         "card": {
                             "header": {
                                 "title": "PR: ${{ steps.escapeIssueTitle.outputs.issueTitle }}",
-                                "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo SPA SDK Repo",
+                                "subtitle": "By ${{ github.event.issue.user.login }} in Asgardeo React SDK Repo",
                                 "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
                                 "imageType": "CIRCLE",
                                 "imageAltText": "GitHub Avatar"
@@ -101,7 +101,7 @@ jobs:
                         "card": {
                             "header": {
                                 "title": "PR: ${{ steps.escapePRTitle.outputs.prTitle }}",
-                                "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo SPA SDK Repo",
+                                "subtitle": "By ${{ github.event.pull_request.user.login }} in Asgardeo React SDK Repo",
                                 "imageUrl": "https://avatars.githubusercontent.com/u/583231?v=4",
                                 "imageType": "CIRCLE",
                                 "imageAltText": "GitHub Avatar"
