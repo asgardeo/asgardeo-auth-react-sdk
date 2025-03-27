@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "@asgardeo/choreo-react-express",
   "version": "5.2.5",
   "description": "React and Express based sample fullstack app to demonstrate Asgardeo / WSO2 Identity Server Auth React SDK usage",
