@@ -76,7 +76,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const [ state, dispatch ] = useState<AuthStateInterface>(AuthClient.getState());
     const [ initialized, setInitialized ] = useState(false);
 
-    const config = useMemo(
+    const mergedConfig = useMemo(
         (): AuthReactConfig => ({ ...defaultConfig, ...passedConfig }), [ passedConfig ]
     );
 
@@ -90,6 +90,16 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
             params: Record<string, unknown>
         }
     ): Promise<BasicUserInfo> => {
+        const _config = await AuthClient.getConfigData();
+
+        // NOTE: With React 19 strict mode, the initialization logic runs twice, and there's an intermittent
+        // issue where the config object is not getting stored in the storage layer with Vite scaffolding.
+        // Hence, we need to check if the client is initialized but the config object is empty, and reinitialize.
+        // Tracker: https://github.com/asgardeo/asgardeo-auth-react-sdk/issues/240
+        if (!_config || Object.keys(_config).length === 0) {
+            await AuthClient.init(mergedConfig);
+        }
+
         try {
             setError(null);
             return await AuthClient.signIn(
@@ -147,12 +157,12 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
         if (state.isAuthenticated) {
             return;
         }
+
         (async () => {
-            setInitialized(await AuthClient.init(config));
+            setInitialized(await AuthClient.init(mergedConfig));
             checkIsAuthenticated();
         })();
-
-    }, [ config ]);
+    }, [ mergedConfig ]);
 
     /**
      * Try signing in when the component is mounted.
@@ -189,7 +199,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
             // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
             // If so, initiate the sign in.
-            if (!config.skipRedirectCallback) {
+            if (!mergedConfig.skipRedirectCallback) {
                 let authParams: AuthParams = null;
                 if (getAuthParams && typeof getAuthParams === "function") {
                     authParams = await getAuthParams();
@@ -197,11 +207,13 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
 
                 const url = new URL(location.href);
 
-                if ((SPAUtils.hasAuthSearchParamsInURL()
-                    && new URL(url.origin + url.pathname).toString() === new URL(config?.signInRedirectURL).toString())
-                    || authParams?.authorizationCode
-                    || url.searchParams.get("error") )
-                {
+                if (
+                    (SPAUtils.hasAuthSearchParamsInURL() &&
+                      new URL(url.origin + url.pathname).toString() ===
+                        new URL(mergedConfig?.signInRedirectURL).toString()) ||
+                    authParams?.authorizationCode ||
+                    url.searchParams.get("error")
+                ) {
                     try{
                         await signIn(
                             { callOnlyOnRedirect: true }, 
@@ -222,11 +234,11 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 return;
             }
 
-            if (!config.disableAutoSignIn && await AuthClient.isSessionActive()) {
+            if (!mergedConfig.disableAutoSignIn && await AuthClient.isSessionActive()) {
                 signIn();
             }  
 
-            if (config.disableTrySignInSilently || isSignedOut) {
+            if (mergedConfig.disableTrySignInSilently || isSignedOut) {
                 dispatch({ ...state, isLoading: false });
 
                 return;
@@ -249,7 +261,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 });
         })();
 
-    }, [ config ]);
+    }, [ mergedConfig ]);
 
     /**
      * Check if the user is authenticated and update the state.isAuthenticated value.
@@ -291,6 +303,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                 value={ {
                     disableHttpHandler,
                     enableHttpHandler,
+                    error,
                     getAccessToken,
                     getBasicUserInfo,
                     getDecodedIDPIDToken,
@@ -309,8 +322,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     signOut,
                     state,
                     trySignInSilently,
-                    updateConfig,
-                    error
+                    updateConfig
                 } }
             >
                 { initialized ? children : fallback ?? null }
