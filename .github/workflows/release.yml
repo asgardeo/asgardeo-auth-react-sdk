@@ -80,32 +80,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ASGARDIO_GITHUB_BOT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Pack Release Artifacts
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: |
-          mkdir artifacts
-          if test -d samples
-          then
-            cd samples
-            rm -rf **/node_modules/
-            rm -rf samples/**/dist/
-            rm -rf samples/asgardeo-choreo-react-express/apps/**/node_modules/
-            rm -rf samples/asgardeo-choreo-react-express/apps/client/build/
-            rm -rf samples/asgardeo-choreo-react-express/apps/server/dist/
-            for dir in */ ; do
-                zip -r "../artifacts/${dir%/}.zip" $dir
-            done
-          fi
-
-      - name: Release Asgardeo Auth React SDK
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: |
-          version=`git describe --tags --abbrev=0`
-          echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
-          if test -d samples
-          then
-            gh release create $version artifacts/*
-          else
-            gh release create $version
-          fi
