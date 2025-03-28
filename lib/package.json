@@ -35,6 +35,9 @@
     },
     "homepage": "https://github.com/asgardeo/asgardeo-auth-react-sdk#readme",
     "author": "WSO2",
+    "publishConfig": {
+        "access": "public"
+    },
     "license": "Apache-2.0",
     "files": [
         "dist",
