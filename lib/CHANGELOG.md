@@ -1,5 +1,11 @@
 # @asgardeo/auth-react
 
+## 5.2.5
+
+### Patch Changes
+
+- c7ec8e5: Copy README into SDK build artifact
+
 ## 5.2.4
 
 ### Patch Changes
