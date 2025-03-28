@@ -1,5 +1,11 @@
 # @asgardeo/auth-react
 
+## 5.2.6
+
+### Patch Changes
+
+- 2a1b145: Fix readme copy issue
+
 ## 5.2.5
 
 ### Patch Changes
