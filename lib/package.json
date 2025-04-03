@@ -47,7 +47,7 @@
         "LICENSE"
     ],
     "dependencies": {
-        "@asgardeo/auth-spa": "^3.1.5"
+        "@asgardeo/auth-spa": "^3.2.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.19.3",
