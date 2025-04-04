@@ -4,11 +4,11 @@
 ## Related issues
 <!-- List any related issues or pull requests here. -->
 
-## Samples
-<!-- Provide high-level details about the samples related to this feature -->
-
 ## Related PRs
 <!-- List any other related PRs -->
+
+## Samples
+<!-- Provide high-level details about the samples related to this feature -->
 
 ## Security checks
  - [ ] Followed secure coding standards in http://wso2.com/technical-reports/wso2-secure-engineering-guidelines
