@@ -1,5 +1,12 @@
 # @asgardeo/auth-react
 
+## 5.3.0
+
+### Minor Changes
+
+- 9b3414d: Allow TypeScript users to simply pass the `storage` option as a string literal
+  - https://github.com/asgardeo/asgardeo-auth-react-sdk/issues/292
+
 ## 5.2.6
 
 ### Patch Changes
