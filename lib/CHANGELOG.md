@@ -1,5 +1,15 @@
 # @asgardeo/auth-react
 
+## 5.4.0
+
+### Minor Changes
+
+- ccf572b: Update `@asgardeo/auth-spa` from `v3.2.0` to `v3.3.0`
+
+  This update includes the following changes:
+
+  - https://github.com/asgardeo/asgardeo-auth-spa-sdk/pull/191
+
 ## 5.3.0
 
 ### Minor Changes
