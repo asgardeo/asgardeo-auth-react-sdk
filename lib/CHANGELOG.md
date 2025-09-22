@@ -1,5 +1,11 @@
 # @asgardeo/auth-react
 
+## 5.4.2
+
+### Patch Changes
+
+- 52d1b0c: Update `@asgardeo/auth-spa` from `v3.3.1` to `v3.3.2`.
+
 ## 5.4.1
 
 ### Patch Changes
