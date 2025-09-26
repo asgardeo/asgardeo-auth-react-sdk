@@ -25,9 +25,9 @@ jobs:
 
       - name: Create asgardeo-react-app.zip
         run: |
-          cd samples
-          zip -r ../asgardeo-react-app.zip asgardeo-react-app \
-            -x "**/node_modules/**" "**/.git/**" "**/dist/**" "**/.next/**" "**/build/**"
+          cd samples/asgardeo-react-app
+          zip -r ../../asgardeo-react-app.zip . \
+            -x "**/node_modules/**" "**/.git/**"
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
