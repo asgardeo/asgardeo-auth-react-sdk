@@ -1,0 +1,38 @@
+name: Attach React sample ZIP to release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to upload to (manual runs)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs: 
+  upload-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout at ref
+        uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Create asgardeo-react-app.zip
+        run: |
+          cd samples
+          zip -r ../asgardeo-react-app.zip asgardeo-react-app \
+            -x "**/node_modules/**" "**/.git/**" "**/dist/**" "**/.next/**" "**/build/**"
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: asgardeo-react-app.zip
+          tag_name: ${{ inputs.tag || github.event.release.tag_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
