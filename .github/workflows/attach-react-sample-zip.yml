@@ -23,16 +23,23 @@ jobs:
           fetch-depth: 0
           ref: ${{ inputs.tag || github.ref }}
 
-      - name: Create asgardeo-react-app.zip
+      - name: Create samples zip file
         run: |
-          cd samples/asgardeo-react-app
-          zip -r ../../asgardeo-react-app.zip . \
+          mkdir -p /tmp/samples
+          
+          cp -r samples/asgardeo-react-app /tmp/samples/
+          cp -r samples/asgardeo-choreo-react-express /tmp/samples/
+
+          cd /tmp
+          zip -r asgardeo-samples.zip samples \
             -x "**/node_modules/**" "**/.git/**"
+
+          mv asgardeo-samples.zip $GITHUB_WORKSPACE/
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: asgardeo-react-app.zip
+          files: asgardeo-samples.zip
           tag_name: ${{ inputs.tag || github.event.release.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
