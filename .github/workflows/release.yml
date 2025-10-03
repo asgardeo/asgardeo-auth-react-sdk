@@ -25,6 +25,8 @@ on:
     branches: [ main ]
     paths-ignore:
       - "LICENSE"
+  release:
+    types: [ published ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -32,6 +34,9 @@ on:
         description: 'Choose which version to bump before release'
         required: true
         default: 'patch'
+
+permissions:
+  contents: write
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -71,6 +76,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish
         id: changesets
+        if: github.repository == 'asgardeo/asgardeo-auth-react-sdk' && github.event_name != 'release'
         uses: changesets/action@v1
         with:
           publish: yarn publish:packages
@@ -80,3 +86,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ASGARDIO_GITHUB_BOT_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Prepare sample apps for upload
+        if: github.event_name == 'release'
+        run: |
+          mkdir -p /tmp/samples
+          cp -r samples/asgardeo-react-app /tmp/samples/
+          cp -r samples/asgardeo-choreo-react-express /tmp/samples/
+
+          cd /tmp
+          zip -r asgardeo-react-app.zip samples/asgardeo-react-app -x "**/node_modules/**" "**/.git/**"
+          zip -r asgardeo-choreo-react-express.zip samples/asgardeo-choreo-react-express -x "**/node_modules/**" "**/.git/**"
+
+          mv asgardeo-react-app.zip "$GITHUB_WORKSPACE/"
+          mv asgardeo-choreo-react-express.zip "$GITHUB_WORKSPACE/"
+
+      - name: Upload assets to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: |
+            asgardeo-react-app.zip
+            asgardeo-choreo-react-express.zip
+          tag_name: ${{ github.event.release.tag_name }}
