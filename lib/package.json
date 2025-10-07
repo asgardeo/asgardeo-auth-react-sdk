@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-react",
-    "version": "5.4.2",
+    "version": "5.4.3",
     "description": "Asgardeo Auth React SDK for React Applications.",
     "keywords": [
         "WSO2",

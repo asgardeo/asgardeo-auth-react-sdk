@@ -1,5 +1,11 @@
 # @asgardeo/auth-react
 
+## 5.4.3
+
+### Patch Changes
+
+- 94030b7: Improve release workflow
+
 ## 5.4.2
 
 ### Patch Changes
