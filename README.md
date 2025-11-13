@@ -1,5 +1,16 @@
 # Asgardeo Auth React SDK
 
+> [!WARNING]
+> **Deprecation Notice**
+>
+> This repository (**asgardeo-auth-react-sdk**) has been **deprecated** and is **no longer maintained** by WSO2.  
+> The functionality of this SDK has been replaced by the **new Asgardeo React SDK**, which is now part of the official **Asgardeo JavaScript Monorepo**.
+>
+> 👉 You can find the new SDK here:  
+> [https://github.com/asgardeo/javascript/tree/main/packages/react](https://github.com/asgardeo/javascript/tree/main/packages/react)
+>
+> Please migrate your projects to the new SDK to receive the latest updates, features, and security improvements.
+
 ![Builder](https://github.com/asgardeo/asgardeo-auth-react-sdk/workflows/Builder/badge.svg)
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://discord.gg/wso2](https://img.shields.io/badge/Join%20us%20on-Discord-%23e01563.svg)](https://discord.gg/wso2)
