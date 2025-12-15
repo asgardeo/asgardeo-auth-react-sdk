@@ -180,7 +180,7 @@ Clicking on **Login button** will take the user to Asgardeo login page. Upon suc
 Clicking on **Logout button** will sign out the user and will be redirected to `signOutRedirectURL` and the `state.isAuthenticated` will be set to `false`. 
 
 > **Note**
-> Instead of buttons you can use the `signIn()` & `signOut()` methods from the SDK to implement any preffered user-experience in your application
+> Instead of buttons you can use the `signIn()` & `signOut()` methods from the SDK to implement any preferred user-experience in your application
 
 You can use the `state.isAuthenticated` attribute to check the authenticated status of the user.
 
