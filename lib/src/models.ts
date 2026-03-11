@@ -100,6 +100,7 @@ export interface AuthContextInterface {
     getBasicUserInfo(): Promise<BasicUserInfo>;
     httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>>;
     httpRequestAll(configs: HttpRequestConfig[]): Promise<HttpResponse<any>[]>;
+    httpStreamRequest(config: HttpRequestConfig): Promise<ReadableStream>;
     requestCustomGrant(
         config: CustomGrantConfig,
         callback?: (response: BasicUserInfo | FetchResponse<any>) => void

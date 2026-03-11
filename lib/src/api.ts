@@ -203,6 +203,20 @@ class AuthAPI {
     }
 
     /**
+     * This method sends a streaming API request to a protected endpoint.
+     * The access token is automatically attached to the header of the request.
+     *
+     * @param {HttpRequestConfig} config -  The config object containing attributes necessary to send a request.
+     *
+     * @return {Promise<ReadableStream>} - Returns a Promise that resolves with a ReadableStream.
+     */
+    public async httpStreamRequest(config: HttpRequestConfig): Promise<ReadableStream | undefined> {
+        // httpStreamRequest was added in the latest Asgardeo SPA SDK version.
+        // We cast _client to any here to avoid TS errors until the package.json bump is resolved fully.
+        return (this._client as any).httpStreamRequest(config);
+    }
+
+    /**
      * This method allows you to send a request with a custom grant.
      *
      * @param {CustomGrantRequestParams} config - The request parameters.
