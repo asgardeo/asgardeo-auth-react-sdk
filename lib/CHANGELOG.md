@@ -1,5 +1,15 @@
 # @asgardeo/auth-react
 
+## 5.5.0
+
+### Minor Changes
+
+- 0e35e0e: Bump @asgardeo/auth-spa and add httpStreamRequest method to AuthAPI
+
+### Patch Changes
+
+- 6b7217c: Add deprecation notice
+
 ## 5.4.3
 
 ### Patch Changes
