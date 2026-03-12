@@ -122,6 +122,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
     const getBasicUserInfo = () => AuthClient.getBasicUserInfo();
     const httpRequest = (config: HttpRequestConfig) => AuthClient.httpRequest(config);
     const httpRequestAll = (configs: HttpRequestConfig[]) => AuthClient.httpRequestAll(configs);
+    const httpStreamRequest = (config: HttpRequestConfig) => AuthClient.httpStreamRequest(config);
     const requestCustomGrant = (
         config: SPACustomGrantConfig,
         callback?: (response: BasicUserInfo | FetchResponse<any>) => void
@@ -312,6 +313,7 @@ const AuthProvider: FunctionComponent<PropsWithChildren<AuthProviderPropsInterfa
                     getIDToken,
                     getOIDCServiceEndpoints,
                     httpRequest,
+                    httpStreamRequest,
                     httpRequestAll,
                     isAuthenticated,
                     on,
