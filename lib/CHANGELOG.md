@@ -1,5 +1,11 @@
 # @asgardeo/auth-react
 
+## 5.6.0
+
+### Minor Changes
+
+- 429b84d: Bump @asgardeo/auth-spa to version 3.5.0
+
 ## 5.5.0
 
 ### Minor Changes
