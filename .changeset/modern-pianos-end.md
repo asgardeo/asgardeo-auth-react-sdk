@@ -1,5 +1,0 @@
----
-"@asgardeo/auth-react": patch
----
-
-Bump @asgardeo/auth-spa to version 3.5.1
