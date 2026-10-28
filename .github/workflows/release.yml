@@ -88,9 +88,9 @@ jobs:
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
           if test -d samples
           then
-            gh release create $version artifacts/*
+            gh release create $version artifacts/* --latest=false
           else
-            gh release create $version
+            gh release create $version --latest=false
           fi
 
       - name: Publish Asgardeo Auth React SDK
@@ -100,4 +100,4 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           cp README.md lib
           cd lib
-          npm publish --access public
+          npm publish --access public --tag legacy-3.1
