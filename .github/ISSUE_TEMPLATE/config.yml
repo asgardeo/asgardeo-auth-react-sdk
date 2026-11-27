@@ -1,5 +1,5 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Ask a question
-    url: https://github.com/wso2/product-is/wiki/Engage-with-the-community
-    about: Check here on how you can ask a question about the product
+  - name: Report an issue in the Asgardeo issue tracker
+    url: https://github.com/asgardeo/asgardeo/issues/new/choose
+    about: Issues for all Asgardeo SDKs are tracked in asgardeo/asgardeo. Please open bugs, improvements and feature requests there.
